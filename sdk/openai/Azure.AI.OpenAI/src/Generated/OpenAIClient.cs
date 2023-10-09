@@ -47,7 +47,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
@@ -61,7 +62,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 

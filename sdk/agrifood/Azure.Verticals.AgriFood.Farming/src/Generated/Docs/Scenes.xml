@@ -164,7 +164,7 @@ This sample shows how to call SearchFeaturesAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -185,7 +185,7 @@ This sample shows how to call SearchFeaturesAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -245,7 +245,7 @@ This sample shows how to call SearchFeatures and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -266,7 +266,7 @@ This sample shows how to call SearchFeatures with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -494,7 +494,7 @@ This sample shows how to call CreateSatelliteDataIngestionJobAsync and parse the
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -517,7 +517,7 @@ This sample shows how to call CreateSatelliteDataIngestionJobAsync with all para
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -583,7 +583,7 @@ This sample shows how to call CreateSatelliteDataIngestionJob and parse the resu
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -606,7 +606,7 @@ This sample shows how to call CreateSatelliteDataIngestionJob with all parameter
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",

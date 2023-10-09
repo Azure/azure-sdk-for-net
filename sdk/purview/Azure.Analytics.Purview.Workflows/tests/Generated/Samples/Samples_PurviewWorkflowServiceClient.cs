@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 triggers = new object[]
             {
@@ -148,7 +148,7 @@ type = "when_term_creation_is_requested",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 triggers = new object[]
             {
@@ -180,7 +180,7 @@ type = "when_term_creation_is_requested",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 triggers = new object[]
             {
@@ -223,7 +223,7 @@ underGlossary = "<underGlossary>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 triggers = new object[]
             {
@@ -318,7 +318,7 @@ underGlossary = "<underGlossary>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operations = new object[]
             {
@@ -347,7 +347,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operations = new object[]
             {
@@ -376,7 +376,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operations = new object[]
             {
@@ -408,7 +408,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operations = new object[]
             {
@@ -528,7 +528,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -542,7 +542,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -556,7 +556,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -573,7 +573,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -698,7 +698,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -712,7 +712,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -726,7 +726,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -743,7 +743,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -760,7 +760,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -774,7 +774,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -788,7 +788,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -805,7 +805,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
@@ -822,7 +822,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -836,7 +836,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
@@ -850,7 +850,7 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 reassignments = new object[]
             {
@@ -874,7 +874,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 reassignments = new object[]
             {
@@ -898,7 +898,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
@@ -915,7 +915,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
@@ -932,7 +932,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
@@ -950,7 +950,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
