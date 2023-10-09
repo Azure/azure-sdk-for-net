@@ -441,7 +441,7 @@ Name = "testcontainerAppsJob0",
         {
             ContainerAppSourceControlData data = new ContainerAppSourceControlData()
             {
-                RepoUri = new Uri("https://github.com/xwang971/ghatest"),
+                //RepoUri = new Uri("https://github.com/xwang971/ghatest"),
                 Branch = "master",
                 GitHubActionConfiguration = new ContainerAppGitHubActionConfiguration()
                 {
@@ -460,6 +460,7 @@ Name = "testcontainerAppsJob0",
                     },
                     ContextPath = "./",
                     Image = "image/tag",
+                    GitHubPersonalAccessToken = "test"
                 },
             };
             return data;
