@@ -1,9 +1,14 @@
 # Release History
 
+## 1.1.0 (2022-10-10)
+
+## Features Added
+- Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
+
 ## 1.1.0-beta.1 (2023-10-10)
 
 ### Bugs Fixed
-- Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
+- Fix sovereign support for US Gov and China clouds
 
 ## 1.0.0 (2023-02-21)
 
@@ -20,10 +25,6 @@
 - Removed Model `UploadLogsResult` containing the result of a logs upload operation
 - Removed Model `UploadLogsError` representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
 - Removed Model `UploadLogsStatus` indicating the status of a logs upload operation.
-
-## 1.1.0 (2022-10-11)
-## Features Added
-- GA release with sovereign support
 
 ## 1.0.0-beta.4 (2022-10-11)
 
