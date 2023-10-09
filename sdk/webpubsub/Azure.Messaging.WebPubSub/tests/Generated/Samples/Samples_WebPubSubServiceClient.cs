@@ -68,7 +68,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToAll(content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -80,7 +80,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToAllAsync(content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -92,7 +92,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToAll(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
 
             Console.WriteLine(response.Status);
@@ -104,7 +104,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToAllAsync(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
 
             Console.WriteLine(response.Status);
@@ -160,7 +160,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -172,7 +172,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToConnectionAsync("<connectionId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -184,7 +184,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -196,7 +196,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToConnectionAsync("<connectionId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -296,7 +296,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToGroup("<group>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -308,7 +308,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -320,7 +320,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToGroup("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
 
             Console.WriteLine(response.Status);
@@ -332,7 +332,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
 
             Console.WriteLine(response.Status);
@@ -476,7 +476,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToUser("<userId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -488,7 +488,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToUserAsync("<userId>", content, new ContentType("application/json"));
 
             Console.WriteLine(response.Status);
@@ -500,7 +500,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.SendToUser("<userId>", content, new ContentType("application/json"), filter: "<filter>");
 
             Console.WriteLine(response.Status);
@@ -512,7 +512,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToUserAsync("<userId>", content, new ContentType("application/json"), filter: "<filter>");
 
             Console.WriteLine(response.Status);

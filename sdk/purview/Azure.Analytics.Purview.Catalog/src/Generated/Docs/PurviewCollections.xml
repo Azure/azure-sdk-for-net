@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -21,7 +21,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
@@ -198,7 +198,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateEntity("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -210,7 +210,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
@@ -387,7 +387,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -399,7 +399,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entities = new object[]
     {
@@ -579,7 +579,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -591,7 +591,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entities = new object[]
     {
@@ -771,7 +771,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -783,7 +783,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entityGuids = new object[]
     {
@@ -866,7 +866,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.MoveEntitiesToCollection("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -878,7 +878,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entityGuids = new object[]
     {

@@ -133,7 +133,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAccountPropertiesAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -145,7 +145,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -200,7 +200,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateAccountProperties(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -212,7 +212,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -319,7 +319,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.RegenerateAccessKeyAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -331,7 +331,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     keyType = "PrimaryAtlasKafkaKey",
 });
@@ -350,7 +350,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.RegenerateAccessKey(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -362,7 +362,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     keyType = "PrimaryAtlasKafkaKey",
 });

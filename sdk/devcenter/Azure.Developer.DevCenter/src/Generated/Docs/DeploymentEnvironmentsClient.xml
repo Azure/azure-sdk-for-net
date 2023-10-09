@@ -653,7 +653,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -673,7 +673,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -705,7 +705,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -725,7 +725,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",

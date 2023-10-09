@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateCollection(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateCollectionAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -134,13 +134,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 friendlyName = "<friendlyName>",
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = client.CreateOrUpdateCollection(content);
@@ -168,13 +169,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 friendlyName = "<friendlyName>",
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = await client.CreateOrUpdateCollectionAsync(content);

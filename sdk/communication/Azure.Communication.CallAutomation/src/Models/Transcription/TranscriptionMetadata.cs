@@ -27,5 +27,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         [JsonPropertyName("callConnectionId")]
         public string CallConnectionId { get; set; }
+
+        /// <summary>
+        /// correlation Id.
+        /// </summary>
+        [JsonPropertyName("correlationId")]
+        public string CorrelationId { get; set; }
     }
 }
