@@ -88,6 +88,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new FileSource(new Uri("https://localhost"))
         };
 
+        private static readonly SendDtmfTonesOptions _sendDtmfOptions = new(new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       new CommunicationUserIdentifier("targetUserId"))
+        {
+            OperationContext = "context",
+        };
+
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
         {
             InterruptCallMediaOperation = true,
@@ -539,11 +545,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<SendDtmfTonesResult>>?[]
                 {
-                   callMedia => callMedia.SendDtmfTones(
-                       new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       new CommunicationUserIdentifier("targetUserId"),
-                       "context"
-                       )
+                   callMedia => callMedia.SendDtmfTones(_sendDtmfOptions)
                 }
             };
         }

@@ -171,7 +171,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
         private static string GetEventSessionFilePath(string testSessionFilePath)
         {
             // replace SessionRecords with directory name of event recordings - it'll be easier to correlate
-            return testSessionFilePath.Replace("SessionRecords", RecordingLocation);
+            var relativeEventSessionFilePath = testSessionFilePath.Replace("SessionRecords", RecordingLocation);
+
+            return Path.Combine(TestEnvironment.RepositoryRoot, relativeEventSessionFilePath);
         }
 
         // wrapper handler to access internal event store handler

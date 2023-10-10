@@ -1,30 +1,29 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Options for the Remove Participants Request.
+    /// The Cancel add participants operation options.
     /// </summary>
-    public class RemoveParticipantOptions
+    public class CancelAddParticipantOptions
     {
         /// <summary>
-        /// Creates a new RemoveParticipantsOptions object.
+        /// Creates a new CancelAddParticipantOptions object.
         /// </summary>
-        public RemoveParticipantOptions(CommunicationIdentifier participantToRemove)
+        /// <param name="invitationId"></param>
+        public CancelAddParticipantOptions(string invitationId)
         {
-            ParticipantToRemove = participantToRemove;
+            InvitationId = invitationId;
         }
 
         /// <summary>
-        /// The list of identity of the participant to be removed from the call.
+        /// Invitation ID used to add a participant.
         /// </summary>
-        public CommunicationIdentifier ParticipantToRemove { get; }
+        public string InvitationId { get; }
 
         /// <summary>
-        /// The operation context.
+        /// The operationContext for this add participants call.
         /// </summary>
         public string OperationContext { get; set; }
 

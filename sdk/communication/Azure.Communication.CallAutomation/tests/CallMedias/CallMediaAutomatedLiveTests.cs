@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
         }
 
-        //[Ignore(reason: "Send Dtmf response change not deployed on nextpma yet")]
         [RecordedTest]
         public async Task continuousDtmfDetectionAndSendDtmfTest()
         {
@@ -96,18 +95,30 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
             try
             {
+                string operationContext = "Sales";
+
+                ContinuousDtmfRecognitionOptions continuousDtmfRecognitionOptions = new(target)
+                {
+                    OperationContext = operationContext
+                };
+
                 // start continuous dtmf recognition
-                var startContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StartContinuousDtmfRecognitionAsync(target);
+                var startContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StartContinuousDtmfRecognitionAsync(continuousDtmfRecognitionOptions);
                 Assert.AreEqual(StatusCodes.Status200OK, startContinuousDtmfResponse.Status);
 
                 // again start continuous dtmf recognition and expect success
-                startContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StartContinuousDtmfRecognitionAsync(target);
+                startContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StartContinuousDtmfRecognitionAsync(continuousDtmfRecognitionOptions);
                 Assert.AreEqual(startContinuousDtmfResponse.Status, StatusCodes.Status200OK);
 
                 // send dtmf tones to the target user and validate SendDtmfResult
                 var tones = new DtmfTone[] { DtmfTone.One };
-                string operationContext = "Sales";
-                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfTonesAsync(tones, target, operationContext);
+
+                SendDtmfTonesOptions sendDtmfOptions = new(tones, target)
+                {
+                    OperationContext = operationContext
+                };
+
+                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfTonesAsync(sendDtmfOptions);
                 Assert.AreEqual(StatusCodes.Status202Accepted, sendDtmfResponse.GetRawResponse().Status);
                 SendDtmfTonesResult sendDtmfResult = sendDtmfResponse.Value;
                 Assert.AreEqual(operationContext, sendDtmfResult.OperationContext);
@@ -132,8 +143,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 Assert.IsNotNull(continuousDtmfRecognitionStopped);
                 Assert.IsTrue(continuousDtmfRecognitionStopped is ContinuousDtmfRecognitionStopped);
 
-                // again call stop coninuous recognition and expect success
-                stopContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StopContinuousDtmfRecognitionAsync(target);
+                // now call stop coninuous recognition and expect success
+                stopContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StopContinuousDtmfRecognitionAsync(continuousDtmfRecognitionOptions);
                 Assert.AreEqual(StatusCodes.Status200OK, stopContinuousDtmfResponse.Status);
             }
             catch (RequestFailedException ex)

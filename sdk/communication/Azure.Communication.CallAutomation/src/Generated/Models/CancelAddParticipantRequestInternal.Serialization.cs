@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RemoveParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class CancelAddParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participantToRemove"u8);
-            writer.WriteObjectValue(ParticipantToRemove);
+            writer.WritePropertyName("invitationId"u8);
+            writer.WriteStringValue(InvitationId);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

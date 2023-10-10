@@ -27,6 +27,11 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
+        /// The callback URI to override the main callback URI.
+        /// </summary>
+        public string OverrideCallbackUrl { get; set; }
+
+        /// <summary>
         /// Creates a new PlayToAllOptions object.
         /// </summary>
         public PlayToAllOptions(IEnumerable<PlaySource> playSources)

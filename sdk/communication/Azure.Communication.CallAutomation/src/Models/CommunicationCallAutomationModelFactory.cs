@@ -16,10 +16,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participant"> Participant of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="invitationId">The Invitation ID used to cancel the add participant action</param>
         /// <returns> A new <see cref="CallAutomation.AddParticipantResult"/> instance for mocking. </returns>
-        public static AddParticipantResult AddParticipantsResult(CallParticipant participant = default, string operationContext = default)
+        public static AddParticipantResult AddParticipantsResult(CallParticipant participant = default, string operationContext = default, string invitationId = default)
         {
-            return new AddParticipantResult(participant, operationContext);
+            return new AddParticipantResult(participant, operationContext, invitationId);
         }
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>
@@ -82,6 +83,15 @@ namespace Azure.Communication.CallAutomation
             return new RemoveParticipantResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of CancelAddParticipantResult. </summary>
+        /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResult"/> instance for mocking. </returns>
+        public static CancelAddParticipantResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
+        {
+            return new CancelAddParticipantResult(invitationId, operationContext);
+        }
+
         /// <summary> Create an EventSource. </summary>
         /// <param name="callConnectionId"> Call connection id for the event. </param>
         /// <param name="eventName"> Optional event name; used for events related to content. </param>
@@ -130,6 +140,40 @@ namespace Azure.Communication.CallAutomation
                 );
 
             return new AddParticipantSucceeded(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of cancel add participant failed event.
+        /// </summary>
+        public static CancelAddParticipantFailed CancelAddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string invitationId = default, ResultInformation resultInformation = default, string operationContext = default)
+        {
+            var internalObject = new CancelAddParticipantFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                invitationId
+                );
+
+            return new CancelAddParticipantFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of cancel add participant success event.
+        /// </summary>
+        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string invitationId = default, CommunicationIdentifier participant = default, string operationContext = default)
+        {
+            var internalObject = new CancelAddParticipantSucceededInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                invitationId
+                );
+
+            return new CancelAddParticipantSucceeded(internalObject);
         }
 
         /// <summary>
@@ -199,6 +243,29 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, RecognizeResult recognizeResult = null)
         {
             return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, recognizeResult);
+        }
+
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transferee"> Transferee is the participant who is transferring the call.  </param>
+        /// <param name="transferTarget"> The identity of the target where call should be transferred to. </param>
+        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
+        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CommunicationIdentifier transferee = null, CommunicationIdentifier transferTarget = null)
+        {
+            var internalEvent =  new CallTransferAcceptedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
+                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                );
+            return new CallTransferAccepted(internalEvent);
         }
 
         /// <summary>
