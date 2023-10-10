@@ -17,14 +17,11 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    private readonly TimeSpan _networkTimeout;
-
-    public ResponseBufferingPolicy(TimeSpan networkTimeout)
+    public ResponseBufferingPolicy()
     {
-        _networkTimeout = networkTimeout;
     }
 
-    public void Process(PipelineMessage message,  IPipelineEnumerator pipeline)
+    public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
@@ -33,15 +30,14 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
     public async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message,  IPipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IPipelineEnumerator pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        TimeSpan networkTimeout = _networkTimeout;
-        if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+        if (!TryGetNetworkTimeout(message, out TimeSpan networkTimeout))
         {
-            networkTimeout = networkTimeoutOverride;
+            throw new InvalidOperationException("NetworkTimeout must be set on the ResponseBufferingPolicy.");
         }
 
         cts.CancelAfter(networkTimeout);
@@ -68,58 +64,64 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             cts.CancelAfter(Timeout.Infinite);
         }
 
-        Stream? responseContentStream = message.Response.ContentStream;
-        if (responseContentStream == null || responseContentStream.CanSeek)
+        // Default to true if property is not present
+        if (TryGetBufferResponse(message, out bool bufferResponse) && !bufferResponse)
         {
             return;
         }
 
-        if (message.BufferResponse)
+        Stream? responseContentStream = message.Response.ContentStream;
+        if (responseContentStream == null || responseContentStream.CanSeek)
         {
-            // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-            // register callback to dispose the stream on cancellation.
-            if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
+            // There is either no content on the response, or the content has already
+            // been buffered.
+            // TODO: there is a bug here if a user overrides the default transport.
+            return;
+        }
+
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
+        if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
+        {
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
+        }
+
+        try
+        {
+            var bufferedStream = new MemoryStream();
+            if (async)
             {
-                cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
+                await CopyToAsync(responseContentStream, bufferedStream, networkTimeout, cts).ConfigureAwait(false);
+            }
+            else
+            {
+                CopyTo(responseContentStream, bufferedStream, networkTimeout, cts);
             }
 
-            try
-            {
-                var bufferedStream = new MemoryStream();
-                if (async)
-                {
-                    await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
-                }
-                else
-                {
-                    CopyTo(responseContentStream, bufferedStream, cts);
-                }
-
-                responseContentStream.Dispose();
-                bufferedStream.Position = 0;
-                message.Response.ContentStream = bufferedStream;
-            }
-            // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
-            catch (Exception ex)
-                when (ex is ObjectDisposedException
-                          or IOException
-                          or OperationCanceledException
-                          or NotSupportedException)
-            {
-                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
-                throw;
-            }
+            responseContentStream.Dispose();
+            bufferedStream.Position = 0;
+            message.Response.ContentStream = bufferedStream;
+        }
+        // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
+        catch (Exception ex)
+            when (ex is ObjectDisposedException
+                      or IOException
+                      or OperationCanceledException
+                      or NotSupportedException)
+        {
+            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+            throw;
         }
     }
 
-    private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
+    private async Task CopyToAsync(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
     {
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
         try
         {
             while (true)
             {
-                cancellationTokenSource.CancelAfter(_networkTimeout);
+                cancellationTokenSource.CancelAfter(networkTimeout);
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
@@ -134,7 +136,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         }
     }
 
-    private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
+    private void CopyTo(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
     {
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
         try
@@ -143,7 +145,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
             {
                 cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                cancellationTokenSource.CancelAfter(_networkTimeout);
+                cancellationTokenSource.CancelAfter(networkTimeout);
                 destination.Write(buffer, 0, read);
             }
         }
@@ -174,4 +176,48 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
                 $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
         }
     }
+
+    #region Buffer Response Override
+
+    public static void SetBufferResponse(PipelineMessage message, bool bufferResponse)
+        => message.SetProperty(typeof(BufferResponsePropertyKey), bufferResponse);
+
+    public static bool TryGetBufferResponse(PipelineMessage message, out bool bufferResponse)
+    {
+        if (message.TryGetProperty(typeof(BufferResponsePropertyKey), out object? value) &&
+            value is bool doBuffer)
+        {
+            bufferResponse = doBuffer;
+            return true;
+        }
+
+        bufferResponse = default;
+        return false;
+    }
+
+    private struct BufferResponsePropertyKey { }
+
+    #endregion
+
+    #region Network Timeout Override
+
+    public static void SetNetworkTimeout(PipelineMessage message, TimeSpan networkTimeout)
+        => message.SetProperty(typeof(NetworkTimeoutPropertyKey), networkTimeout);
+
+    public static bool TryGetNetworkTimeout(PipelineMessage message, out TimeSpan networkTimeout)
+    {
+        if (message.TryGetProperty(typeof(NetworkTimeoutPropertyKey), out object? value) &&
+            value is TimeSpan timeout)
+        {
+            networkTimeout = timeout;
+            return true;
+        }
+
+        networkTimeout = default;
+        return false;
+    }
+
+    private struct NetworkTimeoutPropertyKey { }
+
+    #endregion
 }

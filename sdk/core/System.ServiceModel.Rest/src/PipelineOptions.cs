@@ -32,5 +32,7 @@ public class PipelineOptions
     public static IPipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
 
     public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
+
+    public static TimeSpan DefaultNetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     #endregion
 }

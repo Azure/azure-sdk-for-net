@@ -28,7 +28,6 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
             ResponseClassifier = responseClassifier;
         }
@@ -157,30 +156,6 @@ namespace Azure.Core
             }
             properties[name] = value;
         }
-
-        /// <summary>
-        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
-        /// </summary>
-        /// <param name="type">The property type.</param>
-        /// <param name="value">The property value.</param>
-        /// <remarks>
-        /// The key value is of type <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that though the accessor methods
-        /// are public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
-        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage. Secondly, <c>Type</c>
-        /// comparisons are faster than string comparisons.
-        /// </remarks>
-        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(Type type, out object? value) =>
-            _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
-
-        /// <summary>
-        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
-        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
-        /// </summary>
-        /// <param name="type">The key for the value.</param>
-        /// <param name="value">The property value.</param>
-        public void SetProperty(Type type, object value) =>
-            _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
         /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/> would result in exception.

@@ -15,82 +15,53 @@ namespace Azure.Core.Pipeline
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
         private readonly ResponseBufferingPolicy _policy;
-        private readonly TimeSpan _networkTimeout;
 
-        public ResponseBodyPolicy(TimeSpan networkTimeout)
+        public ResponseBodyPolicy()
         {
-            _policy = new ResponseBufferingPolicy(networkTimeout);
-            _networkTimeout = networkTimeout;
+            _policy = new ResponseBufferingPolicy();
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
+
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
+            AzureCorePipelineEnumerator executor = new(message, pipeline);
 
             try
             {
-                TimeSpan networkTimeout = _networkTimeout;
-                if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                if (!ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeout))
                 {
-                    networkTimeout = networkTimeoutOverride;
+                    throw new InvalidOperationException("NetworkTimeout must be set on the ResponseBodyPolicy.");
                 }
 
-                await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
-
-                if (!message.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (async)
                 {
-                    // TODO: tidy this up
-                    Stream? responseContentStream = message.Response.ContentStream;
-                    if (responseContentStream == null || responseContentStream.CanSeek)
-                    {
-                        return;
-                    }
-
-                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
-                }
-            }
-            catch (TaskCanceledException e)
-            {
-                // TODO: come back and clean this up.
-                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
-                {
-                    string exceptionMessage = e.Message +
-                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
-#if NETCOREAPP2_1_OR_GREATER
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
-#else
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
-#endif
+                    await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
                 }
                 else
                 {
-                    throw e;
-                }
-            }
-        }
-
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
-
-            try
-            {
-                TimeSpan networkTimeout = _networkTimeout;
-                if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
-                {
-                    networkTimeout = networkTimeoutOverride;
+                    _policy.Process(message, executor);
                 }
 
-                _policy.Process(message, executor);
-
-                if (!message.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
                 {
-                    // TODO: tidy this up
+                    // We default to buffering the response if not set on message.
+                    bufferResponse = true;
+                }
+
+                if (!bufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                {
+                    // TODO: tidy this up - there is a bug here if customer overrides default transport
                     Stream? responseContentStream = message.Response.ContentStream;
                     if (responseContentStream == null || responseContentStream.CanSeek)
                     {
                         return;
                     }
+
                     message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
                 }
             }

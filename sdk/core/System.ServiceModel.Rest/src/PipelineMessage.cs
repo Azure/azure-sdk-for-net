@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 
 namespace System.ServiceModel.Rest.Core;
@@ -13,6 +14,7 @@ public class PipelineMessage : IDisposable
     protected internal PipelineMessage(PipelineRequest request)
     {
         Request = request;
+        _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
     public virtual PipelineRequest Request { get; }
@@ -38,15 +40,13 @@ public class PipelineMessage : IDisposable
 
     public virtual CancellationToken CancellationToken { get; set; }
 
-    // TODO: Move these into property bag
-    private bool _bufferResponse = true;
-    public virtual bool BufferResponse
-    {
-        get => _bufferResponse;
-        set => _bufferResponse = value;
-    }
+    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
-    public virtual TimeSpan? NetworkTimeout { get; set; }
+    public bool TryGetProperty(Type type, out object? value) =>
+        _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
+
+    public void SetProperty(Type type, object value) =>
+        _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
     public virtual ResponseErrorClassifier ResponseClassifier { get; set; } = InvocationOptions.DefaultResponseClassifier;
 
