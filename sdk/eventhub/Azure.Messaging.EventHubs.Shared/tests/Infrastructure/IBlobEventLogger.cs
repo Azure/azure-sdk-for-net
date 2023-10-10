@@ -293,12 +293,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the Event Hubs client that authored the checkpoint.</param>
+        /// <param name="lastModified">The date and time the associated checkpoint was last modified.</param>
         ///
         void GetCheckpointComplete(string fullyQualifiedNamespace,
                                    string eventHubName,
                                    string consumerGroup,
                                    string partitionId,
-                                   string clientIdentifier);
+                                   string clientIdentifier,
+                                   string lastModified);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.

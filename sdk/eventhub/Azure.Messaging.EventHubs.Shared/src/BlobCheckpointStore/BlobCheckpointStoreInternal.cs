@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpoint?.ClientIdentifier);
+                GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpoint?.ClientIdentifier, checkpoint?.LastModified.ToString());
             }
         }
 
@@ -478,6 +478,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 PartitionId = partitionId,
                 StartingPosition = startingPosition.Value,
                 Offset = offset,
+                ReplicationSegment = replicationSegment,
                 SequenceNumber = sequenceNumber,
                 LastModified = modifiedDate,
                 ClientIdentifier = clientIdentifier,
@@ -700,12 +701,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the Event Hubs client that authored this checkpoint.</param>
+        /// <param name="lastModified">The date and time the associated checkpoint was last modified.</param>
         ///
         partial void GetCheckpointComplete(string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
                                            string partitionId,
-                                           string clientIdentifier);
+                                           string clientIdentifier,
+                                           string lastModified);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
@@ -910,6 +913,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             public long? Offset { get; set; }
             public long? SequenceNumber { get; set; }
+            public string ReplicationSegment { get; set; }
         }
     }
 }

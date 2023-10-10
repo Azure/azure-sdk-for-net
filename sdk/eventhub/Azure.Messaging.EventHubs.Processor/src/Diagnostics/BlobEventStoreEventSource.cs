@@ -385,17 +385,19 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the Event Hubs client that wrote this checkpoint.</param>
+        /// <param name="lastModified">The date and time the associated checkpoint was last modified.</param>
         ///
-        [Event(37, Level = EventLevel.Verbose, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; CheckpointAuthor: '{4}'")]
+        [Event(37, Level = EventLevel.Verbose, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; CheckpointAuthor: '{4}'; LastModified: '{5}'")]
         public virtual void GetCheckpointComplete(string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string partitionId,
-                                                  string clientIdentifier)
+                                                  string clientIdentifier,
+                                                  string lastModified)
         {
             if (IsEnabled())
             {
-                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId, clientIdentifier ?? string.Empty);
+                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId, clientIdentifier ?? string.Empty, lastModified ?? string.Empty);
             }
         }
 

@@ -101,6 +101,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="beginningReplicationSegment">The first replication segment available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastReplicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
@@ -110,6 +111,7 @@ namespace Azure.Messaging.EventHubs
                                                string partitionId,
                                                bool isEmpty,
                                                long beginningSequenceNumber,
+                                               string beginningReplicationSegment,
                                                long lastSequenceNumber,
                                                long lastOffset,
                                                string lastReplicationSegment,

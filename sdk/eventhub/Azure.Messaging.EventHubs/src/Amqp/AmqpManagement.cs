@@ -81,6 +81,12 @@ namespace Azure.Messaging.EventHubs
             public static MapKey PartitionBeginSequenceNumber { get; } = new MapKey("begin_sequence_number");
 
             /// <summary>
+            ///   The message property that identifies the beginning replication segment in a partition.
+            /// </summary>
+            ///
+            public static MapKey PartitionBeginReplicationSegment { get; } = new MapKey("begin_sequence_number_epoch");
+
+            /// <summary>
             ///   The message property that identifies the last sequence number enqueued for a partition.
             /// </summary>
             ///

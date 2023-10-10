@@ -249,6 +249,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
+                (string)responseData[AmqpManagement.ResponseMap.PartitionBeginReplicationSegment],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
                 long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset], NumberStyles.Integer, CultureInfo.InvariantCulture),
                 (string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment],

@@ -57,14 +57,14 @@ namespace Azure.Messaging.EventHubs
         {
             // Build the filter expression, in the order of significance.
 
+            if (eventPosition.SequenceNumber.HasValue)
+            {
+                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.ReplicationSegment ?? ""}:{eventPosition.SequenceNumber.Value}";
+            }
+
             if (!string.IsNullOrEmpty(eventPosition.Offset))
             {
                 return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
-            }
-
-            if (eventPosition.SequenceNumber.HasValue)
-            {
-                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } {eventPosition.ReplicationSegment ?? "" }:{ eventPosition.SequenceNumber.Value }";
             }
 
             if (eventPosition.EnqueuedTime.HasValue)

@@ -324,7 +324,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies basic functionality of GetcheckpointAsync and ensures the appropriate events are emitted on success.
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -352,7 +352,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
 
             mockLog.Verify(m => m.GetCheckpointStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition));
-            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, null));
+            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, null, It.IsAny<string>()));
         }
 
         /// <summary>
