@@ -89,7 +89,7 @@
 ## 1.8.0 (2022-11-08)
 
 ### Bugs Fixed
-- Fixed error message parsing in `AzureCliCredential` which would misinterpret ME-ID errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret Microsoft Entra ID errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
 - `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable. [#30467](https://github.com/Azure/azure-sdk-for-net/issues/30467), [#32061](https://github.com/Azure/azure-sdk-for-net/issues/32061)
 
 ## 1.9.0-beta.1 (2022-10-13)
