@@ -6,38 +6,36 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public abstract class PipelineTransport<TMessage, TOptions> : IPipelinePolicy<TMessage, TOptions>
+public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 {
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    /// <param name="options"></param>
-    public abstract void Process(TMessage message, TOptions options);
+    public abstract void Process(TMessage message);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    /// /// <param name="options"></param>
-    public abstract ValueTask ProcessAsync(TMessage message, TOptions options);
+    public abstract ValueTask ProcessAsync(TMessage message);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     public abstract TMessage CreateMessage();
 
-    public void Process(TMessage message, TOptions options, IPipelineEnumerator pipeline)
+    public void Process(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
-        Process(message, options);
+        Process(message);
     }
 
-    public async ValueTask ProcessAsync(TMessage message, TOptions options, IPipelineEnumerator pipeline)
+    public async ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
-        await ProcessAsync(message, options).ConfigureAwait(false);
+        await ProcessAsync(message).ConfigureAwait(false);
     }
 }

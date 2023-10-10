@@ -13,24 +13,24 @@ namespace System.ServiceModel.Rest;
 public class PipelineOptions
 {
     #region Pipeline creation: Customer-specified policies
-    public IPipelinePolicy<PipelineMessage, InvocationOptions>[]? PerTryPolicies { get; set; }
+    public IPipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
 
-    public IPipelinePolicy<PipelineMessage, InvocationOptions>[]? PerCallPolicies { get; set; }
+    public IPipelinePolicy<PipelineMessage>[]? PerCallPolicies { get; set; }
     #endregion
 
     #region Pipeline creation: Required policy overrides
-    public IPipelinePolicy<PipelineMessage, InvocationOptions>? RetryPolicy { get; set; }
+    public IPipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
 
-    public IPipelinePolicy<PipelineMessage, InvocationOptions>? LoggingPolicy { get; set; }
+    public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
 
-    public PipelineTransport<PipelineMessage, InvocationOptions>? Transport { get; set; }
+    public PipelineTransport<PipelineMessage>? Transport { get; set; }
     #endregion
 
     #region Defaults for pipeline creation
-    public static IPipelinePolicy<PipelineMessage, InvocationOptions>? DefaultRetryPolicy { get; set; }
+    public static IPipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
 
-    public static IPipelinePolicy<PipelineMessage, InvocationOptions>? DefaultLoggingPolicy { get; set; }
+    public static IPipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
 
-    public static PipelineTransport<PipelineMessage, InvocationOptions>? DefaultTransport { get; set; }
+    public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
     #endregion
 }

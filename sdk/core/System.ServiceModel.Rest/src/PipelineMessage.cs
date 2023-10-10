@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+
 namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage : IDisposable
@@ -31,6 +33,24 @@ public class PipelineMessage : IDisposable
     }
 
     public bool HasResponse => _response is not null;
+
+    #region Pipeline invocation options
+
+    public virtual CancellationToken CancellationToken { get; set; }
+
+    // TODO: Move these into property bag
+    private bool _bufferResponse = true;
+    public virtual bool BufferResponse
+    {
+        get => _bufferResponse;
+        set => _bufferResponse = value;
+    }
+
+    public virtual TimeSpan? NetworkTimeout { get; set; }
+
+    public virtual ResponseErrorClassifier ResponseClassifier { get; set; } = InvocationOptions.DefaultResponseClassifier;
+
+    #endregion
 
     #region IDisposable
 
