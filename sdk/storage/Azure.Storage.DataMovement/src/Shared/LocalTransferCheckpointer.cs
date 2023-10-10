@@ -72,6 +72,8 @@ namespace Azure.Storage.DataMovement
                 transferId,
                 DateTimeOffset.UtcNow,
                 GetOperationType(source, destination),
+                source.ProviderId,
+                destination.ProviderId,
                 false, /* enumerationComplete */
                 new DataTransferStatusInternal(),
                 source.Uri.AbsoluteUri,

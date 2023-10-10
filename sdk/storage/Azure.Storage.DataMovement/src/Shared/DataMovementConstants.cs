@@ -72,12 +72,16 @@ namespace Azure.Storage.DataMovement
 
             internal const int VersionStrLength = 2;
             internal const int VersionStrNumBytes = VersionStrLength * 2;
+            internal const int ProviderIdMaxLength = 5;
+            internal const int ProviderIdNumBytes = ProviderIdMaxLength * 2;
 
             internal const int VersionIndex = 0;
             internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
             internal const int CrateTimeIndex = TransferIdIndex + GuidSizeInBytes;
             internal const int OperationTypeIndex = CrateTimeIndex + LongSizeInBytes;
-            internal const int EnumerationCompleteIndex = OperationTypeIndex + OneByte;
+            internal const int SourceProviderIdIndex = OperationTypeIndex + OneByte;
+            internal const int DestinationProviderIdIndex = SourceProviderIdIndex + ProviderIdNumBytes;
+            internal const int EnumerationCompleteIndex = DestinationProviderIdIndex + ProviderIdNumBytes;
             internal const int JobStatusIndex = EnumerationCompleteIndex + OneByte;
             internal const int ParentSourcePathOffsetIndex = JobStatusIndex + IntSizeInBytes;
             internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
