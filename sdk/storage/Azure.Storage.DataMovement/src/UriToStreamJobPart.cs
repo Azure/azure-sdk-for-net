@@ -26,8 +26,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private UriToStreamJobPart(
             UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -39,7 +38,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -57,7 +55,6 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
             DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
@@ -71,7 +68,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -85,17 +81,11 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<UriToStreamJobPart> CreateJobPartAsync(
             UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            int partNumber)
         {
-            // Create Job Part file as we're intializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(
-                job: job,
-                partNumber: partNumber,
-                isFinalPart: isFinalPart);
-            await part.AddJobPartToCheckpointerAsync(
-                chunksTotal: 1,
-                isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+            // Create Job Part file as we're initializing the job part
+            UriToStreamJobPart part = new UriToStreamJobPart(job, partNumber);
+            await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             return part;
         }
 
@@ -104,23 +94,21 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
             DataTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
         {
-            // Create Job Part file as we're intializing the job part
+            // Create Job Part file as we're initializing the job part
             UriToStreamJobPart part = new UriToStreamJobPart(
                 job: job,
                 partNumber: partNumber,
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                isFinalPart: isFinalPart,
                 length: length);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }

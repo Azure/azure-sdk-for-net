@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Samples
 {
-    public class Samples_PurviewWorkflowServiceClient
+    public partial class Samples_PurviewWorkflowServiceClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -117,15 +116,15 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -149,15 +148,15 @@ type = "when_term_creation_is_requested",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -181,10 +180,10 @@ type = "when_term_creation_is_requested",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
@@ -192,7 +191,7 @@ underGlossaryHierarchy = "<underGlossaryHierarchy>",
 underCollection = "<underCollection>",
 underGlossary = "<underGlossary>",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -224,10 +223,10 @@ underGlossary = "<underGlossary>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
@@ -235,7 +234,7 @@ underGlossaryHierarchy = "<underGlossaryHierarchy>",
 underCollection = "<underCollection>",
 underGlossary = "<underGlossary>",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -268,6 +267,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -280,6 +280,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -292,6 +293,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -304,6 +306,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -315,16 +318,16 @@ underGlossary = "<underGlossary>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
             });
             Response response = client.SubmitUserRequests(content);
 
@@ -344,16 +347,16 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
             });
             Response response = await client.SubmitUserRequestsAsync(content);
 
@@ -373,16 +376,16 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
                 comment = "<comment>",
             });
             Response response = client.SubmitUserRequests(content);
@@ -405,16 +408,16 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
                 comment = "<comment>",
             });
             Response response = await client.SubmitUserRequestsAsync(content);
@@ -525,8 +528,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -538,8 +542,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -551,11 +556,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -567,11 +573,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -691,8 +698,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -704,8 +712,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -717,11 +726,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -733,11 +743,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -749,8 +760,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -762,8 +774,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -775,11 +788,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -791,11 +805,12 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
             Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -807,8 +822,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -820,8 +836,9 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -833,18 +850,19 @@ payload = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                reassignments = new List<object>()
-{
+                reassignments = new object[]
+            {
 new
 {
 reassignFrom = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
-},
+            },
             });
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -856,18 +874,19 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                reassignments = new List<object>()
-{
+                reassignments = new object[]
+            {
 new
 {
 reassignFrom = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
-},
+            },
             });
             Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -879,11 +898,12 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
             Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -895,11 +915,12 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
             Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -911,12 +932,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
             });
             Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -928,12 +950,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
             });
             Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -948,11 +971,11 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             foreach (BinaryData item in client.GetWorkflows(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("isEnabled").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -967,11 +990,11 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             await foreach (BinaryData item in client.GetWorkflowsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("isEnabled").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -986,18 +1009,18 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             foreach (BinaryData item in client.GetWorkflows(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underCollection").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underCollection").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("updatedBy").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("isEnabled").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -1012,18 +1035,18 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             await foreach (BinaryData item in client.GetWorkflowsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underCollection").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossaryHierarchy").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underCollection").ToString());
+                Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("underGlossary").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("updatedBy").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("isEnabled").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -1038,13 +1061,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             foreach (BinaryData item in client.GetWorkflowRuns(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -1059,13 +1082,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -1077,26 +1100,20 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new List<string>()
-{
-"InProgress"
-}, new List<string>()
-{
-"<workflowIds>"
-}, 1234, null))
+            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("userRequestId").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("cancelTime").ToString());
-                Console.WriteLine(result[0].GetProperty("cancelComment").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("userRequestId").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("cancelTime").ToString());
+                Console.WriteLine(result.GetProperty("cancelComment").ToString());
             }
         }
 
@@ -1108,26 +1125,20 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new List<string>()
-{
-"InProgress"
-}, new List<string>()
-{
-"<workflowIds>"
-}, 1234, null))
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("userRequestId").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("cancelTime").ToString());
-                Console.WriteLine(result[0].GetProperty("cancelComment").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("userRequestId").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("cancelTime").ToString());
+                Console.WriteLine(result.GetProperty("cancelComment").ToString());
             }
         }
 
@@ -1142,15 +1153,15 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             foreach (BinaryData item in client.GetWorkflowTasks(null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
             }
         }
 
@@ -1165,15 +1176,15 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
             }
         }
 
@@ -1185,37 +1196,28 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new List<string>()
-{
-"<workflowIds>"
-}, "1d", 1234, "status desc", new List<string>()
-{
-"Approval"
-}, new List<string>()
-{
-"InProgress"
-}, "<workflowNameKeyword>", null))
+            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("title").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("payload").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("title").ToString());
+                Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("payload").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
             }
         }
 
@@ -1227,37 +1229,28 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new List<string>()
-{
-"<workflowIds>"
-}, "1d", 1234, "status desc", new List<string>()
-{
-"Approval"
-}, new List<string>()
-{
-"InProgress"
-}, "<workflowNameKeyword>", null))
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("title").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("payload").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
-                Console.WriteLine(result[0].GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
-                Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("title").ToString());
+                Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+                Console.WriteLine(result.GetProperty("workflowId").ToString());
+                Console.WriteLine(result.GetProperty("requestor").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result.GetProperty("payload").GetProperty("payload").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
+                Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
+                Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
             }
         }
     }

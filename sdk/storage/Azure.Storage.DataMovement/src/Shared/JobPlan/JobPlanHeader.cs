@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the transfer job.
         /// </summary>
-        public JobPlanStatus JobStatus;
+        public DataTransferStatus JobStatus;
 
         /// <summary>
         /// The parent path for the source of the transfer.
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             DateTimeOffset createTime,
             JobPlanOperation operationType,
             bool enumerationComplete,
-            JobPlanStatus jobStatus,
+            DataTransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath)
         {
@@ -100,23 +100,15 @@ namespace Azure.Storage.DataMovement.JobPlan
             writer.Write(Convert.ToByte(EnumerationComplete));
 
             // JobStatus
-            writer.Write((int)JobStatus);
+            writer.Write((int)JobStatus.ToJobPlanStatus());
 
-            // ParentSourcePath offset
+            // ParentSourcePath offset/length
             byte[] parentSourcePathBytes = Encoding.UTF8.GetBytes(ParentSourcePath);
-            writer.Write(currentVariableLengthIndex);
-            currentVariableLengthIndex += parentSourcePathBytes.Length;
+            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentSourcePathBytes, ref currentVariableLengthIndex);
 
-            // ParentSourcePath length
-            writer.Write(parentSourcePathBytes.Length);
-
-            // ParentDestinationPath offset
+            // ParentDestinationPath offset/length
             byte[] parentDestinationPathBytes = Encoding.UTF8.GetBytes(ParentDestinationPath);
-            writer.Write(currentVariableLengthIndex);
-            currentVariableLengthIndex += parentDestinationPathBytes.Length;
-
-            // ParentDestinationPath length
-            writer.Write(parentDestinationPathBytes.Length);
+            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentDestinationPathBytes, ref currentVariableLengthIndex);
 
             // ParentSourcePath
             writer.Write(parentSourcePathBytes);
@@ -156,7 +148,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             bool enumerationComplete = Convert.ToBoolean(enumerationCompleteByte);
 
             // JobStatus
-            JobPlanStatus jobStatus = (JobPlanStatus)reader.ReadInt32();
+            JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
 
             // ParentSourcePath offset
             int parentSourcePathOffset = reader.ReadInt32();
@@ -194,7 +186,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 createTime,
                 operationType,
                 enumerationComplete,
-                jobStatus,
+                jobPlanStatus.ToDataTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath);
         }

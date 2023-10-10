@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Samples
 {
-    public class Samples_LoadTestRunClient
+    public partial class Samples_LoadTestRunClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -272,6 +271,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = client.DeleteTestRun("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -284,6 +284,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = await client.DeleteTestRunAsync("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -296,6 +297,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = client.DeleteTestRun("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -308,6 +310,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = await client.DeleteTestRunAsync("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -759,7 +762,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -780,7 +783,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -801,7 +804,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -839,7 +842,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -955,7 +958,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -970,7 +973,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -985,7 +988,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -1027,7 +1030,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -1149,11 +1152,11 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1165,11 +1168,11 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1181,27 +1184,27 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                filters = new List<object>()
-{
+                filters = new object[]
+            {
 new
 {
 name = "<name>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
 }
-},
+            },
             });
             foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-                Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+                Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
             }
         }
 
@@ -1213,27 +1216,27 @@ values = new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                filters = new List<object>()
-{
+                filters = new object[]
+            {
 new
 {
 name = "<name>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
 }
-},
+            },
             });
             await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-                Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+                Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
             }
         }
 
@@ -1248,7 +1251,7 @@ values = new List<object>()
             foreach (BinaryData item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1263,7 +1266,7 @@ values = new List<object>()
             await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1278,7 +1281,7 @@ values = new List<object>()
             foreach (BinaryData item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", interval: "PT5S"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1293,7 +1296,7 @@ values = new List<object>()
             await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", interval: "PT5S"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
     }

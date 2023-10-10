@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    internal class Samples_PurviewCollection
+    public partial class Samples_PurviewCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateCollection(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateCollectionAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -134,13 +134,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 friendlyName = "<friendlyName>",
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = client.CreateOrUpdateCollection(content);
@@ -168,13 +169,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 friendlyName = "<friendlyName>",
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = await client.CreateOrUpdateCollectionAsync(content);
@@ -203,6 +205,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = client.DeleteCollection();
+
             Console.WriteLine(response.Status);
         }
 
@@ -215,6 +218,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = await client.DeleteCollectionAsync();
+
             Console.WriteLine(response.Status);
         }
 
@@ -227,6 +231,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = client.DeleteCollection();
+
             Console.WriteLine(response.Status);
         }
 
@@ -239,6 +244,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = await client.DeleteCollectionAsync();
+
             Console.WriteLine(response.Status);
         }
 
@@ -311,7 +317,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             foreach (BinaryData item in client.GetChildCollectionNames(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -326,7 +332,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             await foreach (BinaryData item in client.GetChildCollectionNamesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -341,8 +347,8 @@ namespace Azure.Analytics.Purview.Administration.Samples
             foreach (BinaryData item in client.GetChildCollectionNames("<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -357,8 +363,8 @@ namespace Azure.Analytics.Purview.Administration.Samples
             await foreach (BinaryData item in client.GetChildCollectionNamesAsync("<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
     }

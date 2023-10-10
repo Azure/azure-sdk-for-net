@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var settingSnapshot = new ConfigurationSnapshot(
                 "name",
                 ConfigurationSnapshotStatus.Ready,
-                new List<SnapshotSettingFilter>(),
+                new List<ConfigurationSettingsFilter>(),
                 new SnapshotComposition(),
                 DateTime.UtcNow,
                 DateTime.UtcNow,
@@ -32,7 +32,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingSetter()
         {
-            List<SnapshotSettingFilter> filters = new() { new SnapshotSettingFilter("key", "val") };
+            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val") };
 
             var settingSnapshot = new ConfigurationSnapshot(filters);
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);

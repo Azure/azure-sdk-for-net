@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_WeatherData
+    public partial class Samples_WeatherData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -26,7 +25,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -50,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -74,16 +73,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                locations = new List<object>()
-{
+                locations = new object[]
+            {
 new
 {
 type = "LatLong",
 value = "<value>",
 }
-},
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -171,16 +170,16 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                locations = new List<object>()
-{
+                locations = new object[]
+            {
 new
 {
 type = "LatLong",
 value = "<value>",
 }
-},
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",

@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Samples
 {
-    public class Samples_LoadTestAdministrationClient
+    public partial class Samples_LoadTestAdministrationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -26,7 +26,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateTest("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -56,7 +56,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 passFailCriteria = new
                 {
@@ -184,7 +184,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 passFailCriteria = new
                 {
@@ -313,6 +313,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTest("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -325,6 +326,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestAsync("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -337,6 +339,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTest("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -349,6 +352,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestAsync("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -603,6 +607,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -615,6 +620,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -627,6 +633,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -639,6 +646,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -650,7 +658,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -671,7 +679,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -692,7 +700,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -730,7 +738,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -846,7 +854,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -861,7 +869,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -876,7 +884,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -918,7 +926,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -1043,7 +1051,7 @@ namespace Azure.Developer.LoadTesting.Samples
             foreach (BinaryData item in client.GetTestFiles("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1058,7 +1066,7 @@ namespace Azure.Developer.LoadTesting.Samples
             await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1073,12 +1081,12 @@ namespace Azure.Developer.LoadTesting.Samples
             foreach (BinaryData item in client.GetTestFiles("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("url").ToString());
-                Console.WriteLine(result[0].GetProperty("fileName").ToString());
-                Console.WriteLine(result[0].GetProperty("fileType").ToString());
-                Console.WriteLine(result[0].GetProperty("expireDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("validationStatus").ToString());
-                Console.WriteLine(result[0].GetProperty("validationFailureDetails").ToString());
+                Console.WriteLine(result.GetProperty("url").ToString());
+                Console.WriteLine(result.GetProperty("fileName").ToString());
+                Console.WriteLine(result.GetProperty("fileType").ToString());
+                Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+                Console.WriteLine(result.GetProperty("validationStatus").ToString());
+                Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
             }
         }
 
@@ -1093,12 +1101,12 @@ namespace Azure.Developer.LoadTesting.Samples
             await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("url").ToString());
-                Console.WriteLine(result[0].GetProperty("fileName").ToString());
-                Console.WriteLine(result[0].GetProperty("fileType").ToString());
-                Console.WriteLine(result[0].GetProperty("expireDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("validationStatus").ToString());
-                Console.WriteLine(result[0].GetProperty("validationFailureDetails").ToString());
+                Console.WriteLine(result.GetProperty("url").ToString());
+                Console.WriteLine(result.GetProperty("fileName").ToString());
+                Console.WriteLine(result.GetProperty("fileType").ToString());
+                Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+                Console.WriteLine(result.GetProperty("validationStatus").ToString());
+                Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
             }
         }
     }

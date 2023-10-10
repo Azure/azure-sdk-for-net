@@ -118,7 +118,7 @@ This sample shows how to call CreateLedgerEntryAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -132,7 +132,7 @@ This sample shows how to call CreateLedgerEntryAsync with all parameters and req
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -149,7 +149,7 @@ This sample shows how to call CreateLedgerEntry and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -163,7 +163,7 @@ This sample shows how to call CreateLedgerEntry with all parameters and request 
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -405,6 +405,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = await client.DeleteUserAsync("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteUserAsync with all parameters.
@@ -413,6 +414,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = await client.DeleteUserAsync("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -424,6 +426,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = client.DeleteUser("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteUser with all parameters.
@@ -432,6 +435,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = client.DeleteUser("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -490,7 +494,7 @@ This sample shows how to call CreateOrUpdateUserAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -504,7 +508,7 @@ This sample shows how to call CreateOrUpdateUserAsync with all parameters and re
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -522,7 +526,7 @@ This sample shows how to call CreateOrUpdateUser and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -536,7 +540,7 @@ This sample shows how to call CreateOrUpdateUser with all parameters and request
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -557,8 +561,8 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetConsortiumMembersAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("certificate").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
 This sample shows how to call GetConsortiumMembersAsync with all request content and parse the result.
@@ -569,8 +573,8 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetConsortiumMembersAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("certificate").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code></example>
     </member>
@@ -584,8 +588,8 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetConsortiumMembers())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("certificate").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
 This sample shows how to call GetConsortiumMembers with all request content and parse the result.
@@ -596,8 +600,8 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetConsortiumMembers())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("certificate").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code></example>
     </member>
@@ -611,7 +615,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetCollectionsAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code>
 This sample shows how to call GetCollectionsAsync with all request content and parse the result.
@@ -622,7 +626,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetCollectionsAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code></example>
     </member>
@@ -636,7 +640,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetCollections())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code>
 This sample shows how to call GetCollections with all request content and parse the result.
@@ -647,7 +651,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetCollections())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
 }
 ]]></code></example>
     </member>
@@ -661,7 +665,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetLedgerEntriesAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("contents").ToString());
 }
 ]]></code>
 This sample shows how to call GetLedgerEntriesAsync with all parameters and parse the result.
@@ -672,9 +676,9 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("contents").ToString());
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-    Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+    Console.WriteLine(result.GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("transactionId").ToString());
 }
 ]]></code></example>
     </member>
@@ -688,7 +692,7 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetLedgerEntries())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("contents").ToString());
 }
 ]]></code>
 This sample shows how to call GetLedgerEntries with all parameters and parse the result.
@@ -699,9 +703,9 @@ ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://l
 foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("contents").ToString());
-    Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-    Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+    Console.WriteLine(result.GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
+    Console.WriteLine(result.GetProperty("transactionId").ToString());
 }
 ]]></code></example>
     </member>
