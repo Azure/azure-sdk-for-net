@@ -56,8 +56,6 @@ acronym-mapping:
 
 list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
-- /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}
-- /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic

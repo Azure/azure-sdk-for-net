@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
+    /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic troubleshooter. </summary>
     public partial class SelfHelpDiagnosticInsight
     {
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
-        public SelfHelpDiagnosticInsight()
+        internal SelfHelpDiagnosticInsight()
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Article id. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
         /// <summary> This insight's title. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Detailed result content. </summary>
-        public string Results { get; set; }
+        public string Results { get; }
         /// <summary> Importance level of the insight. </summary>
-        public SelfHelpImportanceLevel? InsightImportanceLevel { get; set; }
+        public SelfHelpImportanceLevel? InsightImportanceLevel { get; }
     }
 }

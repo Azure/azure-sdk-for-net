@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, DiagnosticProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             Insights = insights;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Diagnostic Request Accepted time. </summary>
         public DateTimeOffset? AcceptedOn { get; }
         /// <summary> Status of diagnostic provisioning. </summary>
-        public DiagnosticProvisioningState? ProvisioningState { get; }
+        public SelfHelpProvisioningState? ProvisioningState { get; }
         /// <summary> Array of Diagnostics. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
