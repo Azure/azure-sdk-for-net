@@ -80,9 +80,13 @@ override-operation-name:
   Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
-  directive:
+directive:
   - from: help.json
-    where: $.definitions
+    where: $.definitions.MetricsBasedChart
     transform: >
-      $.SolutionResource.properties.properties.solutionResourceProperties.properties.replacementMaps.properties.metricsBasedChart.properties.timeSpanDuration['format'] = 'duration';
+      $.properties.timeSpanDuration['format'] = 'duration';
+  - from: help.json
+    where: $.definitions.Step.properties.type
+    transform: >
+      $["x-ms-client-name"] = 'StepType';
 ```
