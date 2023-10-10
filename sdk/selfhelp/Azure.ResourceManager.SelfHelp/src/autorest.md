@@ -56,6 +56,8 @@ acronym-mapping:
 
 list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
+- /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}
+- /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic
@@ -77,7 +79,7 @@ rename-mapping:
   ProvisioningState: SelfHelpProvisioningState
 
 override-operation-name:
-  Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
+  CheckNameAvailability_Post: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
 directive:

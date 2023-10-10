@@ -19,38 +19,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutionId"u8);
-                writer.WriteStringValue(SolutionId);
-            }
-            if (Optional.IsDefined(SolutionType))
-            {
-                writer.WritePropertyName("solutionType"u8);
-                writer.WriteStringValue(SolutionType);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(RequiredParameterSets))
-            {
-                writer.WritePropertyName("requiredParameterSets"u8);
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredParameterSets)
+                foreach (var item in Solutions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -68,10 +43,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> solutionId = default;
-            Optional<string> solutionType = default;
-            Optional<string> description = default;
-            Optional<IList<IList<string>>> requiredParameterSets = default;
+            Optional<IList<SolutionMetadataProperties>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,52 +79,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("solutionId"u8))
-                        {
-                            solutionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("solutionType"u8))
-                        {
-                            solutionType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiredParameterSets"u8))
+                        if (property0.NameEquals("solutions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<IList<string>> array = new List<IList<string>>();
+                            List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    List<string> array0 = new List<string>();
-                                    foreach (var item0 in item.EnumerateArray())
-                                    {
-                                        array0.Add(item0.GetString());
-                                    }
-                                    array.Add(array0);
-                                }
+                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
                             }
-                            requiredParameterSets = array;
+                            solutions = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets));
+            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, Optional.ToList(solutions));
         }
     }
 }

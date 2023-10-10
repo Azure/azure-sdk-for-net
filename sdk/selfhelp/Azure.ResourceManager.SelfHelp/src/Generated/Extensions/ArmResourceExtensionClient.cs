@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _selfHelpDiagnosticDiagnosticsClientDiagnostics;
-        private DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
+        private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
+        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _discoverySolutionClientDiagnostics;
         private DiscoverySolutionRestOperations _discoverySolutionRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.SelfHelp
         {
         }
 
-        private ClientDiagnostics SelfHelpDiagnosticDiagnosticsClientDiagnostics => _selfHelpDiagnosticDiagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
-        private DiagnosticsRestOperations SelfHelpDiagnosticDiagnosticsRestClient => _selfHelpDiagnosticDiagnosticsRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SelfHelpDiagnosticResource.ResourceType));
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -55,8 +55,22 @@ namespace Azure.ResourceManager.SelfHelp
             return GetCachedClient(Client => new SelfHelpDiagnosticCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of SolutionResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SolutionResources and their operations over a SolutionResource. </returns>
+        public virtual SolutionResourceCollection GetSolutionResources()
+        {
+            return GetCachedClient(Client => new SolutionResourceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of TroubleshooterResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of TroubleshooterResources and their operations over a TroubleshooterResource. </returns>
+        public virtual TroubleshooterResourceCollection GetTroubleshooterResources()
+        {
+            return GetCachedClient(Client => new TroubleshooterResourceCollection(Client, Id));
+        }
+
         /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic check.
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -64,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_CheckNameAvailability</description>
+        /// <description>CheckNameAvailability_Post</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -72,11 +86,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();
             try
             {
-                var response = await SelfHelpDiagnosticDiagnosticsRestClient.CheckNameAvailabilityAsync(Id, content, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityRestClient.PostAsync(Id, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -87,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic check.
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_CheckNameAvailability</description>
+        /// <description>CheckNameAvailability_Post</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,11 +117,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();
             try
             {
-                var response = SelfHelpDiagnosticDiagnosticsRestClient.CheckNameAvailability(Id, content, cancellationToken);
+                var response = CheckNameAvailabilityRestClient.Post(Id, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -118,7 +132,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
+        /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,8 +144,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
@@ -142,7 +156,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
+        /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -154,8 +168,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
