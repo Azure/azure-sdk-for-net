@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -33,82 +32,8 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2023-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string scope, SelfHelpNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Help/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (content != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
-                request.Content = content0;
-            }
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic check. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="content"> The required parameters for availability check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckNameAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateCheckNameAvailabilityRequest(scope, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SelfHelpNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic check. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="content"> The required parameters for availability check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<SelfHelpNameAvailabilityResult> CheckNameAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateCheckNameAvailabilityRequest(scope, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SelfHelpNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateCreateRequest(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data)
@@ -133,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp
             return message;
         }
 
-        /// <summary> Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
+        /// <summary> Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
@@ -158,7 +83,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        /// <summary> Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
+        /// <summary> Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
