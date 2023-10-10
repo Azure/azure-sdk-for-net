@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.ServiceModel.Rest.Internal
 {
-    // TODO: this is coped from Azure.Core - we should make sure the type is implemented
+    // TODO: this is copied from Azure.Core - we should make sure the type is implemented
     // in only one place.
 
     /// <summary>

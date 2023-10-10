@@ -59,21 +59,33 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         };
     }
 
-    public override PipelineMessage CreateMessage()
+    public override PipelineMessage CreateMessage(InvocationOptions options)
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
 
+        // Wire up options on message
+        message.CancellationToken = options.CancellationToken;
+        message.ResponseClassifier = options.ResponseClassifier;
+
+        // TODO: note that this is a lot of *ways* to set values on the
+        // message, policy, etc.  Let's get clear on how many ways we need and why
+        // and then simplify it back to that.
+        if (options.NetworkTimeout.HasValue)
+        {
+            ResponseBufferingPolicy.SetNetworkTimeout(message, options.NetworkTimeout.Value);
+        }
+
         return message;
     }
 
-    public override void Process(PipelineMessage message, InvocationOptions options)
+    public override void Process(PipelineMessage message)
     {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 
 #if NET6_0_OR_GREATER
 
-        ProcessSyncOrAsync(message, options, async: false).GetAwaiter().GetResult();
+        ProcessSyncOrAsync(message, async: false).GetAwaiter().GetResult();
 
 #else
 
@@ -82,21 +94,21 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         // The resolution is for a customer to upgrade to a net6.0+ target,
         // where we are able to provide a code path that calls HttpClient native sync APIs.
 
-        ProcessSyncOrAsync(message, options, async: true).AsTask().GetAwaiter().GetResult();
+        ProcessSyncOrAsync(message, async: true).AsTask().GetAwaiter().GetResult();
 
 #endif
 
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, InvocationOptions options)
-        => await ProcessSyncOrAsync(message, options, async: true).ConfigureAwait(false);
+    public override async ValueTask ProcessAsync(PipelineMessage message)
+        => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, InvocationOptions options, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
 #pragma warning restore CA1801
     {
-        using HttpRequestMessage httpRequest = BuildRequestMessage(message, options);
+        using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
         OnSendingRequest(message, httpRequest);
 
@@ -115,14 +127,14 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
                 // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
                 // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                responseMessage = _httpClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, options.CancellationToken);
+                responseMessage = _httpClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
 #pragma warning restore CA1416
             }
             else
 #endif
             {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, options.CancellationToken).ConfigureAwait(false);
+                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             }
 
@@ -131,11 +143,11 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 #if NET5_0_OR_GREATER
                 if (async)
                 {
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync(options.CancellationToken).ConfigureAwait(false);
+                    contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    contentStream = responseMessage.Content.ReadAsStream(options.CancellationToken);
+                    contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
                 }
 #else
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
@@ -145,9 +157,9 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             }
         }
         // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-        catch (OperationCanceledException e) when (ClientUtilities.ShouldWrapInOperationCanceledException(e, options.CancellationToken))
+        catch (OperationCanceledException e) when (ClientUtilities.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
         {
-            throw ClientUtilities.CreateOperationCanceledException(e, options.CancellationToken);
+            throw ClientUtilities.CreateOperationCanceledException(e, message.CancellationToken);
         }
         catch (HttpRequestException e)
         {
@@ -157,7 +169,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         OnReceivedResponse(message, responseMessage, contentStream);
 
         // Set IsError meta-data on the response.
-        message.Response.IsError = options.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     /// <summary>
@@ -176,14 +188,14 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
         => message.Response = new HttpPipelineResponse(httpResponse, contentStream);
 
-    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message, InvocationOptions options)
+    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
         if (message.Request is not HttpPipelineRequest pipelineRequest)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        return pipelineRequest.BuildRequestMessage(message, options);
+        return pipelineRequest.BuildRequestMessage(message);
     }
 
     #region IDisposable

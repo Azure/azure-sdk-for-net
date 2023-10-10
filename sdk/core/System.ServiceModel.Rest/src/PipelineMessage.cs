@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ServiceModel.Rest.Internal;
+using System.Threading;
+
 namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage : IDisposable
@@ -11,6 +14,7 @@ public class PipelineMessage : IDisposable
     protected internal PipelineMessage(PipelineRequest request)
     {
         Request = request;
+        _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
     public virtual PipelineRequest Request { get; }
@@ -31,6 +35,22 @@ public class PipelineMessage : IDisposable
     }
 
     public bool HasResponse => _response is not null;
+
+    #region Pipeline invocation options
+
+    public virtual CancellationToken CancellationToken { get; set; }
+
+    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
+
+    public bool TryGetProperty(Type type, out object? value) =>
+        _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
+
+    public void SetProperty(Type type, object value) =>
+        _propertyBag.Set((ulong)type.TypeHandle.Value, value);
+
+    public virtual ResponseErrorClassifier ResponseClassifier { get; set; } = InvocationOptions.DefaultResponseClassifier;
+
+    #endregion
 
     #region IDisposable
 

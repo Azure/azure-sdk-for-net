@@ -24,83 +24,52 @@ namespace Azure.Core.Pipeline
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
+
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
+            AzureCorePipelineEnumerator executor = new(message, pipeline);
+
+            // Get the network timeout for this particular invocation of the pipeline.
+            // We either use the default that the policy was constructed with at
+            // pipeline-creation time, or we get an override value from the message that
+            // we use for the duration of this invocation only.
+            TimeSpan invocationNetworkTimeout = _networkTimeout;
+            if (ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
+            {
+                invocationNetworkTimeout = networkTimeoutOverride;
+            }
 
             try
             {
-                // TODO: idea: if invocation options was an interface, message could just implement
-                // it instead of using an adapter everywhere?  It would bake in the options, though.
-
-                // TODO: Could we hide the options in the executor somehow?  How would that work?
-
-                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
-
-                TimeSpan networkTimeout = _networkTimeout;
-                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                if (async)
                 {
-                    networkTimeout = networkTimeoutOverride;
-                }
-
-                await _policy.ProcessAsync(message, options, executor).ConfigureAwait(false);
-
-                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
-                {
-                    // TODO: tidy this up
-                    Stream? responseContentStream = message.Response.ContentStream;
-                    if (responseContentStream == null || responseContentStream.CanSeek)
-                    {
-                        return;
-                    }
-
-                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
-                }
-            }
-            catch (TaskCanceledException e)
-            {
-                // TODO: come back and clean this up.
-                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
-                {
-                    string exceptionMessage = e.Message +
-                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
-#if NETCOREAPP2_1_OR_GREATER
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
-#else
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
-#endif
+                    await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
                 }
                 else
                 {
-                    throw e;
-                }
-            }
-        }
-
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
-
-            try
-            {
-                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
-
-                TimeSpan networkTimeout = _networkTimeout;
-                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
-                {
-                    networkTimeout = networkTimeoutOverride;
+                    _policy.Process(message, executor);
                 }
 
-                _policy.Process(message, options, executor);
-
-                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
                 {
-                    // TODO: tidy this up
+                    // We default to buffering the response if not set on message.
+                    bufferResponse = true;
+                }
+
+                if (!bufferResponse && invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+                {
+                    // TODO: tidy this up - there is a bug here if customer overrides default transport
                     Stream? responseContentStream = message.Response.ContentStream;
                     if (responseContentStream == null || responseContentStream.CanSeek)
                     {
                         return;
                     }
-                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+
+                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
                 }
             }
             catch (TaskCanceledException e)

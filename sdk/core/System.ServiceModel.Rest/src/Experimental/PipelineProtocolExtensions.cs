@@ -12,7 +12,7 @@ public static class PipelineProtocolExtensions
 {
     public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, InvocationOptions requestContext, CancellationToken cancellationToken = default)
     {
-        await pipeline.SendAsync(message, requestContext).ConfigureAwait(false);
+        await pipeline.SendAsync(message).ConfigureAwait(false);
 
         if (message.Response is null)
         {
@@ -29,7 +29,7 @@ public static class PipelineProtocolExtensions
 
     public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, InvocationOptions requestContext, CancellationToken cancellationToken = default)
     {
-        pipeline.Send(message, requestContext);
+        pipeline.Send(message);
 
         if (message.Response is null)
         {

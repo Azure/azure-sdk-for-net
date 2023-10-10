@@ -59,21 +59,13 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         public virtual void Process(HttpMessage message)
-        {
-            // TODO: reduce allocations?
-            HttpPipelineInvocationOptions options = new(message);
-
-            base.Process(message, options);
-        }
+            => base.Process(message);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
         public virtual async ValueTask ProcessAsync(HttpMessage message)
-        {
-            HttpPipelineInvocationOptions options = new(message);
-            await base.ProcessAsync(message, options).ConfigureAwait(false);
-        }
+            => await base.ProcessAsync(message).ConfigureAwait(false);
     }
 }
