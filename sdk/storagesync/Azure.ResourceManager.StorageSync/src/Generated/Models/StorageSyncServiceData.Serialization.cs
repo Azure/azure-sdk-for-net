@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageSync
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
-            Optional<long> storageSyncServiceStatus = default;
+            Optional<int> storageSyncServiceStatus = default;
             Optional<Guid> storageSyncServiceUid = default;
             Optional<string> provisioningState = default;
             Optional<bool> useIdentity = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            storageSyncServiceStatus = property0.Value.GetInt64();
+                            storageSyncServiceStatus = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("storageSyncServiceUid"u8))

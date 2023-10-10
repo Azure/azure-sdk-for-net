@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
-        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, long? volumeFreeSpacePercent, long? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy) : base(id, name, resourceType, systemData)
+        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Cloud Tiering. </summary>
         public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
-        public long? VolumeFreeSpacePercent { get; set; }
+        public int? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
-        public long? TierFilesOlderThanDays { get; set; }
+        public int? TierFilesOlderThanDays { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Server Resource Id. </summary>

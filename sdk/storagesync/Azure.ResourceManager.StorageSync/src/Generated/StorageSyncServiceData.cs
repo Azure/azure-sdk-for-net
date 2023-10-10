@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
-        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, long? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, bool? useIdentity, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, bool? useIdentity, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Incoming Traffic Policy. </summary>
         public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
         /// <summary> Storage Sync service status. </summary>
-        public long? StorageSyncServiceStatus { get; }
+        public int? StorageSyncServiceStatus { get; }
         /// <summary> Storage Sync service Uid. </summary>
         public Guid? StorageSyncServiceUid { get; }
         /// <summary> StorageSyncService Provisioning State. </summary>

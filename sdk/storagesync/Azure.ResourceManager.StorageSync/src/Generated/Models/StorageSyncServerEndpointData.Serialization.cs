@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.StorageSync
             Optional<SystemData> systemData = default;
             Optional<string> serverLocalPath = default;
             Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<long> volumeFreeSpacePercent = default;
-            Optional<long> tierFilesOlderThanDays = default;
+            Optional<int> volumeFreeSpacePercent = default;
+            Optional<int> tierFilesOlderThanDays = default;
             Optional<string> friendlyName = default;
             Optional<ResourceIdentifier> serverResourceId = default;
             Optional<string> provisioningState = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            volumeFreeSpacePercent = property0.Value.GetInt64();
+                            volumeFreeSpacePercent = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("tierFilesOlderThanDays"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            tierFilesOlderThanDays = property0.Value.GetInt64();
+                            tierFilesOlderThanDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))

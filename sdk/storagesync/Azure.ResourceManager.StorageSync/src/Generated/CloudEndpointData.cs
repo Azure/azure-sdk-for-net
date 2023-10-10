@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Backup Enabled. </summary>
         public string IsBackupEnabled { get; }
         /// <summary> CloudEndpoint Provisioning State. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState { get; set; }
         /// <summary> CloudEndpoint lastWorkflowId. </summary>
         public string LastWorkflowId { get; set; }
         /// <summary> Resource Last Operation Name. </summary>

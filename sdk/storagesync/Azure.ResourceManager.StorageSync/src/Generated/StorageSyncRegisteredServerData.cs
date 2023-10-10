@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
         /// <param name="activeAuthType"> Server auth type. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, long? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, string applicationId, bool? identity, string latestApplicationId, ServerAuthType? activeAuthType) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, string applicationId, bool? identity, string latestApplicationId, ServerAuthType? activeAuthType) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Registered Server OS Version. </summary>
         public string ServerOSVersion { get; set; }
         /// <summary> Registered Server Management Error Code. </summary>
-        public long? ServerManagementErrorCode { get; set; }
+        public int? ServerManagementErrorCode { get; set; }
         /// <summary> Registered Server last heart beat. </summary>
         public string LastHeartbeat { get; set; }
         /// <summary> Registered Server Provisioning State. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState { get; set; }
         /// <summary> Registered Server serverRole. </summary>
         public string ServerRole { get; set; }
         /// <summary> Registered Server clusterId. </summary>

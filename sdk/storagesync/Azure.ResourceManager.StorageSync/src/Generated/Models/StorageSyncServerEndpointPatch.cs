@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Cloud Tiering. </summary>
         public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
-        public long? VolumeFreeSpacePercent { get; set; }
+        public int? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
-        public long? TierFilesOlderThanDays { get; set; }
+        public int? TierFilesOlderThanDays { get; set; }
         /// <summary> Offline data transfer. </summary>
         public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
         /// <summary> Offline data transfer share name. </summary>
