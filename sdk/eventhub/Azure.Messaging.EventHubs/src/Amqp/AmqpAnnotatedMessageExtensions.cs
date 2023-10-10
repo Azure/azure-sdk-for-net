@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationSegment.ToString(), out var value)))
             {
-                return (string)value;
+                return ((int)value).ToString();
             }
 
             return defaultValue;
@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedReplicationSegment.ToString(), out var value)))
             {
-                return value?.ToString();
+                return ((int)value).ToString();
             }
 
             return defaultValue;
