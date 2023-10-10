@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     }
     public partial class ClusterClientCertificateCommonName
     {
-        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, System.BinaryData certificateIssuerThumbprint) { }
+        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName) { }
         public string CertificateCommonName { get { throw null; } set { } }
         public System.BinaryData CertificateIssuerThumbprint { get { throw null; } set { } }
         public bool IsAdmin { get { throw null; } set { } }
