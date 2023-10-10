@@ -368,6 +368,8 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static readonly char[] NegativeTestCharacters = new char[] { '|', '&', ';', '\'', '"', '!', '@', '$', '%', '^', '*', '(', ')', '=', '[', ']', '{', '}', '<', '>', '?' };
+
         public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
         {
             string tenant = Guid.NewGuid().ToString();
