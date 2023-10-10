@@ -1,14 +1,10 @@
 # Release History
 
-## 6.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 6.0.1 (2023-10-10)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added support for the legacy checkpoint format when making scaling decisions.
 
 ## 6.0.0 (2023-09-12)
 
