@@ -1121,7 +1121,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
+        public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1132,7 +1132,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1161,7 +1161,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
+        public virtual Operation DeleteDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1172,7 +1172,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

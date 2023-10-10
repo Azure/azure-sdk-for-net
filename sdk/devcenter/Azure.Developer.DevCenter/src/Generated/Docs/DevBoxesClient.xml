@@ -1201,74 +1201,40 @@ Console.WriteLine(result.GetProperty("localAdministrator").ToString());
     </member>
     <member name="DeleteDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteDevBoxAsync and parse the result.
+This sample shows how to call DeleteDevBoxAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
 ]]></code>
-This sample shows how to call DeleteDevBoxAsync with all parameters and parse the result.
+This sample shows how to call DeleteDevBoxAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
 ]]></code></example>
     </member>
     <member name="DeleteDevBox(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteDevBox and parse the result.
+This sample shows how to call DeleteDevBox.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
 ]]></code>
-This sample shows how to call DeleteDevBox with all parameters and parse the result.
+This sample shows how to call DeleteDevBox with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
 ]]></code></example>
     </member>
     <member name="StartDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
