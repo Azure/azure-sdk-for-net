@@ -14,11 +14,9 @@ namespace System.ServiceModel.Rest;
 // TODO: Make options freezable
 // TODO: This was RequestOptions, I'm changing it for now, we can change it back if
 // if we want.
-public class InvocationOptions
+public class InvocationOptions : PipelineOptions
 {
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
-
-    // Moving CancellationToken here because it's needed for Pipeline.Send
 
     // TODO: handle duplication across message and options
 

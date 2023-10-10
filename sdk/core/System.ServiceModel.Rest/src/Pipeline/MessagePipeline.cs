@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class MessagePipeline : Pipeline<PipelineMessage>
+public class MessagePipeline : Pipeline<PipelineMessage, InvocationOptions>
 {
     private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
-    private readonly PipelineTransport<PipelineMessage> _transport;
+    private readonly PipelineTransport<PipelineMessage, InvocationOptions> _transport;
 
     public MessagePipeline(
-        PipelineTransport<PipelineMessage> transport,
+        PipelineTransport<PipelineMessage, InvocationOptions> transport,
         ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
     {
         _transport = transport;
@@ -23,7 +23,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
     {
-        _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length - 1];
+        _transport = (PipelineTransport<PipelineMessage, InvocationOptions>)policies.Span[policies.Length - 1];
         _policies = policies;
     }
 
@@ -88,7 +88,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             pipeline[index++] = options.LoggingPolicy;
         }
 
-        ResponseBufferingPolicy bufferingPolicy = new(options.NetworkTimeout);
+        TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineOptions.DefaultNetworkTimeout;
+        ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
         pipeline[index++] = bufferingPolicy;
 
         if (options.Transport != null)
@@ -105,9 +106,9 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage()
+    public override PipelineMessage CreateMessage(InvocationOptions options)
     {
-        return _transport.CreateMessage();
+        return _transport.CreateMessage(options);
     }
 
     public override void Send(PipelineMessage message)

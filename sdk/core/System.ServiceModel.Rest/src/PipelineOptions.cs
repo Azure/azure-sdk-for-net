@@ -23,11 +23,11 @@ public class PipelineOptions
 
     public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
 
-    public PipelineTransport<PipelineMessage>? Transport { get; set; }
+    public PipelineTransport<PipelineMessage, InvocationOptions>? Transport { get; set; }
     #endregion
 
     #region Pipeline creation: Policy-specific settings
-    public TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
+    public TimeSpan? NetworkTimeout { get; set; }
     #endregion
 
     #region Defaults for pipeline creation
@@ -35,7 +35,7 @@ public class PipelineOptions
 
     public static IPipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
 
-    public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
+    public static PipelineTransport<PipelineMessage, InvocationOptions>? DefaultTransport { get; set; }
 
     public static TimeSpan DefaultNetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     #endregion
