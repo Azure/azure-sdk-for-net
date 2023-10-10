@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure Developer CLI to obtain an access token.
+    /// Enables authentication to Microsoft Entra ID using Azure Developer CLI to obtain an access token.
     /// </summary>
     public class AzureDeveloperCliCredential : TokenCredential
     {
