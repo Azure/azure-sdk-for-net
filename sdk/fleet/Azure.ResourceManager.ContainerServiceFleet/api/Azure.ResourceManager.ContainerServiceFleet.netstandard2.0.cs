@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetWaitStatus ContainerServiceFleetWaitStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status = null, int? waitDurationInSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetCredentialResult FleetCredentialResult(string name = null, byte[] value = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetCredentialResults FleetCredentialResults(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceFleet.Models.FleetCredentialResult> kubeconfigs = null) { throw null; }
-        public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetHubProfile FleetHubProfile(string dnsPrefix = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, Azure.Core.ResourceIdentifier agentSubnetId = null, string fqdn = null, string kubernetesVersion = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceFleet.Models.FleetHubProfile FleetHubProfile(string dnsPrefix = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, string agentSubnetId = null, string fqdn = null, string kubernetesVersion = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.MemberUpdateStatus MemberUpdateStatus(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetUpdateStatus status = null, string name = null, Azure.Core.ResourceIdentifier clusterResourceId = null, string operationId = null, string message = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageVersion NodeImageVersion(string version = null) { throw null; }
     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetAPIServerAccessProfile() { }
         public bool? EnablePrivateCluster { get { throw null; } set { } }
         public bool? EnableVnetIntegration { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public string SubnetId { get { throw null; } set { } }
     }
     public partial class ContainerServiceFleetManagedClusterUpdate
     {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public partial class FleetHubProfile
     {
         public FleetHubProfile() { }
-        public Azure.Core.ResourceIdentifier AgentSubnetId { get { throw null; } set { } }
+        public string AgentSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetAPIServerAccessProfile ApiServerAccessProfile { get { throw null; } set { } }
         public string DnsPrefix { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }

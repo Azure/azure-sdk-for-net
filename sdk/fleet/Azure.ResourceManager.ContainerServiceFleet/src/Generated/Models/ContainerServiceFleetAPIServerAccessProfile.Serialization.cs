@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             Optional<bool> enablePrivateCluster = default;
             Optional<bool> enableVnetIntegration = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enablePrivateCluster"u8))
@@ -64,11 +64,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (property.NameEquals("subnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = property.Value.GetString();
                     continue;
                 }
             }

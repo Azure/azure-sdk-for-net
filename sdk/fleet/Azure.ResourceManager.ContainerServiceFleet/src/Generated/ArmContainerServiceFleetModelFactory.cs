@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
         /// <returns> A new <see cref="Models.FleetHubProfile"/> instance for mocking. </returns>
-        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, ResourceIdentifier agentSubnetId = null, string fqdn = null, string kubernetesVersion = null)
+        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, string agentSubnetId = null, string fqdn = null, string kubernetesVersion = null)
         {
             return new FleetHubProfile(dnsPrefix, apiServerAccessProfile, agentSubnetId != null ? new ContainerServiceFleetAgentProfile(agentSubnetId) : null, fqdn, kubernetesVersion);
         }

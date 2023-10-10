@@ -29,16 +29,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = property.Value.GetString();
                     continue;
                 }
             }
