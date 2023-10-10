@@ -484,7 +484,9 @@ namespace Azure.Core
     public sealed partial class HttpMessage : System.ServiceModel.Rest.Core.PipelineMessage
     {
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ServiceModel.Rest.Core.PipelineRequest)) { }
+        public bool BufferResponse { get { throw null; } set { } }
         public new bool HasResponse { get { throw null; } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
@@ -492,9 +494,7 @@ namespace Azure.Core
         public override void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
-        public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
-        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public enum HttpPipelinePosition
     {

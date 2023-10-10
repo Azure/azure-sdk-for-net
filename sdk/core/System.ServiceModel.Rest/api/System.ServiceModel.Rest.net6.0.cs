@@ -39,9 +39,11 @@ namespace System.ServiceModel.Rest
     {
         public PipelineOptions() { }
         public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultLoggingPolicy { get { throw null; } set { } }
+        public static System.TimeSpan DefaultNetworkTimeout { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultRetryPolicy { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultTransport { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? LoggingPolicy { get { throw null; } set { } }
+        public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerCallPolicies { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerTryPolicies { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? RetryPolicy { get { throw null; } set { } }
@@ -67,15 +69,15 @@ namespace System.ServiceModel.Rest.Core
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request) { }
-        public virtual bool BufferResponse { get { throw null; } set { } }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public virtual System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
         public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
+        public void SetProperty(System.Type type, object value) { }
+        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public abstract partial class PipelineRequest
     {
@@ -225,6 +227,10 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
         public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
         public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
+        public static void SetBufferResponse(System.ServiceModel.Rest.Core.PipelineMessage message, bool bufferResponse) { }
+        public static void SetNetworkTimeout(System.ServiceModel.Rest.Core.PipelineMessage message, System.TimeSpan networkTimeout) { }
+        public static bool TryGetBufferResponse(System.ServiceModel.Rest.Core.PipelineMessage message, out bool bufferResponse) { throw null; }
+        public static bool TryGetNetworkTimeout(System.ServiceModel.Rest.Core.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Internal

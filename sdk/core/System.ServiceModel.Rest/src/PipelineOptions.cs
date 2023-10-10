@@ -26,6 +26,10 @@ public class PipelineOptions
     public PipelineTransport<PipelineMessage>? Transport { get; set; }
     #endregion
 
+    #region Pipeline creation: Policy-specific settings
+    public TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
+    #endregion
+
     #region Defaults for pipeline creation
     public static IPipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
 

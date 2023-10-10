@@ -15,10 +15,12 @@ namespace Azure.Core.Pipeline
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
         private readonly ResponseBufferingPolicy _policy;
+        private readonly TimeSpan _networkTimeout;
 
-        public ResponseBodyPolicy()
+        public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new ResponseBufferingPolicy();
+            _policy = new ResponseBufferingPolicy(networkTimeout);
+            _networkTimeout = networkTimeout;
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -31,13 +33,17 @@ namespace Azure.Core.Pipeline
         {
             AzureCorePipelineEnumerator executor = new(message, pipeline);
 
+            // This tracks the network timeout for this particular invocation of the pipeline.
+            // We either use the default that the policy was constructed with, or we get an override
+            // value from the message that we use for the duration of this invocation only.
+            TimeSpan invocationNetworkTimeout = _networkTimeout;
+            if (!ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
+            {
+                invocationNetworkTimeout = networkTimeoutOverride;
+            }
+
             try
             {
-                if (!ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeout))
-                {
-                    throw new InvalidOperationException("NetworkTimeout must be set on the ResponseBodyPolicy.");
-                }
-
                 if (async)
                 {
                     await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
@@ -53,7 +59,7 @@ namespace Azure.Core.Pipeline
                     bufferResponse = true;
                 }
 
-                if (!bufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (!bufferResponse && invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     // TODO: tidy this up - there is a bug here if customer overrides default transport
                     Stream? responseContentStream = message.Response.ContentStream;
@@ -62,7 +68,7 @@ namespace Azure.Core.Pipeline
                         return;
                     }
 
-                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
                 }
             }
             catch (TaskCanceledException e)

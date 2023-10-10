@@ -17,8 +17,18 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    public ResponseBufferingPolicy()
+    private readonly TimeSpan _networkTimeout;
+
+    public ResponseBufferingPolicy(TimeSpan networkTimeout)
     {
+        // Note: we set this in the constructor because we need a value for it and
+        // don't want to expect/require a caller to know/remember to set it on the message.
+        // The one on the message then becomes and invocation-time override of what was
+        // baked in at pipeline-construction time.
+
+        // TODO: It feels like this should live on the transport and not a random policy.
+        // Revisit this and see if we can do it and what it would look like.
+        _networkTimeout = networkTimeout;
     }
 
     public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
@@ -35,12 +45,16 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        if (!TryGetNetworkTimeout(message, out TimeSpan networkTimeout))
+        // This tracks the network timeout for this particular invocation of the pipeline.
+        // We either use the default that the policy was constructed with, or we get an override
+        // value from the message that we use for the duration of this invocation only.
+        TimeSpan invocationNetworkTimeout = _networkTimeout;
+        if (!TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
         {
-            throw new InvalidOperationException("NetworkTimeout must be set on the ResponseBufferingPolicy.");
+            invocationNetworkTimeout = networkTimeoutOverride;
         }
 
-        cts.CancelAfter(networkTimeout);
+        cts.CancelAfter(invocationNetworkTimeout);
         try
         {
             message.CancellationToken = cts.Token;
@@ -55,7 +69,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         }
         catch (OperationCanceledException ex)
         {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
             throw;
         }
         finally
@@ -81,7 +95,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
 
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
-        if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
+        if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
             cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
         }
@@ -91,11 +105,11 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             var bufferedStream = new MemoryStream();
             if (async)
             {
-                await CopyToAsync(responseContentStream, bufferedStream, networkTimeout, cts).ConfigureAwait(false);
+                await CopyToAsync(responseContentStream, bufferedStream, invocationNetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
-                CopyTo(responseContentStream, bufferedStream, networkTimeout, cts);
+                CopyTo(responseContentStream, bufferedStream, invocationNetworkTimeout, cts);
             }
 
             responseContentStream.Dispose();
@@ -109,7 +123,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
                       or OperationCanceledException
                       or NotSupportedException)
         {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
             throw;
         }
     }

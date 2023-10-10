@@ -88,7 +88,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             pipeline[index++] = options.LoggingPolicy;
         }
 
-        ResponseBufferingPolicy bufferingPolicy = new();
+        ResponseBufferingPolicy bufferingPolicy = new(options.NetworkTimeout);
         pipeline[index++] = bufferingPolicy;
 
         if (options.Transport != null)
