@@ -176,3 +176,5 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+/sdk/datafactory/Azure.ResourceManager.DataFactory/tests/Scenario/DataFactoryCopyDataTask.cs
+/sdk/datafactory/Azure.ResourceManager.DataFactory/tests/Azure.ResourceManager.DataFactory.Tests.csproj
