@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Access profile for the Fleet hub API server. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="enablePrivateCluster"> Whether to create the Fleet hub as a private cluster or not. </param>
         /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the Fleet hub or not. </param>
         /// <param name="subnetId"> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </param>
-        internal ContainerServiceFleetAPIServerAccessProfile(bool? enablePrivateCluster, bool? enableVnetIntegration, string subnetId)
+        internal ContainerServiceFleetAPIServerAccessProfile(bool? enablePrivateCluster, bool? enableVnetIntegration, ResourceIdentifier subnetId)
         {
             EnablePrivateCluster = enablePrivateCluster;
             EnableVnetIntegration = enableVnetIntegration;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Whether to enable apiserver vnet integration for the Fleet hub or not. </summary>
         public bool? EnableVnetIntegration { get; set; }
         /// <summary> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

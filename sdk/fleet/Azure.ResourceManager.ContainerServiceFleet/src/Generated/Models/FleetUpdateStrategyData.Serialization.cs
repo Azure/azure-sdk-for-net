@@ -13,33 +13,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    public partial class ContainerServiceFleetUpdateRunData : IUtf8JsonSerializable
+    public partial class FleetUpdateStrategyData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateStrategyId))
-            {
-                writer.WritePropertyName("updateStrategyId"u8);
-                writer.WriteStringValue(UpdateStrategyId);
-            }
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteObjectValue(Strategy);
             }
-            if (Optional.IsDefined(ManagedClusterUpdate))
-            {
-                writer.WritePropertyName("managedClusterUpdate"u8);
-                writer.WriteObjectValue(ManagedClusterUpdate);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceFleetUpdateRunData DeserializeContainerServiceFleetUpdateRunData(JsonElement element)
+        internal static FleetUpdateStrategyData DeserializeFleetUpdateStrategyData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,11 +40,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ContainerServiceFleetUpdateRunProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> updateStrategyId = default;
+            Optional<FleetUpdateStrategyProvisioningState> provisioningState = default;
             Optional<ContainerServiceFleetUpdateRunStrategy> strategy = default;
-            Optional<ContainerServiceFleetManagedClusterUpdate> managedClusterUpdate = default;
-            Optional<ContainerServiceFleetUpdateRunStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -105,16 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            provisioningState = new ContainerServiceFleetUpdateRunProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("updateStrategyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updateStrategyId = new ResourceIdentifier(property0.Value.GetString());
+                            provisioningState = new FleetUpdateStrategyProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("strategy"u8))
@@ -126,29 +104,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             strategy = ContainerServiceFleetUpdateRunStrategy.DeserializeContainerServiceFleetUpdateRunStrategy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("managedClusterUpdate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedClusterUpdate = ContainerServiceFleetManagedClusterUpdate.DeserializeContainerServiceFleetManagedClusterUpdate(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = ContainerServiceFleetUpdateRunStatus.DeserializeContainerServiceFleetUpdateRunStatus(property0.Value);
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ContainerServiceFleetUpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), updateStrategyId.Value, strategy.Value, managedClusterUpdate.Value, status.Value);
+            return new FleetUpdateStrategyData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), strategy.Value);
         }
     }
 }

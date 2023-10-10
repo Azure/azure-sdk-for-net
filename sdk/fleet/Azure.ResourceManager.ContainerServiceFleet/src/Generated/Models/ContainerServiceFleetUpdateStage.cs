@@ -11,13 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary>
-    /// Contains the groups to be updated by an UpdateRun.
-    /// Update order:
-    /// - Sequential between stages: Stages run sequentially. The previous stage must complete before the next one starts.
-    /// - Parallel within a stage: Groups within a stage run in parallel.
-    /// - Sequential within a group: Clusters within a group are updated sequentially.
-    /// </summary>
+    /// <summary> Defines a stage which contains the groups to update and the steps to take (e.g., wait for a time period) before starting the next stage. </summary>
     public partial class ContainerServiceFleetUpdateStage
     {
         /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStage. </summary>
@@ -33,10 +27,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStage. </summary>
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
-        /// <param name="groups">
-        /// A list of group names that compose the stage.
-        /// The groups will be updated in parallel. Each group name can only appear once in the UpdateRun.
-        /// </param>
+        /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
         internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds)
         {
@@ -47,10 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The name of the stage. Must be unique within the UpdateRun. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// A list of group names that compose the stage.
-        /// The groups will be updated in parallel. Each group name can only appear once in the UpdateRun.
-        /// </summary>
+        /// <summary> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </summary>
         public IList<ContainerServiceFleetUpdateGroup> Groups { get; }
         /// <summary> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </summary>
         public int? AfterStageWaitInSeconds { get; set; }

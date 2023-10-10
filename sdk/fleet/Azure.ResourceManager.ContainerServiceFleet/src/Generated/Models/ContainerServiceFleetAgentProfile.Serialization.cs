@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    internal partial class ContainerServiceFleetAgentProfile : IUtf8JsonSerializable
+    public partial class ContainerServiceFleetAgentProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
+            }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
             }
             writer.WriteEndObject();
         }
@@ -29,16 +34,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> vmSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmSize"u8))
+                {
+                    vmSize = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServiceFleetAgentProfile(subnetId.Value);
+            return new ContainerServiceFleetAgentProfile(subnetId.Value, vmSize.Value);
         }
     }
 }

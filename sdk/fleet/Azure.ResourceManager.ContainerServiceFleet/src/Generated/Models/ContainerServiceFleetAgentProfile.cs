@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Agent profile for the Fleet hub. </summary>
-    internal partial class ContainerServiceFleetAgentProfile
+    public partial class ContainerServiceFleetAgentProfile
     {
         /// <summary> Initializes a new instance of ContainerServiceFleetAgentProfile. </summary>
         public ContainerServiceFleetAgentProfile()
@@ -17,12 +19,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Initializes a new instance of ContainerServiceFleetAgentProfile. </summary>
         /// <param name="subnetId"> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </param>
-        internal ContainerServiceFleetAgentProfile(string subnetId)
+        /// <param name="vmSize"> The virtual machine size of the Fleet hub. </param>
+        internal ContainerServiceFleetAgentProfile(ResourceIdentifier subnetId, string vmSize)
         {
             SubnetId = subnetId;
+            VmSize = vmSize;
         }
 
         /// <summary> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
+        /// <summary> The virtual machine size of the Fleet hub. </summary>
+        public string VmSize { get; set; }
     }
 }
