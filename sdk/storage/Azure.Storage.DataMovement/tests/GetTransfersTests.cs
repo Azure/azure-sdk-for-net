@@ -243,11 +243,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Build expected results first to use to populate checkpointer
             DataTransferProperties[] expectedResults = new DataTransferProperties[]
             {
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath, DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath2, DestinationTypeId = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceTypeId = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationProviderId = "blob", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationProviderId = "local", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationProviderId = "blob", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceTypeId = "BlockBlob", SourcePath = parentRemotePath, DestinationProviderId = "local", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceTypeId = "LocalFile", SourcePath = parentLocalPath2, DestinationProviderId = "blob", DestinationTypeId = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
             };
 
             // Add a transfer for each expected result
@@ -320,7 +320,9 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath,
                 properties.TransferId,
                 parentSourcePath: properties.SourcePath,
-                parentDestinationPath: properties.DestinationPath);
+                parentDestinationPath: properties.DestinationPath,
+                sourceProviderId: properties.SourceProviderId,
+                destinationProviderId: properties.DestinationProviderId);
 
             if (properties.IsContainer)
             {
@@ -368,8 +370,10 @@ namespace Azure.Storage.DataMovement.Tests
         private void AssertTransferProperties(DataTransferProperties expected, DataTransferProperties actual)
         {
             Assert.AreEqual(expected.TransferId, actual.TransferId);
+            Assert.AreEqual(expected.SourceProviderId, actual.SourceProviderId);
             Assert.AreEqual(expected.SourceTypeId, actual.SourceTypeId);
             Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath.TrimEnd('\\', '/'));
+            Assert.AreEqual(expected.DestinationProviderId, actual.DestinationProviderId);
             Assert.AreEqual(expected.DestinationTypeId, actual.DestinationTypeId);
             Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);

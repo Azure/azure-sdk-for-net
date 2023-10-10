@@ -46,51 +46,6 @@ namespace Azure.Storage.DataMovement
             return result;
         }
 
-        internal static async Task<(string Source, string Destination)> GetResourcePathsAsync(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            CancellationToken cancellationToken)
-        {
-            int startIndex = DataMovementConstants.JobPlanFile.ParentSourcePathOffsetIndex;
-
-            string parentSourcePath = default;
-            string parentDestinationPath = default;
-            using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
-                transferId: transferId,
-                offset: startIndex,
-                length: 0, // Read to the end
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // ParentSourcePath offset/length
-                int parentSourcePathOffset = reader.ReadInt32() - startIndex;
-                int parentSourcePathLength = reader.ReadInt32();
-
-                // ParentDestinationPath offset/length
-                int parentDestinationPathOffset = reader.ReadInt32() - startIndex;
-                int parentDestinationPathLength = reader.ReadInt32();
-
-                // ParentSourcePath
-                if (parentSourcePathOffset > 0)
-                {
-                    reader.BaseStream.Position = parentSourcePathOffset;
-                    byte[] parentSourcePathBytes = reader.ReadBytes(parentSourcePathLength);
-                    parentSourcePath = parentSourcePathBytes.ToString(parentSourcePathLength);
-                }
-
-                // ParentDestinationPath
-                if (parentDestinationPathOffset > 0)
-                {
-                    reader.BaseStream.Position = parentDestinationPathOffset;
-                    byte[] parentDestinationPathBytes = reader.ReadBytes(parentDestinationPathLength);
-                    parentDestinationPath = parentDestinationPathBytes.ToString(parentDestinationPathLength);
-                }
-            }
-
-            return (parentSourcePath, parentDestinationPath);
-        }
-
         internal static async Task<(string Source, string Destination)> GetResourceIdsAsync(
             this TransferCheckpointer checkpointer,
             string transferId,

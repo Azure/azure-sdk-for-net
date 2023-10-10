@@ -16,15 +16,11 @@ namespace Azure.Storage.DataMovement
     {
         private Uri _uri;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected internal override string ResourceId => "LocalFile";
 
-        /// <summary>
-        /// Gets the Uri of the resource.
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource

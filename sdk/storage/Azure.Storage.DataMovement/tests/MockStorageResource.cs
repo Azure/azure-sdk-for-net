@@ -16,6 +16,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "mock";
+
         protected internal override string ResourceId => "Mock";
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
