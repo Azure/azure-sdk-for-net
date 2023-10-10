@@ -514,8 +514,10 @@ namespace Azure.Messaging.WebPubSub.Clients
                     {
                         try
                         {
-                            var message = _protocol.ParseMessage(result.Payload);
-                            await HandleMessageAsync(message, token).ConfigureAwait(false);
+                            foreach (var message in _protocol.ParseMessage(result.Payload))
+                            {
+                                await HandleMessageAsync(message, token).ConfigureAwait(false);
+                            }
                         }
                         catch (Exception ex)
                         {

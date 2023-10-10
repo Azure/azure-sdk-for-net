@@ -16,13 +16,20 @@ extends:
           - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
+      PPE:
+        SubscriptionConfigurations:
+          - $(sub-config-communication-ppe-test-resources-common)
+          - $(sub-config-communication-ppe-test-resources-net)
+        MatrixReplace: 
+          - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
+          - SKIP_SIPROUTING_LIVE_TESTS=FALSE/TRUE
       Int:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
         MatrixReplace: 
           - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
-    Clouds: Public,Int
+    Clouds: Public, PPE, Int
     TestResourceDirectories:
       - communication/test-resources/
     EnvVars:

@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSnapshot(IEnumerable<SnapshotSettingFilter> filters)
+        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<SnapshotSettingFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
         {
             Name = name;
             Status = status;
@@ -54,7 +54,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The current status of the snapshot. </summary>
         public ConfigurationSnapshotStatus? Status { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
-        public IList<SnapshotSettingFilter> Filters { get; }
+        public IList<ConfigurationSettingsFilter> Filters { get; }
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         public SnapshotComposition? SnapshotComposition { get; set; }
         /// <summary> The time that the snapshot was created. </summary>

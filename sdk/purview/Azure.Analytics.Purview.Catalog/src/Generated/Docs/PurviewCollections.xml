@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -21,7 +21,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
@@ -29,14 +29,14 @@ RequestContent content = RequestContent.Create(new
         {
             key = new object(),
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -67,11 +67,11 @@ RequestContent content = RequestContent.Create(new
         guid = "<guid>",
         homeId = "<homeId>",
         isIncomplete = true,
-        labels = new List<object>()
+        labels = new object[]
         {
             "<labels>"
         },
-        meanings = new List<object>()
+        meanings = new object[]
         {
             new
             {
@@ -104,7 +104,7 @@ RequestContent content = RequestContent.Create(new
         },
         contacts = new
         {
-            key = new List<object>()
+            key = new object[]
             {
                 new
                 {
@@ -120,9 +120,7 @@ RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new
-    {
-    },
+    referredEntities = new { },
 });
 Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
@@ -200,7 +198,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateEntity("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -212,7 +210,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
@@ -220,14 +218,14 @@ RequestContent content = RequestContent.Create(new
         {
             key = new object(),
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -258,11 +256,11 @@ RequestContent content = RequestContent.Create(new
         guid = "<guid>",
         homeId = "<homeId>",
         isIncomplete = true,
-        labels = new List<object>()
+        labels = new object[]
         {
             "<labels>"
         },
-        meanings = new List<object>()
+        meanings = new object[]
         {
             new
             {
@@ -295,7 +293,7 @@ RequestContent content = RequestContent.Create(new
         },
         contacts = new
         {
-            key = new List<object>()
+            key = new object[]
             {
                 new
                 {
@@ -311,9 +309,7 @@ RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new
-    {
-    },
+    referredEntities = new { },
 });
 Response response = client.CreateOrUpdateEntity("<collection>", content);
 
@@ -391,7 +387,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -403,9 +399,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    entities = new List<object>()
+    entities = new object[]
     {
         new
         {
@@ -413,14 +409,14 @@ RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             },
-            classifications = new List<object>()
+            classifications = new object[]
             {
                 new
                 {
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
+                    validityPeriods = new object[]
                     {
                         new
                         {
@@ -451,11 +447,11 @@ RequestContent content = RequestContent.Create(new
             guid = "<guid>",
             homeId = "<homeId>",
             isIncomplete = true,
-            labels = new List<object>()
+            labels = new object[]
             {
                 "<labels>"
             },
-            meanings = new List<object>()
+            meanings = new object[]
             {
                 new
                 {
@@ -488,7 +484,7 @@ RequestContent content = RequestContent.Create(new
             },
             contacts = new
             {
-                key = new List<object>()
+                key = new object[]
                 {
                     new
                     {
@@ -505,9 +501,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new
-    {
-    },
+    referredEntities = new { },
 });
 Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
@@ -585,7 +579,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -597,9 +591,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    entities = new List<object>()
+    entities = new object[]
     {
         new
         {
@@ -607,14 +601,14 @@ RequestContent content = RequestContent.Create(new
             {
                 key = new object(),
             },
-            classifications = new List<object>()
+            classifications = new object[]
             {
                 new
                 {
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
+                    validityPeriods = new object[]
                     {
                         new
                         {
@@ -645,11 +639,11 @@ RequestContent content = RequestContent.Create(new
             guid = "<guid>",
             homeId = "<homeId>",
             isIncomplete = true,
-            labels = new List<object>()
+            labels = new object[]
             {
                 "<labels>"
             },
-            meanings = new List<object>()
+            meanings = new object[]
             {
                 new
                 {
@@ -682,7 +676,7 @@ RequestContent content = RequestContent.Create(new
             },
             contacts = new
             {
-                key = new List<object>()
+                key = new object[]
                 {
                     new
                     {
@@ -699,9 +693,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new
-    {
-    },
+    referredEntities = new { },
 });
 Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
@@ -779,7 +771,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -791,9 +783,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    entityGuids = new List<object>()
+    entityGuids = new object[]
     {
         "<entityGuids>"
     },
@@ -874,7 +866,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.MoveEntitiesToCollection("<collection>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -886,9 +878,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    entityGuids = new List<object>()
+    entityGuids = new object[]
     {
         "<entityGuids>"
     },

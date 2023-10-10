@@ -232,7 +232,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await pathClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.PublicAudience);
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DefaultAudience);
 
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
             {
@@ -288,7 +288,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await pathClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DataLakeServiceAccountAudience(test.FileSystem.AccountName));
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.CreateDataLakeServiceAccountAudience(test.FileSystem.AccountName));
 
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
             {

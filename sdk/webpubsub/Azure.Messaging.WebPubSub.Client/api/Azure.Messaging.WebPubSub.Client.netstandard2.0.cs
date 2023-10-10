@@ -152,7 +152,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public override string Name { get { throw null; } }
         public override Azure.Messaging.WebPubSub.Clients.WebPubSubProtocolMessageType WebSocketMessageType { get { throw null; } }
         public override System.ReadOnlyMemory<byte> GetMessageBytes(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message) { throw null; }
-        public override Azure.Messaging.WebPubSub.Clients.WebPubSubMessage ParseMessage(System.Buffers.ReadOnlySequence<byte> input) { throw null; }
+        public override System.Collections.Generic.IReadOnlyList<Azure.Messaging.WebPubSub.Clients.WebPubSubMessage> ParseMessage(System.Buffers.ReadOnlySequence<byte> input) { throw null; }
         public override void WriteMessage(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message, System.Buffers.IBufferWriter<byte> output) { }
     }
     public partial class WebPubSubJsonReliableProtocol : Azure.Messaging.WebPubSub.Clients.WebPubSubProtocol
@@ -162,7 +162,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public override string Name { get { throw null; } }
         public override Azure.Messaging.WebPubSub.Clients.WebPubSubProtocolMessageType WebSocketMessageType { get { throw null; } }
         public override System.ReadOnlyMemory<byte> GetMessageBytes(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message) { throw null; }
-        public override Azure.Messaging.WebPubSub.Clients.WebPubSubMessage ParseMessage(System.Buffers.ReadOnlySequence<byte> input) { throw null; }
+        public override System.Collections.Generic.IReadOnlyList<Azure.Messaging.WebPubSub.Clients.WebPubSubMessage> ParseMessage(System.Buffers.ReadOnlySequence<byte> input) { throw null; }
         public override void WriteMessage(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message, System.Buffers.IBufferWriter<byte> output) { }
     }
     public abstract partial class WebPubSubMessage
@@ -176,7 +176,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         public abstract string Name { get; }
         public abstract Azure.Messaging.WebPubSub.Clients.WebPubSubProtocolMessageType WebSocketMessageType { get; }
         public abstract System.ReadOnlyMemory<byte> GetMessageBytes(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message);
-        public abstract Azure.Messaging.WebPubSub.Clients.WebPubSubMessage ParseMessage(System.Buffers.ReadOnlySequence<byte> input);
+        public abstract System.Collections.Generic.IReadOnlyList<Azure.Messaging.WebPubSub.Clients.WebPubSubMessage> ParseMessage(System.Buffers.ReadOnlySequence<byte> input);
         public abstract void WriteMessage(Azure.Messaging.WebPubSub.Clients.WebPubSubMessage message, System.Buffers.IBufferWriter<byte> output);
     }
     public enum WebPubSubProtocolMessageType

@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Distribution expressions to sweep over values of model settings.
     /// &lt;example&gt;
     /// Some examples are:
-    /// &lt;code&gt;
+    /// ```
     /// ModelName = "choice('seresnext', 'resnest50')";
     /// LearningRate = "uniform(0.001, 0.01)";
     /// LayersToFreeze = "choice(0, 2)";
-    /// &lt;/code&gt;&lt;/example&gt;
+    /// ```&lt;/example&gt;
     /// For more details on how to compose distribution expressions please check the documentation:
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-tune-hyperparameters
     /// For more information on the available settings please visit the official documentation:

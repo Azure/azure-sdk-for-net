@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,8 +13,8 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// WorkloadIdentityCredential supports Azure workload identity authentication on Kubernetes and other hosts supporting workload identity.
-    /// Refer to <a href="https://learn.microsoft.com/azure/aks/workload-identity-overview">Azure Active Directory Workload Identity</a> for more information.
+    /// WorkloadIdentityCredential supports Microsoft Entra Workload ID authentication on Kubernetes and other hosts supporting workload identity.
+    /// Refer to <a href="https://learn.microsoft.com/azure/aks/workload-identity-overview">Microsoft Entra Workload ID</a> for more information.
     /// </summary>
     public class WorkloadIdentityCredential : TokenCredential
     {

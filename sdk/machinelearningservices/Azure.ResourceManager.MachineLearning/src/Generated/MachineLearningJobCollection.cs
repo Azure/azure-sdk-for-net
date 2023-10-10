@@ -223,16 +223,15 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="jobType"> Type of job to be returned. </param>
-        /// <param name="tag"> Jobs returned will have this tag key. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(MachineLearningJobCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
+            options ??= new MachineLearningJobCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.AssetName, options.Scheduled, options.ScheduleId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.AssetName, options.Scheduled, options.ScheduleId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -249,16 +248,15 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="jobType"> Type of job to be returned. </param>
-        /// <param name="tag"> Jobs returned will have this tag key. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningJobResource> GetAll(string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningJobResource> GetAll(MachineLearningJobCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
+            options ??= new MachineLearningJobCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.AssetName, options.Scheduled, options.ScheduleId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.AssetName, options.Scheduled, options.ScheduleId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -408,17 +406,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningJobResource> IEnumerable<MachineLearningJobResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningJobResource> IAsyncEnumerable<MachineLearningJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
