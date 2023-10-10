@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    ///  Enables authentication to Azure Active Directory using a user's username and password. If the user has MFA enabled this
+    ///  Enables authentication to Microsoft Entra ID using a user's username and password. If the user has MFA enabled this
     ///  credential will fail to get a token throwing an <see cref="AuthenticationFailedException"/>. Also, this credential requires a high degree of
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>
@@ -38,7 +38,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's username, also known as UPN.</param>
@@ -50,7 +50,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
@@ -63,7 +63,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
