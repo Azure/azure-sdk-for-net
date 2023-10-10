@@ -29,22 +29,15 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                // TODO: idea: if invocation options was an interface, message could just implement
-                // it instead of using an adapter everywhere?  It would bake in the options, though.
-
-                // TODO: Could we hide the options in the executor somehow?  How would that work?
-
-                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
-
                 TimeSpan networkTimeout = _networkTimeout;
-                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
                 {
                     networkTimeout = networkTimeoutOverride;
                 }
 
-                await _policy.ProcessAsync(message, options, executor).ConfigureAwait(false);
+                await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
 
-                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (!message.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     // TODO: tidy this up
                     Stream? responseContentStream = message.Response.ContentStream;
@@ -82,17 +75,15 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
-
                 TimeSpan networkTimeout = _networkTimeout;
-                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
                 {
                     networkTimeout = networkTimeoutOverride;
                 }
 
-                _policy.Process(message, options, executor);
+                _policy.Process(message, executor);
 
-                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                if (!message.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     // TODO: tidy this up
                     Stream? responseContentStream = message.Response.ContentStream;

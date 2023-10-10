@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline : Pipeline<HttpMessage, InvocationOptions>
+    public class HttpPipeline : Pipeline<HttpMessage>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -145,24 +145,22 @@ namespace Azure.Core.Pipeline
                 return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
             }
 
-            InvocationOptions options = new HttpPipelineInvocationOptions(message);
-            return SendAsync(message, options);
+            return SendAsync(message);
         }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="options"></param>
         /// <returns></returns>
-        public override async ValueTask SendAsync(HttpMessage message, InvocationOptions options)
+        public override async ValueTask SendAsync(HttpMessage message)
         {
             int length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
 
             try
             {
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally
@@ -188,23 +186,21 @@ namespace Azure.Core.Pipeline
                 return;
             }
 
-            InvocationOptions options = new HttpPipelineInvocationOptions(message);
-            Send(message, options);
+            Send(message);
         }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="options"></param>
-        public override void Send(HttpMessage message, InvocationOptions options)
+        public override void Send(HttpMessage message)
         {
             int length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
 
             try
             {
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                 pipeline.Span[0].Process(message, pipeline.Slice(1));
             }
             finally
@@ -281,7 +277,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Copy over client policies and splice in custom policies at designated indices
-            var pipeline = _pipeline.Span;
+            ReadOnlySpan<HttpPipelinePolicy> pipeline = _pipeline.Span;
             int transportIndex = pipeline.Length - 1;
 
             pipeline.Slice(0, _perCallIndex).CopyTo(policies);
@@ -314,7 +310,7 @@ namespace Azure.Core.Pipeline
             int count = 0;
             if (source != null)
             {
-                foreach (var policy in source)
+                foreach ((HttpPipelinePosition Position, HttpPipelinePolicy Policy) policy in source)
                 {
                     if (policy.Position == position)
                     {
@@ -351,7 +347,7 @@ namespace Azure.Core.Pipeline
                 if (parent != null)
                 {
                     Properties = new Dictionary<string, object?>(parent.Properties);
-                    foreach (var kvp in messageProperties)
+                    foreach (KeyValuePair<string, object?> kvp in messageProperties)
                     {
                         Properties[kvp.Key] = kvp.Value;
                     }

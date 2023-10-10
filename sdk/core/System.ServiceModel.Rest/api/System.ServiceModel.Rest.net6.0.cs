@@ -9,6 +9,7 @@ namespace System.ServiceModel.Rest
     public partial class InvocationOptions
     {
         public InvocationOptions() { }
+        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.ResponseErrorClassifier DefaultResponseClassifier { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.ErrorBehavior ErrorBehavior { get { throw null; } set { } }

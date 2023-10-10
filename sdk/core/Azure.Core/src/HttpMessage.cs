@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel.Rest.Core;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -82,25 +81,13 @@ namespace Azure.Core
         internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
-
-        /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
-        /// </summary>
-        public bool BufferResponse { get; set; }
-
-        /// <summary>
-        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
-        /// Defaults to <c>null</c>.
-        /// </summary>
-        public TimeSpan? NetworkTimeout { get; set; }
+        public new ResponseClassifier ResponseClassifier
+        {
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
+        }
 
         internal int RetryNumber { get; set; }
 

@@ -22,7 +22,10 @@ public class InvocationOptions
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
     // Moving CancellationToken here because it's needed for Pipeline.Send
-    //public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
+
+    // TODO: handle duplication across message and options
+
+    public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
     public virtual ResponseErrorClassifier ResponseClassifier { get; set; } = DefaultResponseClassifier;
 
