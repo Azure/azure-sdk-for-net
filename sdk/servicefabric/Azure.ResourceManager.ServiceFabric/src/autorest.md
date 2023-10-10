@@ -136,5 +136,6 @@ directive:
       $.ClusterUpgradePolicy.properties.upgradeDomainTimeout['x-ms-format'] = 'duration-constant';
       $.ClusterUpgradePolicy.properties.upgradeTimeout['x-ms-format'] = 'duration-constant';
       $.ClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
+      $.ClientCertificateCommonName.required = ["certificateCommonName","isAdmin"]
 
 ```

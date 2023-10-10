@@ -16,13 +16,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ClusterClientCertificateCommonName. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateCommonName"> The common name of the client certificate. </param>
-        /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
-        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> is null. </exception>
+        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName)
         {
             Argument.AssertNotNull(certificateCommonName, nameof(certificateCommonName));
-            Argument.AssertNotNull(certificateIssuerThumbprint, nameof(certificateIssuerThumbprint));
 
+            IsAdmin = isAdmin;
+            CertificateCommonName = certificateCommonName;
+        }
+
+        /// <summary> Initializes a new instance of ClusterClientCertificateCommonName. </summary>
+        /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
+        /// <param name="certificateCommonName"> The common name of the client certificate. </param>
+        /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
+        internal ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
+        {
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;
             CertificateIssuerThumbprint = certificateIssuerThumbprint;

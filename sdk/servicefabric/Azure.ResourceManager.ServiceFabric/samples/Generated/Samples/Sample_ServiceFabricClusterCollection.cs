@@ -172,7 +172,10 @@ new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("12599211
                 },
                 ClientCertificateCommonNames =
 {
-new ClusterClientCertificateCommonName(true,"abc.com",BinaryData.FromString("5F3660C715EBBDA31DB1FFDCF508302348DE8E7A"))
+new ClusterClientCertificateCommonName(true,"abc.com")
+{
+CertificateIssuerThumbprint = BinaryData.FromString("5F3660C715EBBDA31DB1FFDCF508302348DE8E7A"),
+}
 },
                 ClientCertificateThumbprints =
 {

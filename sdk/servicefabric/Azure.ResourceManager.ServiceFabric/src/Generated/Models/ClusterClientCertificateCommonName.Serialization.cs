@@ -20,12 +20,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteBooleanValue(IsAdmin);
             writer.WritePropertyName("certificateCommonName"u8);
             writer.WriteStringValue(CertificateCommonName);
-            writer.WritePropertyName("certificateIssuerThumbprint"u8);
+            if (Optional.IsDefined(CertificateIssuerThumbprint))
+            {
+                writer.WritePropertyName("certificateIssuerThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateIssuerThumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateIssuerThumbprint.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateIssuerThumbprint.ToString()).RootElement);
 #endif
+            }
             writer.WriteEndObject();
         }
 
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             bool isAdmin = default;
             string certificateCommonName = default;
-            BinaryData certificateIssuerThumbprint = default;
+            Optional<BinaryData> certificateIssuerThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAdmin"u8))
@@ -52,11 +55,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("certificateIssuerThumbprint"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     certificateIssuerThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new ClusterClientCertificateCommonName(isAdmin, certificateCommonName, certificateIssuerThumbprint);
+            return new ClusterClientCertificateCommonName(isAdmin, certificateCommonName, certificateIssuerThumbprint.Value);
         }
     }
 }
