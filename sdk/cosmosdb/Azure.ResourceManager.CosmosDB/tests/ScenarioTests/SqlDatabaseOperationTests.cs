@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.That(databases, Has.Count.EqualTo(1));
             Assert.AreEqual(database.Data.Name, databases[0].Data.Name);
             DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)database.Data.Resource.Timestamp.Value);
-            AddDelayInSeconds(60);
+            AddDelayInSeconds(180);
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60)
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(100)
             };
             CosmosDBSqlDatabaseResourceInfo resource = new CosmosDBSqlDatabaseResourceInfo(_databaseName, RestoreParameters, CosmosDBAccountCreateMode.Restore);
 
