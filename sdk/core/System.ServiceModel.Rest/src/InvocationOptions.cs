@@ -16,9 +16,6 @@ namespace System.ServiceModel.Rest;
 // if we want.
 public class InvocationOptions
 {
-    // Default is yes, buffer the response.
-    //private bool _bufferResponse = true;
-
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
     // Moving CancellationToken here because it's needed for Pipeline.Send
@@ -45,13 +42,6 @@ public class InvocationOptions
     // set options the pipeline might not use, or back in required policies in the
     // pipeline, or somehow engineer it such that construction and invocation options
     // work together to make it so people can't do the wrong thing.
-    //public virtual bool BufferResponse
-    //{
-    //    get => _bufferResponse;
-    //    set => _bufferResponse = value;
-    //}
-
-    //public virtual TimeSpan? NetworkTimeout { get; set; }
 
     #endregion
 

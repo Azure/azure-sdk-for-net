@@ -45,11 +45,12 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        // This tracks the network timeout for this particular invocation of the pipeline.
-        // We either use the default that the policy was constructed with, or we get an override
-        // value from the message that we use for the duration of this invocation only.
+        // Get the network timeout for this particular invocation of the pipeline.
+        // We either use the default that the policy was constructed with at
+        // pipeline-creation time, or we get an override value from the message that
+        // we use for the duration of this invocation only.
         TimeSpan invocationNetworkTimeout = _networkTimeout;
-        if (!TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
+        if (TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
         {
             invocationNetworkTimeout = networkTimeoutOverride;
         }
