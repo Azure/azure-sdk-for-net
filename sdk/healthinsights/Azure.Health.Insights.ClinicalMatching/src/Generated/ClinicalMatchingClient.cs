@@ -126,7 +126,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
