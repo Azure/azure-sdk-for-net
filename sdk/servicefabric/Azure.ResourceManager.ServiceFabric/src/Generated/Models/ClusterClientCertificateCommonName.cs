@@ -25,17 +25,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             CertificateCommonName = certificateCommonName;
         }
 
-        /// <summary> Initializes a new instance of ClusterClientCertificateCommonName. </summary>
-        /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
-        /// <param name="certificateCommonName"> The common name of the client certificate. </param>
-        /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
-        internal ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
-        {
-            IsAdmin = isAdmin;
-            CertificateCommonName = certificateCommonName;
-            CertificateIssuerThumbprint = certificateIssuerThumbprint;
-        }
-
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>
         public bool IsAdmin { get; set; }
         /// <summary> The common name of the client certificate. </summary>
