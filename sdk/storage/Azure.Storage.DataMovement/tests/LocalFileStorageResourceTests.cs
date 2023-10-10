@@ -69,6 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 // Assert
                 Assert.AreEqual(path, storageResource.Uri.LocalPath);
+                Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
             }
         }
 
@@ -82,7 +83,10 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource("   "));
 
             Assert.Catch<ArgumentException>(() =>
-                new LocalFileStorageResource((string)default));
+                new LocalFileStorageResource(path: default));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(uri: default));
         }
 
         [Test]

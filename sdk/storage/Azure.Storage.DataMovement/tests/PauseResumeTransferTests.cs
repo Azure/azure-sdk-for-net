@@ -383,7 +383,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -439,7 +439,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transfer.Id,
                 transferOptions: resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(15));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
@@ -804,7 +804,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
