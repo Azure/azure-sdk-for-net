@@ -466,11 +466,15 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmfTones(
-                       new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       new CommunicationUserIdentifier("targetUserId"),
-                       OperationContext
-                );
+            SendDtmfTonesOptions SendDtmfTonesOptions = new(new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       new CommunicationUserIdentifier("targetUserId"))
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.GetCallMedia().SendDtmfTones(SendDtmfTonesOptions);
+
+            Assert.NotNull(response);
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -496,11 +500,15 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmfTones(
-                       new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       new CommunicationUserIdentifier("targetUserId"),
-                       OperationContext
-                );
+            SendDtmfTonesOptions SendDtmfTonesOptions = new(new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       new CommunicationUserIdentifier("targetUserId"))
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.GetCallMedia().SendDtmfTones(SendDtmfTonesOptions);
+
+            Assert.NotNull(response);
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
