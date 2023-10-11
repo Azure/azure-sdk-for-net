@@ -20,8 +20,14 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 AnalyzeTextOptions body = new AnalyzeTextOptions("<text>")
 {
-    Categories = { TextCategory.Hate },
-    BlocklistNames = { "<blocklistNames>" },
+    Categories =
+    {
+        TextCategory.Hate
+    },
+    BlocklistNames =
+    {
+        "<blocklistNames>"
+    },
     BreakByBlocklists = true,
 };
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
@@ -46,8 +52,14 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 AnalyzeTextOptions body = new AnalyzeTextOptions("<text>")
 {
-    Categories = { TextCategory.Hate },
-    BlocklistNames = { "<blocklistNames>" },
+    Categories =
+    {
+        TextCategory.Hate
+    },
+    BlocklistNames =
+    {
+        "<blocklistNames>"
+    },
     BreakByBlocklists = true,
 };
 Response<AnalyzeTextResult> response = client.AnalyzeText(body);
@@ -61,7 +73,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     text = "<text>",
 });
@@ -76,14 +88,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     text = "<text>",
-    categories = new object[]
+    categories = new List<object>()
     {
         "Hate"
     },
-    blocklistNames = new object[]
+    blocklistNames = new List<object>()
     {
         "<blocklistNames>"
     },
@@ -115,7 +127,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     text = "<text>",
 });
@@ -130,14 +142,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     text = "<text>",
-    categories = new object[]
+    categories = new List<object>()
     {
         "Hate"
     },
-    blocklistNames = new object[]
+    blocklistNames = new List<object>()
     {
         "<blocklistNames>"
     },
@@ -178,13 +190,16 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData
+AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData()
 {
     Content = BinaryData.FromObjectAsJson(new object()),
     BlobUrl = new Uri("http://localhost:3000"),
 })
 {
-    Categories = { ImageCategory.Hate },
+    Categories =
+    {
+        ImageCategory.Hate
+    },
 };
 Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(body);
 ]]></code></example>
@@ -206,13 +221,16 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData
+AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData()
 {
     Content = BinaryData.FromObjectAsJson(new object()),
     BlobUrl = new Uri("http://localhost:3000"),
 })
 {
-    Categories = { ImageCategory.Hate },
+    Categories =
+    {
+        ImageCategory.Hate
+    },
 };
 Response<AnalyzeImageResult> response = client.AnalyzeImage(body);
 ]]></code></example>
@@ -225,7 +243,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     image = new object(),
 });
@@ -240,14 +258,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     image = new
     {
         content = new object(),
         blobUrl = "http://localhost:3000",
     },
-    categories = new object[]
+    categories = new List<object>()
     {
         "Hate"
     },
@@ -273,7 +291,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     image = new object(),
 });
@@ -288,14 +306,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     image = new
     {
         content = new object(),
         blobUrl = "http://localhost:3000",
     },
-    categories = new object[]
+    categories = new List<object>()
     {
         "Hate"
     },
@@ -411,7 +429,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     blocklistName = "<blocklistName>",
 });
@@ -426,7 +444,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     blocklistName = "<blocklistName>",
     description = "<description>",
@@ -446,7 +464,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     blocklistName = "<blocklistName>",
 });
@@ -461,7 +479,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     blocklistName = "<blocklistName>",
     description = "<description>",
@@ -482,7 +500,6 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTextBlocklistAsync with all parameters.
@@ -492,7 +509,6 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -505,7 +521,6 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 Response response = client.DeleteTextBlocklist("<blocklistName>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTextBlocklist with all parameters.
@@ -515,7 +530,6 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 Response response = client.DeleteTextBlocklist("<blocklistName>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -527,7 +541,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
 {
     new TextBlockItemInfo("<text>")
 });
@@ -539,7 +553,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
 {
     new TextBlockItemInfo("<text>")
     {
@@ -557,7 +571,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
 {
     new TextBlockItemInfo("<text>")
 });
@@ -569,7 +583,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
 {
     new TextBlockItemInfo("<text>")
     {
@@ -587,9 +601,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItems = new object[]
+    blockItems = new List<object>()
     {
         new
         {
@@ -608,9 +622,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItems = new object[]
+    blockItems = new List<object>()
     {
         new
         {
@@ -635,9 +649,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItems = new object[]
+    blockItems = new List<object>()
     {
         new
         {
@@ -656,9 +670,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItems = new object[]
+    blockItems = new List<object>()
     {
         new
         {
@@ -683,8 +697,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
+RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
+{
+    "<blockItemIds>"
+});
 Response response = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
+Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveBlockItemsAsync with all parameters.
 <code><![CDATA[
@@ -692,8 +710,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
+RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
+{
+    "<blockItemIds>"
+});
 Response response = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
+Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="RemoveBlockItems(string,RemoveBlockItemsOptions,CancellationToken)">
@@ -704,8 +726,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
+RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
+{
+    "<blockItemIds>"
+});
 Response response = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
+Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveBlockItems with all parameters.
 <code><![CDATA[
@@ -713,8 +739,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
+RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
+{
+    "<blockItemIds>"
+});
 Response response = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
+Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="RemoveBlockItemsAsync(string,RequestContent,RequestContext)">
@@ -725,15 +755,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItemIds = new object[]
+    blockItemIds = new List<object>()
     {
         "<blockItemIds>"
     },
 });
 Response response = await client.RemoveBlockItemsAsync("<blocklistName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveBlockItemsAsync with all parameters and request content.
@@ -742,15 +771,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItemIds = new object[]
+    blockItemIds = new List<object>()
     {
         "<blockItemIds>"
     },
 });
 Response response = await client.RemoveBlockItemsAsync("<blocklistName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -762,15 +790,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItemIds = new object[]
+    blockItemIds = new List<object>()
     {
         "<blockItemIds>"
     },
 });
 Response response = client.RemoveBlockItems("<blocklistName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveBlockItems with all parameters and request content.
@@ -779,15 +806,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
-    blockItemIds = new object[]
+    blockItemIds = new List<object>()
     {
         "<blockItemIds>"
     },
 });
 Response response = client.RemoveBlockItems("<blocklistName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -942,7 +968,7 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 await foreach (BinaryData item in client.GetTextBlocklistsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
+    Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
 }
 ]]></code>
 This sample shows how to call GetTextBlocklistsAsync with all parameters and parse the result.
@@ -954,8 +980,8 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 await foreach (BinaryData item in client.GetTextBlocklistsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
+    Console.WriteLine(result[0].GetProperty("description").ToString());
 }
 ]]></code></example>
     </member>
@@ -970,7 +996,7 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 foreach (BinaryData item in client.GetTextBlocklists(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
+    Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
 }
 ]]></code>
 This sample shows how to call GetTextBlocklists with all parameters and parse the result.
@@ -982,8 +1008,8 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 foreach (BinaryData item in client.GetTextBlocklists(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
+    Console.WriteLine(result[0].GetProperty("description").ToString());
 }
 ]]></code></example>
     </member>
@@ -1044,8 +1070,8 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 await foreach (BinaryData item in client.GetTextBlocklistItemsAsync("<blocklistName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
+    Console.WriteLine(result[0].GetProperty("text").ToString());
 }
 ]]></code>
 This sample shows how to call GetTextBlocklistItemsAsync with all parameters and parse the result.
@@ -1057,9 +1083,9 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 await foreach (BinaryData item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
+    Console.WriteLine(result[0].GetProperty("description").ToString());
+    Console.WriteLine(result[0].GetProperty("text").ToString());
 }
 ]]></code></example>
     </member>
@@ -1074,8 +1100,8 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 foreach (BinaryData item in client.GetTextBlocklistItems("<blocklistName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
+    Console.WriteLine(result[0].GetProperty("text").ToString());
 }
 ]]></code>
 This sample shows how to call GetTextBlocklistItems with all parameters and parse the result.
@@ -1087,9 +1113,9 @@ ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 foreach (BinaryData item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
+    Console.WriteLine(result[0].GetProperty("description").ToString());
+    Console.WriteLine(result[0].GetProperty("text").ToString());
 }
 ]]></code></example>
     </member>
