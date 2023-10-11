@@ -31,7 +31,7 @@ namespace EventGridSourceGenerator
                 xmlDoc.LoadXml(symbol.GetDocumentationCommentXml());
                 var xmlNode = xmlDoc.SelectSingleNode("member/summary");
                 // the event name is either 3 or 4 parts, e.g. Microsoft.AppConfiguration.KeyValueDeleted or Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged
-                var match = Regex.Match(xmlNode.InnerText, "[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+(\\.[a-zA-Z])?");
+                var match = Regex.Match(xmlNode.InnerText, "[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+(\\.[a-zA-Z]+)?");
                 if (!match.Success)
                 {
                     // We expect some EventData to not have event types if they are base types,

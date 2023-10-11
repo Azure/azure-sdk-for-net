@@ -4230,6 +4230,45 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(DateTimeOffset.Parse("2022-10-12T19:38:08.0218897Z"), dataBoxEvent.StageTime);
         }
         #endregion
+        #region Resource Notifications
+
+        [Test] public void ConsumeCloudEventHealthResourcesAvailiabilityStatusChangedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""1fb6fa94-d965-4306-abeq-4810f0774e97"",
+              ""source"": ""/subscriptions/{subscription-id}"",
+              ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}"",
+              ""data"": {
+                ""resourceInfo"": {
+                  ""id"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}"",
+                  ""name"": ""{event-id}"",
+                  ""type"": ""Microsoft.ResourceHealth/availabilityStatuses"",
+                  ""properties"": {
+                    ""targetResourceId"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}"",
+                    ""targetResourceType"": ""Microsoft.Compute/virtualMachines"",
+                    ""occurredTime"": ""2023-07-24T19:20:37.9245071Z"",
+                    ""previousAvailabilityState"": ""Unavailable"",
+                    ""availabilityState"": ""Available""
+                  }
+                },
+                ""operationalInfo"": {
+                  ""resourceEventTime"": ""2023-07-24T19:20:37.9245071Z""
+                },
+                ""apiVersion"": ""2023-12-01""
+              },
+              ""type"": ""Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2023-07-24T19:20:37.9245071Z""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var availabilityStatusChangedEventData = eventData as ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData;
+            Assert.IsNotNull(availabilityStatusChangedEventData);
+            Assert.AreEqual("{event-id}", availabilityStatusChangedEventData.ResourceDetails.Name);
+        }
+        #endregion
         #endregion
     }
 }
