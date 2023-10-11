@@ -15,8 +15,8 @@ resource cluster 'Microsoft.Kusto/clusters@2023-08-15' = {
     name: clusterName
     location: location
     sku: {
-        name: 'Standard_E8as_v5+1TB_PS'
-        tier: 'Standard'
+        name: 'Dev(No SLA)_Standard_E2a_v4'
+        tier: 'Basic'
     }
     identity: {
         type: 'SystemAssigned, UserAssigned'
@@ -61,8 +61,8 @@ resource followerCluster 'Microsoft.Kusto/clusters@2023-08-15' = {
     name: followingClusterName
     location: location
     sku: {
-        name: 'Dev(No SLA)_Standard_E2a_v4'
-        tier: 'Basic'
+        name: 'Standard_E8as_v5+1TB_PS'
+        tier: 'Standard'
     }
     identity: {
         type: 'SystemAssigned'

@@ -11,36 +11,39 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
     public class KustoSandboxCustomImageTests : KustoManagementTestBase
     {
         public KustoSandboxCustomImageTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(cluster: true);
+            await BaseSetUp();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task SandboxCustomImageTests()
         {
-            var sandboxCustomImageCollection = Cluster.GetSandboxCustomImages();
+            // Custom Image only works on clusters with skus supporing hyper-threading
+            // Since DatabaseCmkTests require devSku this test uses the follower cluster resource
+            // Once DatabaseCmk feature if publicly available - change follower cluster back to regular sku and work on regular cluster
+            var sandboxCustomImageCollection = FollowingCluster.GetSandboxCustomImages();
 
-            var sandboxCustomImageName = GenerateAssetName("sdkSandboxCustomImage");
+            var sandboxCustomImageName = "sdksandboxcustomimage";
 
             var sandboxCustomImageDataCreate = new SandboxCustomImageData()
             {
                 Language = Language.Python,
-                LanguageVersion = "3.10.8",
-                RequirementsFileContent = "Requests",
+                LanguageVersion = "3.9.7",
+                RequirementsFileContent = "Requests\n urllib3"
             };
 
             var sandboxCustomImageDataUpdate = new SandboxCustomImageData()
             {
                 Language = Language.Python,
-                LanguageVersion = "3.9.16",
-                RequirementsFileContent = "Pillow",
+                LanguageVersion = "3.10.8",
+                RequirementsFileContent = "Pillow"
             };
 
             Task<ArmOperation<SandboxCustomImageResource>> CreateOrUpdateSandboxCustomImageAsync(
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             await CollectionTests(
                 sandboxCustomImageName,
-                GetFullClusterChildResourceName(sandboxCustomImageName),
+                GetFullClusterChildResourceName(sandboxCustomImageName, TE.FollowingClusterName),
                 sandboxCustomImageDataCreate,
                 sandboxCustomImageDataUpdate,
                 CreateOrUpdateSandboxCustomImageAsync,
