@@ -12,7 +12,7 @@ pr:
   paths:
     include:
     - sdk/codesigning/ci.mgmt.yml
-    - sdk/codesigning/Microsoft.CodeSigning/
+    - sdk/codesigning/Azure.CodeSigning/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -20,5 +20,5 @@ extends:
     ServiceDirectory: codesigning
     LimitForPullRequest: true
     Artifacts:
-    - name: Microsoft.CodeSigning
-      safeName: MicrosoftCodeSigning
+    - name: Azure.CodeSigning
+      safeName: AzureCodeSigning

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: CodeSigning
 namespace: Azure.ResourceManager.CodeSigning
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/codesigning/resource-manager/readme.md
+require: https://github.com/ashutak84/azure-rest-api-specs/blob/640c21a0319de4474c6c63ee9a447eb90ddad31d/specification/codesigning/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Microsoft.CodeSigning.Tests
+namespace Microsoft.TrustedSigning.Tests
 {
     public class CodeSigningManagementTestEnvironment : TestEnvironment
     {

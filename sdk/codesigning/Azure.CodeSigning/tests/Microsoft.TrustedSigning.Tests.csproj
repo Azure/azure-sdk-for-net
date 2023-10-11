@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.33.0" />
+    <PackageReference Include="Azure.ResourceManager" Version="1.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.TrustedSigning.csproj" />
+  </ItemGroup>
+</Project>
