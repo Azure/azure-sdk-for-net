@@ -205,16 +205,8 @@ namespace Azure.Storage.DataMovement
                 preserveLastModifiedTime: false, // TODO: update when supported
                 checksumVerificationOption: 0); // TODO: update when supported
 
-            // Create the source Path
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-            sourceUriBuilder.Query = "";
-            string sourcePath = sourceUriBuilder.Uri.AbsoluteUri;
-
-            // Remove any query or SAS that could be attach to the Uri
-            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-            destinationUriBuilder.Query = "";
-            string destinationPath = destinationUriBuilder.Uri.AbsoluteUri;
+            string sourcePath = jobPart._sourceResource.Uri.ToSanitizedString();
+            string destinationPath = jobPart._destinationResource.Uri.ToSanitizedString();
 
             return new JobPartPlanHeader(
                 version: DataMovementConstants.JobPartPlanFile.SchemaVersion,
