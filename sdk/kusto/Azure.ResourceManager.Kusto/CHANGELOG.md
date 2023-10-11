@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.5.0 (latest)
+## 1.5.0 (2023-10-25)
 
 ### Features Added
 
