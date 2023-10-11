@@ -120,7 +120,7 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":startTranscription", false);
+            uri.AppendPath(":StartTranscription", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -194,7 +194,7 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":stopTranscription", false);
+            uri.AppendPath(":StopTranscription", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -615,7 +615,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest)
+        internal HttpMessage CreateUpdateTranscriptionDataRequest(string callConnectionId, UpdateTranscriptionDataRequest updateTranscriptionDataRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -624,35 +624,35 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":updateTranscription", false);
+            uri.AppendPath(":updateTranscriptionData", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue(updateTranscriptionDataRequest);
             request.Content = content;
             return message;
         }
 
-        /// <summary> UpdateTranscription Api. </summary>
+        /// <summary> UpdateTranscriptionData Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequest"> The updateTranscription request. </param>
+        /// <param name="updateTranscriptionDataRequest"> The updateTranscriptionData request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionDataRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTranscriptionDataAsync(string callConnectionId, UpdateTranscriptionDataRequest updateTranscriptionDataRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (updateTranscriptionRequest == null)
+            if (updateTranscriptionDataRequest == null)
             {
-                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
+                throw new ArgumentNullException(nameof(updateTranscriptionDataRequest));
             }
 
-            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
+            using var message = CreateUpdateTranscriptionDataRequest(callConnectionId, updateTranscriptionDataRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -663,24 +663,24 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> UpdateTranscription Api. </summary>
+        /// <summary> UpdateTranscriptionData Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequest"> The updateTranscription request. </param>
+        /// <param name="updateTranscriptionDataRequest"> The updateTranscriptionData request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionDataRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        public Response UpdateTranscriptionData(string callConnectionId, UpdateTranscriptionDataRequest updateTranscriptionDataRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (updateTranscriptionRequest == null)
+            if (updateTranscriptionDataRequest == null)
             {
-                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
+                throw new ArgumentNullException(nameof(updateTranscriptionDataRequest));
             }
 
-            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
+            using var message = CreateUpdateTranscriptionDataRequest(callConnectionId, updateTranscriptionDataRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

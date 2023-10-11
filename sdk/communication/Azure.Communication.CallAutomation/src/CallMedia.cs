@@ -969,8 +969,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
-                return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
+                UpdateTranscriptionDataRequest request = new UpdateTranscriptionDataRequest(locale);
+                return CallMediaRestClient.UpdateTranscriptionData(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -991,8 +991,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
-                return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                UpdateTranscriptionDataRequest request = new UpdateTranscriptionDataRequest(locale);
+                return await CallMediaRestClient.UpdateTranscriptionDataAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
