@@ -16,6 +16,10 @@
 
 - Introduced Cluster Sandbox Custom Image functionality.
 
+### Other Changes
+
+- Upgraded to Azure API version 2023-08-15.
+
 ## 1.4.0 (2023-07-05)
 
 ### Features Added
