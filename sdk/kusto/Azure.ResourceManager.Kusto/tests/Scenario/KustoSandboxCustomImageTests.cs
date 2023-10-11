@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
     public class KustoSandboxCustomImageTests : KustoManagementTestBase
     {
         public KustoSandboxCustomImageTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
