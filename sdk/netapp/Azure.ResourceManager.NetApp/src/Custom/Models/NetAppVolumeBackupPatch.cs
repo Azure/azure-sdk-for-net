@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Backup patch. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppVolumeBackupPatch
     {
         /// <summary> Initializes a new instance of NetAppVolumeBackupPatch. </summary>

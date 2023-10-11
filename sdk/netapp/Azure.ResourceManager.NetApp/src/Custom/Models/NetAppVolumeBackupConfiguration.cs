@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Policy Resource ID. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier BackupPolicyId { get; set; }
 
         /// <summary> Policy Enforced. </summary>

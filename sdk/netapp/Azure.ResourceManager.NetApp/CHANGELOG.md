@@ -1,7 +1,7 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-- Updated to support ANF api-version 2022-09-01
+## 1.4.0-beta.1 (2023-10-15)
+- Updated to support ANF api-version 2023-05-01
 ### Features Added
 - Added `QueryNetworkSiblingSetNetAppResource` and `UpdateNetworkSiblingSetNetAppResource` to allow clients to query and update the Networking features for a Networking siblingset related to a ANF Volume
 - Added `CoolAccessRetrievalPolicy` to `NetAppVolumePatch` and `NetAppVolumeData`, coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes.

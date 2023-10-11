@@ -17,8 +17,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppResource_NetworkSiblingSetTests: NetAppTestBase
     {
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
-        private readonly string _pool1Name = "pool1";
-        //public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
+        private readonly string _pool1Name = "pool1";        
         public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
         internal NetAppVolumeResource _volumeResource;
@@ -64,9 +63,6 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await pool.DeleteAsync(WaitUntil.Completed);
                 }
                 await LiveDelay(40000);
-                //remove
-                //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                //await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;

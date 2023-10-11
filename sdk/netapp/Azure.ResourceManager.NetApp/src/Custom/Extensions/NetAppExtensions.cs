@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetAppAccountBackupResource" /> object. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountBackupResource GetNetAppAccountBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetAppVolumeBackupResource" /> object. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+
         public static NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>

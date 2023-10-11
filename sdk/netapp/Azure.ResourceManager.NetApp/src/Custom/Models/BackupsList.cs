@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Value = value;
         }
 
-        /// <summary> A list of Backups. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> A list of Backups. </summary>        
         public IReadOnlyList<NetAppBackupData> Value { get; }
     }
 }

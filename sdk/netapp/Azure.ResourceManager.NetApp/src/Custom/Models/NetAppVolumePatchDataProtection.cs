@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -11,6 +12,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumePatchDataProtection
     {
         /// <summary> Backup Properties. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetAppVolumeBackupConfiguration Backup { get; set; }
     }
 }
