@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 
 namespace System.ServiceModel.Rest;
@@ -16,6 +17,21 @@ namespace System.ServiceModel.Rest;
 // if we want.
 public class InvocationOptions : PipelineOptions
 {
+    public void Apply(PipelineMessage message)
+    {
+        // Wire up options on message
+        message.CancellationToken = CancellationToken;
+        message.ResponseClassifier = ResponseClassifier;
+
+        // TODO: note that this is a lot of *ways* to set values on the
+        // message, policy, etc.  Let's get clear on how many ways we need and why
+        // and when we use what, etc., then simplify it back to that per reasons.
+        if (NetworkTimeout.HasValue)
+        {
+            ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+        }
+    }
+
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
     // TODO: handle duplication across message and options

@@ -11,7 +11,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 // Introduces the dependency on System.Net.Http;
 
-public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage, InvocationOptions>, IDisposable
+public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     /// <summary>
     /// A shared instance of <see cref="HttpPipelineMessageTransport"/> with default parameters.
@@ -59,22 +59,10 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         };
     }
 
-    public override PipelineMessage CreateMessage(InvocationOptions options)
+    public override PipelineMessage CreateMessage()
     {
         PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
-
-        // Wire up options on message
-        message.CancellationToken = options.CancellationToken;
-        message.ResponseClassifier = options.ResponseClassifier;
-
-        // TODO: note that this is a lot of *ways* to set values on the
-        // message, policy, etc.  Let's get clear on how many ways we need and why
-        // and then simplify it back to that.
-        if (options.NetworkTimeout.HasValue)
-        {
-            ResponseBufferingPolicy.SetNetworkTimeout(message, options.NetworkTimeout.Value);
-        }
 
         return message;
     }

@@ -958,14 +958,14 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<Azure.Core.HttpMessage, Azure.RequestContext>
+    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<Azure.Core.HttpMessage>
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage() { throw null; }
-        public override Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
+        public override Azure.Core.HttpMessage CreateMessage() { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public override void Send(Azure.Core.HttpMessage message) { }

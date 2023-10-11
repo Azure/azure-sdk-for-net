@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public abstract class PipelineTransport<TMessage, TMessageOptions> : IPipelinePolicy<TMessage>
+public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 {
     /// <summary>
     /// TBD: needed for inheritdoc.
@@ -23,7 +23,7 @@ public abstract class PipelineTransport<TMessage, TMessageOptions> : IPipelinePo
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
-    public abstract TMessage CreateMessage(TMessageOptions options);
+    public abstract TMessage CreateMessage();
 
     public void Process(TMessage message, IPipelineEnumerator pipeline)
     {

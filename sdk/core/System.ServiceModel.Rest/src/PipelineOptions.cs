@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 
 /// <summary>
 /// Controls the creation of the pipeline.
-/// Works with InvocationOptions, which controls the behavior of the pipeline.
+/// Works with RequestOptions (TODO: InvocationOptions), which controls the behavior of the pipeline.
 /// </summary>
 public class PipelineOptions
 {
@@ -23,7 +23,7 @@ public class PipelineOptions
 
     public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
 
-    public PipelineTransport<PipelineMessage, InvocationOptions>? Transport { get; set; }
+    public PipelineTransport<PipelineMessage>? Transport { get; set; }
     #endregion
 
     #region Pipeline creation: Policy-specific settings
@@ -35,7 +35,7 @@ public class PipelineOptions
 
     public static IPipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
 
-    public static PipelineTransport<PipelineMessage, InvocationOptions>? DefaultTransport { get; set; }
+    public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
 
     public static TimeSpan DefaultNetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     #endregion
