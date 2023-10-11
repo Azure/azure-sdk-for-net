@@ -13,13 +13,13 @@ namespace Azure.Developer.DevCenter
     /// <summary> Client options for DevCenter library clients. </summary>
     public partial class DevCenterClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_11_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-11-11-preview". </summary>
-            V2022_11_11_Preview = 1,
+            /// <summary> Service version "2023-04-01". </summary>
+            V2023_04_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Developer.DevCenter
         {
             Version = version switch
             {
-                ServiceVersion.V2022_11_11_Preview => "2022-11-11-preview",
+                ServiceVersion.V2023_04_01 => "2023-04-01",
                 _ => throw new NotSupportedException()
             };
         }

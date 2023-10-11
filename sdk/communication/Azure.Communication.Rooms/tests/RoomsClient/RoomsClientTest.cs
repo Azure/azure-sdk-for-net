@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Rooms;
 using Moq;
 using NUnit.Framework;
 
@@ -48,6 +47,51 @@ namespace Azure.Communication.Rooms.Tests
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 
+        [Theory]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateRoomWithPstnAsyncShouldSucceed(bool? pstnDialOutEnabled)
+        {
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(1);
+
+            var mri1 = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
+            var mri2 = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000102";
+
+            var communicationUser1 = new CommunicationUserIdentifier(mri1);
+            var communicationUser2 = new CommunicationUserIdentifier(mri2);
+
+            var participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            var participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+
+            List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
+            {
+                participant1,
+                participant2
+            };
+
+            CreateRoomOptions createRoomOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+                Participants = createRoomParticipants
+            };
+
+            Response<CommunicationRoom> expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            mockRoomsClient
+                .Setup(roomsClient => roomsClient.CreateRoomAsync(createRoomOptions, cancellationToken))
+                .ReturnsAsync(expectedRoomResult);
+
+            Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.CreateRoomAsync(createRoomOptions, cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoomAsync(createRoomOptions, cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
         [Test]
         public void CreateRoomShouldSucceed()
         {
@@ -73,6 +117,42 @@ namespace Azure.Communication.Rooms.Tests
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 
+        [Theory]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CreateRoomWithPstnShouldSucceed(bool? pstnDialOutEnabled)
+        {
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(1);
+            List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
+            string communicationUser1 = "mockAcsUserIdentityString1";
+            string communicationUser2 = "mockAcsUserIdentityString2";
+
+            createRoomParticipants.Add(new RoomParticipant(new CommunicationUserIdentifier(communicationUser1)) { Role = ParticipantRole.Presenter });
+            createRoomParticipants.Add(new RoomParticipant(new CommunicationUserIdentifier(communicationUser2)) { Role = ParticipantRole.Attendee });
+
+            CreateRoomOptions createRoomOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+                Participants = createRoomParticipants
+            };
+
+            Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            mockRoomsClient
+                .Setup(roomsClient => roomsClient.CreateRoom(createRoomOptions, cancellationToken))
+                .Returns(expectedRoomResult);
+
+            Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.CreateRoom(createRoomOptions, cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.CreateRoom(createRoomOptions, cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
         [Test]
         public async Task UpdateRoomAsyncShouldSucceed()
         {
@@ -90,6 +170,35 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
+        [Theory]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateRoomWithPstnAsyncShouldSucceed(bool? pstnDialOutEnabled)
+        {
+            string roomId = "123";
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(1);
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled
+            };
+
+            Response<CommunicationRoom>? expectedRoomResult = default;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            mockRoomsClient
+            .Setup(roomsClient => roomsClient.UpdateRoomAsync(roomId, roomUpdateOptions, cancellationToken))
+            .ReturnsAsync(expectedRoomResult);
+
+            Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, roomUpdateOptions, cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, roomUpdateOptions, cancellationToken), Times.Once());
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 
@@ -111,6 +220,34 @@ namespace Azure.Communication.Rooms.Tests
             Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, validFrom, validUntil, cancellationToken);
 
             mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil, cancellationToken), Times.Once());
+            Assert.AreEqual(expectedRoomResult, actualResponse);
+        }
+
+        [Theory]
+        [TestCase(true)]
+        public void UpdateRoomWithPstnShouldSucceed(bool? pstnDialOutEnabled)
+        {
+            Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
+            string roomId = "123";
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(1);
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled
+            };
+
+            Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
+            CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
+            mockRoomsClient
+            .Setup(roomsClient => roomsClient.UpdateRoom(roomId, roomUpdateOptions, cancellationToken))
+            .Returns(expectedRoomResult);
+
+            Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, roomUpdateOptions, cancellationToken);
+
+            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, roomUpdateOptions, cancellationToken), Times.Once());
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 

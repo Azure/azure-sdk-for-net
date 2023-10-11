@@ -877,6 +877,39 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task RetriesOnRetriableStatusCode([Values(404, 410, 500)] int status)
+        {
+            int retryCount = 0;
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+            var errorMessage = "Some error happened";
+            var mockTransport = new MockTransport(request =>
+            {
+                retryCount++;
+                return CreateErrorMockResponse(status, errorMessage);
+            });
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
+            Assert.That(ex.Message, Does.Contain(errorMessage));
+            Assert.That(retryCount, Is.EqualTo(4));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
         [TestCaseSource("ExceptionalEnvironmentConfigs")]
         public async Task VerifyAuthenticationFailedExceptionsAreDeferredToGetToken(Dictionary<string, string> environmentVariables)
         {

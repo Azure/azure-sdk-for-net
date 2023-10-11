@@ -31,6 +31,16 @@ namespace Azure.Storage.DataMovement.JobPlan
         public JobPlanOperation OperationType;
 
         /// <summary>
+        /// A string ID of the source resource provider to use for rehydration.
+        /// </summary>
+        public string SourceProviderId;
+
+        /// <summary>
+        /// A string ID of the destination resource provider to use for rehydration.
+        /// </summary>
+        public string DestinationProviderId;
+
+        /// <summary>
         /// Whether or not the enumeration of the parent container has completed.
         /// </summary>
         public bool EnumerationComplete;
@@ -38,7 +48,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the transfer job.
         /// </summary>
-        public JobPlanStatus JobStatus;
+        public DataTransferStatus JobStatus;
 
         /// <summary>
         /// The parent path for the source of the transfer.
@@ -55,21 +65,36 @@ namespace Azure.Storage.DataMovement.JobPlan
             string transferId,
             DateTimeOffset createTime,
             JobPlanOperation operationType,
+            string sourceProviderId,
+            string destinationProviderId,
             bool enumerationComplete,
-            JobPlanStatus jobStatus,
+            DataTransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath)
         {
             Argument.AssertNotNull(version, nameof(version));
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            Argument.AssertNotNullOrEmpty(sourceProviderId, nameof(sourceProviderId));
+            Argument.AssertNotNullOrEmpty(destinationProviderId, nameof(destinationProviderId));
             Argument.AssertNotNull(createTime, nameof(createTime));
             Argument.AssertNotNullOrEmpty(parentSourcePath, nameof(parentSourcePath));
             Argument.AssertNotNullOrEmpty(parentDestinationPath, nameof(parentDestinationPath));
+
+            if (sourceProviderId.Length > DataMovementConstants.JobPlanFile.ProviderIdMaxLength)
+            {
+                throw new ArgumentException("The provided sourceProviderId is too long.");
+            }
+            if (destinationProviderId.Length > DataMovementConstants.JobPlanFile.ProviderIdMaxLength)
+            {
+                throw new ArgumentException("The provided destinationProviderId is too long.");
+            }
 
             Version = version;
             TransferId = transferId;
             CreateTime = createTime;
             OperationType = operationType;
+            SourceProviderId = sourceProviderId;
+            DestinationProviderId = destinationProviderId;
             EnumerationComplete = enumerationComplete;
             JobStatus = jobStatus;
             ParentSourcePath = parentSourcePath;
@@ -96,27 +121,25 @@ namespace Azure.Storage.DataMovement.JobPlan
             // OperationType
             writer.Write((byte)OperationType);
 
+            // SourceProviderId
+            WritePaddedString(writer, SourceProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+
+            // DestinationProviderId
+            WritePaddedString(writer, DestinationProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+
             // EnumerationComplete
             writer.Write(Convert.ToByte(EnumerationComplete));
 
             // JobStatus
-            writer.Write((int)JobStatus);
+            writer.Write((int)JobStatus.ToJobPlanStatus());
 
-            // ParentSourcePath offset
+            // ParentSourcePath offset/length
             byte[] parentSourcePathBytes = Encoding.UTF8.GetBytes(ParentSourcePath);
-            writer.Write(currentVariableLengthIndex);
-            currentVariableLengthIndex += parentSourcePathBytes.Length;
+            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentSourcePathBytes, ref currentVariableLengthIndex);
 
-            // ParentSourcePath length
-            writer.Write(parentSourcePathBytes.Length);
-
-            // ParentDestinationPath offset
+            // ParentDestinationPath offset/length
             byte[] parentDestinationPathBytes = Encoding.UTF8.GetBytes(ParentDestinationPath);
-            writer.Write(currentVariableLengthIndex);
-            currentVariableLengthIndex += parentDestinationPathBytes.Length;
-
-            // ParentDestinationPath length
-            writer.Write(parentDestinationPathBytes.Length);
+            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentDestinationPathBytes, ref currentVariableLengthIndex);
 
             // ParentSourcePath
             writer.Write(parentSourcePathBytes);
@@ -151,12 +174,18 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte operationTypeByte = reader.ReadByte();
             JobPlanOperation operationType = (JobPlanOperation)operationTypeByte;
 
+            // SourceProviderId
+            string sourceProviderId = ReadPaddedString(reader, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+
+            // DestinationProviderId
+            string destProviderId = ReadPaddedString(reader, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+
             // EnumerationComplete
             byte enumerationCompleteByte = reader.ReadByte();
             bool enumerationComplete = Convert.ToBoolean(enumerationCompleteByte);
 
             // JobStatus
-            JobPlanStatus jobStatus = (JobPlanStatus)reader.ReadInt32();
+            JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
 
             // ParentSourcePath offset
             int parentSourcePathOffset = reader.ReadInt32();
@@ -193,8 +222,10 @@ namespace Azure.Storage.DataMovement.JobPlan
                 transferId,
                 createTime,
                 operationType,
+                sourceProviderId,
+                destProviderId,
                 enumerationComplete,
-                jobStatus,
+                jobPlanStatus.ToDataTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath);
         }
@@ -210,6 +241,12 @@ namespace Azure.Storage.DataMovement.JobPlan
                 char[] paddingArray = new char[padding];
                 writer.Write(paddingArray);
             }
+        }
+
+        private static string ReadPaddedString(BinaryReader reader, int numBytes)
+        {
+            byte[] stringBytes = reader.ReadBytes(numBytes);
+            return stringBytes.ToString(numBytes).TrimEnd('\0');
         }
 
         private static void CheckSchemaVersion(string version)

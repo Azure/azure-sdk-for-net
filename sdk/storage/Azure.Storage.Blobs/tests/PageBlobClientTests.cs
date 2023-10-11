@@ -156,7 +156,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.PublicAudience);
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {
@@ -212,7 +212,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync(Constants.KB);
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.GetBlobServiceAccountAudience(test.Container.AccountName));
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(test.Container.AccountName));
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -15,13 +14,13 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
+namespace Azure.AI.Language.QuestionAnswering.Samples
 {
-    public class Samples_QuestionAnsweringAuthoringClient
+    public partial class Samples_QuestionAnsweringAuthoringClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDetails()
+        public void Example_GetProjectDetails_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -35,7 +34,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDetails_Async()
+        public async Task Example_GetProjectDetails_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -91,13 +90,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject()
+        public void Example_CreateProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 language = "<language>",
             });
@@ -109,13 +108,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_Async()
+        public async Task Example_CreateProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 language = "<language>",
             });
@@ -133,7 +132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -164,7 +163,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -189,7 +188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeleteStatus()
+        public void Example_GetDeleteStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -206,7 +205,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeleteStatus_Async()
+        public async Task Example_GetDeleteStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -259,7 +258,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportStatus()
+        public void Example_GetExportStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -276,7 +275,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportStatus_Async()
+        public async Task Example_GetExportStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -329,7 +328,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportStatus()
+        public void Example_GetImportStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -346,7 +345,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportStatus_Async()
+        public async Task Example_GetImportStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -399,7 +398,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployStatus()
+        public void Example_GetDeployStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -416,7 +415,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployStatus_Async()
+        public async Task Example_GetDeployStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -469,27 +468,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSynonyms()
+        public void Example_UpdateSynonyms_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateSynonyms("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSynonyms_Async()
+        public async Task Example_UpdateSynonyms_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -501,21 +502,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                value = new List<object>()
-{
+                value = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
+            },
                 nextLink = "<nextLink>",
             });
             Response response = client.UpdateSynonyms("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -527,27 +529,28 @@ alterations = new List<object>()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                value = new List<object>()
-{
+                value = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
+            },
                 nextLink = "<nextLink>",
             });
             Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateSourcesStatus()
+        public void Example_GetUpdateSourcesStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -564,7 +567,7 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateSourcesStatus_Async()
+        public async Task Example_GetUpdateSourcesStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -617,7 +620,7 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateQnasStatus()
+        public void Example_GetUpdateQnasStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -634,7 +637,7 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateQnasStatus_Async()
+        public async Task Example_GetUpdateQnasStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -687,27 +690,29 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddFeedback()
+        public void Example_AddFeedback_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.AddFeedback("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddFeedback_Async()
+        public async Task Example_AddFeedback_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddFeedbackAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -719,19 +724,20 @@ alterations = new List<object>()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                records = new List<object>()
-{
+                records = new object[]
+            {
 new
 {
 userId = "<userId>",
 userQuestion = "<userQuestion>",
 qnaId = 1234,
 }
-},
+            },
             });
             Response response = client.AddFeedback("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -743,25 +749,26 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                records = new List<object>()
-{
+                records = new object[]
+            {
 new
 {
 userId = "<userId>",
 userQuestion = "<userQuestion>",
 qnaId = 1234,
 }
-},
+            },
             });
             Response response = await client.AddFeedbackAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects()
+        public void Example_GetProjects_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -770,13 +777,13 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_Async()
+        public async Task Example_GetProjects_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -785,7 +792,7 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -800,14 +807,14 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("multilingualResource").ToString());
-                Console.WriteLine(result[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+                Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             }
         }
 
@@ -822,20 +829,20 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("multilingualResource").ToString());
-                Console.WriteLine(result[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+                Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments()
+        public void Example_GetDeployments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -844,13 +851,13 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_Async()
+        public async Task Example_GetDeployments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -859,7 +866,7 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -874,8 +881,8 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             }
         }
 
@@ -890,14 +897,14 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSynonyms()
+        public void Example_GetSynonyms_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -906,13 +913,13 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetSynonyms("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
+                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSynonyms_Async()
+        public async Task Example_GetSynonyms_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -921,7 +928,7 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
+                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
             }
         }
 
@@ -936,7 +943,7 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetSynonyms("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
+                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
             }
         }
 
@@ -951,13 +958,13 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
+                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSources()
+        public void Example_GetSources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -966,14 +973,14 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetSources("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSources_Async()
+        public async Task Example_GetSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -982,8 +989,8 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
@@ -998,11 +1005,11 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetSources("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
-                Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
             }
         }
 
@@ -1017,17 +1024,17 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
-                Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQnas()
+        public void Example_GetQnas_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1036,13 +1043,13 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetQnas("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQnas_Async()
+        public async Task Example_GetQnas_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1051,7 +1058,7 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1066,28 +1073,28 @@ qnaId = 1234,
             foreach (BinaryData item in client.GetQnas("<projectName>", source: "<source>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
             }
         }
 
@@ -1102,34 +1109,34 @@ qnaId = 1234,
             await foreach (BinaryData item in client.GetQnasAsync("<projectName>", source: "<source>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject()
+        public void Example_DeleteProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1140,7 +1147,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_Async()
+        public async Task Example_DeleteProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1173,7 +1180,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Export()
+        public void Example_Export_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1191,7 +1198,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Export_Async()
+        public async Task Example_Export_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1247,13 +1254,13 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Import()
+        public void Example_Import_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1266,13 +1273,13 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Import_Async()
+        public async Task Example_Import_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1291,7 +1298,7 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1305,24 +1312,24 @@ qnaId = 1234,
                 },
                 assets = new
                 {
-                    synonyms = new List<object>()
-{
+                    synonyms = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
-                    qnas = new List<object>()
-{
+            },
+                    qnas = new object[]
+            {
 new
 {
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1333,7 +1340,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1344,7 +1351,7 @@ qna = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1352,12 +1359,12 @@ metadata = new
 {
 key = "<metadata>",
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1373,12 +1380,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 null
 },
 }
-},
+            },
                 },
                 fileUri = "<fileUri>",
             });
@@ -1401,7 +1408,7 @@ null
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1415,24 +1422,24 @@ null
                 },
                 assets = new
                 {
-                    synonyms = new List<object>()
-{
+                    synonyms = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
-                    qnas = new List<object>()
-{
+            },
+                    qnas = new object[]
+            {
 new
 {
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1443,7 +1450,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1454,7 +1461,7 @@ qna = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1462,12 +1469,12 @@ metadata = new
 {
 key = "<metadata>",
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1483,12 +1490,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 null
 },
 }
-},
+            },
                 },
                 fileUri = "<fileUri>",
             });
@@ -1505,7 +1512,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject()
+        public void Example_DeployProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1520,7 +1527,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_Async()
+        public async Task Example_DeployProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1567,14 +1574,14 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSources()
+        public void Example_UpdateSources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1584,26 +1591,27 @@ sourceUri = "http://localhost:3000",
 sourceKind = "file",
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSources_Async()
+        public async Task Example_UpdateSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1613,13 +1621,14 @@ sourceUri = "http://localhost:3000",
 sourceKind = "file",
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
@@ -1631,8 +1640,8 @@ sourceKind = "file",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1645,16 +1654,17 @@ sourceKind = "file",
 contentStructureKind = "unstructured",
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
-                Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
             }
         }
 
@@ -1666,8 +1676,8 @@ contentStructureKind = "unstructured",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1680,64 +1690,67 @@ sourceKind = "file",
 contentStructureKind = "unstructured",
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("displayName").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
-                Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+                Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateQnas()
+        public void Example_UpdateQnas_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
 value = new object(),
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateQnas_Async()
+        public async Task Example_UpdateQnas_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
 value = new object(),
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1749,8 +1762,8 @@ value = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1759,7 +1772,7 @@ value = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1770,7 +1783,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1780,12 +1793,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1798,33 +1811,34 @@ autoSuggestedCount = 1234,
 },
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
             }
         }
 
@@ -1836,8 +1850,8 @@ autoSuggestedCount = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            using RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1846,7 +1860,7 @@ value = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1857,7 +1871,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1867,12 +1881,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1885,33 +1899,34 @@ autoSuggestedCount = 1234,
 },
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+                Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
             }
         }
     }

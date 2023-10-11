@@ -1958,6 +1958,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
 Response response = await client.DeleteTypeByNameAsync("<name>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeByNameAsync with all parameters.
@@ -1967,6 +1968,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
 Response response = await client.DeleteTypeByNameAsync("<name>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1979,6 +1981,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
 Response response = client.DeleteTypeByName("<name>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeByName with all parameters.
@@ -1988,6 +1991,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
 Response response = client.DeleteTypeByName("<name>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -2713,7 +2717,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateTypeDefinitionsAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2725,26 +2729,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -2768,7 +2772,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -2776,7 +2780,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -2789,18 +2793,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -2818,23 +2821,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -2856,26 +2859,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -2895,7 +2898,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -2917,12 +2920,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -2949,7 +2952,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -2964,7 +2967,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -2986,11 +2989,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3012,11 +3015,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3385,7 +3388,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateTypeDefinitions(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3397,26 +3400,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -3440,7 +3443,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -3448,7 +3451,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -3461,18 +3464,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -3490,23 +3492,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3528,26 +3530,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -3567,7 +3569,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3589,12 +3591,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -3621,7 +3623,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -3636,7 +3638,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3658,11 +3660,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -3684,11 +3686,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4057,7 +4059,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4069,26 +4071,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -4112,7 +4114,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -4120,7 +4122,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -4133,18 +4135,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -4162,23 +4163,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4200,26 +4201,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -4239,7 +4240,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4261,12 +4262,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -4293,7 +4294,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -4308,7 +4309,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4330,11 +4331,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4356,11 +4357,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4729,7 +4730,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateAtlasTypeDefinitions(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4741,26 +4742,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -4784,7 +4785,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -4792,7 +4793,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -4805,18 +4806,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -4834,23 +4834,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4872,26 +4872,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -4911,7 +4911,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -4933,12 +4933,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -4965,7 +4965,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -4980,7 +4980,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5002,11 +5002,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5028,11 +5028,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5401,8 +5401,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.DeleteTypeDefinitionsAsync(content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
@@ -5411,26 +5412,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -5454,7 +5455,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -5462,7 +5463,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -5475,18 +5476,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -5504,23 +5504,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5542,26 +5542,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -5581,7 +5581,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5603,12 +5603,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -5635,7 +5635,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -5650,7 +5650,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5672,11 +5672,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5698,11 +5698,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5726,6 +5726,7 @@ RequestContent content = RequestContent.Create(new
     },
 });
 Response response = await client.DeleteTypeDefinitionsAsync(content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -5737,8 +5738,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.DeleteTypeDefinitions(content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeDefinitions with all request content.
@@ -5747,26 +5749,26 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    businessMetadataDefs = new List<object>()
+    businessMetadataDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 new
                 {
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
-                        new Dictionary<string, object>()
+                        new Dictionary<string, object>
                         {
                             ["params"] = new
                             {
                                 key = new object(),
                             },
-                            ["type"] = "<type>",
+                            ["type"] = "<type>"
                         }
                     },
                     defaultValue = "<defaultValue>",
@@ -5790,7 +5792,7 @@ RequestContent content = RequestContent.Create(new
             createdBy = "<createdBy>",
             dateFormatter = new
             {
-                availableLocales = new List<object>()
+                availableLocales = new object[]
                 {
                     "<availableLocales>"
                 },
@@ -5798,7 +5800,7 @@ RequestContent content = RequestContent.Create(new
                 lenient = true,
                 numberFormat = new
                 {
-                    availableLocales = new List<object>()
+                    availableLocales = new object[]
                     {
                         "<availableLocales>"
                     },
@@ -5811,18 +5813,17 @@ RequestContent content = RequestContent.Create(new
                     parseIntegerOnly = true,
                     roundingMode = "UP",
                 },
-                timeZone = new Dictionary<string, object>()
+                timeZone = new Dictionary<string, object>
                 {
                     ["dstSavings"] = 1234,
                     ["id"] = "<id>",
-                    ["availableIds"] = new List<object>()
+                    ["availableIds"] = new object[]
                     {
                         "<availableIds>"
                     },
-                    ["default"] = null
-                    ,
+                    ["default"] = null,
                     ["displayName"] = "<displayName>",
-                    ["rawOffset"] = 1234,
+                    ["rawOffset"] = 1234
                 },
             },
             description = "<description>",
@@ -5840,23 +5841,23 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    classificationDefs = new List<object>()
+    classificationDefs = new object[]
     {
         new
         {
-            entityTypes = new List<object>()
+            entityTypes = new object[]
             {
                 "<entityTypes>"
             },
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5878,26 +5879,26 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    entityDefs = new List<object>()
+    entityDefs = new object[]
     {
         new
         {
-            subTypes = new List<object>()
+            subTypes = new object[]
             {
                 "<subTypes>"
             },
-            superTypes = new List<object>()
+            superTypes = new object[]
             {
                 "<superTypes>"
             },
-            relationshipAttributeDefs = new List<object>()
+            relationshipAttributeDefs = new object[]
             {
                 new
                 {
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
-                    constraints = new List<object>()
+                    constraints = new object[]
                     {
                         null
                     },
@@ -5917,7 +5918,7 @@ RequestContent content = RequestContent.Create(new
                     valuesMinCount = 1234,
                 }
             },
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -5939,12 +5940,12 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    enumDefs = new List<object>()
+    enumDefs = new object[]
     {
         new
         {
             defaultValue = "<defaultValue>",
-            elementDefs = new List<object>()
+            elementDefs = new object[]
             {
                 new
                 {
@@ -5971,7 +5972,7 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    relationshipDefs = new List<object>()
+    relationshipDefs = new object[]
     {
         new
         {
@@ -5986,7 +5987,7 @@ RequestContent content = RequestContent.Create(new
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -6008,11 +6009,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    structDefs = new List<object>()
+    structDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -6034,11 +6035,11 @@ RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    termTemplateDefs = new List<object>()
+    termTemplateDefs = new object[]
     {
         new
         {
-            attributeDefs = new List<object>()
+            attributeDefs = new object[]
             {
                 null
             },
@@ -6062,6 +6063,7 @@ RequestContent content = RequestContent.Create(new
     },
 });
 Response response = client.DeleteTypeDefinitions(content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

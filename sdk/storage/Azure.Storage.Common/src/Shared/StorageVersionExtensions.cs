@@ -20,6 +20,8 @@ using ServiceVersion =
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #elif BlobDataMovementSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
+#elif ShareDataMovementSDK
+    Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion;
 #else
     // If you see this error, you've included this shared source file from a
     // client library that it doesn't know how to help you with.  Either add
@@ -39,8 +41,8 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         public const ServiceVersion LatestVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK
-            ServiceVersion.V2023_08_03;
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK || ShareDataMovementSDK
+            ServiceVersion.V2023_11_03;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -49,7 +51,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         internal const ServiceVersion MaxVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK || ShareDataMovementSDK
             ServiceVersion.V2023_11_03;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;

@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override string TypeId => "share";
+        protected override string ProviderId => "share";
 
         private readonly CredentialType _credentialType;
         private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
@@ -304,7 +304,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 CredentialType.Sas => new ShareFileClient(new Uri(fileUri), _getAzureSasCredential(fileUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-            return new ShareFileStorageResourceItem(client, options);
+            return new ShareFileStorageResource(client, options);
         }
         #endregion
 
@@ -344,7 +344,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient client,
             ShareFileStorageResourceOptions options = default)
         {
-            return new ShareFileStorageResourceItem(client, options);
+            return new ShareFileStorageResource(client, options);
         }
         #endregion
 

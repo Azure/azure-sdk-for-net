@@ -65,7 +65,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -77,7 +77,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
@@ -102,7 +102,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -114,7 +114,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
@@ -199,7 +199,6 @@ Response response = await client.GetScanRulesetAsync("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -230,7 +229,6 @@ Response response = client.GetScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetScanRuleset with all parameters and parse the result.
 <code><![CDATA[
@@ -257,12 +255,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -270,16 +267,16 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
         description = "<description>",
-        excludedSystemClassifications = new List<object>()
+        excludedSystemClassifications = new object[]
         {
             "<excludedSystemClassifications>"
         },
-        includedCustomClassificationRuleNames = new List<object>()
+        includedCustomClassificationRuleNames = new object[]
         {
             "<includedCustomClassificationRuleNames>"
         },
@@ -306,12 +303,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -319,16 +315,16 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
         description = "<description>",
-        excludedSystemClassifications = new List<object>()
+        excludedSystemClassifications = new object[]
         {
             "<excludedSystemClassifications>"
         },
-        includedCustomClassificationRuleNames = new List<object>()
+        includedCustomClassificationRuleNames = new object[]
         {
             "<includedCustomClassificationRuleNames>"
         },
@@ -359,7 +355,6 @@ Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -390,7 +385,6 @@ Response response = client.DeleteScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteScanRuleset with all parameters and parse the result.
 <code><![CDATA[
@@ -421,7 +415,6 @@ Response response = await client.GetSystemRulesetsForDataSourceAsync("None", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSourceAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -452,7 +445,6 @@ Response response = client.GetSystemRulesetsForDataSource("None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSource with all parameters and parse the result.
 <code><![CDATA[
@@ -483,7 +475,6 @@ Response response = await client.GetSystemRulesetsForVersionAsync(1234, null, nu
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -514,7 +505,6 @@ Response response = client.GetSystemRulesetsForVersion(1234, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersion with all parameters and parse the result.
 <code><![CDATA[
@@ -545,7 +535,6 @@ Response response = await client.GetLatestSystemRulesetsAsync(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesetsAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -576,7 +565,6 @@ Response response = client.GetLatestSystemRulesets(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesets with all parameters and parse the result.
 <code><![CDATA[
@@ -606,7 +594,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetKeyVaultReferencesAsync with all parameters and parse the result.
@@ -618,10 +606,10 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("baseUrl").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -636,7 +624,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetKeyVaultReferences(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetKeyVaultReferences with all parameters and parse the result.
@@ -648,10 +636,10 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetKeyVaultReferences(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("baseUrl").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -666,8 +654,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetClassificationRulesAsync with all parameters and parse the result.
@@ -679,9 +666,9 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -696,8 +683,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetClassificationRules(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetClassificationRules with all parameters and parse the result.
@@ -709,9 +695,9 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetClassificationRules(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -726,8 +712,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetDataSourcesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetDataSourcesAsync with all parameters and parse the result.
@@ -739,37 +724,37 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetDataSourcesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -784,8 +769,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetDataSources(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetDataSources with all parameters and parse the result.
@@ -797,37 +781,37 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetDataSources(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -842,8 +826,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetScanRulesetsAsync with all parameters and parse the result.
@@ -855,12 +838,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -875,8 +858,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetScanRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetScanRulesets with all parameters and parse the result.
@@ -888,12 +870,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetScanRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -908,8 +890,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsAsync with all parameters and parse the result.
@@ -921,12 +902,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -941,8 +922,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetSystemRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesets with all parameters and parse the result.
@@ -954,12 +934,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetSystemRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -974,8 +954,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync(null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters and parse the result.
@@ -987,12 +966,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync("None", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -1007,8 +986,7 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetSystemRulesetsVersions(null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersions with all parameters and parse the result.
@@ -1020,12 +998,12 @@ PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint,
 foreach (BinaryData item in client.GetSystemRulesetsVersions("None", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("version").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>

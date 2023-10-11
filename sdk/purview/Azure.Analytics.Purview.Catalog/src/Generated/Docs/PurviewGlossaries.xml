@@ -121,7 +121,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateGlossaryAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -133,9 +133,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -147,7 +147,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
     language = "<language>",
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -162,14 +162,14 @@ RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -243,7 +243,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateGlossary(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -255,9 +255,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -269,7 +269,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
     language = "<language>",
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -284,14 +284,14 @@ RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -365,7 +365,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -380,7 +380,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -390,7 +390,7 @@ RequestContent content = RequestContent.Create(new List<object>()
             glossaryGuid = "<glossaryGuid>",
             relationGuid = "<relationGuid>",
         },
-        childrenCategories = new List<object>()
+        childrenCategories = new object[]
         {
             new
             {
@@ -401,7 +401,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 relationGuid = "<relationGuid>",
             }
         },
-        terms = new List<object>()
+        terms = new object[]
         {
             new
             {
@@ -415,14 +415,14 @@ RequestContent content = RequestContent.Create(new List<object>()
                 termGuid = "<termGuid>",
             }
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -503,7 +503,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -518,7 +518,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -528,7 +528,7 @@ RequestContent content = RequestContent.Create(new List<object>()
             glossaryGuid = "<glossaryGuid>",
             relationGuid = "<relationGuid>",
         },
-        childrenCategories = new List<object>()
+        childrenCategories = new object[]
         {
             new
             {
@@ -539,7 +539,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 relationGuid = "<relationGuid>",
             }
         },
-        terms = new List<object>()
+        terms = new object[]
         {
             new
             {
@@ -553,14 +553,14 @@ RequestContent content = RequestContent.Create(new List<object>()
                 termGuid = "<termGuid>",
             }
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -641,7 +641,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateGlossaryCategoryAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -653,7 +653,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     anchor = new
     {
@@ -661,7 +661,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    childrenCategories = new List<object>()
+    childrenCategories = new object[]
     {
         new
         {
@@ -672,7 +672,7 @@ RequestContent content = RequestContent.Create(new
             relationGuid = "<relationGuid>",
         }
     },
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -686,14 +686,14 @@ RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -773,7 +773,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateGlossaryCategory(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -785,7 +785,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     anchor = new
     {
@@ -793,7 +793,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    childrenCategories = new List<object>()
+    childrenCategories = new object[]
     {
         new
         {
@@ -804,7 +804,7 @@ RequestContent content = RequestContent.Create(new
             relationGuid = "<relationGuid>",
         }
     },
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -818,14 +818,14 @@ RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -1029,7 +1029,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1041,7 +1041,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     anchor = new
     {
@@ -1049,7 +1049,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    childrenCategories = new List<object>()
+    childrenCategories = new object[]
     {
         new
         {
@@ -1060,7 +1060,7 @@ RequestContent content = RequestContent.Create(new
             relationGuid = "<relationGuid>",
         }
     },
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -1074,14 +1074,14 @@ RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -1161,7 +1161,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1173,7 +1173,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     anchor = new
     {
@@ -1181,7 +1181,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    childrenCategories = new List<object>()
+    childrenCategories = new object[]
     {
         new
         {
@@ -1192,7 +1192,7 @@ RequestContent content = RequestContent.Create(new
             relationGuid = "<relationGuid>",
         }
     },
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -1206,14 +1206,14 @@ RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -1294,6 +1294,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryCategoryAsync with all parameters.
@@ -1303,6 +1304,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1315,6 +1317,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryCategory with all parameters.
@@ -1324,6 +1327,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1335,7 +1339,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -1350,7 +1354,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -1405,7 +1409,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -1420,7 +1424,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -1597,7 +1601,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateGlossaryTermAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1609,10 +1613,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     abbreviation = "<abbreviation>",
-    templateName = new List<object>()
+    templateName = new object[]
     {
         new object()
     },
@@ -1622,7 +1626,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    antonyms = new List<object>()
+    antonyms = new object[]
     {
         new
         {
@@ -1641,7 +1645,7 @@ RequestContent content = RequestContent.Create(new
     updateTime = 123.45F,
     updatedBy = "<updatedBy>",
     status = "Draft",
-    resources = new List<object>()
+    resources = new object[]
     {
         new
         {
@@ -1651,7 +1655,7 @@ RequestContent content = RequestContent.Create(new
     },
     contacts = new
     {
-        key = new List<object>()
+        key = new object[]
         {
             new
             {
@@ -1667,7 +1671,7 @@ RequestContent content = RequestContent.Create(new
             key = new object(),
         },
     },
-    assignedEntities = new List<object>()
+    assignedEntities = new object[]
     {
         new
         {
@@ -1693,7 +1697,7 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -1704,67 +1708,67 @@ RequestContent content = RequestContent.Create(new
             status = "DRAFT",
         }
     },
-    classifies = new List<object>()
+    classifies = new object[]
     {
         null
     },
-    examples = new List<object>()
+    examples = new object[]
     {
         "<examples>"
     },
-    isA = new List<object>()
+    isA = new object[]
     {
         null
     },
-    preferredTerms = new List<object>()
+    preferredTerms = new object[]
     {
         null
     },
-    preferredToTerms = new List<object>()
+    preferredToTerms = new object[]
     {
         null
     },
-    replacedBy = new List<object>()
+    replacedBy = new object[]
     {
         null
     },
-    replacementTerms = new List<object>()
+    replacementTerms = new object[]
     {
         null
     },
-    seeAlso = new List<object>()
+    seeAlso = new object[]
     {
         null
     },
-    synonyms = new List<object>()
+    synonyms = new object[]
     {
         null
     },
-    translatedTerms = new List<object>()
+    translatedTerms = new object[]
     {
         null
     },
-    translationTerms = new List<object>()
+    translationTerms = new object[]
     {
         null
     },
     usage = "<usage>",
-    validValues = new List<object>()
+    validValues = new object[]
     {
         null
     },
-    validValuesFor = new List<object>()
+    validValuesFor = new object[]
     {
         null
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -1960,7 +1964,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateGlossaryTerm(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1972,10 +1976,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     abbreviation = "<abbreviation>",
-    templateName = new List<object>()
+    templateName = new object[]
     {
         new object()
     },
@@ -1985,7 +1989,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    antonyms = new List<object>()
+    antonyms = new object[]
     {
         new
         {
@@ -2004,7 +2008,7 @@ RequestContent content = RequestContent.Create(new
     updateTime = 123.45F,
     updatedBy = "<updatedBy>",
     status = "Draft",
-    resources = new List<object>()
+    resources = new object[]
     {
         new
         {
@@ -2014,7 +2018,7 @@ RequestContent content = RequestContent.Create(new
     },
     contacts = new
     {
-        key = new List<object>()
+        key = new object[]
         {
             new
             {
@@ -2030,7 +2034,7 @@ RequestContent content = RequestContent.Create(new
             key = new object(),
         },
     },
-    assignedEntities = new List<object>()
+    assignedEntities = new object[]
     {
         new
         {
@@ -2056,7 +2060,7 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -2067,67 +2071,67 @@ RequestContent content = RequestContent.Create(new
             status = "DRAFT",
         }
     },
-    classifies = new List<object>()
+    classifies = new object[]
     {
         null
     },
-    examples = new List<object>()
+    examples = new object[]
     {
         "<examples>"
     },
-    isA = new List<object>()
+    isA = new object[]
     {
         null
     },
-    preferredTerms = new List<object>()
+    preferredTerms = new object[]
     {
         null
     },
-    preferredToTerms = new List<object>()
+    preferredToTerms = new object[]
     {
         null
     },
-    replacedBy = new List<object>()
+    replacedBy = new object[]
     {
         null
     },
-    replacementTerms = new List<object>()
+    replacementTerms = new object[]
     {
         null
     },
-    seeAlso = new List<object>()
+    seeAlso = new object[]
     {
         null
     },
-    synonyms = new List<object>()
+    synonyms = new object[]
     {
         null
     },
-    translatedTerms = new List<object>()
+    translatedTerms = new object[]
     {
         null
     },
-    translationTerms = new List<object>()
+    translationTerms = new object[]
     {
         null
     },
     usage = "<usage>",
-    validValues = new List<object>()
+    validValues = new object[]
     {
         null
     },
-    validValuesFor = new List<object>()
+    validValuesFor = new object[]
     {
         null
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -2334,10 +2338,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new List<string>()
-{
-    "<excludeRelationshipTypeList>"
-}, null);
+Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2515,10 +2516,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.GetGlossaryTerm("<termGuid>", true, new List<string>()
-{
-    "<excludeRelationshipTypeList>"
-}, null);
+Response response = client.GetGlossaryTerm("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2685,7 +2683,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2697,10 +2695,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     abbreviation = "<abbreviation>",
-    templateName = new List<object>()
+    templateName = new object[]
     {
         new object()
     },
@@ -2710,7 +2708,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    antonyms = new List<object>()
+    antonyms = new object[]
     {
         new
         {
@@ -2729,7 +2727,7 @@ RequestContent content = RequestContent.Create(new
     updateTime = 123.45F,
     updatedBy = "<updatedBy>",
     status = "Draft",
-    resources = new List<object>()
+    resources = new object[]
     {
         new
         {
@@ -2739,7 +2737,7 @@ RequestContent content = RequestContent.Create(new
     },
     contacts = new
     {
-        key = new List<object>()
+        key = new object[]
         {
             new
             {
@@ -2755,7 +2753,7 @@ RequestContent content = RequestContent.Create(new
             key = new object(),
         },
     },
-    assignedEntities = new List<object>()
+    assignedEntities = new object[]
     {
         new
         {
@@ -2781,7 +2779,7 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -2792,67 +2790,67 @@ RequestContent content = RequestContent.Create(new
             status = "DRAFT",
         }
     },
-    classifies = new List<object>()
+    classifies = new object[]
     {
         null
     },
-    examples = new List<object>()
+    examples = new object[]
     {
         "<examples>"
     },
-    isA = new List<object>()
+    isA = new object[]
     {
         null
     },
-    preferredTerms = new List<object>()
+    preferredTerms = new object[]
     {
         null
     },
-    preferredToTerms = new List<object>()
+    preferredToTerms = new object[]
     {
         null
     },
-    replacedBy = new List<object>()
+    replacedBy = new object[]
     {
         null
     },
-    replacementTerms = new List<object>()
+    replacementTerms = new object[]
     {
         null
     },
-    seeAlso = new List<object>()
+    seeAlso = new object[]
     {
         null
     },
-    synonyms = new List<object>()
+    synonyms = new object[]
     {
         null
     },
-    translatedTerms = new List<object>()
+    translatedTerms = new object[]
     {
         null
     },
-    translationTerms = new List<object>()
+    translationTerms = new object[]
     {
         null
     },
     usage = "<usage>",
-    validValues = new List<object>()
+    validValues = new object[]
     {
         null
     },
-    validValuesFor = new List<object>()
+    validValuesFor = new object[]
     {
         null
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -3048,7 +3046,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateGlossaryTerm("<termGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3060,10 +3058,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     abbreviation = "<abbreviation>",
-    templateName = new List<object>()
+    templateName = new object[]
     {
         new object()
     },
@@ -3073,7 +3071,7 @@ RequestContent content = RequestContent.Create(new
         glossaryGuid = "<glossaryGuid>",
         relationGuid = "<relationGuid>",
     },
-    antonyms = new List<object>()
+    antonyms = new object[]
     {
         new
         {
@@ -3092,7 +3090,7 @@ RequestContent content = RequestContent.Create(new
     updateTime = 123.45F,
     updatedBy = "<updatedBy>",
     status = "Draft",
-    resources = new List<object>()
+    resources = new object[]
     {
         new
         {
@@ -3102,7 +3100,7 @@ RequestContent content = RequestContent.Create(new
     },
     contacts = new
     {
-        key = new List<object>()
+        key = new object[]
         {
             new
             {
@@ -3118,7 +3116,7 @@ RequestContent content = RequestContent.Create(new
             key = new object(),
         },
     },
-    assignedEntities = new List<object>()
+    assignedEntities = new object[]
     {
         new
         {
@@ -3144,7 +3142,7 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -3155,67 +3153,67 @@ RequestContent content = RequestContent.Create(new
             status = "DRAFT",
         }
     },
-    classifies = new List<object>()
+    classifies = new object[]
     {
         null
     },
-    examples = new List<object>()
+    examples = new object[]
     {
         "<examples>"
     },
-    isA = new List<object>()
+    isA = new object[]
     {
         null
     },
-    preferredTerms = new List<object>()
+    preferredTerms = new object[]
     {
         null
     },
-    preferredToTerms = new List<object>()
+    preferredToTerms = new object[]
     {
         null
     },
-    replacedBy = new List<object>()
+    replacedBy = new object[]
     {
         null
     },
-    replacementTerms = new List<object>()
+    replacementTerms = new object[]
     {
         null
     },
-    seeAlso = new List<object>()
+    seeAlso = new object[]
     {
         null
     },
-    synonyms = new List<object>()
+    synonyms = new object[]
     {
         null
     },
-    translatedTerms = new List<object>()
+    translatedTerms = new object[]
     {
         null
     },
-    translationTerms = new List<object>()
+    translationTerms = new object[]
     {
         null
     },
     usage = "<usage>",
-    validValues = new List<object>()
+    validValues = new object[]
     {
         null
     },
-    validValuesFor = new List<object>()
+    validValuesFor = new object[]
     {
         null
     },
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -3412,6 +3410,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryTermAsync with all parameters.
@@ -3421,6 +3420,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -3433,6 +3433,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossaryTerm("<termGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryTerm with all parameters.
@@ -3442,6 +3443,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossaryTerm("<termGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -3453,7 +3455,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -3468,7 +3470,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -3639,7 +3641,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -3654,7 +3656,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -3825,7 +3827,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -3840,12 +3842,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
         abbreviation = "<abbreviation>",
-        templateName = new List<object>()
+        templateName = new object[]
         {
             new object()
         },
@@ -3855,7 +3857,7 @@ RequestContent content = RequestContent.Create(new List<object>()
             glossaryGuid = "<glossaryGuid>",
             relationGuid = "<relationGuid>",
         },
-        antonyms = new List<object>()
+        antonyms = new object[]
         {
             new
             {
@@ -3874,7 +3876,7 @@ RequestContent content = RequestContent.Create(new List<object>()
         updateTime = 123.45F,
         updatedBy = "<updatedBy>",
         status = "Draft",
-        resources = new List<object>()
+        resources = new object[]
         {
             new
             {
@@ -3884,7 +3886,7 @@ RequestContent content = RequestContent.Create(new List<object>()
         },
         contacts = new
         {
-            key = new List<object>()
+            key = new object[]
             {
                 new
                 {
@@ -3900,7 +3902,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 key = new object(),
             },
         },
-        assignedEntities = new List<object>()
+        assignedEntities = new object[]
         {
             new
             {
@@ -3926,7 +3928,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 },
             }
         },
-        categories = new List<object>()
+        categories = new object[]
         {
             new
             {
@@ -3937,67 +3939,67 @@ RequestContent content = RequestContent.Create(new List<object>()
                 status = "DRAFT",
             }
         },
-        classifies = new List<object>()
+        classifies = new object[]
         {
             null
         },
-        examples = new List<object>()
+        examples = new object[]
         {
             "<examples>"
         },
-        isA = new List<object>()
+        isA = new object[]
         {
             null
         },
-        preferredTerms = new List<object>()
+        preferredTerms = new object[]
         {
             null
         },
-        preferredToTerms = new List<object>()
+        preferredToTerms = new object[]
         {
             null
         },
-        replacedBy = new List<object>()
+        replacedBy = new object[]
         {
             null
         },
-        replacementTerms = new List<object>()
+        replacementTerms = new object[]
         {
             null
         },
-        seeAlso = new List<object>()
+        seeAlso = new object[]
         {
             null
         },
-        synonyms = new List<object>()
+        synonyms = new object[]
         {
             null
         },
-        translatedTerms = new List<object>()
+        translatedTerms = new object[]
         {
             null
         },
-        translationTerms = new List<object>()
+        translationTerms = new object[]
         {
             null
         },
         usage = "<usage>",
-        validValues = new List<object>()
+        validValues = new object[]
         {
             null
         },
-        validValuesFor = new List<object>()
+        validValuesFor = new object[]
         {
             null
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -4194,7 +4196,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
@@ -4209,12 +4211,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
         abbreviation = "<abbreviation>",
-        templateName = new List<object>()
+        templateName = new object[]
         {
             new object()
         },
@@ -4224,7 +4226,7 @@ RequestContent content = RequestContent.Create(new List<object>()
             glossaryGuid = "<glossaryGuid>",
             relationGuid = "<relationGuid>",
         },
-        antonyms = new List<object>()
+        antonyms = new object[]
         {
             new
             {
@@ -4243,7 +4245,7 @@ RequestContent content = RequestContent.Create(new List<object>()
         updateTime = 123.45F,
         updatedBy = "<updatedBy>",
         status = "Draft",
-        resources = new List<object>()
+        resources = new object[]
         {
             new
             {
@@ -4253,7 +4255,7 @@ RequestContent content = RequestContent.Create(new List<object>()
         },
         contacts = new
         {
-            key = new List<object>()
+            key = new object[]
             {
                 new
                 {
@@ -4269,7 +4271,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 key = new object(),
             },
         },
-        assignedEntities = new List<object>()
+        assignedEntities = new object[]
         {
             new
             {
@@ -4295,7 +4297,7 @@ RequestContent content = RequestContent.Create(new List<object>()
                 },
             }
         },
-        categories = new List<object>()
+        categories = new object[]
         {
             new
             {
@@ -4306,67 +4308,67 @@ RequestContent content = RequestContent.Create(new List<object>()
                 status = "DRAFT",
             }
         },
-        classifies = new List<object>()
+        classifies = new object[]
         {
             null
         },
-        examples = new List<object>()
+        examples = new object[]
         {
             "<examples>"
         },
-        isA = new List<object>()
+        isA = new object[]
         {
             null
         },
-        preferredTerms = new List<object>()
+        preferredTerms = new object[]
         {
             null
         },
-        preferredToTerms = new List<object>()
+        preferredToTerms = new object[]
         {
             null
         },
-        replacedBy = new List<object>()
+        replacedBy = new object[]
         {
             null
         },
-        replacementTerms = new List<object>()
+        replacementTerms = new object[]
         {
             null
         },
-        seeAlso = new List<object>()
+        seeAlso = new object[]
         {
             null
         },
-        synonyms = new List<object>()
+        synonyms = new object[]
         {
             null
         },
-        translatedTerms = new List<object>()
+        translatedTerms = new object[]
         {
             null
         },
-        translationTerms = new List<object>()
+        translationTerms = new object[]
         {
             null
         },
         usage = "<usage>",
-        validValues = new List<object>()
+        validValues = new object[]
         {
             null
         },
-        validValuesFor = new List<object>()
+        validValuesFor = new object[]
         {
             null
         },
-        classifications = new List<object>()
+        classifications = new object[]
         {
             new
             {
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
-                validityPeriods = new List<object>()
+                validityPeriods = new object[]
                 {
                     new
                     {
@@ -4633,11 +4635,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AssignTermToEntitiesAsync with all parameters and request content.
@@ -4646,7 +4649,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4673,6 +4676,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -4684,11 +4688,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = client.AssignTermToEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AssignTermToEntities with all parameters and request content.
@@ -4697,7 +4702,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4724,6 +4729,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = client.AssignTermToEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -4735,11 +4741,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveTermAssignmentFromEntitiesAsync with all parameters and request content.
@@ -4748,7 +4755,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4775,6 +4782,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -4786,11 +4794,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveTermAssignmentFromEntities with all parameters and request content.
@@ -4799,7 +4808,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4826,6 +4835,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -4837,11 +4847,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with all parameters and request content.
@@ -4850,7 +4861,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4877,6 +4888,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -4888,11 +4900,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new object()
 });
 Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTermAssignmentFromEntities with all parameters and request content.
@@ -4901,7 +4914,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -4928,6 +4941,7 @@ RequestContent content = RequestContent.Create(new List<object>()
     }
 });
 Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -5115,7 +5129,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5127,9 +5141,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -5141,7 +5155,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
     language = "<language>",
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -5156,14 +5170,14 @@ RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -5237,7 +5251,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateGlossary("<glossaryGuid>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5249,9 +5263,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    categories = new List<object>()
+    categories = new object[]
     {
         new
         {
@@ -5263,7 +5277,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
     language = "<language>",
-    terms = new List<object>()
+    terms = new object[]
     {
         new
         {
@@ -5278,14 +5292,14 @@ RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
-    classifications = new List<object>()
+    classifications = new object[]
     {
         new
         {
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
-            validityPeriods = new List<object>()
+            validityPeriods = new object[]
             {
                 new
                 {
@@ -5360,6 +5374,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryAsync with all parameters.
@@ -5369,6 +5384,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -5381,6 +5397,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossary("<glossaryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossary with all parameters.
@@ -5390,6 +5407,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 Response response = client.DeleteGlossary("<glossaryGuid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -6079,7 +6097,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -6094,7 +6112,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -6143,7 +6161,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -6158,7 +6176,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     key = "<partialUpdates>",
 });
@@ -6691,7 +6709,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     "<termGuids>"
 });
@@ -6706,7 +6724,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     "<termGuids>"
 });
@@ -6724,7 +6742,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     "<termGuids>"
 });
@@ -6739,7 +6757,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(new List<object>()
+using RequestContent content = RequestContent.Create(new object[]
 {
     "<termGuids>"
 });
@@ -7113,7 +7131,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
 BinaryData responseData = operation.Value;
 
@@ -7126,7 +7144,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
@@ -7149,7 +7167,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content);
 BinaryData responseData = operation.Value;
 
@@ -7162,7 +7180,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
@@ -7185,7 +7203,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
 BinaryData responseData = operation.Value;
 
@@ -7198,7 +7216,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
@@ -7221,7 +7239,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content);
 BinaryData responseData = operation.Value;
 
@@ -7234,7 +7252,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
 Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
