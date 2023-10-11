@@ -16,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Template.Samples
 {
-    public partial class Samples_TemplateClient
+    public class Samples_TemplateClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSecret_ShortVersion()
+        public void Example_GetSecret()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
@@ -33,7 +33,7 @@ namespace Azure.Template.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSecret_ShortVersion_Async()
+        public async Task Example_GetSecret_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
