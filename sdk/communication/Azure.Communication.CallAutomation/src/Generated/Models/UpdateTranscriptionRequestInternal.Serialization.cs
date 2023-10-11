@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class UpdateTranscriptionDataRequestInternal : IUtf8JsonSerializable
+    internal partial class UpdateTranscriptionRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
