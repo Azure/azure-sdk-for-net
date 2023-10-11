@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {

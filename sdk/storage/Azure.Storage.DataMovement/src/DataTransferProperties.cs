@@ -29,6 +29,11 @@ namespace Azure.Storage.DataMovement
         public virtual string SourcePath { get; internal set; }
 
         /// <summary>
+        /// A string ID for the source resource provider that should be used for rehydration.
+        /// </summary>
+        public virtual string SourceProviderId { get; internal set; }
+
+        /// <summary>
         /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
         /// </summary>
         public virtual string DestinationTypeId { get; internal set; }
@@ -37,6 +42,11 @@ namespace Azure.Storage.DataMovement
         /// Contains the Destination path of the Storage Resource.
         /// </summary>
         public virtual string DestinationPath { get; internal set; }
+
+        /// <summary>
+        /// A string ID for the destination resource provider that should be used for rehydration.
+        /// </summary>
+        public virtual string DestinationProviderId { get; internal set; }
 
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.

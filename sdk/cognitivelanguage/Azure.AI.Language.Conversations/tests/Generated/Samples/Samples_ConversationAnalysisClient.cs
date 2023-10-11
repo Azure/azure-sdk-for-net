@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -303,7 +303,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -352,7 +352,7 @@ kind = "ConversationalSummarizationTask",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 analysisInput = new
                 {
@@ -401,7 +401,7 @@ kind = "ConversationalSummarizationTask",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 analysisInput = new
@@ -482,7 +482,7 @@ taskName = "<taskName>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 analysisInput = new

@@ -381,7 +381,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 extensionId = "<extensionId>",
                 partyId = "<partyId>",
@@ -403,7 +403,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 extensionId = "<extensionId>",
                 partyId = "<partyId>",
@@ -425,7 +425,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 extensionId = "<extensionId>",
                 partyId = "<partyId>",
@@ -475,7 +475,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 extensionId = "<extensionId>",
                 partyId = "<partyId>",
@@ -525,7 +525,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 boundaryId = "<boundaryId>",
                 partyId = "<partyId>",
@@ -554,7 +554,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 boundaryId = "<boundaryId>",
                 partyId = "<partyId>",
@@ -583,7 +583,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 boundaryId = "<boundaryId>",
                 partyId = "<partyId>",
@@ -636,7 +636,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 boundaryId = "<boundaryId>",
                 partyId = "<partyId>",

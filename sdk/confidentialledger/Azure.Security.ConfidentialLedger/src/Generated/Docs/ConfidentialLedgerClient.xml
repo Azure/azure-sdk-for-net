@@ -118,7 +118,7 @@ This sample shows how to call CreateLedgerEntryAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -132,7 +132,7 @@ This sample shows how to call CreateLedgerEntryAsync with all parameters and req
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -149,7 +149,7 @@ This sample shows how to call CreateLedgerEntry and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -163,7 +163,7 @@ This sample shows how to call CreateLedgerEntry with all parameters and request 
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     contents = "<contents>",
 });
@@ -494,7 +494,7 @@ This sample shows how to call CreateOrUpdateUserAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -508,7 +508,7 @@ This sample shows how to call CreateOrUpdateUserAsync with all parameters and re
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -526,7 +526,7 @@ This sample shows how to call CreateOrUpdateUser and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
@@ -540,7 +540,7 @@ This sample shows how to call CreateOrUpdateUser with all parameters and request
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     assignedRole = "Administrator",
 });
