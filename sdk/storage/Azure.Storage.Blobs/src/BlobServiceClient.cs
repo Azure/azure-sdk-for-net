@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs
             : this(
                   serviceUri,
                   credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
                     options),
                   credential,
                   options ?? new BlobClientOptions())

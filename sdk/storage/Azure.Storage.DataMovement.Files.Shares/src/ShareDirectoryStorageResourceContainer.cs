@@ -20,6 +20,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override Uri Uri => ShareDirectoryClient.Uri;
 
+        public override string ProviderId => "share";
+
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
