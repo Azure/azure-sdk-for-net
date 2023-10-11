@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.StorageSync.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CertificateValue = "certificate";
-        private const string ManagedidentityValue = "managedidentity";
+        private const string CertificateValue = "Certificate";
+        private const string ManagedIdentityValue = "ManagedIdentity";
 
-        /// <summary> certificate. </summary>
+        /// <summary> Certificate. </summary>
         public static ServerAuthType Certificate { get; } = new ServerAuthType(CertificateValue);
-        /// <summary> managedidentity. </summary>
-        public static ServerAuthType Managedidentity { get; } = new ServerAuthType(ManagedidentityValue);
+        /// <summary> ManagedIdentity. </summary>
+        public static ServerAuthType ManagedIdentity { get; } = new ServerAuthType(ManagedIdentityValue);
         /// <summary> Determines if two <see cref="ServerAuthType"/> values are the same. </summary>
         public static bool operator ==(ServerAuthType left, ServerAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerAuthType"/> values are not the same. </summary>
