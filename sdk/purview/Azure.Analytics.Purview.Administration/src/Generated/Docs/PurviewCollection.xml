@@ -81,7 +81,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-using RequestContent content = RequestContent.Create(new object());
+RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateCollectionAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -93,7 +93,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     description = "<description>",
     friendlyName = "<friendlyName>",
@@ -128,7 +128,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-using RequestContent content = RequestContent.Create(new object());
+RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateCollection(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -140,7 +140,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     description = "<description>",
     friendlyName = "<friendlyName>",
@@ -176,7 +176,6 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
 Response response = await client.DeleteCollectionAsync();
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteCollectionAsync with all request content.
@@ -186,7 +185,6 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
 Response response = await client.DeleteCollectionAsync();
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -199,7 +197,6 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
 Response response = client.DeleteCollection();
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteCollection with all request content.
@@ -209,7 +206,6 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
 Response response = client.DeleteCollection();
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -276,7 +272,7 @@ PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPur
 await foreach (BinaryData item in client.GetChildCollectionNamesAsync(null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetChildCollectionNamesAsync with all parameters and parse the result.
@@ -288,8 +284,8 @@ PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPur
 await foreach (BinaryData item in client.GetChildCollectionNamesAsync("<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("friendlyName").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
+    Console.WriteLine(result[0].GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -304,7 +300,7 @@ PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPur
 foreach (BinaryData item in client.GetChildCollectionNames(null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetChildCollectionNames with all parameters and parse the result.
@@ -316,8 +312,8 @@ PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPur
 foreach (BinaryData item in client.GetChildCollectionNames("<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("friendlyName").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
+    Console.WriteLine(result[0].GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>

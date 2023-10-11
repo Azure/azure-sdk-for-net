@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    public partial class Samples_PurviewResourceSetRule
+    internal class Samples_PurviewResourceSetRule
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetResourceSetRule_ShortVersion()
+        public void Example_GetResourceSetRule()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRule_ShortVersion_Async()
+        public async Task Example_GetResourceSetRule_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -244,13 +245,13 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateResourceSetRule_ShortVersion()
+        public void Example_CreateOrUpdateResourceSetRule()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateResourceSetRule(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -259,13 +260,13 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateResourceSetRule_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateResourceSetRule_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -280,7 +281,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {
@@ -289,8 +290,8 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 },
                 pathPatternConfig = new
                 {
-                    acceptedPatterns = new object[]
-            {
+                    acceptedPatterns = new List<object>()
+{
 new
 {
 createdBy = "<createdBy>",
@@ -300,9 +301,9 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 path = "<path>",
 }
-            },
-                    complexReplacers = new object[]
-            {
+},
+                    complexReplacers = new List<object>()
+{
 new
 {
 createdBy = "<createdBy>",
@@ -314,19 +315,19 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 typeName = "<typeName>",
 }
-            },
+},
                     createdBy = "<createdBy>",
                     enableDefaultPatterns = true,
                     lastUpdatedTimestamp = 1234L,
                     modifiedBy = "<modifiedBy>",
-                    normalizationRules = new object[]
-            {
+                    normalizationRules = new List<object>()
+{
 new
 {
 description = "<description>",
 disabled = true,
 dynamicReplacement = true,
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
@@ -349,9 +350,9 @@ regexStr = "<regexStr>",
 replaceWith = "<replaceWith>",
 version = 123.45,
 }
-            },
-                    regexReplacers = new object[]
-            {
+},
+                    regexReplacers = new List<object>()
+{
 new
 {
 condition = "<condition>",
@@ -364,17 +365,17 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 replaceWith = "<replaceWith>",
 }
-            },
-                    rejectedPatterns = new object[]
-            {
+},
+                    rejectedPatterns = new List<object>()
+{
 null
-            },
-                    scopedRules = new object[]
-            {
+},
+                    scopedRules = new List<object>()
+{
 new
 {
 bindingUrl = "<bindingUrl>",
-rules = new object[]
+rules = new List<object>()
 {
 new
 {
@@ -387,7 +388,7 @@ qualifiedName = "<qualifiedName>",
 },
 storeType = "<storeType>",
 }
-            },
+},
                     version = 1234,
                 },
             });
@@ -489,7 +490,7 @@ storeType = "<storeType>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {
@@ -498,8 +499,8 @@ storeType = "<storeType>",
                 },
                 pathPatternConfig = new
                 {
-                    acceptedPatterns = new object[]
-            {
+                    acceptedPatterns = new List<object>()
+{
 new
 {
 createdBy = "<createdBy>",
@@ -509,9 +510,9 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 path = "<path>",
 }
-            },
-                    complexReplacers = new object[]
-            {
+},
+                    complexReplacers = new List<object>()
+{
 new
 {
 createdBy = "<createdBy>",
@@ -523,19 +524,19 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 typeName = "<typeName>",
 }
-            },
+},
                     createdBy = "<createdBy>",
                     enableDefaultPatterns = true,
                     lastUpdatedTimestamp = 1234L,
                     modifiedBy = "<modifiedBy>",
-                    normalizationRules = new object[]
-            {
+                    normalizationRules = new List<object>()
+{
 new
 {
 description = "<description>",
 disabled = true,
 dynamicReplacement = true,
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
@@ -558,9 +559,9 @@ regexStr = "<regexStr>",
 replaceWith = "<replaceWith>",
 version = 123.45,
 }
-            },
-                    regexReplacers = new object[]
-            {
+},
+                    regexReplacers = new List<object>()
+{
 new
 {
 condition = "<condition>",
@@ -573,17 +574,17 @@ modifiedBy = "<modifiedBy>",
 name = "<name>",
 replaceWith = "<replaceWith>",
 }
-            },
-                    rejectedPatterns = new object[]
-            {
+},
+                    rejectedPatterns = new List<object>()
+{
 null
-            },
-                    scopedRules = new object[]
-            {
+},
+                    scopedRules = new List<object>()
+{
 new
 {
 bindingUrl = "<bindingUrl>",
-rules = new object[]
+rules = new List<object>()
 {
 new
 {
@@ -596,7 +597,7 @@ qualifiedName = "<qualifiedName>",
 },
 storeType = "<storeType>",
 }
-            },
+},
                     version = 1234,
                 },
             });
@@ -692,27 +693,25 @@ storeType = "<storeType>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteResourceSetRule_ShortVersion()
+        public void Example_DeleteResourceSetRule()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = client.DeleteResourceSetRule();
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteResourceSetRule_ShortVersion_Async()
+        public async Task Example_DeleteResourceSetRule_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = await client.DeleteResourceSetRuleAsync();
-
             Console.WriteLine(response.Status);
         }
 
@@ -725,7 +724,6 @@ storeType = "<storeType>",
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = client.DeleteResourceSetRule();
-
             Console.WriteLine(response.Status);
         }
 
@@ -738,7 +736,6 @@ storeType = "<storeType>",
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = await client.DeleteResourceSetRuleAsync();
-
             Console.WriteLine(response.Status);
         }
     }

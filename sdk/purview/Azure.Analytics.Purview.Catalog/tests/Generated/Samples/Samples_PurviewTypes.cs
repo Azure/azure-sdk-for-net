@@ -17,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    public partial class Samples_PurviewTypes
+    internal class Samples_PurviewTypes
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBusinessMetadataDefByGuid_ShortVersion()
+        public void Example_GetBusinessMetadataDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByGuid_ShortVersion_Async()
+        public async Task Example_GetBusinessMetadataDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBusinessMetadataDefByName_ShortVersion()
+        public void Example_GetBusinessMetadataDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByName_ShortVersion_Async()
+        public async Task Example_GetBusinessMetadataDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationDefByGuid_ShortVersion()
+        public void Example_GetClassificationDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -319,7 +319,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByGuid_ShortVersion_Async()
+        public async Task Example_GetClassificationDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -453,7 +453,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationDefByName_ShortVersion()
+        public void Example_GetClassificationDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -467,7 +467,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByName_ShortVersion_Async()
+        public async Task Example_GetClassificationDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEntityDefinitionByGuid_ShortVersion()
+        public void Example_GetEntityDefinitionByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -615,7 +615,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByGuid_ShortVersion_Async()
+        public async Task Example_GetEntityDefinitionByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -779,7 +779,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEntityDefinitionByName_ShortVersion()
+        public void Example_GetEntityDefinitionByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -793,7 +793,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByName_ShortVersion_Async()
+        public async Task Example_GetEntityDefinitionByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -957,7 +957,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnumDefByGuid_ShortVersion()
+        public void Example_GetEnumDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -971,7 +971,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByGuid_ShortVersion_Async()
+        public async Task Example_GetEnumDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1079,7 +1079,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnumDefByName_ShortVersion()
+        public void Example_GetEnumDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1093,7 +1093,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByName_ShortVersion_Async()
+        public async Task Example_GetEnumDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1201,7 +1201,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRelationshipDefByGuid_ShortVersion()
+        public void Example_GetRelationshipDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1215,7 +1215,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByGuid_ShortVersion_Async()
+        public async Task Example_GetRelationshipDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1371,7 +1371,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRelationshipDefByName_ShortVersion()
+        public void Example_GetRelationshipDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1385,7 +1385,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByName_ShortVersion_Async()
+        public async Task Example_GetRelationshipDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1541,7 +1541,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetStructDefByGuid_ShortVersion()
+        public void Example_GetStructDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1555,7 +1555,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByGuid_ShortVersion_Async()
+        public async Task Example_GetStructDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1683,7 +1683,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetStructDefByName_ShortVersion()
+        public void Example_GetStructDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1697,7 +1697,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByName_ShortVersion_Async()
+        public async Task Example_GetStructDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1825,7 +1825,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTypeDefinitionByGuid_ShortVersion()
+        public void Example_GetTypeDefinitionByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1839,7 +1839,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByGuid_ShortVersion_Async()
+        public async Task Example_GetTypeDefinitionByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1939,7 +1939,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTypeDefinitionByName_ShortVersion()
+        public void Example_GetTypeDefinitionByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1953,7 +1953,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByName_ShortVersion_Async()
+        public async Task Example_GetTypeDefinitionByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2053,27 +2053,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTypeByName_ShortVersion()
+        public void Example_DeleteTypeByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.DeleteTypeByName("<name>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTypeByName_ShortVersion_Async()
+        public async Task Example_DeleteTypeByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = await client.DeleteTypeByNameAsync("<name>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -2086,7 +2084,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.DeleteTypeByName("<name>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -2099,13 +2096,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = await client.DeleteTypeByNameAsync("<name>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllTypeDefinitions_ShortVersion()
+        public void Example_GetAllTypeDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2119,7 +2115,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTypeDefinitions_ShortVersion_Async()
+        public async Task Example_GetAllTypeDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2825,13 +2821,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateTypeDefinitions_ShortVersion()
+        public void Example_CreateTypeDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2840,13 +2836,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTypeDefinitions_ShortVersion_Async()
+        public async Task Example_CreateTypeDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2861,26 +2857,26 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -2904,7 +2900,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -2912,7 +2908,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -2925,17 +2921,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -2952,24 +2949,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -2990,27 +2987,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -3030,7 +3027,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3051,13 +3048,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -3083,9 +3080,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -3099,7 +3096,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3120,12 +3117,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3146,12 +3143,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3172,7 +3169,7 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = client.CreateTypeDefinitions(content);
 
@@ -3520,26 +3517,26 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -3563,7 +3560,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -3571,7 +3568,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -3584,17 +3581,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -3611,24 +3609,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3649,27 +3647,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -3689,7 +3687,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3710,13 +3708,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -3742,9 +3740,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -3758,7 +3756,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3779,12 +3777,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3805,12 +3803,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -3831,7 +3829,7 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = await client.CreateTypeDefinitionsAsync(content);
 
@@ -4173,13 +4171,13 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateAtlasTypeDefinitions_ShortVersion()
+        public void Example_UpdateAtlasTypeDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateAtlasTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4188,13 +4186,13 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateAtlasTypeDefinitions_ShortVersion_Async()
+        public async Task Example_UpdateAtlasTypeDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4209,26 +4207,26 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -4252,7 +4250,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -4260,7 +4258,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -4273,17 +4271,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -4300,24 +4299,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4338,27 +4337,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -4378,7 +4377,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4399,13 +4398,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -4431,9 +4430,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -4447,7 +4446,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4468,12 +4467,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4494,12 +4493,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4520,7 +4519,7 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = client.UpdateAtlasTypeDefinitions(content);
 
@@ -4868,26 +4867,26 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -4911,7 +4910,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -4919,7 +4918,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -4932,17 +4931,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -4959,24 +4959,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -4997,27 +4997,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -5037,7 +5037,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5058,13 +5058,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -5090,9 +5090,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -5106,7 +5106,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5127,12 +5127,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5153,12 +5153,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5179,7 +5179,7 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
@@ -5521,29 +5521,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTypeDefinitions_ShortVersion()
+        public void Example_DeleteTypeDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = client.DeleteTypeDefinitions(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTypeDefinitions_ShortVersion_Async()
+        public async Task Example_DeleteTypeDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = await client.DeleteTypeDefinitionsAsync(content);
-
             Console.WriteLine(response.Status);
         }
 
@@ -5555,26 +5553,26 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -5598,7 +5596,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -5606,7 +5604,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -5619,17 +5617,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -5646,24 +5645,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5684,27 +5683,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -5724,7 +5723,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5745,13 +5744,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -5777,9 +5776,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -5793,7 +5792,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5814,12 +5813,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5840,12 +5839,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -5866,10 +5865,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = client.DeleteTypeDefinitions(content);
-
             Console.WriteLine(response.Status);
         }
 
@@ -5881,26 +5879,26 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
+                businessMetadataDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 new
 {
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
-new Dictionary<string, object>
+new Dictionary<string, object>()
 {
 ["params"] = new
 {
 key = new object(),
 },
-["type"] = "<type>"
+["type"] = "<type>",
 }
 },
 defaultValue = "<defaultValue>",
@@ -5924,7 +5922,7 @@ createTime = 123.45F,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -5932,7 +5930,7 @@ calendar = 123.45F,
 lenient = true,
 numberFormat = new
 {
-availableLocales = new object[]
+availableLocales = new List<object>()
 {
 "<availableLocales>"
 },
@@ -5945,17 +5943,18 @@ minimumIntegerDigits = 1234,
 parseIntegerOnly = true,
 roundingMode = "UP",
 },
-timeZone = new Dictionary<string, object>
+timeZone = new Dictionary<string, object>()
 {
 ["dstSavings"] = 1234,
 ["id"] = "<id>",
-["availableIds"] = new object[]
+["availableIds"] = new List<object>()
 {
 "<availableIds>"
 },
-["default"] = null,
+["default"] = null
+,
 ["displayName"] = "<displayName>",
-["rawOffset"] = 1234
+["rawOffset"] = 1234,
 },
 },
 description = "<description>",
@@ -5972,24 +5971,24 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                classificationDefs = new object[]
-            {
+},
+                classificationDefs = new List<object>()
+{
 new
 {
-entityTypes = new object[]
+entityTypes = new List<object>()
 {
 "<entityTypes>"
 },
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -6010,27 +6009,27 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                entityDefs = new object[]
-            {
+},
+                entityDefs = new List<object>()
+{
 new
 {
-subTypes = new object[]
+subTypes = new List<object>()
 {
 "<subTypes>"
 },
-superTypes = new object[]
+superTypes = new List<object>()
 {
 "<superTypes>"
 },
-relationshipAttributeDefs = new object[]
+relationshipAttributeDefs = new List<object>()
 {
 new
 {
 isLegacyAttribute = true,
 relationshipTypeName = "<relationshipTypeName>",
 cardinality = "SINGLE",
-constraints = new object[]
+constraints = new List<object>()
 {
 null
 },
@@ -6050,7 +6049,7 @@ valuesMaxCount = 1234,
 valuesMinCount = 1234,
 }
 },
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -6071,13 +6070,13 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                enumDefs = new object[]
-            {
+},
+                enumDefs = new List<object>()
+{
 new
 {
 defaultValue = "<defaultValue>",
-elementDefs = new object[]
+elementDefs = new List<object>()
 {
 new
 {
@@ -6103,9 +6102,9 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                relationshipDefs = new object[]
-            {
+},
+                relationshipDefs = new List<object>()
+{
 new
 {
 endDef1 = new
@@ -6119,7 +6118,7 @@ type = "<type>",
 },
 relationshipCategory = "ASSOCIATION",
 relationshipLabel = "<relationshipLabel>",
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -6140,12 +6139,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                structDefs = new object[]
-            {
+},
+                structDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -6166,12 +6165,12 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                termTemplateDefs = new object[]
-            {
+},
+                termTemplateDefs = new List<object>()
+{
 new
 {
-attributeDefs = new object[]
+attributeDefs = new List<object>()
 {
 null
 },
@@ -6192,16 +6191,15 @@ updatedBy = "<updatedBy>",
 version = 123.45F,
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
             });
             Response response = await client.DeleteTypeDefinitionsAsync(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTypeDefinitionHeaders_ShortVersion()
+        public void Example_GetTypeDefinitionHeaders()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6215,7 +6213,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionHeaders_ShortVersion_Async()
+        public async Task Example_GetTypeDefinitionHeaders_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6261,7 +6259,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTermTemplateDefByGuid_ShortVersion()
+        public void Example_GetTermTemplateDefByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6275,7 +6273,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByGuid_ShortVersion_Async()
+        public async Task Example_GetTermTemplateDefByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6403,7 +6401,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTermTemplateDefByName_ShortVersion()
+        public void Example_GetTermTemplateDefByName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6417,7 +6415,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByName_ShortVersion_Async()
+        public async Task Example_GetTermTemplateDefByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
