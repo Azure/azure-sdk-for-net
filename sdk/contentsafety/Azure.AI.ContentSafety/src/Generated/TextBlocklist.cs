@@ -34,7 +34,5 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Text blocklist name. </summary>
         public string BlocklistName { get; }
-        /// <summary> Text blocklist description. </summary>
-        public string Description { get; }
     }
 }
