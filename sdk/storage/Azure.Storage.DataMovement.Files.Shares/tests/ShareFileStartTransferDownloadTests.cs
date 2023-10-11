@@ -33,11 +33,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
         }
 
-        protected override Task<bool> ExistsAsync(ShareFileClient objectClient)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await ClientBuilder.GetTestShareAsync(service, containerName);
 

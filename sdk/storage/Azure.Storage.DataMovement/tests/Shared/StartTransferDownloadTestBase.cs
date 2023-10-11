@@ -98,13 +98,6 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="objectClient">The object client to get the Open Read Stream from.</param>
         /// <returns></returns>
         protected abstract Task<Stream> OpenReadAsync(TObjectClient objectClient);
-
-        /// <summary>
-        /// Checks if the Object Client exists.
-        /// </summary>
-        /// <param name="objectClient">Object Client to call exists on.</param>
-        /// <returns></returns>
-        protected abstract Task<bool> ExistsAsync(TObjectClient objectClient);
         #endregion
 
         protected string GetNewObjectName()
