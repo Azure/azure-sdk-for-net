@@ -7,11 +7,7 @@
 - Added `CoolAccessRetrievalPolicy` to `NetAppVolumePatch` and `NetAppVolumeData`, coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes.
 - Added `SmbNonBrowsable` to `NetAppVolumePatch`, enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
 - Added `SmbAccessBasedEnumeration` to `NetAppVolumePatch`, Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
-### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0 (2023-08-15)
 
