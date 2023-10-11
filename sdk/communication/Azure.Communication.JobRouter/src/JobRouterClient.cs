@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
@@ -143,11 +144,13 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return await RestClient.UpsertJobAsync(
+                var response = await RestClient.UpsertJobAsync(
                         id:options.JobId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -198,10 +201,12 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return RestClient.UpsertJob(
+                var response = RestClient.UpsertJob(
                     id:options.JobId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    context: new RequestContext(){ CancellationToken = cancellationToken });
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -255,11 +260,13 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return await RestClient.UpsertJobAsync(
+                var response = await RestClient.UpsertJobAsync(
                         id: options.JobId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: new RequestContext() { CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -309,10 +316,12 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return RestClient.UpsertJob(
+                var response = RestClient.UpsertJob(
                     id: options.JobId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    context: new RequestContext() { CancellationToken = cancellationToken });
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -325,10 +334,12 @@ using Azure.Core.Pipeline;
 
         /// <summary> Update an existing job. </summary>
         /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterJob>> UpdateJobAsync(
             UpdateJobOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
@@ -366,11 +377,14 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return await RestClient.UpsertJobAsync(
+                var response = await RestClient.UpsertJobAsync(
                         id: options.JobId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -381,10 +395,12 @@ using Azure.Core.Pipeline;
 
         /// <summary> Update an existing job. </summary>
         /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterJob> UpdateJob(
             UpdateJobOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
@@ -422,10 +438,13 @@ using Azure.Core.Pipeline;
                     request.Notes.Add(note);
                 }
 
-                return RestClient.UpsertJob(
+                var response = RestClient.UpsertJob(
                     id: options.JobId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: new RequestContext() { CancellationToken = cancellationToken });
+
+                return Response.FromValue(RouterJob.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -437,11 +456,13 @@ using Azure.Core.Pipeline;
         /// <summary> Protocol method to use to remove properties from job. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateJobAsync(
             string jobId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
@@ -451,6 +472,7 @@ using Azure.Core.Pipeline;
                 return await RestClient.UpsertJobAsync(
                         id: jobId,
                         content: content,
+                        requestConditions: requestConditions,
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -464,11 +486,13 @@ using Azure.Core.Pipeline;
         /// <summary> Protocol method to use to remove properties from job. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateJob(
             string jobId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
@@ -478,6 +502,7 @@ using Azure.Core.Pipeline;
                 return RestClient.UpsertJob(
                     id: jobId,
                     content: content,
+                    requestConditions: requestConditions,
                     context: context);
             }
             catch (Exception ex)
@@ -548,11 +573,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.ReclassifyJobActionAsync(
+                return await RestClient.ReclassifyJobAsync(
                     id: jobId,
-                    new ReclassifyJobRequest(),
+                    reclassifyJobRequest: new Dictionary<string, string>(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -576,11 +600,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.ReclassifyJobAction(
+                return RestClient.ReclassifyJob(
                     id: jobId,
-                    new ReclassifyJobRequest(),
+                    reclassifyJobRequest: new Dictionary<string, string>(),
                     cancellationToken: cancellationToken);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -601,13 +624,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.CancelJobActionAsync(
+                return await RestClient.CancelJobAsync(
                         id: options.JobId,
-                        note: options.Note,
-                        dispositionCode: options.DispositionCode,
+                        cancelJobRequest: new CancelJobRequest(options.Note, options.DispositionCode),
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -628,12 +649,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.CancelJobAction(
+                return RestClient.CancelJob(
                     id: options.JobId,
-                    note: options.Note,
-                    dispositionCode: options.DispositionCode,
+                    cancelJobRequest: new CancelJobRequest(options.Note, options.DispositionCode),
                     cancellationToken: cancellationToken);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -654,14 +673,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.CompleteJobActionAsync(
+                return await RestClient.CompleteJobAsync(
                         id: options.JobId,
-                        assignmentId: options.AssignmentId,
-                        note: options.Note,
+                        completeJobRequest: new CompleteJobRequest(options.AssignmentId, options.Note),
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -682,13 +698,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.CompleteJobAction(
+                return RestClient.CompleteJob(
                     id: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    note: options.Note,
+                    completeJobRequest: new CompleteJobRequest(options.AssignmentId, options.Note),
                     cancellationToken: cancellationToken);
-
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -709,15 +722,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.CloseJobActionAsync(
+                return await RestClient.CloseJobAsync(
                         id: options.JobId,
-                        assignmentId: options.AssignmentId,
-                        dispositionCode: options.DispositionCode,
-                        closeAt: options.CloseAt,
-                        note: options.Note,
+                        closeJobRequest: new CloseJobRequest(options.AssignmentId, options.DispositionCode, options.CloseAt, options.Note),
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -738,14 +747,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.CloseJobAction(
+                return RestClient.CloseJob(
                     id: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    dispositionCode: options.DispositionCode,
-                    closeAt: options.CloseAt,
-                    note: options.Note,
+                    closeJobRequest: new CloseJobRequest(options.AssignmentId, options.DispositionCode, options.CloseAt, options.Note),
                     cancellationToken: cancellationToken);
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -762,62 +767,15 @@ using Azure.Core.Pipeline;
             GetJobsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            async Task<Page<RouterJobItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetJobs)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterJobCollection> response = await RestClient.ListJobsAsync(
-                            status: options?.Status,
-                            queueId: options?.QueueId,
-                            channelId: options?.ChannelId,
-                            classificationPolicyId: options?.ClassificationPolicyId,
-                            scheduledBefore: options?.ScheduledBefore,
-                            scheduledAfter: options?.ScheduledAfter,
-                            maxpagesize: maxPageSize,
-                            cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<RouterJobItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope =
-                    _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetJobs)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterJobCollection> response = await RestClient
-                        .ListJobsNextPageAsync(
-                            nextLink: nextLink,
-                            status: options?.Status,
-                            queueId: options?.QueueId,
-                            channelId: options?.ChannelId,
-                            classificationPolicyId: options?.ClassificationPolicyId,
-                            scheduledBefore: options?.ScheduledBefore,
-                            scheduledAfter: options?.ScheduledAfter,
-                            maxpagesize: maxPageSize,
-                            cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: add client diagnostic
+            return RestClient.GetJobsAsync(
+                    status: options?.Status,
+                    queueId: options?.QueueId,
+                    channelId: options?.ChannelId,
+                    classificationPolicyId: options?.ClassificationPolicyId,
+                    scheduledBefore: options?.ScheduledBefore,
+                    scheduledAfter: options?.ScheduledAfter,
+                    cancellationToken: cancellationToken);
         }
 
         // <summary> Retrieves list of jobs based on filters. </summary>
@@ -828,60 +786,14 @@ using Azure.Core.Pipeline;
             GetJobsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            Page<RouterJobItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetJobs)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterJobCollection> response = RestClient.ListJobs(
-                        status: options?.Status,
-                        queueId: options?.QueueId,
-                        channelId: options?.ChannelId,
-                        classificationPolicyId: options?.ClassificationPolicyId,
-                        scheduledBefore: options?.ScheduledBefore,
-                        scheduledAfter: options?.ScheduledAfter,
-                        maxpagesize: maxPageSize,
-                        cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<RouterJobItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope =
-                    _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetJobs)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterJobCollection> response = RestClient
-                        .ListJobsNextPage(
-                            nextLink: nextLink,
-                            status: options?.Status,
-                            queueId: options?.QueueId,
-                            channelId: options?.ChannelId,
-                            classificationPolicyId: options?.ClassificationPolicyId,
-                            scheduledBefore: options?.ScheduledBefore,
-                            scheduledAfter: options?.ScheduledAfter,
-                            maxpagesize: maxPageSize,
-                            cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return RestClient.GetJobs(
+                status: options?.Status,
+                queueId: options?.QueueId,
+                channelId: options?.ChannelId,
+                classificationPolicyId: options?.ClassificationPolicyId,
+                scheduledBefore: options?.ScheduledBefore,
+                scheduledAfter: options?.ScheduledAfter,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary> Gets a jobs position details. </summary>
@@ -889,7 +801,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<Models.RouterJobPositionDetails>> GetQueuePositionAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouterJobPositionDetails>> GetQueuePositionAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
@@ -897,8 +809,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                Response<Models.RouterJobPositionDetails> job = await RestClient.GetInQueuePositionAsync(jobId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(job.Value, job.GetRawResponse());
+                return await RestClient.GetQueuePositionAsync(jobId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -912,7 +823,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<Models.RouterJobPositionDetails> GetQueuePosition(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<RouterJobPositionDetails> GetQueuePosition(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
@@ -920,8 +831,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                Response<Models.RouterJobPositionDetails> job = RestClient.GetInQueuePosition(jobId, cancellationToken);
-                return Response.FromValue(job.Value, job.GetRawResponse());
+                return RestClient.GetQueuePosition(jobId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -943,7 +853,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return await RestClient.DeleteJobAsync(id: jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteJobAsync(id: jobId, context: new RequestContext(){ CancellationToken = cancellationToken }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -965,7 +875,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return RestClient.DeleteJob(id: jobId, cancellationToken: cancellationToken);
+                return RestClient.DeleteJob(id: jobId, context: new RequestContext() { CancellationToken = cancellationToken });
             }
             catch (Exception ex)
             {
@@ -995,7 +905,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.AcceptJobActionAsync(
+                var response = await RestClient.AcceptJobAsync(
                         workerId: workerId,
                         offerId: offerId,
                         cancellationToken: cancellationToken)
@@ -1027,7 +937,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.AcceptJobAction(
+                var response = RestClient.AcceptJob(
                     workerId: workerId,
                     offerId: offerId,
                     cancellationToken: cancellationToken);
@@ -1051,14 +961,12 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.DeclineJobActionAsync(
+                return await RestClient.DeclineJobAsync(
                         workerId: options.WorkerId,
                         offerId: options.OfferId,
                         declineJobOfferRequest: new DeclineJobOfferRequest { RetryOfferAt = options.RetryOfferAt },
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -1077,13 +985,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.DeclineJobAction(
+                return RestClient.DeclineJob(
                     workerId: options.WorkerId,
                     offerId: options.OfferId,
                     declineJobOfferRequest: new DeclineJobOfferRequest { RetryOfferAt = options.RetryOfferAt },
                     cancellationToken: cancellationToken);
-
-                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -1185,10 +1091,11 @@ using Azure.Core.Pipeline;
 
                 var response = await RestClient.UpsertWorkerAsync(
                         workerId: options.WorkerId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+
+                return Response.FromValue(RouterWorker.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1237,9 +1144,10 @@ using Azure.Core.Pipeline;
 
                 var response = RestClient.UpsertWorker(
                     workerId: options.WorkerId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                    content: request.ToRequestContent(),
+                    context: new RequestContext() { CancellationToken = cancellationToken });
+
+                return Response.FromValue(RouterWorker.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1250,10 +1158,12 @@ using Azure.Core.Pipeline;
 
         /// <summary> Create or update a worker to process jobs. </summary>
         /// <param name="options"> Options for updating a router worker. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterWorker>> UpdateWorkerAsync(
             UpdateWorkerOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
@@ -1288,10 +1198,12 @@ using Azure.Core.Pipeline;
 
                 var response = await RestClient.UpsertWorkerAsync(
                         workerId: options.WorkerId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+
+                return Response.FromValue(RouterWorker.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1302,10 +1214,12 @@ using Azure.Core.Pipeline;
 
         /// <summary> Create or update a worker to process jobs. </summary>
         /// <param name="options"> Options for updating a router worker. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterWorker> UpdateWorker(
             UpdateWorkerOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
@@ -1340,9 +1254,11 @@ using Azure.Core.Pipeline;
 
                 var response = RestClient.UpsertWorker(
                     workerId: options.WorkerId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: new RequestContext() { CancellationToken = cancellationToken });
+
+                return Response.FromValue(RouterWorker.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1354,11 +1270,13 @@ using Azure.Core.Pipeline;
         /// <summary> Protocol method to use to remove properties from worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateWorkerAsync(
             string workerId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
@@ -1368,6 +1286,7 @@ using Azure.Core.Pipeline;
                 return await RestClient.UpsertWorkerAsync(
                         workerId: workerId,
                         content: content,
+                        requestConditions: requestConditions,
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -1381,11 +1300,13 @@ using Azure.Core.Pipeline;
         /// <summary> Protocol method to use to remove properties from worker. </summary>
         /// <param name="workerId"> Id of the worker. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateWorker(
             string workerId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
@@ -1395,6 +1316,7 @@ using Azure.Core.Pipeline;
                 return RestClient.UpsertWorker(
                     workerId: workerId,
                     content: content,
+                    requestConditions: requestConditions,
                     context: context);
             }
             catch (Exception ex)
@@ -1414,9 +1336,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = await RestClient.UnassignJobActionAsync(
+                var response = await RestClient.UnassignJobAsync(
                         id: options.JobId,
                         assignmentId: options.AssignmentId,
+                        unassignJobRequest: new UnassignJobRequest(options.SuspendMatching),
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1439,9 +1362,10 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var response = RestClient.UnassignJobAction(
+                var response = RestClient.UnassignJob(
                     id: options.JobId,
                     assignmentId: options.AssignmentId,
+                    unassignJobRequest: new UnassignJobRequest(options.SuspendMatching),
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(response.Value, response.GetRawResponse());
@@ -1461,58 +1385,13 @@ using Azure.Core.Pipeline;
             GetWorkersOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            async Task<Page<RouterWorkerItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetWorkers)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterWorkerCollection> response = await RestClient.ListWorkersAsync(
-                        state: options?.State,
-                        channelId: options?.ChannelId,
-                        queueId: options?.QueueId,
-                        hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
-                        cancellationToken:  cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<RouterWorkerItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope =
-                    _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetWorkers)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterWorkerCollection> response = await RestClient
-                        .ListWorkersNextPageAsync(
-                            nextLink: nextLink,
-                            state: options?.State,
-                            channelId: options?.ChannelId,
-                            queueId: options?.QueueId,
-                            hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
-                            cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: add client diagnostic
+            return RestClient.GetWorkersAsync(
+                    state: options?.State,
+                    channelId: options?.ChannelId,
+                    queueId: options?.QueueId,
+                    hasCapacity: options?.HasCapacity,
+                    cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves existing workers. Pass status and Channel Id to filter workers further. </summary>
@@ -1523,56 +1402,13 @@ using Azure.Core.Pipeline;
             GetWorkersOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            Page<RouterWorkerItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetWorkers)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterWorkerCollection> response = RestClient.ListWorkers(
-                        state: options?.State,
-                        channelId: options?.ChannelId,
-                        queueId: options?.QueueId,
-                        hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
-                        cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<RouterWorkerItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope =
-                    _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(GetWorkers)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterWorkerCollection> response = RestClient
-                        .ListWorkersNextPage(
-                            nextLink: nextLink,
-                            state: options?.State,
-                            channelId: options?.ChannelId,
-                            queueId: options?.QueueId,
-                            hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
-                            cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: add client diagnostic
+            return RestClient.GetWorkers(
+                state: options?.State,
+                channelId: options?.ChannelId,
+                queueId: options?.QueueId,
+                hasCapacity: options?.HasCapacity,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves an existing worker by Id. </summary>
@@ -1634,7 +1470,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return await RestClient.DeleteWorkerAsync(workerId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteWorkerAsync(workerId, context: new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1656,7 +1492,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return RestClient.DeleteWorker(workerId, cancellationToken);
+                return RestClient.DeleteWorker(workerId, context: new RequestContext() { CancellationToken = cancellationToken });
             }
             catch (Exception ex)
             {
@@ -1666,5 +1502,15 @@ using Azure.Core.Pipeline;
         }
 
         #endregion Worker
+
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return new RequestContext();
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
     }
 }

@@ -15,8 +15,16 @@ namespace Azure.Communication.JobRouter
     /// At the specified time, matching worker to a job will not start
     /// automatically.
     /// </summary>
-    public partial class ScheduleAndSuspendMode
+    public partial class ScheduleAndSuspendMode : JobMatchingMode
     {
+        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <param name="scheduleAt"> Scheduled time. </param>
+        internal ScheduleAndSuspendMode(string kind, DateTimeOffset scheduleAt) : base(kind)
+        {
+            ScheduleAt = scheduleAt;
+        }
+
         /// <summary> Scheduled time. </summary>
         public DateTimeOffset ScheduleAt { get; }
     }

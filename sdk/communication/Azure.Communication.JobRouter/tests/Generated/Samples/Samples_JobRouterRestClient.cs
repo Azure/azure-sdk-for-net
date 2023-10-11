@@ -87,13 +87,8 @@ expedite = true,
                 },
                 matchingMode = new
                 {
-                    modeType = "queueAndMatchMode",
-                    queueAndMatchMode = new object(),
-                    scheduleAndSuspendMode = new
-                    {
-                        scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
-                    },
-                    suspendMode = new object(),
+                    scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+                    kind = "schedule-and-suspend",
                 },
             });
             Response response = client.UpsertJob("<id>", content, requestConditions: null);
@@ -131,8 +126,7 @@ expedite = true,
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
 
         [Test]
@@ -175,13 +169,8 @@ expedite = true,
                 },
                 matchingMode = new
                 {
-                    modeType = "queueAndMatchMode",
-                    queueAndMatchMode = new object(),
-                    scheduleAndSuspendMode = new
-                    {
-                        scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
-                    },
-                    suspendMode = new object(),
+                    scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+                    kind = "schedule-and-suspend",
                 },
             });
             Response response = await client.UpsertJobAsync("<id>", content, requestConditions: null);
@@ -219,8 +208,7 @@ expedite = true,
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
 
         [Test]
@@ -311,8 +299,7 @@ expedite = true,
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
 
         [Test]
@@ -357,8 +344,7 @@ expedite = true,
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+            Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
 
         [Test]
@@ -1811,8 +1797,7 @@ expedite = true,
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("scheduledAt").ToString());
-                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
-                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
                 Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
@@ -1859,8 +1844,7 @@ expedite = true,
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
                 Console.WriteLine(result[0].GetProperty("job").GetProperty("scheduledAt").ToString());
-                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
-                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+                Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
                 Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }

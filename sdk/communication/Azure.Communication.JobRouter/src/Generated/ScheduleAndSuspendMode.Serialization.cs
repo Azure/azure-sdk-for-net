@@ -21,6 +21,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             DateTimeOffset scheduleAt = default;
+            string kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAt"u8))
@@ -28,13 +29,18 @@ namespace Azure.Communication.JobRouter
                     scheduleAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ScheduleAndSuspendMode(scheduleAt);
+            return new ScheduleAndSuspendMode(kind, scheduleAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ScheduleAndSuspendMode FromResponse(Response response)
+        internal static new ScheduleAndSuspendMode FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeScheduleAndSuspendMode(document.RootElement);

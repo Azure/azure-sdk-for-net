@@ -37,5 +37,11 @@ namespace Azure.Communication.JobRouter
         /// Unique key that identifies this job assignment.
         /// </summary>
         public string AssignmentId { get; }
+
+        /// <summary>
+        /// If SuspendMatching is true, then the job is not queued for re-matching with a
+        /// worker.
+        /// </summary>
+        public bool? SuspendMatching { get; set; }
     }
 }

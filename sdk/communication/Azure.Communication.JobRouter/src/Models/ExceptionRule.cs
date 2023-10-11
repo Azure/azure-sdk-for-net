@@ -35,7 +35,9 @@ namespace Azure.Communication.JobRouter
             foreach (var item in Actions)
             {
                 writer.WritePropertyName(item.Key);
+#pragma warning disable CS8604 // Null requires to be sent as payload as well
                 writer.WriteObjectValue(item.Value);
+#pragma warning restore CS8604
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

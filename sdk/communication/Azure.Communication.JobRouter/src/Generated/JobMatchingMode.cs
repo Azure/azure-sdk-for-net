@@ -20,28 +20,19 @@ namespace Azure.Communication.JobRouter
     /// the job will not start automatically.
     /// SuspendMode: Used when matching workers
     /// to a job needs to be suspended.
+    /// Please note <see cref="JobMatchingMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/> and <see cref="SuspendMode"/>.
     /// </summary>
-    public partial class JobMatchingMode
+    public abstract partial class JobMatchingMode
     {
         /// <summary> Initializes a new instance of JobMatchingMode. </summary>
-        /// <param name="modeType"> Discriminator value used to differentiate between supported matching mode types. </param>
-        /// <param name="queueAndMatchMode">
-        /// Describes a matching mode where matching worker to a job is automatically
-        /// started after job is queued successfully.
-        /// </param>
-        /// <param name="scheduleAndSuspendMode">
-        /// Describes a matching mode used for scheduling jobs to be queued at a future
-        /// time.
-        /// At the specified time, matching worker to a job will not start
-        /// automatically.
-        /// </param>
-        /// <param name="suspendMode"> Describes a matching mode where matching worker to a job is suspended. </param>
-        internal JobMatchingMode(JobMatchModeType? modeType, object queueAndMatchMode, ScheduleAndSuspendMode scheduleAndSuspendMode, object suspendMode)
+        /// <param name="kind"> Discriminator. </param>
+        internal JobMatchingMode(string kind)
         {
-            ModeType = modeType;
-            _queueAndMatchMode = queueAndMatchMode;
-            ScheduleAndSuspendMode = scheduleAndSuspendMode;
-            _suspendMode = suspendMode;
+            Kind = kind;
         }
+
+        /// <summary> Discriminator. </summary>
+        internal string Kind { get; set; }
     }
 }

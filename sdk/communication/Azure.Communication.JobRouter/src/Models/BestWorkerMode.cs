@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
     [CodeGenModel("BestWorkerMode")]
-    public partial class BestWorkerMode : DistributionMode, IUtf8JsonSerializable
+    public partial class BestWorkerMode : IUtf8JsonSerializable
     {
         #region Default scoring rule
 
@@ -32,11 +32,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="allowScoringBatchOfWorkers"> (Optional) If true, will try to obtain scores for a batch of workers. By default, set to false. </param>
         /// <param name="batchSize"> (Optional) Set batch size when 'allowScoringBatchOfWorkers' is set to true to control batch size of workers. Defaults to 20 if not set. </param>
         /// <param name="descendingOrder"> (Optional) If false, will sort scores by ascending order. By default, set to true. </param>
-        public BestWorkerMode(RouterRule scoringRule,
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for the job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        public BestWorkerMode(RouterRule scoringRule = default,
             IList<ScoringRuleParameterSelector> scoringParameterSelectors = default,
             bool allowScoringBatchOfWorkers = false,
             int? batchSize = default,
-            bool descendingOrder = true)
+            bool descendingOrder = true,
+            bool bypassSelectors = false)
             : this(null)
         {
             if (batchSize is <= 0)
@@ -45,12 +47,7 @@ namespace Azure.Communication.JobRouter
             }
 
             ScoringRule = scoringRule;
-            ScoringRuleOptions = new ScoringRuleOptions
-            {
-                BatchSize = batchSize,
-                AllowScoringBatchOfWorkers = allowScoringBatchOfWorkers,
-                DescendingOrder = descendingOrder
-            };
+            ScoringRuleOptions = new ScoringRuleOptions(batchSize, scoringParameterSelectors ?? new ChangeTrackingList<ScoringRuleParameterSelector>(), allowScoringBatchOfWorkers, descendingOrder);
 
             if (scoringParameterSelectors is not null)
             {
@@ -59,22 +56,14 @@ namespace Azure.Communication.JobRouter
                     ScoringRuleOptions.ScoringParameters.Add(scoringParameterSelector);
                 }
             }
+
+            BypassSelectors = bypassSelectors;
         }
 
         internal BestWorkerMode(string kind)
         {
             Kind = kind ?? "best-worker";
         }
-
-        /// <summary>
-        /// Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode.
-        /// </summary>
-        public ScoringRuleOptions ScoringRuleOptions { get; internal set; }
-
-        /// <summary>
-        /// Defines a scoring rule to use, when calculating a score to determine the best worker.
-        /// </summary>
-        public RouterRule ScoringRule { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

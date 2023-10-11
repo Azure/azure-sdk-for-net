@@ -8,7 +8,12 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a matching mode where matching worker to a job is suspended. </summary>
-    public partial class SuspendMode
+    public partial class SuspendMode : JobMatchingMode
     {
+        /// <summary> Initializes a new instance of SuspendMode. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        internal SuspendMode(string kind) : base(kind)
+        {
+        }
     }
 }

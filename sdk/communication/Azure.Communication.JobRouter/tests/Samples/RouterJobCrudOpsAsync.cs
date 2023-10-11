@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -30,7 +27,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
                     "distribution-policy-id", TimeSpan.FromMinutes(5), new LongestIdleMode()));
 
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
 
             string jobId = "router-job-id";
 
@@ -84,7 +81,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition_Async
 
-            Response<Models.RouterJobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
+            Response<RouterJobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
 
             Console.WriteLine($"Job position for id `{jobPositionDetails.Value.JobId}` successfully retrieved. JobPosition: {jobPositionDetails.Value.Position}");
 
@@ -141,7 +138,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Response<RouterWorker> queriedWorker = await routerClient.GetWorkerAsync(worker.Value.Id);
 
-            Models.RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
+            RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
 
             Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.OfferId} and offer expiry time: {issuedOffer.ExpiresAt}");
 

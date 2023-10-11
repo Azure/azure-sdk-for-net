@@ -8,7 +8,12 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a matching mode where matching worker to a job is automatically started after job is queued successfully. </summary>
-    public partial class QueueAndMatchMode
+    public partial class QueueAndMatchMode : JobMatchingMode
     {
+        /// <summary> Initializes a new instance of QueueAndMatchMode. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        internal QueueAndMatchMode(string kind) : base(kind)
+        {
+        }
     }
 }

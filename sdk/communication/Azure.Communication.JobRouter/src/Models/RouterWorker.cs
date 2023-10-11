@@ -97,10 +97,7 @@ namespace Azure.Communication.JobRouter
             {
                 foreach (var channelConfiguration in value)
                 {
-                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channelConfiguration.Value.MaxNumberOfJobs
-                    };
+                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob, channelConfiguration.Value.MaxNumberOfJobs);
                 }
             }
         }
@@ -197,6 +194,13 @@ namespace Azure.Communication.JobRouter
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

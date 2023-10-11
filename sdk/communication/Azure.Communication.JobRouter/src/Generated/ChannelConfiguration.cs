@@ -37,7 +37,5 @@ namespace Azure.Communication.JobRouter
         /// of the total worker capacity.
         /// </summary>
         public int CapacityCostPerJob { get; }
-        /// <summary> The maximum number of jobs that can be supported concurrently for this channel. </summary>
-        public int? MaxNumberOfJobs { get; }
     }
 }

@@ -31,16 +31,5 @@ namespace Azure.Communication.JobRouter
             Note = note;
             DispositionCode = dispositionCode;
         }
-
-        /// <summary>
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </summary>
-        public string Note { get; }
-        /// <summary>
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
-        /// custom values.
-        /// </summary>
-        public string DispositionCode { get; }
     }
 }

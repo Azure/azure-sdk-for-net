@@ -2,14 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -159,7 +155,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
                     Priority = 1,
-                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
                 });
 
             AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
@@ -425,15 +421,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new QueueAndMatchMode()),
+                    MatchingMode = new QueueAndMatchMode(),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.QueueAndMatchMode);
-            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(QueueAndMatchMode));
         }
 
         [Test]
@@ -453,15 +446,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new SuspendMode()),
+                    MatchingMode = new SuspendMode(),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(SuspendMode));
         }
 
         [Test]
@@ -482,15 +472,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.ScheduleAndSuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(ScheduleAndSuspendMode));
         }
 
         [Test]

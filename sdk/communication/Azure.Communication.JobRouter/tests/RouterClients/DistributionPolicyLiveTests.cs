@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -50,14 +48,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new UpdateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId)
                 {
                     OfferExpiresAfter = TimeSpan.FromSeconds(60),
-                    Mode = new BestWorkerMode
-                    {
-                        BypassSelectors = true,
-                        ScoringRuleOptions = new ScoringRuleOptions
-                        {
-                            DescendingOrder = false
-                        }
-                    },
+                    Mode = new BestWorkerMode(descendingOrder: false, bypassSelectors: true),
                     Name = bestWorkerModeDistributionPolicyName
                 });
 

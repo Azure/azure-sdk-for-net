@@ -10,11 +10,6 @@ namespace Azure.Communication.JobRouter
     [CodeGenModel("ScoringRuleOptions")]
     public partial class ScoringRuleOptions : IUtf8JsonSerializable
     {
-        internal ScoringRuleOptions()
-        {
-            ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
-        }
-
         /// <summary>
         /// (Optional) List of extra parameters from the job that will be sent as part of the payload to scoring rule.
         /// If not set, the job&apos;s labels (sent in the payload as `job`) and the job&apos;s worker selectors (sent in the payload as `selectors`)

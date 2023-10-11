@@ -14,10 +14,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="scheduleAt">The time at which the job will be scheduled.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
-        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt)
+        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this("schedule-and-suspend", scheduleAt)
         {
             Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
-            ScheduleAt = scheduleAt;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -28,6 +27,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("scheduleAt"u8);
                 writer.WriteStringValue(ScheduleAt, "O");
             }
+
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+
             writer.WriteEndObject();
         }
     }

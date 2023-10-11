@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -29,7 +26,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<DistributionPolicy> distributionPolicy =
                 routerAdministrationClient.CreateDistributionPolicy(new CreateDistributionPolicyOptions("distribution-policy-id", TimeSpan.FromMinutes(5), new LongestIdleMode()));
 
-            Response<Models.RouterQueue> jobQueue = routerAdministrationClient.CreateQueue(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
+            Response<RouterQueue> jobQueue = routerAdministrationClient.CreateQueue(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
 
             string jobId = "router-job-id";
 
@@ -83,7 +80,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition
 
-            Response<Models.RouterJobPositionDetails> jobPositionDetails = routerClient.GetQueuePosition(jobId);
+            Response<RouterJobPositionDetails> jobPositionDetails = routerClient.GetQueuePosition(jobId);
 
             Console.WriteLine($"Job position for id `{jobPositionDetails.Value.JobId}` successfully retrieved. JobPosition: {jobPositionDetails.Value.Position}");
 
@@ -140,7 +137,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Response<RouterWorker> queriedWorker = routerClient.GetWorker(worker.Value.Id);
 
-            Models.RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
+            RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
 
             Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.OfferId} and offer expiry time: {issuedOffer.ExpiresAt}");
 

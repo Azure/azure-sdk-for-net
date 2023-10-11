@@ -233,5 +233,12 @@ namespace Azure.Communication.JobRouter
             }
             writer.WriteEndObject();
         }
+
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

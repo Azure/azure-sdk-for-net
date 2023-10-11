@@ -25,14 +25,7 @@ namespace Azure.Communication.JobRouter
         {
             QueueId = queueId;
             Priority = priority;
-            WorkerSelectors = workerSelectors;
+            _workerSelectors = workerSelectors;
         }
-
-        /// <summary> Updated QueueId. </summary>
-        public string QueueId { get; }
-        /// <summary> Updated Priority. </summary>
-        public int? Priority { get; }
-        /// <summary> Updated WorkerSelectors. </summary>
-        public IReadOnlyList<RouterWorkerSelector> WorkerSelectors { get; }
     }
 }

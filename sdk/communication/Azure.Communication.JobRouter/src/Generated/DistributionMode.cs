@@ -43,16 +43,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Discriminator. </summary>
         internal string Kind { get; set; }
-        /// <summary>
-        /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they
-        /// don't match label selectors.
-        /// Warning: You may get workers that are not
-        /// qualified for the job they are matched with if you set this
-        /// variable to true.
-        /// This flag is intended more for temporary usage.
-        /// By default, set to false.
-        /// </summary>
-        public bool? BypassSelectors { get; }
     }
 }

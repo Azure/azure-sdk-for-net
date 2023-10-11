@@ -10,15 +10,15 @@ using Azure;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class SuspendMode
+    internal partial class UnknownJobMatchingMode
     {
-        internal static SuspendMode DeserializeSuspendMode(JsonElement element)
+        internal static UnknownJobMatchingMode DeserializeUnknownJobMatchingMode(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string kind = default;
+            string kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -27,15 +27,15 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new SuspendMode(kind);
+            return new UnknownJobMatchingMode(kind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new SuspendMode FromResponse(Response response)
+        internal static new UnknownJobMatchingMode FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSuspendMode(document.RootElement);
+            return DeserializeUnknownJobMatchingMode(document.RootElement);
         }
     }
 }

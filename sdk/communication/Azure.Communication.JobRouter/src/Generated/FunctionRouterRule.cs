@@ -22,7 +22,8 @@ namespace Azure.Communication.JobRouter
             FunctionUri = functionUri;
             Credential = credential;
         }
-        /// <summary> Credentials used to access Azure function rule. </summary>
-        public FunctionRouterRuleCredential Credential { get; }
+
+        /// <summary> URL for Azure Function. </summary>
+        public Uri FunctionUri { get; }
     }
 }

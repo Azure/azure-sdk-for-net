@@ -14,26 +14,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationJobRouterModelFactory
     {
-        /// <summary> Initializes a new instance of DistributionMode. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
-        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        /// <param name="bypassSelectors">
-        /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they
-        /// don't match label selectors.
-        /// Warning: You may get workers that are not
-        /// qualified for the job they are matched with if you set this
-        /// variable to true.
-        /// This flag is intended more for temporary usage.
-        /// By default, set to false.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.DistributionMode"/> instance for mocking. </returns>
-        public static DistributionMode DistributionMode(string kind = null, int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null)
-        {
-            return new UnknownDistributionMode(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors);
-        }
-
         /// <summary> Initializes a new instance of BestWorkerMode. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
@@ -151,44 +131,6 @@ namespace Azure.Communication.JobRouter
             scoringParameters ??= new List<ScoringRuleParameterSelector>();
 
             return new ScoringRuleOptions(batchSize, scoringParameters?.ToList(), allowScoringBatchOfWorkers, descendingOrder);
-        }
-
-        /// <summary> Initializes a new instance of LongestIdleMode. </summary>
-        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
-        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        /// <param name="bypassSelectors">
-        /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they
-        /// don't match label selectors.
-        /// Warning: You may get workers that are not
-        /// qualified for the job they are matched with if you set this
-        /// variable to true.
-        /// This flag is intended more for temporary usage.
-        /// By default, set to false.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.LongestIdleMode"/> instance for mocking. </returns>
-        public static LongestIdleMode LongestIdleMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null)
-        {
-            return new LongestIdleMode("longest-idle", minConcurrentOffers, maxConcurrentOffers, bypassSelectors);
-        }
-
-        /// <summary> Initializes a new instance of RoundRobinMode. </summary>
-        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
-        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        /// <param name="bypassSelectors">
-        /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they
-        /// don't match label selectors.
-        /// Warning: You may get workers that are not
-        /// qualified for the job they are matched with if you set this
-        /// variable to true.
-        /// This flag is intended more for temporary usage.
-        /// By default, set to false.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.RoundRobinMode"/> instance for mocking. </returns>
-        public static RoundRobinMode RoundRobinMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null)
-        {
-            return new RoundRobinMode("round-robin", minConcurrentOffers, maxConcurrentOffers, bypassSelectors);
         }
 
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
@@ -435,7 +377,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
         public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
-            return new ScheduleAndSuspendMode(scheduleAt);
+            return new ScheduleAndSuspendMode("schedule-and-suspend", scheduleAt);
         }
 
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>

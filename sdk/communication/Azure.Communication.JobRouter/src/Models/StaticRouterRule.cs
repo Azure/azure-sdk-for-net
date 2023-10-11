@@ -8,6 +8,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("StaticRouterRule")]
+    [CodeGenSuppress("StaticRouterRule")]
     public partial class StaticRouterRule : IUtf8JsonSerializable
     {
         /// <summary> The static value this rule always returns. </summary>
@@ -27,9 +28,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
         /// <param name="value"> The static value this rule always returns. </param>
-        public StaticRouterRule(LabelValue value) : this(null, BinaryData.FromObjectAsJson(value.Value))
+        public StaticRouterRule(LabelValue value) : this("static-rule", BinaryData.FromObjectAsJson(value.Value))
         {
-            Kind = "static-rule";
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

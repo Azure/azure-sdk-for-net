@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -19,50 +18,16 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<JobMatchModeType> modeType = default;
-            Optional<object> queueAndMatchMode = default;
-            Optional<ScheduleAndSuspendMode> scheduleAndSuspendMode = default;
-            Optional<object> suspendMode = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("modeType"u8))
+                switch (discriminator.GetString())
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modeType = new JobMatchModeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("queueAndMatchMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queueAndMatchMode = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("scheduleAndSuspendMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scheduleAndSuspendMode = JobRouter.ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("suspendMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    suspendMode = property.Value.GetObject();
-                    continue;
+                    case "schedule-and-suspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element);
+                    case "queue-and-match": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element);
+                    case "suspend": return SuspendMode.DeserializeSuspendMode(element);
                 }
             }
-            return new JobMatchingMode(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
+            return UnknownJobMatchingMode.DeserializeUnknownJobMatchingMode(element);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

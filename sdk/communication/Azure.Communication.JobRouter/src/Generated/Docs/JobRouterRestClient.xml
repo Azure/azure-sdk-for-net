@@ -52,13 +52,8 @@ RequestContent content = RequestContent.Create(new
     },
     matchingMode = new
     {
-        modeType = "queueAndMatchMode",
-        queueAndMatchMode = new object(),
-        scheduleAndSuspendMode = new
-        {
-            scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
-        },
-        suspendMode = new object(),
+        scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+        kind = "schedule-and-suspend",
     },
 });
 Response response = await client.UpsertJobAsync("<id>", content, requestConditions: null);
@@ -96,8 +91,7 @@ Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProp
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
 ]]></code></example>
     </member>
     <member name="UpsertJob(string,RequestContent,RequestConditions,RequestContext)">
@@ -151,13 +145,8 @@ RequestContent content = RequestContent.Create(new
     },
     matchingMode = new
     {
-        modeType = "queueAndMatchMode",
-        queueAndMatchMode = new object(),
-        scheduleAndSuspendMode = new
-        {
-            scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
-        },
-        suspendMode = new object(),
+        scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+        kind = "schedule-and-suspend",
     },
 });
 Response response = client.UpsertJob("<id>", content, requestConditions: null);
@@ -195,8 +184,7 @@ Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProp
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
 ]]></code></example>
     </member>
     <member name="GetJobAsync(string,CancellationToken)">
@@ -285,8 +273,7 @@ Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProp
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
 ]]></code></example>
     </member>
     <member name="GetJob(string,RequestContext)">
@@ -341,8 +328,7 @@ Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProp
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("scheduledAt").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
-Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteJobAsync(string,RequestContext)">
@@ -1637,8 +1623,7 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", 
     Console.WriteLine(result[0].GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
     Console.WriteLine(result[0].GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
     Console.WriteLine(result[0].GetProperty("job").GetProperty("scheduledAt").ToString());
-    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
-    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
     Console.WriteLine(result[0].GetProperty("etag").ToString());
 }
 ]]></code></example>
@@ -1697,8 +1682,7 @@ foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId
     Console.WriteLine(result[0].GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
     Console.WriteLine(result[0].GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
     Console.WriteLine(result[0].GetProperty("job").GetProperty("scheduledAt").ToString());
-    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
-    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+    Console.WriteLine(result[0].GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
     Console.WriteLine(result[0].GetProperty("etag").ToString());
 }
 ]]></code></example>

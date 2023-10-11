@@ -101,11 +101,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> Creates a classification policy. </summary>
         /// <param name="options"> (Optional) Options for creating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> CreateClassificationPolicyAsync(
             CreateClassificationPolicyOptions options,
-            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(CreateClassificationPolicy)}");
@@ -125,8 +123,7 @@ namespace Azure.Communication.JobRouter
                 var result = await RestClient.UpsertClassificationPolicyAsync(
                         id: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
-                        context: null,
-                        requestConditions: requestConditions)
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
@@ -140,12 +137,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a classification policy. </summary>
         /// <param name="options"> (Optional) Options for creating classification policy. </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> CreateClassificationPolicy(
             CreateClassificationPolicyOptions options,
-            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(CreateClassificationPolicy)}");
@@ -165,8 +160,7 @@ namespace Azure.Communication.JobRouter
                 var result = RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
-                    context: null);
+                    context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
             }
@@ -179,10 +173,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates classification policy. </summary>
         /// <param name="options"> (Optional) Options for updating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> UpdateClassificationPolicyAsync(
             UpdateClassificationPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
@@ -199,11 +195,14 @@ namespace Azure.Communication.JobRouter
                 request.QueueSelectors.AddRange(options.QueueSelectors);
                 request.WorkerSelectors.AddRange(options.WorkerSelectors);
 
-                return await RestClient.UpsertClassificationPolicyAsync(
+                var response = await RestClient.UpsertClassificationPolicyAsync(
                         id: options.ClassificationPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -214,10 +213,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a classification policy. </summary>
         /// <param name="options"> (Optional) Options for updating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> UpdateClassificationPolicy(
             UpdateClassificationPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
@@ -234,10 +235,13 @@ namespace Azure.Communication.JobRouter
                 request.QueueSelectors.AddRange(options.QueueSelectors);
                 request.WorkerSelectors.AddRange(options.WorkerSelectors);
 
-                return RestClient.UpsertClassificationPolicy(
+                var response = RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -249,11 +253,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from classification policy. </summary>
         /// <param name="classificationPolicyId"> Id of the classification policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateClassificationPolicyAsync(
             string classificationPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
@@ -276,11 +282,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from classification policy. </summary>
         /// <param name="classificationPolicyId"> Id of the classification policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateClassificationPolicy(
             string classificationPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
@@ -304,47 +312,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<ClassificationPolicyItem> GetClassificationPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClassificationPolicyItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetClassificationPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<ClassificationPolicyCollection> response = await RestClient
-                        .ListClassificationPoliciesAsync(maxPageSize, cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<ClassificationPolicyItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetClassificationPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<ClassificationPolicyCollection> response = await RestClient
-                        .ListClassificationPoliciesNextPageAsync(nextLink, maxPageSize, cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: add diagnostic
+            return RestClient.GetClassificationPoliciesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
@@ -352,44 +321,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<ClassificationPolicyItem> GetClassificationPolicies(CancellationToken cancellationToken = default)
         {
-            Page<ClassificationPolicyItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetClassificationPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<ClassificationPolicyCollection> response = RestClient
-                        .ListClassificationPolicies(maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<ClassificationPolicyItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetClassificationPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<ClassificationPolicyCollection> response = RestClient
-                        .ListClassificationPoliciesNextPage(nextLink, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: add diagnostic
+            return RestClient.GetClassificationPolicies(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves an existing classification policy by Id. </summary>
@@ -448,7 +381,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.DeleteClassificationPolicyAsync(classificationPolicyId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteClassificationPolicyAsync(classificationPolicyId, FromCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -469,7 +402,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.DeleteClassificationPolicy(classificationPolicyId, cancellationToken);
+                return RestClient.DeleteClassificationPolicy(classificationPolicyId, FromCancellationToken(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -499,11 +432,13 @@ namespace Azure.Communication.JobRouter
                     Name = options?.Name,
                 };
 
-                return await RestClient.UpsertDistributionPolicyAsync(
+                var response = await RestClient.UpsertDistributionPolicyAsync(
                         id: options.DistributionPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -529,10 +464,12 @@ namespace Azure.Communication.JobRouter
                     Name = options?.Name,
                 };
 
-                return RestClient.UpsertDistributionPolicy(
+                var response = RestClient.UpsertDistributionPolicy(
                     id: options.DistributionPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -543,10 +480,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Updates a distribution policy. </summary>
         /// <param name="options"> (Optional) Options for the distribution policy. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DistributionPolicy>> UpdateDistributionPolicyAsync(
             UpdateDistributionPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
@@ -560,11 +499,14 @@ namespace Azure.Communication.JobRouter
                     Mode = options.Mode,
                 };
 
-                return await RestClient.UpsertDistributionPolicyAsync(
+                var response = await RestClient.UpsertDistributionPolicyAsync(
                         id: options.DistributionPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -575,10 +517,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Updates a distribution policy. </summary>
         /// <param name="options"> (Optional) Options for the distribution policy. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DistributionPolicy> UpdateDistributionPolicy(
             UpdateDistributionPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
@@ -592,10 +536,13 @@ namespace Azure.Communication.JobRouter
                     Mode = options.Mode,
                 };
 
-                return RestClient.UpsertDistributionPolicy(
+                var response = RestClient.UpsertDistributionPolicy(
                     id: options.DistributionPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(DistributionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -607,11 +554,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
         /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateDistributionPolicyAsync(
             string distributionPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
@@ -621,6 +570,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertDistributionPolicyAsync(
                         id: distributionPolicyId,
                         content: content,
+                        requestConditions: requestConditions,
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -634,11 +584,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from distribution policy. </summary>
         /// <param name="distributionPolicyId"> Id of the distribution policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateDistributionPolicy(
             string distributionPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
@@ -648,6 +600,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertDistributionPolicy(
                     id: distributionPolicyId,
                     content: content,
+                    requestConditions: requestConditions,
                     context: context);
             }
             catch (Exception ex)
@@ -662,47 +615,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<DistributionPolicyItem> GetDistributionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DistributionPolicyItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetDistributionPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<DistributionPolicyCollection> response = await RestClient
-                        .ListDistributionPoliciesAsync(maxPageSize, cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<DistributionPolicyItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetDistributionPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<DistributionPolicyCollection> response = await RestClient
-                        .ListDistributionPoliciesNextPageAsync(nextLink, maxPageSize, cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostic
+            return RestClient.GetDistributionPoliciesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
@@ -710,45 +624,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<DistributionPolicyItem> GetDistributionPolicies(CancellationToken cancellationToken = default)
         {
-            Page<DistributionPolicyItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetDistributionPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<DistributionPolicyCollection> response = RestClient
-                        .ListDistributionPolicies(maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<DistributionPolicyItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetDistributionPolicies)}");
-                scope.Start();
-                try
-                {
-                    Response<DistributionPolicyCollection> response = RestClient
-                        .ListDistributionPoliciesNextPage(nextLink, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value,
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostic
+            return RestClient.GetDistributionPolicies(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves an existing distribution policy by Id. </summary>
@@ -807,7 +684,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.DeleteDistributionPolicyAsync(distributionPolicyId, cancellationToken)
+                return await RestClient.DeleteDistributionPolicyAsync(distributionPolicyId, FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -829,7 +706,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.DeleteDistributionPolicy(distributionPolicyId, cancellationToken);
+                return RestClient.DeleteDistributionPolicy(distributionPolicyId, FromCancellationToken(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -864,11 +741,13 @@ namespace Azure.Communication.JobRouter
                     request.ExceptionRules[rule.Key] = rule.Value;
                 }
 
-                return await RestClient.UpsertExceptionPolicyAsync(
+                var response = await RestClient.UpsertExceptionPolicyAsync(
                         id: options.ExceptionPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -899,10 +778,12 @@ namespace Azure.Communication.JobRouter
                     request.ExceptionRules[rule.Key] = rule.Value;
                 }
 
-                return RestClient.UpsertExceptionPolicy(
+                var response = RestClient.UpsertExceptionPolicy(
                     id: options.ExceptionPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -913,10 +794,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates a new exception policy. </summary>
         /// <param name="options"> Options for updating exception policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ExceptionPolicy>> UpdateExceptionPolicyAsync(
             UpdateExceptionPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
@@ -933,11 +816,14 @@ namespace Azure.Communication.JobRouter
                     request.ExceptionRules[rule.Key] = rule.Value;
                 }
 
-                return await RestClient.UpsertExceptionPolicyAsync(
+                var response = await RestClient.UpsertExceptionPolicyAsync(
                         id: options.ExceptionPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -948,10 +834,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a exception policy. </summary>
         /// <param name="options"> Options for updating exception policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ExceptionPolicy> UpdateExceptionPolicy(
             UpdateExceptionPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
@@ -968,10 +856,13 @@ namespace Azure.Communication.JobRouter
                     request.ExceptionRules[rule.Key] = rule.Value;
                 }
 
-                return RestClient.UpsertExceptionPolicy(
+                var response = RestClient.UpsertExceptionPolicy(
                     id: options.ExceptionPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -983,11 +874,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from exception policy. </summary>
         /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateExceptionPolicyAsync(
             string exceptionPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
@@ -997,6 +890,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertExceptionPolicyAsync(
                         id: exceptionPolicyId,
                         content: content,
+                        requestConditions: requestConditions,
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -1010,11 +904,13 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from exception policy. </summary>
         /// <param name="exceptionPolicyId"> Id of the exception policy. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateExceptionPolicy(
             string exceptionPolicyId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
@@ -1024,6 +920,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertExceptionPolicy(
                     id: exceptionPolicyId,
                     content: content,
+                    requestConditions: requestConditions,
                     context: context);
             }
             catch (Exception ex)
@@ -1038,40 +935,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<ExceptionPolicyItem> GetExceptionPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExceptionPolicyItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetExceptionPolicies)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ExceptionPolicyCollection> response = await RestClient.ListExceptionPoliciesAsync(maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<ExceptionPolicyItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetExceptionPolicies)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ExceptionPolicyCollection> response = await RestClient.ListExceptionPoliciesNextPageAsync(nextLink, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostic
+            return RestClient.GetExceptionPoliciesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
@@ -1079,40 +944,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<ExceptionPolicyItem> GetExceptionPolicies(CancellationToken cancellationToken = default)
         {
-            Page<ExceptionPolicyItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetExceptionPolicies)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ExceptionPolicyCollection> response = RestClient.ListExceptionPolicies(maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<ExceptionPolicyItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(GetExceptionPolicies)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ExceptionPolicyCollection> response = RestClient.ListExceptionPoliciesNextPage(nextLink, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostics
+            return RestClient.GetExceptionPolicies(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves an existing exception policy by Id. </summary>
@@ -1173,7 +1006,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.DeleteExceptionPolicyAsync(exceptionPolicyId, cancellationToken)
+                return await RestClient.DeleteExceptionPolicyAsync(exceptionPolicyId, FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1195,7 +1028,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.DeleteExceptionPolicy(exceptionPolicyId, cancellationToken);
+                return RestClient.DeleteExceptionPolicy(exceptionPolicyId, FromCancellationToken(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -1212,7 +1045,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> Options for creating a job queue. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<Models.RouterQueue>> CreateQueueAsync(
+        public virtual async Task<Response<RouterQueue>> CreateQueueAsync(
             CreateQueueOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -1220,7 +1053,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new Models.RouterQueue()
+                var request = new RouterQueue()
                 {
                     DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
@@ -1232,11 +1065,13 @@ namespace Azure.Communication.JobRouter
                     request.Labels[label.Key] = label.Value;
                 }
 
-                return await RestClient.UpsertQueueAsync(
+                var response = await RestClient.UpsertQueueAsync(
                         id: options.QueueId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(RouterQueue.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1249,7 +1084,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="options"> Options for creating a job queue. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<Models.RouterQueue> CreateQueue(
+        public virtual Response<RouterQueue> CreateQueue(
             CreateQueueOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -1257,7 +1092,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new Models.RouterQueue()
+                var request = new RouterQueue()
                 {
                     DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
@@ -1269,10 +1104,12 @@ namespace Azure.Communication.JobRouter
                     request.Labels[label.Key] = label.Value;
                 }
 
-                return RestClient.UpsertQueue(
+                var response = RestClient.UpsertQueue(
                     id: options.QueueId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(RouterQueue.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1283,18 +1120,20 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a queue. </summary>
         /// <param name="options"> Options for updating a job queue. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<Models.RouterQueue>> UpdateQueueAsync(
+        public virtual async Task<Response<RouterQueue>> UpdateQueueAsync(
             UpdateQueueOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
             try
             {
-                var request = new Models.RouterQueue()
+                var request = new RouterQueue()
                 {
                     DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
@@ -1306,11 +1145,14 @@ namespace Azure.Communication.JobRouter
                     request.Labels[label.Key] = label.Value;
                 }
 
-                return await RestClient.UpsertQueueAsync(
+                var response = await RestClient.UpsertQueueAsync(
                         id: options.QueueId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        requestConditions: requestConditions,
+                        context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
+
+                return Response.FromValue(RouterQueue.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1321,18 +1163,20 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates or updates a queue. </summary>
         /// <param name="options"> Options for updating a queue. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<Models.RouterQueue> UpdateQueue(
+        public virtual Response<RouterQueue> UpdateQueue(
             UpdateQueueOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
             try
             {
-                var request = new Models.RouterQueue()
+                var request = new RouterQueue()
                 {
                     DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
@@ -1344,10 +1188,13 @@ namespace Azure.Communication.JobRouter
                     request.Labels[label.Key] = label.Value;
                 }
 
-                return RestClient.UpsertQueue(
+                var response = RestClient.UpsertQueue(
                     id: options.QueueId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: FromCancellationToken(cancellationToken));
+
+                return Response.FromValue(RouterQueue.FromResponse(response), response);
             }
             catch (Exception ex)
             {
@@ -1359,12 +1206,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Protocol method to use to remove properties from worker. </summary>
         /// <param name="queueId"> Id of the queue. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateQueueAsync(
             string queueId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
@@ -1374,6 +1223,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertQueueAsync(
                         id: queueId,
                         content: content,
+                        requestConditions: requestConditions,
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -1387,12 +1237,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Creates or updates a queue. </summary>
         /// <param name="queueId"> Id of the queue. </param>
         /// <param name="content"> Request content payload. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateQueue(
             string queueId,
             RequestContent content,
+            RequestConditions requestConditions = null,
             RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
@@ -1402,6 +1254,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertQueue(
                     id: queueId,
                     content: content,
+                    requestConditions: requestConditions,
                     context: context);
             }
             catch (Exception ex)
@@ -1414,84 +1267,19 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<Models.RouterQueueItem> GetQueuesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RouterQueueItem> GetQueuesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Models.RouterQueueItem>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouter.JobRouterAdministrationClient)}.{nameof(GetQueues)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterQueueCollection> response = await RestClient.ListQueuesAsync(maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<Models.RouterQueueItem>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouter.JobRouterAdministrationClient)}.{nameof(GetQueues)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterQueueCollection> response = await RestClient.ListQueuesNextPageAsync(nextLink, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostic
+            return RestClient.GetQueuesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<Models.RouterQueueItem> GetQueues(CancellationToken cancellationToken = default)
+        public virtual Pageable<RouterQueueItem> GetQueues(CancellationToken cancellationToken = default)
         {
-            Page<Models.RouterQueueItem> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouter.JobRouterAdministrationClient)}.{nameof(GetQueues)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterQueueCollection> response = RestClient.ListQueues(maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<Models.RouterQueueItem> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouter.JobRouterAdministrationClient)}.{nameof(GetQueues)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RouterQueueCollection> response =
-                        RestClient.ListQueuesNextPage(nextLink, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            // todo: fix diagnostic
+            return RestClient.GetQueues(cancellationToken: cancellationToken);
         }
 
         /// <summary> Retrieves an existing queue by Id. </summary>
@@ -1499,7 +1287,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<Models.RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
 
@@ -1507,7 +1295,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Response<Models.RouterQueue> queue = await RestClient.GetQueueAsync(queueId, cancellationToken).ConfigureAwait(false);
+                Response<RouterQueue> queue = await RestClient.GetQueueAsync(queueId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(queue.Value, queue.GetRawResponse());
             }
             catch (Exception ex)
@@ -1521,7 +1309,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> Id of the queue to retrieve. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        public virtual Response<Models.RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
+        public virtual Response<RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
 
@@ -1529,7 +1317,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                Response<Models.RouterQueue> queue = RestClient.GetQueue(queueId, cancellationToken);
+                Response<RouterQueue> queue = RestClient.GetQueue(queueId, cancellationToken);
                 return Response.FromValue(queue.Value, queue.GetRawResponse());
             }
             catch (Exception ex)
@@ -1551,7 +1339,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.DeleteQueueAsync(queueId, cancellationToken)
+                return await RestClient.DeleteQueueAsync(queueId, FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1573,7 +1361,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.DeleteQueue(queueId, cancellationToken);
+                return RestClient.DeleteQueue(queueId, FromCancellationToken(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -1583,5 +1371,15 @@ namespace Azure.Communication.JobRouter
         }
 
         #endregion Queue
+
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return new RequestContext();
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
     }
 }

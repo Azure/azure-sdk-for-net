@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

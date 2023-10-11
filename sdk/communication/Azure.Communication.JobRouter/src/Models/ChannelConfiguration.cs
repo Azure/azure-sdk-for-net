@@ -9,6 +9,9 @@ namespace Azure.Communication.JobRouter
     [CodeGenModel("ChannelConfiguration")]
     public partial class ChannelConfiguration: IUtf8JsonSerializable
     {
+        /// <summary> The maximum number of jobs that can be supported concurrently for this channel. </summary>
+        public int? MaxNumberOfJobs { get; set; }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

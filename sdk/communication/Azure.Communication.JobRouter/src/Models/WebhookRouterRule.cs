@@ -1,14 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("WebhookRouterRule")]
+    [CodeGenSuppress("WebhookRouterRule")]
     public partial class WebhookRouterRule : IUtf8JsonSerializable
     {
+        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        public WebhookRouterRule(Uri authorizationServerUri, Oauth2ClientCredential clientCredential, Uri webhookUri)
+            : this("webhook-rule", authorizationServerUri, clientCredential, webhookUri)
+        {
+        }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
