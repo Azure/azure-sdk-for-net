@@ -78,13 +78,19 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PersistentCount < 0)
+            if (PersistentCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PersistentCount", 0);
+                if (PersistentCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PersistentCount", 0);
+                }
             }
-            if (TransientCount < 0)
+            if (TransientCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TransientCount", 0);
+                if (TransientCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TransientCount", 0);
+                }
             }
         }
     }

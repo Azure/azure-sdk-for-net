@@ -78,21 +78,27 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (EffectiveVolumeFreeSpacePolicy > 100)
+            if (EffectiveVolumeFreeSpacePolicy != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "EffectiveVolumeFreeSpacePolicy", 100);
+                if (EffectiveVolumeFreeSpacePolicy > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "EffectiveVolumeFreeSpacePolicy", 100);
+                }
+                if (EffectiveVolumeFreeSpacePolicy < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "EffectiveVolumeFreeSpacePolicy", 0);
+                }
             }
-            if (EffectiveVolumeFreeSpacePolicy < 0)
+            if (CurrentVolumeFreeSpacePercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "EffectiveVolumeFreeSpacePolicy", 0);
-            }
-            if (CurrentVolumeFreeSpacePercent > 100)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "CurrentVolumeFreeSpacePercent", 100);
-            }
-            if (CurrentVolumeFreeSpacePercent < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "CurrentVolumeFreeSpacePercent", 0);
+                if (CurrentVolumeFreeSpacePercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "CurrentVolumeFreeSpacePercent", 100);
+                }
+                if (CurrentVolumeFreeSpacePercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CurrentVolumeFreeSpacePercent", 0);
+                }
             }
         }
     }

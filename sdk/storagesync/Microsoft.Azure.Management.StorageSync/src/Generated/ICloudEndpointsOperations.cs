@@ -332,6 +332,37 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </exception>
         Task<AzureOperationHeaderResponse<CloudEndpointsTriggerChangeDetectionHeaders>> TriggerChangeDetectionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get the AFS file share metadata signing certificate public keys.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='storageSyncServiceName'>
+        /// Name of Storage Sync Service resource.
+        /// </param>
+        /// <param name='syncGroupName'>
+        /// Name of Sync Group resource.
+        /// </param>
+        /// <param name='cloudEndpointName'>
+        /// Name of Cloud Endpoint object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="StorageSyncErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CloudEndpointAfsShareMetadataCertificatePublicKeys,CloudEndpointsAfsShareMetadataCertificatePublicKeysHeaders>> AfsShareMetadataCertificatePublicKeysWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create a new CloudEndpoint.
         /// </summary>
         /// <param name='resourceGroupName'>

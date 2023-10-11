@@ -158,9 +158,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TotalPersistentFilesNotSyncingCount < 0)
+            if (TotalPersistentFilesNotSyncingCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalPersistentFilesNotSyncingCount", 0);
+                if (TotalPersistentFilesNotSyncingCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalPersistentFilesNotSyncingCount", 0);
+                }
             }
             if (UploadStatus != null)
             {

@@ -125,17 +125,26 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (LastSyncPerItemErrorCount < 0)
+            if (LastSyncPerItemErrorCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "LastSyncPerItemErrorCount", 0);
+                if (LastSyncPerItemErrorCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "LastSyncPerItemErrorCount", 0);
+                }
             }
-            if (PersistentFilesNotSyncingCount < 0)
+            if (PersistentFilesNotSyncingCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PersistentFilesNotSyncingCount", 0);
+                if (PersistentFilesNotSyncingCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PersistentFilesNotSyncingCount", 0);
+                }
             }
-            if (TransientFilesNotSyncingCount < 0)
+            if (TransientFilesNotSyncingCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TransientFilesNotSyncingCount", 0);
+                if (TransientFilesNotSyncingCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TransientFilesNotSyncingCount", 0);
+                }
             }
             if (FilesNotSyncingErrors != null)
             {

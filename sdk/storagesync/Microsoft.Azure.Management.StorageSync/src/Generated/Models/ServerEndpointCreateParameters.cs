@@ -170,21 +170,27 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VolumeFreeSpacePercent > 100)
+            if (VolumeFreeSpacePercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "VolumeFreeSpacePercent", 100);
+                if (VolumeFreeSpacePercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "VolumeFreeSpacePercent", 100);
+                }
+                if (VolumeFreeSpacePercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeFreeSpacePercent", 0);
+                }
             }
-            if (VolumeFreeSpacePercent < 0)
+            if (TierFilesOlderThanDays != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeFreeSpacePercent", 0);
-            }
-            if (TierFilesOlderThanDays > 2147483647)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "TierFilesOlderThanDays", 2147483647);
-            }
-            if (TierFilesOlderThanDays < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
+                if (TierFilesOlderThanDays > 2147483647)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "TierFilesOlderThanDays", 2147483647);
+                }
+                if (TierFilesOlderThanDays < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
+                }
             }
         }
     }

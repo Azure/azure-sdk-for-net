@@ -85,17 +85,23 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PercentProgress > 100)
+            if (PercentProgress != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "PercentProgress", 100);
+                if (PercentProgress > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "PercentProgress", 100);
+                }
+                if (PercentProgress < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PercentProgress", 0);
+                }
             }
-            if (PercentProgress < 0)
+            if (DownloadedBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PercentProgress", 0);
-            }
-            if (DownloadedBytes < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DownloadedBytes", 0);
+                if (DownloadedBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DownloadedBytes", 0);
+                }
             }
         }
     }

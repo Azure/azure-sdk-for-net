@@ -64,9 +64,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Count < 0)
+            if (Count != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Count", 0);
+                if (Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Count", 0);
+                }
             }
         }
     }

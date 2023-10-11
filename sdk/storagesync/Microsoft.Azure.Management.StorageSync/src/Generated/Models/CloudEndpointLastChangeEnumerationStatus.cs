@@ -103,17 +103,26 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (NamespaceFilesCount < 0)
+            if (NamespaceFilesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceFilesCount", 0);
+                if (NamespaceFilesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceFilesCount", 0);
+                }
             }
-            if (NamespaceDirectoriesCount < 0)
+            if (NamespaceDirectoriesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceDirectoriesCount", 0);
+                if (NamespaceDirectoriesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceDirectoriesCount", 0);
+                }
             }
-            if (NamespaceSizeBytes < 0)
+            if (NamespaceSizeBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceSizeBytes", 0);
+                if (NamespaceSizeBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "NamespaceSizeBytes", 0);
+                }
             }
         }
     }

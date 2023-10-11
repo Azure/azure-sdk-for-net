@@ -86,21 +86,30 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CacheHitBytes < 0)
+            if (CacheHitBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheHitBytes", 0);
+                if (CacheHitBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheHitBytes", 0);
+                }
             }
-            if (CacheMissBytes < 0)
+            if (CacheMissBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheMissBytes", 0);
+                if (CacheMissBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheMissBytes", 0);
+                }
             }
-            if (CacheHitBytesPercent > 100)
+            if (CacheHitBytesPercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "CacheHitBytesPercent", 100);
-            }
-            if (CacheHitBytesPercent < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheHitBytesPercent", 0);
+                if (CacheHitBytesPercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "CacheHitBytesPercent", 100);
+                }
+                if (CacheHitBytesPercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CacheHitBytesPercent", 0);
+                }
             }
         }
     }

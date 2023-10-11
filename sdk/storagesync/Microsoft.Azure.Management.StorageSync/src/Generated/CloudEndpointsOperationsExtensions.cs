@@ -576,6 +576,58 @@ namespace Microsoft.Azure.Management.StorageSync
             }
 
             /// <summary>
+            /// Get the AFS file share metadata signing certificate public keys.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            public static CloudEndpointAfsShareMetadataCertificatePublicKeys AfsShareMetadataCertificatePublicKeys(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
+            {
+                return operations.AfsShareMetadataCertificatePublicKeysAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the AFS file share metadata signing certificate public keys.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeysAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AfsShareMetadataCertificatePublicKeysWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create a new CloudEndpoint.
             /// </summary>
             /// <param name='operations'>

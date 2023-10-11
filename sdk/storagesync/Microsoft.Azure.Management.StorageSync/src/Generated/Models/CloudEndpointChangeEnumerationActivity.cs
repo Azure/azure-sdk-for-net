@@ -171,45 +171,69 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ProcessedFilesCount < 0)
+            if (ProcessedFilesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProcessedFilesCount", 0);
+                if (ProcessedFilesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProcessedFilesCount", 0);
+                }
             }
-            if (ProcessedDirectoriesCount < 0)
+            if (ProcessedDirectoriesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProcessedDirectoriesCount", 0);
+                if (ProcessedDirectoriesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProcessedDirectoriesCount", 0);
+                }
             }
-            if (TotalFilesCount < 0)
+            if (TotalFilesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalFilesCount", 0);
+                if (TotalFilesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalFilesCount", 0);
+                }
             }
-            if (TotalDirectoriesCount < 0)
+            if (TotalDirectoriesCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalDirectoriesCount", 0);
+                if (TotalDirectoriesCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalDirectoriesCount", 0);
+                }
             }
-            if (TotalSizeBytes < 0)
+            if (TotalSizeBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalSizeBytes", 0);
+                if (TotalSizeBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalSizeBytes", 0);
+                }
             }
-            if (ProgressPercent > 100)
+            if (ProgressPercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProgressPercent", 100);
+                if (ProgressPercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ProgressPercent", 100);
+                }
+                if (ProgressPercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ProgressPercent", 0);
+                }
             }
-            if (ProgressPercent < 0)
+            if (MinutesRemaining != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProgressPercent", 0);
+                if (MinutesRemaining < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MinutesRemaining", 0);
+                }
             }
-            if (MinutesRemaining < 0)
+            if (DeletesProgressPercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinutesRemaining", 0);
-            }
-            if (DeletesProgressPercent > 100)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "DeletesProgressPercent", 100);
-            }
-            if (DeletesProgressPercent < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DeletesProgressPercent", 0);
+                if (DeletesProgressPercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "DeletesProgressPercent", 100);
+                }
+                if (DeletesProgressPercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DeletesProgressPercent", 0);
+                }
             }
         }
     }

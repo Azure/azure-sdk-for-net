@@ -100,29 +100,44 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VolumeSizeBytes < 0)
+            if (VolumeSizeBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeSizeBytes", 0);
+                if (VolumeSizeBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeSizeBytes", 0);
+                }
             }
-            if (TotalSizeCloudBytes < 0)
+            if (TotalSizeCloudBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalSizeCloudBytes", 0);
+                if (TotalSizeCloudBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalSizeCloudBytes", 0);
+                }
             }
-            if (CachedSizeBytes < 0)
+            if (CachedSizeBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "CachedSizeBytes", 0);
+                if (CachedSizeBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "CachedSizeBytes", 0);
+                }
             }
-            if (SpaceSavingsPercent > 100)
+            if (SpaceSavingsPercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "SpaceSavingsPercent", 100);
+                if (SpaceSavingsPercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "SpaceSavingsPercent", 100);
+                }
+                if (SpaceSavingsPercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "SpaceSavingsPercent", 0);
+                }
             }
-            if (SpaceSavingsPercent < 0)
+            if (SpaceSavingsBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "SpaceSavingsPercent", 0);
-            }
-            if (SpaceSavingsBytes < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "SpaceSavingsBytes", 0);
+                if (SpaceSavingsBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "SpaceSavingsBytes", 0);
+                }
             }
         }
     }

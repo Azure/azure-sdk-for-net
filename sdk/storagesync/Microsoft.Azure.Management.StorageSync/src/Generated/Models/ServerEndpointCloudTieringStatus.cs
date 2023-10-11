@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="volumeFreeSpacePolicyStatus">Status of the volume free
         /// space policy</param>
         /// <param name="datePolicyStatus">Status of the date policy</param>
-        public ServerEndpointCloudTieringStatus(System.DateTime? lastUpdatedTimestamp = default(System.DateTime?), string health = default(string), System.DateTime? healthLastUpdatedTimestamp = default(System.DateTime?), int? lastCloudTieringResult = default(int?), System.DateTime? lastSuccessTimestamp = default(System.DateTime?), CloudTieringSpaceSavings spaceSavings = default(CloudTieringSpaceSavings), CloudTieringCachePerformance cachePerformance = default(CloudTieringCachePerformance), CloudTieringFilesNotTiering filesNotTiering = default(CloudTieringFilesNotTiering), CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = default(CloudTieringVolumeFreeSpacePolicyStatus), CloudTieringDatePolicyStatus datePolicyStatus = default(CloudTieringDatePolicyStatus))
+        /// <param name="lowDiskMode">Information regarding the low disk mode
+        /// state</param>
+        public ServerEndpointCloudTieringStatus(System.DateTime? lastUpdatedTimestamp = default(System.DateTime?), string health = default(string), System.DateTime? healthLastUpdatedTimestamp = default(System.DateTime?), int? lastCloudTieringResult = default(int?), System.DateTime? lastSuccessTimestamp = default(System.DateTime?), CloudTieringSpaceSavings spaceSavings = default(CloudTieringSpaceSavings), CloudTieringCachePerformance cachePerformance = default(CloudTieringCachePerformance), CloudTieringFilesNotTiering filesNotTiering = default(CloudTieringFilesNotTiering), CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = default(CloudTieringVolumeFreeSpacePolicyStatus), CloudTieringDatePolicyStatus datePolicyStatus = default(CloudTieringDatePolicyStatus), CloudTieringLowDiskMode lowDiskMode = default(CloudTieringLowDiskMode))
         {
             LastUpdatedTimestamp = lastUpdatedTimestamp;
             Health = health;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             FilesNotTiering = filesNotTiering;
             VolumeFreeSpacePolicyStatus = volumeFreeSpacePolicyStatus;
             DatePolicyStatus = datePolicyStatus;
+            LowDiskMode = lowDiskMode;
             CustomInit();
         }
 
@@ -131,6 +134,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "datePolicyStatus")]
         public CloudTieringDatePolicyStatus DatePolicyStatus { get; private set; }
+
+        /// <summary>
+        /// Gets information regarding the low disk mode state
+        /// </summary>
+        [JsonProperty(PropertyName = "lowDiskMode")]
+        public CloudTieringLowDiskMode LowDiskMode { get; private set; }
 
         /// <summary>
         /// Validate the object.

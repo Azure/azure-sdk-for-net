@@ -121,29 +121,47 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PerItemErrorCount < 0)
+            if (PerItemErrorCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PerItemErrorCount", 0);
+                if (PerItemErrorCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PerItemErrorCount", 0);
+                }
             }
-            if (AppliedItemCount < 0)
+            if (AppliedItemCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedItemCount", 0);
+                if (AppliedItemCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedItemCount", 0);
+                }
             }
-            if (TotalItemCount < 0)
+            if (TotalItemCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalItemCount", 0);
+                if (TotalItemCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalItemCount", 0);
+                }
             }
-            if (AppliedBytes < 0)
+            if (AppliedBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedBytes", 0);
+                if (AppliedBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "AppliedBytes", 0);
+                }
             }
-            if (TotalBytes < 0)
+            if (TotalBytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytes", 0);
+                if (TotalBytes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytes", 0);
+                }
             }
-            if (SessionMinutesRemaining < 0)
+            if (SessionMinutesRemaining != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "SessionMinutesRemaining", 0);
+                if (SessionMinutesRemaining < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "SessionMinutesRemaining", 0);
+                }
             }
         }
     }
