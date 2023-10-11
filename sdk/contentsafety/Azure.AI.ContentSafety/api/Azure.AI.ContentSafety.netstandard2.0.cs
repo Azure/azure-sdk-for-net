@@ -70,7 +70,9 @@ namespace Azure.AI.ContentSafety
         public virtual Azure.Response AnalyzeText(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(Azure.AI.ContentSafety.AnalyzeTextOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.TextBlocklist> CreateOrUpdateTextBlocklist(string blocklistName, Azure.AI.ContentSafety.TextBlocklist resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrUpdateTextBlocklist(string blocklistName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.TextBlocklist>> CreateOrUpdateTextBlocklistAsync(string blocklistName, Azure.AI.ContentSafety.TextBlocklist resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTextBlocklistAsync(string blocklistName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTextBlocklist(string blocklistName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTextBlocklistAsync(string blocklistName, Azure.RequestContext context = null) { throw null; }
@@ -163,7 +165,7 @@ namespace Azure.AI.ContentSafety
     {
         internal TextBlocklist() { }
         public string BlocklistName { get { throw null; } }
-        public string Description { get { throw null; } }
+        public string Description { get { throw null; } set { } }
     }
     public partial class TextBlocklistMatchResult
     {
