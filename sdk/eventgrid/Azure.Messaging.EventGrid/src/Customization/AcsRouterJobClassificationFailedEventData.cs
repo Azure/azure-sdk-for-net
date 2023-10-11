@@ -20,18 +20,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             get
             {
-                if (_errors != null)
+                if (_errors == null)
                 {
-                    return _errors;
+                    // Need to re-serialize to be able to deserialize as ResponseError with the internal properties populated.
+                    var serialized = JsonSerializer.Serialize(
+                        ErrorsInternal,
+                        new JsonSerializerOptions
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                        });
+                    _errors = JsonSerializer.Deserialize<List<ResponseError>>(serialized);
                 }
-                // Need to re-serialize to be able to deserialize as ResponseError with the internal properties populated.
-                var serialized = JsonSerializer.Serialize(
-                    ErrorsInternal,
-                    new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                    });
-                _errors ??= JsonSerializer.Deserialize<List<ResponseError>>(serialized);
+
                 return _errors;
             }
         }
