@@ -16,16 +16,16 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    public partial class Samples_SolutionInference
+    internal class Samples_SolutionInference
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Cancel_ShortVersion()
+        public void Example_Cancel()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -37,12 +37,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Cancel_ShortVersion_Async()
+        public async Task Example_Cancel_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -59,7 +59,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
@@ -80,7 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
@@ -96,12 +96,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Fetch_ShortVersion()
+        public void Example_Fetch()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -113,12 +113,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Fetch_ShortVersion_Async()
+        public async Task Example_Fetch_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -135,7 +135,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
@@ -156,7 +156,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
@@ -172,12 +172,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -190,12 +190,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
             });
@@ -213,7 +213,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
@@ -235,7 +235,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new

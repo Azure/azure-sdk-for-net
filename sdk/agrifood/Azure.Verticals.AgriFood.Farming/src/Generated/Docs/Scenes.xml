@@ -9,11 +9,12 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<filePath>", null);
-
 if (response.ContentStream != null)
 {
-    using Stream outFileStream = File.OpenWrite("<filepath>");
-    response.ContentStream.CopyTo(outFileStream);
+    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
 }
 ]]></code>
 This sample shows how to call DownloadAsync with all parameters and parse the result.
@@ -22,11 +23,12 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<filePath>", null);
-
 if (response.ContentStream != null)
 {
-    using Stream outFileStream = File.OpenWrite("<filepath>");
-    response.ContentStream.CopyTo(outFileStream);
+    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
 }
 ]]></code></example>
     </member>
@@ -38,11 +40,12 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<filePath>", null);
-
 if (response.ContentStream != null)
 {
-    using Stream outFileStream = File.OpenWrite("<filepath>");
-    response.ContentStream.CopyTo(outFileStream);
+    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
 }
 ]]></code>
 This sample shows how to call Download with all parameters and parse the result.
@@ -51,11 +54,12 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<filePath>", null);
-
 if (response.ContentStream != null)
 {
-    using Stream outFileStream = File.OpenWrite("<filepath>");
-    response.ContentStream.CopyTo(outFileStream);
+    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    {
+        response.ContentStream.CopyTo(outFileStream);
+    }
 }
 ]]></code></example>
     </member>
@@ -164,7 +168,7 @@ This sample shows how to call SearchFeaturesAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -185,19 +189,19 @@ This sample shows how to call SearchFeaturesAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new
     {
-        coordinates = new object[]
+        coordinates = new List<object>()
         {
-            new object[]
+            new List<object>()
             {
-                new object[]
+                new List<object>()
                 {
-                    new object[]
+                    new List<object>()
                     {
                         123.45
                     }
@@ -206,11 +210,11 @@ using RequestContent content = RequestContent.Create(new
         },
         type = "MultiPolygon",
     },
-    bbox = new object[]
+    bbox = new List<object>()
     {
         123.45
     },
-    featureIds = new object[]
+    featureIds = new List<object>()
     {
         "<featureIds>"
     },
@@ -245,7 +249,7 @@ This sample shows how to call SearchFeatures and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -266,19 +270,19 @@ This sample shows how to call SearchFeatures with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new
     {
-        coordinates = new object[]
+        coordinates = new List<object>()
         {
-            new object[]
+            new List<object>()
             {
-                new object[]
+                new List<object>()
                 {
-                    new object[]
+                    new List<object>()
                     {
                         123.45
                     }
@@ -287,11 +291,11 @@ using RequestContent content = RequestContent.Create(new
         },
         type = "MultiPolygon",
     },
-    bbox = new object[]
+    bbox = new List<object>()
     {
         123.45
     },
-    featureIds = new object[]
+    featureIds = new List<object>()
     {
         "<featureIds>"
     },
@@ -419,7 +423,7 @@ Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "202
 await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetScenesAsync with all parameters and parse the result.
@@ -427,24 +431,33 @@ This sample shows how to call GetScenesAsync with all parameters and parse the r
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+    "<imageNames>"
+}, new List<double>()
+{
+    123.45
+}, new List<string>()
+{
+    "<imageFormats>"
+}, 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
-    Console.WriteLine(result.GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-    Console.WriteLine(result.GetProperty("imageFormat").ToString());
-    Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
-    Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
-    Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
-    Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
+    Console.WriteLine(result[0].GetProperty("provider").ToString());
+    Console.WriteLine(result[0].GetProperty("source").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
+    Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
+    Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
+    Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
+    Console.WriteLine(result[0].GetProperty("partyId").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("eTag").ToString());
 }
 ]]></code></example>
     </member>
@@ -458,7 +471,7 @@ Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "202
 foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetScenes with all parameters and parse the result.
@@ -466,24 +479,33 @@ This sample shows how to call GetScenes with all parameters and parse the result
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+    "<imageNames>"
+}, new List<double>()
+{
+    123.45
+}, new List<string>()
+{
+    "<imageFormats>"
+}, 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
-    Console.WriteLine(result.GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-    Console.WriteLine(result.GetProperty("imageFormat").ToString());
-    Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
-    Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
-    Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
-    Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
+    Console.WriteLine(result[0].GetProperty("provider").ToString());
+    Console.WriteLine(result[0].GetProperty("source").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+    Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
+    Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
+    Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
+    Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
+    Console.WriteLine(result[0].GetProperty("partyId").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("eTag").ToString());
 }
 ]]></code></example>
     </member>
@@ -494,7 +516,7 @@ This sample shows how to call CreateSatelliteDataIngestionJobAsync and parse the
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -517,7 +539,7 @@ This sample shows how to call CreateSatelliteDataIngestionJobAsync with all para
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -527,15 +549,15 @@ using RequestContent content = RequestContent.Create(new
     source = "Sentinel_2_L2A",
     data = new
     {
-        imageNames = new object[]
+        imageNames = new List<object>()
         {
             "<imageNames>"
         },
-        imageFormats = new object[]
+        imageFormats = new List<object>()
         {
             "<imageFormats>"
         },
-        imageResolutions = new object[]
+        imageResolutions = new List<object>()
         {
             123.45
         },
@@ -583,7 +605,7 @@ This sample shows how to call CreateSatelliteDataIngestionJob and parse the resu
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -606,7 +628,7 @@ This sample shows how to call CreateSatelliteDataIngestionJob with all parameter
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-using RequestContent content = RequestContent.Create(new
+RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -616,15 +638,15 @@ using RequestContent content = RequestContent.Create(new
     source = "Sentinel_2_L2A",
     data = new
     {
-        imageNames = new object[]
+        imageNames = new List<object>()
         {
             "<imageNames>"
         },
-        imageFormats = new object[]
+        imageFormats = new List<object>()
         {
             "<imageFormats>"
         },
-        imageResolutions = new object[]
+        imageResolutions = new List<object>()
         {
             123.45
         },

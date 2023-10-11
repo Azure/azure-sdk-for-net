@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    public partial class Samples_PlantingData
+    internal class Samples_PlantingData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPlantingData_ShortVersion()
+        public void Example_GetPlantingData()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -33,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPlantingData_ShortVersion_Async()
+        public async Task Example_GetPlantingData_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -134,12 +135,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<plantingDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -148,12 +149,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
+            RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantingDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -167,20 +168,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 avgPlantingRate = new
                 {
                     unit = "<unit>",
                     value = 123.45,
                 },
-                plantingProductDetails = new object[]
-            {
+                plantingProductDetails = new List<object>()
+{
 new
 {
 productName = "<productName>",
 }
-            },
+},
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -238,20 +239,20 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
                 avgPlantingRate = new
                 {
                     unit = "<unit>",
                     value = 123.45,
                 },
-                plantingProductDetails = new object[]
-            {
+                plantingProductDetails = new List<object>()
+{
 new
 {
 productName = "<productName>",
 }
-            },
+},
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -304,25 +305,23 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Delete()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -334,7 +333,6 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -346,13 +344,12 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_GetCascadeDeleteJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -367,7 +364,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -430,7 +427,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllPlantingDataByPartyId_ShortVersion()
+        public void Example_GetAllPlantingDataByPartyId()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -438,13 +435,13 @@ productName = "<productName>",
             foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllPlantingDataByPartyId_ShortVersion_Async()
+        public async Task Example_GetAllPlantingDataByPartyId_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -452,7 +449,7 @@ productName = "<productName>",
             await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -463,41 +460,59 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
+{
+"<sources>"
+}, new List<string>()
+{
+"<associatedBoundaryIds>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+"<ids>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-                Console.WriteLine(result.GetProperty("partyId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("operationModifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationStartDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationEndDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("attachmentsLink").ToString());
+                Console.WriteLine(result[0].GetProperty("associatedBoundaryId").ToString());
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -508,47 +523,65 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
+{
+"<sources>"
+}, new List<string>()
+{
+"<associatedBoundaryIds>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+"<ids>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-                Console.WriteLine(result.GetProperty("partyId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("operationModifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationStartDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationEndDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("attachmentsLink").ToString());
+                Console.WriteLine(result[0].GetProperty("associatedBoundaryId").ToString());
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllPlantingData_ShortVersion()
+        public void Example_GetAllPlantingData()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -556,13 +589,13 @@ productName = "<productName>",
             foreach (BinaryData item in client.GetAllPlantingData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllPlantingData_ShortVersion_Async()
+        public async Task Example_GetAllPlantingData_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -570,7 +603,7 @@ productName = "<productName>",
             await foreach (BinaryData item in client.GetAllPlantingDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -581,41 +614,59 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
+{
+"<sources>"
+}, new List<string>()
+{
+"<associatedBoundaryIds>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+"<plantingDataIds>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-                Console.WriteLine(result.GetProperty("partyId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("operationModifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationStartDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationEndDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("attachmentsLink").ToString());
+                Console.WriteLine(result[0].GetProperty("associatedBoundaryId").ToString());
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -626,47 +677,65 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
+{
+"<sources>"
+}, new List<string>()
+{
+"<associatedBoundaryIds>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
+{
+"<plantingDataIds>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-                Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-                Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-                Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-                Console.WriteLine(result.GetProperty("partyId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("productName").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("plantingProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("operationModifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationStartDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("operationEndDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("attachmentsLink").ToString());
+                Console.WriteLine(result[0].GetProperty("associatedBoundaryId").ToString());
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_CreateCascadeDeleteJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -682,7 +751,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_CreateCascadeDeleteJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
