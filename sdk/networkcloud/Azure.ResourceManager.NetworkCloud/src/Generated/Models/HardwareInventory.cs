@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal HardwareInventory()
         {
             Interfaces = new ChangeTrackingList<HardwareInventoryNetworkInterface>();
-            Nics = new ChangeTrackingList<Nic>();
+            Nics = new ChangeTrackingList<NetworkCloudNic>();
         }
 
         /// <summary> Initializes a new instance of HardwareInventory. </summary>
         /// <param name="additionalHostInformation"> Freeform data extracted from the environment about this machine. This information varies depending on the specific hardware and configuration. </param>
         /// <param name="interfaces"> The list of network interfaces and associated details for the bare metal machine. </param>
         /// <param name="nics"> Field Deprecated. Will be removed in an upcoming version. The list of network interface cards and associated details for the bare metal machine. </param>
-        internal HardwareInventory(string additionalHostInformation, IReadOnlyList<HardwareInventoryNetworkInterface> interfaces, IReadOnlyList<Nic> nics)
+        internal HardwareInventory(string additionalHostInformation, IReadOnlyList<HardwareInventoryNetworkInterface> interfaces, IReadOnlyList<NetworkCloudNic> nics)
         {
             AdditionalHostInformation = additionalHostInformation;
             Interfaces = interfaces;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The list of network interfaces and associated details for the bare metal machine. </summary>
         public IReadOnlyList<HardwareInventoryNetworkInterface> Interfaces { get; }
         /// <summary> Field Deprecated. Will be removed in an upcoming version. The list of network interface cards and associated details for the bare metal machine. </summary>
-        public IReadOnlyList<Nic> Nics { get; }
+        public IReadOnlyList<NetworkCloudNic> Nics { get; }
     }
 }

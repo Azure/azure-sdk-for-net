@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// This factory should ensure that only one instance of the Transmitter is created for
     /// any unique connection string.
     /// </summary>
-    internal class TransmitterFactory
+    internal sealed class TransmitterFactory
     {
         public static readonly TransmitterFactory Instance = new();
         public static readonly IPlatform platform = new DefaultPlatform();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileRequest(_billingAccountName, _billingProfileName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, _billingAccountName, _billingProfileName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileRequest(_billingAccountName, _billingProfileName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, _billingAccountName, _billingProfileName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,6 +242,80 @@ namespace Azure.ResourceManager.Billing
             {
                 var response = _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingPaymentMethodLinkResource>> GetIfExistsAsync(string paymentMethodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
+
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingPaymentMethodLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
+        public virtual NullableResponse<BillingPaymentMethodLinkResource> GetIfExists(string paymentMethodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
+
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingPaymentMethodLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

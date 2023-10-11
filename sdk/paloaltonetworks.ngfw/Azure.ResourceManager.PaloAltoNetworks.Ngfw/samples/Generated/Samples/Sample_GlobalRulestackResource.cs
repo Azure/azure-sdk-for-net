@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResource result = await globalRulestackResource.GetAsync();
+            GlobalRulestackResource result = await globalRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResource result = await globalRulestackResource.GetAsync();
+            GlobalRulestackResource result = await globalRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GlobalRulestackUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,32 +94,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResourcePatch patch = new GlobalRulestackResourcePatch()
+            GlobalRulestackPatch patch = new GlobalRulestackPatch()
             {
                 Location = new AzureLocation("eastus"),
-                Identity = new AzureResourceManagerManagedIdentityProperties(ManagedIdentityType.None)
+                Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
 {
-["key16"] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
 },
                 },
-                Properties = new GlobalRulestackResourceUpdateProperties()
+                Properties = new GlobalRulestackUpdateProperties()
                 {
-                    PanETag = "2bf4a339-294d-4c25-b0b2-ef649e9f5c12",
-                    PanLocation = "eastus",
-                    Scope = ScopeType.Global,
+                    PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
+                    PanLocation = new AzureLocation("eastus"),
+                    Scope = RulestackScopeType.Global,
                     AssociatedSubscriptions =
 {
 "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
 },
                     Description = "global rulestacks",
-                    DefaultMode = DefaultMode.IPS,
+                    DefaultMode = RuleCreationDefaultMode.IPS,
                     MinAppIdVersion = "8.5.3",
-                    SecurityServices = new SecurityServices()
+                    SecurityServices = new RulestackSecurityServices()
                     {
                         VulnerabilityProfile = "default",
                         AntiSpywareProfile = "default",
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                     },
                 },
             };
-            GlobalRulestackResource result = await globalRulestackResource.UpdateAsync(patch);
+            GlobalRulestackResource result = await globalRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GlobalRulestackUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,15 +158,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResourcePatch patch = new GlobalRulestackResourcePatch();
-            GlobalRulestackResource result = await globalRulestackResource.UpdateAsync(patch);
+            GlobalRulestackPatch patch = new GlobalRulestackPatch();
+            GlobalRulestackResource result = await globalRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GlobalRulestackDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await globalRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GlobalRulestackDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await globalRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Commit_GlobalRulestackCommitMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_commit_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_commit_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_commit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.CommitAsync(WaitUntil.Completed);
+            await globalRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Commit_GlobalRulestackCommitMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_commit_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_commit_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_commit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.CommitAsync(WaitUntil.Completed);
+            await globalRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetChangeLog_GlobalRulestackGetChangeLogMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_getChangeLog_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_getChangeLog_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_getChangeLog" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await globalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await globalRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetChangeLog_GlobalRulestackGetChangeLogMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_getChangeLog_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_getChangeLog_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_getChangeLog" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await globalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await globalRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdvancedSecurityObjects_GlobalRulestackListAdvancedSecurityObjectsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listAdvancedSecurityObjects_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAdvancedSecurityObjects_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -338,13 +338,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("globalRulestacks");
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("globalRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            AdvSecurityObjectListResponse result = await globalRulestackResource.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
+            AdvancedSecurityObjectListResult result = await globalRulestack.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdvancedSecurityObjects_GlobalRulestackListAdvancedSecurityObjectsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listAdvancedSecurityObjects_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAdvancedSecurityObjects_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listAdvancedSecurityObjects" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -366,11 +366,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("globalRulestacks");
-            AdvSecurityObjectListResponse result = await globalRulestackResource.GetAdvancedSecurityObjectsAsync(type);
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("globalRulestacks");
+            AdvancedSecurityObjectListResult result = await globalRulestack.GetAdvancedSecurityObjectsAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppIds_GlobalRulestackListAppIdsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listAppIds_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAppIds_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listAppIds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -392,14 +392,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string appIdVersion = "8543";
             string appPrefix = "pref";
             string skip = "a6a321";
             int? top = 20;
-            await foreach (string item in globalRulestackResource.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
+            await foreach (string item in globalRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAppIds_GlobalRulestackListAppIdsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listAppIds_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listAppIds_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listAppIds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -424,10 +424,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetAppIdsAsync())
+            await foreach (string item in globalRulestack.GetAppIdsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCountries_GlobalRulestackListCountriesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listCountries_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listCountries_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listCountries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -452,12 +452,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (Country item in globalRulestackResource.GetCountriesAsync(skip: skip, top: top))
+            await foreach (RulestackCountry item in globalRulestack.GetCountriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCountries_GlobalRulestackListCountriesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listCountries_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listCountries_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listCountries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -482,10 +482,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Country item in globalRulestackResource.GetCountriesAsync())
+            await foreach (RulestackCountry item in globalRulestack.GetCountriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFirewalls_GlobalRulestackListFirewallsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listFirewalls_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listFirewalls_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listFirewalls" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -510,10 +510,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetFirewallsAsync())
+            await foreach (string item in globalRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFirewalls_GlobalRulestackListFirewallsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listFirewalls_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listFirewalls_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listFirewalls" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -538,10 +538,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetFirewallsAsync())
+            await foreach (string item in globalRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPredefinedUrlCategories_GlobalRulestackListPredefinedUrlCategoriesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listPredefinedUrlCategories_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listPredefinedUrlCategories_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -566,12 +566,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (PredefinedUrlCategory item in globalRulestackResource.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
+            await foreach (PredefinedUrlCategory item in globalRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPredefinedUrlCategories_GlobalRulestackListPredefinedUrlCategoriesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listPredefinedUrlCategories_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listPredefinedUrlCategories_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listPredefinedUrlCategories" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -596,10 +596,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PredefinedUrlCategory item in globalRulestackResource.GetPredefinedUrlCategoriesAsync())
+            await foreach (PredefinedUrlCategory item in globalRulestack.GetPredefinedUrlCategoriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityServices_GlobalRulestackListSecurityServicesMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listSecurityServices_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listSecurityServices_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listSecurityServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -624,13 +624,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("globalRulestacks");
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("globalRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            SecurityServicesResponse result = await globalRulestackResource.GetSecurityServicesAsync(type, skip: skip, top: top);
+            RulestackSecurityServiceListResult result = await globalRulestack.GetSecurityServicesAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityServices_GlobalRulestackListSecurityServicesMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_listSecurityServices_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_listSecurityServices_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_listSecurityServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("globalRulestacks");
-            SecurityServicesResponse result = await globalRulestackResource.GetSecurityServicesAsync(type);
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("globalRulestacks");
+            RulestackSecurityServiceListResult result = await globalRulestack.GetSecurityServicesAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Revert_GlobalRulestackRevertMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_revert_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_revert_MaximumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -678,10 +678,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.RevertAsync();
+            await globalRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Revert_GlobalRulestackRevertMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2022-08-29-preview/examples/GlobalRulestack_revert_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/GlobalRulestack_revert_MinimumSet_Gen.json
             // this example is just showing the usage of "GlobalRulestack_revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -703,10 +703,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.RevertAsync();
+            await globalRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }

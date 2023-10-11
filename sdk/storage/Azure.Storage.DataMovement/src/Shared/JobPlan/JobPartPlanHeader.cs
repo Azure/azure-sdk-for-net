@@ -5,12 +5,10 @@ using System;
 using System.IO;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     /// <summary>
     /// Stores the Job Part Header information to resume from.
-    ///
-    /// This matching the JobPartPlanHeader of azcopy
     /// </summary>
     internal class JobPartPlanHeader
     {
@@ -43,6 +41,16 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         public long PartNumber;
 
         /// <summary>
+        /// The length of the source resource identifier
+        /// </summary>
+        public ushort SourceResourceIdLength;
+
+        /// <summary>
+        /// The identifier of the source resource
+        /// </summary>
+        public string SourceResourceId;
+
+        /// <summary>
         /// The length of the source root path
         /// </summary>
         public ushort SourcePathLength;
@@ -59,10 +67,18 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// Extra query params applicable to the source
-        ///
-        /// Size of byte array in azcopy is 1000 bytes.
         /// </summary>
         public string SourceExtraQuery;
+
+        /// <summary>
+        /// The length of the destination resource identifier
+        /// </summary>
+        public ushort DestinationResourceIdLength;
+
+        /// <summary>
+        /// The identifier of the destination resource
+        /// </summary>
+        public string DestinationResourceId;
 
         /// <summary>
         /// The length of the destination root path
@@ -71,8 +87,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// The destination path
-        ///
-        /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
         public string DestinationPath;
 
@@ -83,8 +97,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// Extra query params applicable to the dest
-        ///
-        /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
         public string DestinationExtraQuery;
 
@@ -197,17 +209,19 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         // jobStatus_doNotUse represents the current status of JobPartPlan
         // jobStatus_doNotUse is a private member whose value can be accessed by Status and SetJobStatus
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
-        public StorageTransferStatus AtomicJobStatus;
+        public DataTransferStatus AtomicJobStatus;
 
-        public StorageTransferStatus AtomicPartStatus;
+        public DataTransferStatus AtomicPartStatus;
 
         internal JobPartPlanHeader(
             string version,
             DateTimeOffset startTime,
             string transferId,
             long partNumber,
+            string sourceResourceId,
             string sourcePath,
             string sourceExtraQuery,
+            string destinationResourceId,
             string destinationPath,
             string destinationExtraQuery,
             bool isFinalPart,
@@ -230,8 +244,8 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             JobPartDeleteSnapshotsOption deleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType,
-            StorageTransferStatus atomicJobStatus,
-            StorageTransferStatus atomicPartStatus)
+            DataTransferStatus atomicJobStatus,
+            DataTransferStatus atomicPartStatus)
         {
             // Version String size verification
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -243,7 +257,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             Argument.AssertNotNull(dstBlobData, nameof(dstBlobData));
             Argument.AssertNotNull(dstLocalData, nameof(dstLocalData));
             // Version
-            if (version.Length == DataMovementConstants.PlanFile.VersionStrLength)
+            if (version.Length == DataMovementConstants.JobPartPlanFile.VersionStrLength)
             {
                 Version = version;
             }
@@ -251,12 +265,12 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(Version),
-                    expectedSize: DataMovementConstants.PlanFile.VersionStrLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.VersionStrLength,
                     actualSize: version.Length);
             }
             StartTime = startTime;
             // TransferId
-            if (transferId.Length == DataMovementConstants.PlanFile.TransferIdStrLength)
+            if (transferId.Length == DataMovementConstants.JobPartPlanFile.TransferIdStrLength)
             {
                 TransferId = transferId;
             }
@@ -264,13 +278,25 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(TransferId),
-                    expectedSize: DataMovementConstants.PlanFile.TransferIdStrLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.TransferIdStrLength,
                     actualSize: transferId.Length);
             }
             PartNumber = partNumber;
-            SourcePath = sourcePath;
+            // Source resource type
+            if (sourceResourceId.Length <= DataMovementConstants.JobPartPlanFile.ResourceIdMaxStrLength)
+            {
+                SourceResourceId = sourceResourceId;
+                SourceResourceIdLength = (ushort) sourceResourceId.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(sourceResourceId),
+                    expectedSize: DataMovementConstants.JobPartPlanFile.ResourceIdMaxStrLength,
+                    actualSize: sourceResourceId.Length);
+            }
             // SourcePath
-            if (sourcePath.Length <= DataMovementConstants.PlanFile.PathStrMaxLength)
+            if (sourcePath.Length <= DataMovementConstants.JobPartPlanFile.PathStrMaxLength)
             {
                 SourcePath = sourcePath;
                 SourcePathLength = (ushort) sourcePath.Length;
@@ -279,11 +305,11 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(SourcePath),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.PathStrMaxLength,
                     actualSize: sourcePath.Length);
             }
             // SourceQuery
-            if (sourceExtraQuery.Length <= DataMovementConstants.PlanFile.ExtraQueryMaxLength)
+            if (sourceExtraQuery.Length <= DataMovementConstants.JobPartPlanFile.ExtraQueryMaxLength)
             {
                 SourceExtraQuery = sourceExtraQuery;
                 SourceExtraQueryLength = (ushort) sourceExtraQuery.Length;
@@ -292,11 +318,24 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(SourceExtraQuery),
-                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.ExtraQueryMaxLength,
                     actualSize: sourceExtraQuery.Length);
             }
+            // Destination resource type
+            if (destinationResourceId.Length <= DataMovementConstants.JobPartPlanFile.ResourceIdMaxStrLength)
+            {
+                DestinationResourceId = destinationResourceId;
+                DestinationResourceIdLength = (ushort)destinationResourceId.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(destinationResourceId),
+                    expectedSize: DataMovementConstants.JobPartPlanFile.ResourceIdMaxStrLength,
+                    actualSize: destinationResourceId.Length);
+            }
             // DestinationPath
-            if (destinationPath.Length <= DataMovementConstants.PlanFile.PathStrMaxLength)
+            if (destinationPath.Length <= DataMovementConstants.JobPartPlanFile.PathStrMaxLength)
             {
                 DestinationPath = destinationPath;
                 DestinationPathLength = (ushort) destinationPath.Length;
@@ -305,11 +344,11 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(DestinationPath),
-                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.PathStrMaxLength,
                     actualSize: destinationPath.Length);
             }
             // DestinationQuery
-            if (destinationExtraQuery.Length <= DataMovementConstants.PlanFile.ExtraQueryMaxLength)
+            if (destinationExtraQuery.Length <= DataMovementConstants.JobPartPlanFile.ExtraQueryMaxLength)
             {
                 DestinationExtraQuery = destinationExtraQuery;
                 DestinationExtraQueryLength = (ushort) destinationExtraQuery.Length;
@@ -318,7 +357,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(DestinationExtraQuery),
-                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.ExtraQueryMaxLength,
                     actualSize: destinationExtraQuery.Length);
             }
             IsFinalPart = isFinalPart;
@@ -359,40 +398,52 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
-            WriteString(writer, Version, DataMovementConstants.PlanFile.VersionStrNumBytes);
+            WriteString(writer, Version, DataMovementConstants.JobPartPlanFile.VersionStrNumBytes);
 
             // StartTime
             writer.Write(StartTime.Ticks);
 
             // TransferId
-            WriteString(writer, TransferId, DataMovementConstants.PlanFile.TransferIdStrNumBytes);
+            WriteString(writer, TransferId, DataMovementConstants.JobPartPlanFile.TransferIdStrNumBytes);
 
             // PartNumber
             writer.Write(PartNumber);
+
+            // SourceResourceIdLength
+            writer.Write(SourceResourceIdLength);
+
+            // SourceResourceId
+            WriteString(writer, SourceResourceId, DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
 
             // SourcePathLength
             writer.Write(SourcePathLength);
 
             // SourcePath
-            WriteString(writer, SourcePath, DataMovementConstants.PlanFile.PathStrNumBytes);
+            WriteString(writer, SourcePath, DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
 
             // SourceExtraQueryLength
             writer.Write(SourceExtraQueryLength);
 
             // SourceExtraQuery
-            WriteString(writer, SourceExtraQuery, DataMovementConstants.PlanFile.ExtraQueryNumBytes);
+            WriteString(writer, SourceExtraQuery, DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes);
+
+            // DestinationResourceIdLength
+            writer.Write(DestinationResourceIdLength);
+
+            // DestinationResourceId
+            WriteString(writer, DestinationResourceId, DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
 
             // DestinationPathLength
             writer.Write(DestinationPathLength);
 
             // DestinationPath
-            WriteString(writer, DestinationPath, DataMovementConstants.PlanFile.PathStrNumBytes);
+            WriteString(writer, DestinationPath, DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
 
             // DestinationExtraQueryLength
             writer.Write(DestinationExtraQueryLength);
 
             // DestinationExtraQuery
-            WriteString(writer, DestinationExtraQuery, DataMovementConstants.PlanFile.ExtraQueryNumBytes);
+            WriteString(writer, DestinationExtraQuery, DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes);
 
             // IsFinalPart
             writer.Write(Convert.ToByte(IsFinalPart));
@@ -431,31 +482,31 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             writer.Write(DstBlobData.ContentTypeLength);
 
             // DstBlobData.ContentType
-            WriteString(writer, DstBlobData.ContentType, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.ContentType, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.ContentEncodingLength
             writer.Write(DstBlobData.ContentEncodingLength);
 
             // DstBlobData.ContentEncoding
-            WriteString(writer, DstBlobData.ContentEncoding, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.ContentEncoding, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.ContentLanguageLength
             writer.Write(DstBlobData.ContentLanguageLength);
 
             // DstBlobData.ContentLanguage
-            WriteString(writer, DstBlobData.ContentLanguage, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.ContentLanguage, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.ContentDispositionLength
             writer.Write(DstBlobData.ContentDispositionLength);
 
             // DstBlobData.ContentDisposition
-            WriteString(writer, DstBlobData.ContentDisposition, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.ContentDisposition, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.CacheControlLength
             writer.Write(DstBlobData.CacheControlLength);
 
             // DstBlobData.CacheControl
-            WriteString(writer, DstBlobData.CacheControl, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.CacheControl, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.BlockBlobTier
             writer.Write((byte)DstBlobData.BlockBlobTier);
@@ -470,13 +521,13 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             writer.Write(DstBlobData.MetadataLength);
 
             // DstBlobData.Metadata
-            WriteString(writer, DstBlobData.Metadata, DataMovementConstants.PlanFile.MetadataStrNumBytes);
+            WriteString(writer, DstBlobData.Metadata, DataMovementConstants.JobPartPlanFile.MetadataStrNumBytes);
 
             // DstBlobData.BlobTagsLength
             writer.Write(DstBlobData.BlobTagsLength);
 
             // DstBlobData.BlobTags
-            WriteString(writer, DstBlobData.BlobTags, DataMovementConstants.PlanFile.BlobTagsStrNumBytes);
+            WriteString(writer, DstBlobData.BlobTags, DataMovementConstants.JobPartPlanFile.BlobTagsStrNumBytes);
 
             // DstBlobData.IsSourceEncrypted
             writer.Write(DstBlobData.IsSourceEncrypted);
@@ -485,7 +536,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             writer.Write(DstBlobData.CpkScopeInfoLength);
 
             // DstBlobData.CpkScopeInfo
-            WriteString(writer, DstBlobData.CpkScopeInfo, DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            WriteString(writer, DstBlobData.CpkScopeInfo, DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
 
             // DstBlobData.BlockSize
             writer.Write(DstBlobData.BlockSize);
@@ -523,11 +574,23 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             // RehydratePriorityType
             writer.Write((byte)RehydratePriorityType);
 
-            // AtomicJobStatus
-            writer.Write((byte)AtomicJobStatus);
+            // AtomicJobStatus.State
+            writer.Write((byte)AtomicJobStatus.State);
 
-            // AtomicPartStatus
-            writer.Write((byte)AtomicPartStatus);
+            // AtomicJobStatus.HasFailedItems
+            writer.Write(Convert.ToByte(AtomicJobStatus.HasFailedItems));
+
+            // AtomicJobStatus.HasSkippedItems
+            writer.Write(Convert.ToByte(AtomicJobStatus.HasSkippedItems));
+
+            // AtomicPartStatus.State
+            writer.Write((byte)AtomicPartStatus.State);
+
+            // AtomicPartStatus.HasFailedItems
+            writer.Write(Convert.ToByte(AtomicPartStatus.HasFailedItems));
+
+            // AtomicPartStatus.HasSkippedItems
+            writer.Write(Convert.ToByte(AtomicPartStatus.HasSkippedItems));
         }
 
         public static JobPartPlanHeader Deserialize(Stream stream)
@@ -541,51 +604,70 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             reader.BaseStream.Position = 0;
 
             // Version
-            byte[] versionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.VersionStrNumBytes);
-            string version = versionBuffer.ToString(DataMovementConstants.PlanFile.VersionStrLength);
+            byte[] versionBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.VersionStrNumBytes);
+            string version = versionBuffer.ToString(DataMovementConstants.JobPartPlanFile.VersionStrLength);
+
+            // Assert the schema version before continuing
+            CheckSchemaVersion(version);
 
             // Start Time
-            byte[] startTimeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] startTimeBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             DateTimeOffset startTime = new DateTimeOffset(startTimeBuffer.ToLong(), new TimeSpan(0, 0, 0));
 
             // Transfer Id
-            byte[] transferIdBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.TransferIdStrNumBytes);
-            string transferId = transferIdBuffer.ToString(DataMovementConstants.PlanFile.TransferIdStrLength);
+            byte[] transferIdBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.TransferIdStrNumBytes);
+            string transferId = transferIdBuffer.ToString(DataMovementConstants.JobPartPlanFile.TransferIdStrLength);
 
             // Job Part Number
-            byte[] partNumberBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] partNumberBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             long partNumber = partNumberBuffer.ToLong();
 
+            // SourceResourceIdLength
+            byte[] sourceResourceIdLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
+            ushort sourceResourceIdLength = sourceResourceIdLengthBuffer.ToUShort();
+
+            // SourceResourceId
+            byte[] sourceResourceIdBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
+            string sourceResourceId = sourceResourceIdBuffer.ToString(sourceResourceIdLength);
+
             // SourcePathLength
-            byte[] sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort sourcePathLength = sourcePathLengthBuffer.ToUShort();
 
             // SourcePath
-            byte[] sourcePathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+            byte[] sourcePathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
             string sourcePath = sourcePathBuffer.ToString(sourcePathLength);
 
             // SourceExtraQueryLength
-            byte[] sourceExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] sourceExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort sourceExtraQueryLength = sourceExtraQueryLengthBuffer.ToUShort();
 
             // SourceExtraQuery
-            byte[] sourceExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryNumBytes);
+            byte[] sourceExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes);
             string sourceExtraQuery = sourceExtraQueryBuffer.ToString(sourceExtraQueryLength);
 
+            // DestinationResourceIdLength
+            byte[] destinationResourceIdLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
+            ushort destinationResourceIdLength = destinationResourceIdLengthBuffer.ToUShort();
+
+            // DestinationResourceId
+            byte[] destinationResourceIdBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
+            string destinationResourceId = destinationResourceIdBuffer.ToString(destinationResourceIdLength);
+
             // DestinationPathLength
-            byte[] destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort destinationPathLength = destinationPathLengthBuffer.ToUShort();
 
             // DestinationPath
-            byte[] destinationPathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+            byte[] destinationPathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
             string destinationPath = destinationPathBuffer.ToString(destinationPathLength);
 
             // DestinationExtraQueryLength
-            byte[] destinationExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] destinationExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort destinationExtraQueryLength = destinationExtraQueryLengthBuffer.ToUShort();
 
             // DestinationExtraQuery
-            byte[] destinationExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryNumBytes);
+            byte[] destinationExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ExtraQueryNumBytes);
             string destinationExtraQuery = destinationExtraQueryBuffer.ToString(destinationExtraQueryLength);
 
             // IsFinalPart
@@ -608,7 +690,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             byte priority = reader.ReadByte();
 
             // TTLAfterCompletion
-            byte[] ttlAfterCompletionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] ttlAfterCompletionBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             DateTimeOffset ttlAfterCompletion = new DateTimeOffset(ttlAfterCompletionBuffer.ToLong(), new TimeSpan(0, 0, 0));
 
             // JobPlanOperation
@@ -620,7 +702,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             FolderPropertiesMode folderPropertyMode = (FolderPropertiesMode)folderPropertyOptionByte;
 
             // NumberChunks
-            byte[] numberChunksBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] numberChunksBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             long numberChunks = numberChunksBuffer.ToLong();
 
             // DstBlobData.BlobType
@@ -632,43 +714,43 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             bool noGuessMimeType = Convert.ToBoolean(noGuessMimeTypeByte);
 
             // DstBlobData.ContentTypeLength
-            byte[] contentTypeLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] contentTypeLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort contentTypeLength = contentTypeLengthBuffer.ToUShort();
 
             // DstBlobData.ContentType
-            byte[] contentTypeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] contentTypeBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string contentType = contentTypeBuffer.ToString(contentTypeLength);
 
             // DstBlobData.ContentEncodingLength
-            byte[] contentEncodingLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] contentEncodingLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort contentEncodingLength = contentEncodingLengthBuffer.ToUShort();
 
             // DstBlobData.ContentEncoding
-            byte[] contentEncodingBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] contentEncodingBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string contentEncoding = contentEncodingBuffer.ToString(contentEncodingLength);
 
             // DstBlobData.ContentLanguageLength
-            byte[] contentLanguageLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] contentLanguageLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort contentLanguageLength = contentLanguageLengthBuffer.ToUShort();
 
             // DstBlobData.ContentLanguage
-            byte[] contentLanguageBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] contentLanguageBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string contentLanguage = contentLanguageBuffer.ToString(contentLanguageLength);
 
             // DstBlobData.ContentDispositionLength
-            byte[] contentDispositionLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] contentDispositionLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort contentDispositionLength = contentDispositionLengthBuffer.ToUShort();
 
             // DstBlobData.ContentDisposition
-            byte[] contentDispositionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] contentDispositionBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string contentDisposition = contentDispositionBuffer.ToString(contentDispositionLength);
 
             // DstBlobData.CacheControlLength
-            byte[] cacheControlLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] cacheControlLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort cacheControlLength = cacheControlLengthBuffer.ToUShort();
 
             // DstBlobData.CacheControl
-            byte[] cacheControlBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] cacheControlBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string cacheControl = cacheControlBuffer.ToString(cacheControlLength);
 
             // DstBlobData.BlockBlobTier
@@ -684,34 +766,34 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             bool putMd5 = Convert.ToBoolean(putMd5Byte);
 
             // DstBlobData.MetadataLength
-            byte[] metadataLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] metadataLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort metadataLength = metadataLengthBuffer.ToUShort();
 
             // DstBlobData.Metadata
-            byte[] metadataBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.MetadataStrNumBytes);
+            byte[] metadataBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.MetadataStrNumBytes);
             string metadata = metadataBuffer.ToString(metadataLength);
 
             // DstBlobData.BlobTagsLength
-            byte[] blobTagsLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] blobTagsLengthBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             long blobTagsLength = blobTagsLengthBuffer.ToLong();
 
             // DstBlobData.BlobTags
-            byte[] blobTagsBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.BlobTagsStrNumBytes);
+            byte[] blobTagsBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.BlobTagsStrNumBytes);
             string blobTags = blobTagsBuffer.ToString(blobTagsLength);
 
             // DstBlobData.IsSourceEncrypted
             bool isSourceEncrypted = Convert.ToBoolean(reader.ReadByte());
 
             // DstBlobData.CpkScopeInfoLength
-            byte[] cpkScopeInfoLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            byte[] cpkScopeInfoLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
             ushort cpkScopeInfoLength = cpkScopeInfoLengthBuffer.ToUShort();
 
             // DstBlobData.CpkScopeInfo
-            byte[] cpkScopeInfoBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueNumBytes);
+            byte[] cpkScopeInfoBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.HeaderValueNumBytes);
             string cpkScopeInfo = cpkScopeInfoBuffer.ToString(cpkScopeInfoLength);
 
             // DstBlobData.BlockSize
-            byte[] blockSizeLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            byte[] blockSizeLengthBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
             long blockSize = blockSizeLengthBuffer.ToLong();
 
             // DstLocalData.PreserveLastModifiedTime
@@ -750,13 +832,35 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             byte rehydratePriorityTypeByte = reader.ReadByte();
             JobPartPlanRehydratePriorityType rehydratePriorityType = (JobPartPlanRehydratePriorityType)rehydratePriorityTypeByte;
 
-            // AtomicJobStatus
+            // AtomicJobStatus.State
             byte atomicJobStatusByte = reader.ReadByte();
-            StorageTransferStatus atomicJobStatus = (StorageTransferStatus)atomicJobStatusByte;
+            DataTransferState jobStatusState = (DataTransferState)atomicJobStatusByte;
 
-            // AtomicPartStatus
+            // AtomicJobStatus.HasFailedItems
+            bool jobStatusHasFailed = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicJobStatus.HasSkippedItems
+            bool jobStatusHasSkipped = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicPartStatus.State
             byte atomicPartStatusByte = reader.ReadByte();
-            StorageTransferStatus atomicPartStatus = (StorageTransferStatus)atomicPartStatusByte;
+            DataTransferState partStatusState = (DataTransferState)atomicPartStatusByte;
+
+            // AtomicPartStatus.HasFailedItems
+            bool partStatusHasFailed = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicPartStatus.HasSkippedItems
+            bool partStatusHasSkipped = Convert.ToBoolean(reader.ReadByte());
+
+            DataTransferStatus atomicJobStatus = new DataTransferStatusInternal(
+                jobStatusState,
+                jobStatusHasFailed,
+                jobStatusHasSkipped);
+
+            DataTransferStatus atomicPartStatus = new DataTransferStatusInternal(
+                partStatusState,
+                partStatusHasFailed,
+                partStatusHasSkipped);
 
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: blobType,
@@ -784,8 +888,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                 startTime: startTime,
                 transferId: transferId,
                 partNumber: partNumber,
+                sourceResourceId: sourceResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: sourceExtraQuery,
+                destinationResourceId: destinationResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: destinationExtraQuery,
                 isFinalPart: isFinalPart,
@@ -821,6 +927,14 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 char[] paddingArray = new char[padding];
                 writer.Write(paddingArray);
+            }
+        }
+
+        private static void CheckSchemaVersion(string version)
+        {
+            if (version != DataMovementConstants.JobPartPlanFile.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobPartSchemaVersionHeader(version);
             }
         }
     }

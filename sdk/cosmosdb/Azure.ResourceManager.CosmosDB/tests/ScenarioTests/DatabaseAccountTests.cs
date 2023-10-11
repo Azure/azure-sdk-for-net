@@ -149,6 +149,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var connectionStrings = await account.GetConnectionStringsAsync().ToEnumerableAsync();
             Assert.That(connectionStrings, Has.Count.EqualTo(4));
+
+            foreach (var item in connectionStrings)
+            {
+                Assert.IsNotNull(item.KeyKind);
+                Assert.IsNotNull(item.KeyType);
+            }
         }
 
         [Test]

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         private async Task<CognitiveServicesAccountDeploymentCollection> GetDeploymentCollectionAsync()
         {
             var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
-            var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.SouthCentralUS);
+            var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
             input.Kind = "OpenAI";
             input.Sku = new CognitiveServicesSku("S0");
             var account = (await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input)).Value;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("userName"u8);
             JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDeploymentResource(Client, WebAppDeploymentData.DeserializeWebAppDeploymentData(e)), _siteDeploymentWebAppsClientDiagnostics, Pipeline, "SiteDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDeploymentWebAppsRestClient.GetDeployment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetDeployment</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Deployment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteDeploymentResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteDeploymentWebAppsRestClient.GetDeploymentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDeploymentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetDeployment</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Deployment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual NullableResponse<SiteDeploymentResource> GetIfExists(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteDeploymentWebAppsRestClient.GetDeployment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

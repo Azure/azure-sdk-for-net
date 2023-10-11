@@ -11,9 +11,10 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/0cfd102a6ecb172f04ec915732bd8ca6f6b2a7af/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/0cfd102a6ecb172f04ec915732bd8ca6f6b2a7af/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
 generation1-convenience-client: true
+deserialize-null-collection-as-null-value: true
 ```
 
 ## Release hacks
@@ -91,17 +92,6 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
-### Rename Vector definition
-
- It conflicts with https://learn.microsoft.com/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
-
-``` yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.Vector
-  transform: $["x-ms-client-name"] = "SearchQueryVector";
-```
-
 ### Rename Dimensions
 
  To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
@@ -124,14 +114,14 @@ directive:
   transform: $["x-ms-format"] = "arm-id";
 ```
 
-### Rename Vector property `K`
+### Rename VectorQuery property `K`
 
- Rename Vector property `K` to `KNearestNeighborsCount`
+ Rename VectorQuery property `K` to `KNearestNeighborsCount`
 
 ```yaml
 directive:
 - from: searchindex.json
-  where: $.definitions.Vector.properties.k
+  where: $.definitions.VectorQuery.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
 ```
 

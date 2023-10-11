@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
+            if (Optional.IsDefined(ElasticSanResourceId))
+            {
+                writer.WritePropertyName("elasticSanResourceId"u8);
+                writer.WriteStringValue(ElasticSanResourceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> logicalSectorSize = default;
             Optional<Uri> securityDataUri = default;
             Optional<bool> performancePlus = default;
+            Optional<ResourceIdentifier> elasticSanResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -176,8 +182,17 @@ namespace Azure.ResourceManager.Compute.Models
                     performancePlus = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("elasticSanResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus));
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value);
         }
     }
 }

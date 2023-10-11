@@ -82,16 +82,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(PrivateKeyPath))
             {
@@ -101,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PrivateKeyContent))
             {
                 writer.WritePropertyName("privateKeyContent"u8);
-                writer.WriteObjectValue(PrivateKeyContent);
+                JsonSerializer.Serialize(writer, PrivateKeyContent);
             }
             if (Optional.IsDefined(PassPhrase))
             {
                 writer.WritePropertyName("passPhrase"u8);
-                writer.WriteObjectValue(PassPhrase);
+                JsonSerializer.Serialize(writer, PassPhrase);
             }
             if (Optional.IsDefined(SkipHostKeyValidation))
             {
@@ -147,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<SftpAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<DataFactoryElement<string>> privateKeyPath = default;
             Optional<DataFactorySecretBaseDefinition> privateKeyContent = default;
             Optional<DataFactorySecretBaseDefinition> passPhrase = default;
@@ -258,16 +254,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("privateKeyPath"u8))
@@ -285,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKeyContent = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            privateKeyContent = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("passPhrase"u8))
@@ -294,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            passPhrase = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            passPhrase = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("skipHostKeyValidation"u8))
@@ -321,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value, privateKeyPath.Value, privateKeyContent.Value, passPhrase.Value, skipHostKeyValidation.Value, hostKeyFingerprint.Value);
+            return new SftpServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password, encryptedCredential.Value, privateKeyPath.Value, privateKeyContent, passPhrase, skipHostKeyValidation.Value, hostKeyFingerprint.Value);
         }
     }
 }

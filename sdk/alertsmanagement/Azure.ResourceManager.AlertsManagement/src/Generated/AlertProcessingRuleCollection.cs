@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertProcessingRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertProcessingRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertProcessingRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertProcessingRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 var response = _alertProcessingRuleRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AlertProcessingRuleResource>> GetIfExistsAsync(string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
+
+            using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _alertProcessingRuleRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AlertProcessingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertProcessingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
+        public virtual NullableResponse<AlertProcessingRuleResource> GetIfExists(string alertProcessingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
+
+            using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _alertProcessingRuleRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AlertProcessingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

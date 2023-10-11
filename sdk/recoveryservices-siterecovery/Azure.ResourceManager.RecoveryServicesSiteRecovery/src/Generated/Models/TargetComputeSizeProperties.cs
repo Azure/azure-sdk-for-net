@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
         internal TargetComputeSizeProperties()
         {
-            Errors = new ChangeTrackingList<ComputeSizeErrorDetails>();
+            Errors = new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
             HyperVGenerations = new ChangeTrackingList<string>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="errors"> The reasons why the target compute size is not applicable for the protected item. </param>
         /// <param name="highIopsSupported"> The value indicating whether the target compute size supports high Iops. </param>
         /// <param name="hyperVGenerations"> The supported HyperV Generations. </param>
-        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<ComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
+        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The maximum Nics count supported by target compute size. </summary>
         public int? MaxNicsCount { get; }
         /// <summary> The reasons why the target compute size is not applicable for the protected item. </summary>
-        public IReadOnlyList<ComputeSizeErrorDetails> Errors { get; }
+        public IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> Errors { get; }
         /// <summary> The value indicating whether the target compute size supports high Iops. </summary>
         public string HighIopsSupported { get; }
         /// <summary> The supported HyperV Generations. </summary>

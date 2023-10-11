@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRule(new LabelValue(10))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(10))
                 });
 
             Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -99,7 +99,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministration = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRouterRule
 
             // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple PowerFx expression
             // The classification policy will be setup to add only the priority value to a job
@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
-                    PrioritizationRule = new ExpressionRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
+                    PrioritizationRule = new ExpressionRouterRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
                 });
 
             Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -194,7 +194,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob2.Value.QueueId == jobQueueId}");
             Console.WriteLine($"Job has been assigned a priority value: {queriedJob2.Value.Priority}"); // 10
 
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRouterRule
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministration = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRouterRule
 
             // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple AzureFunction
             // The classification policy will be setup to add only the priority value to a job
@@ -214,7 +214,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
-                    PrioritizationRule = new FunctionRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
+                    PrioritizationRule = new FunctionRouterRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
                 });
 
             Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -298,7 +298,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob2.Value.QueueId == jobQueueId}");
             Console.WriteLine($"Job has been assigned a priority value: {queriedJob2.Value.Priority}"); // 10
 
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRouterRule
         }
     }
 }

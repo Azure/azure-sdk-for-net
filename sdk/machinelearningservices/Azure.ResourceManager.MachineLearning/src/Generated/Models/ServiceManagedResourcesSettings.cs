@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
-        /// <param name="cosmosDb"> The settings for the service managed cosmosdb account. </param>
+        /// <param name="cosmosDb"></param>
         internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb)
         {
             CosmosDb = cosmosDb;
         }
 
-        /// <summary> The settings for the service managed cosmosdb account. </summary>
+        /// <summary> Gets or sets the cosmos db. </summary>
         internal CosmosDbSettings CosmosDb { get; set; }
-        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        /// <summary> Gets or sets the cosmos db collections throughput. </summary>
         public int? CosmosDbCollectionsThroughput
         {
             get => CosmosDb is null ? default : CosmosDb.CollectionsThroughput;

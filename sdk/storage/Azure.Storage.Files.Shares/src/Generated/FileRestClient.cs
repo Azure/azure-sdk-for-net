@@ -22,10 +22,10 @@ namespace Azure.Storage.Files.Shares
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _url;
-        private readonly bool? _allowTrailingDot;
         private readonly string _version;
-        private readonly ShareTokenIntent? _fileRequestIntent;
         private readonly string _fileRangeWriteFromUrl;
+        private readonly bool? _allowTrailingDot;
+        private readonly ShareTokenIntent? _fileRequestIntent;
         private readonly bool? _allowSourceTrailingDot;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -35,21 +35,21 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2023-01-03". </param>
+        /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. The default value is "update". </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2023-01-03", ShareTokenIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update", bool? allowSourceTrailingDot = null)
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, string fileRangeWriteFromUrl, bool? allowTrailingDot = null, ShareTokenIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
-            _allowTrailingDot = allowTrailingDot;
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRequestIntent = fileRequestIntent;
             _fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
+            _allowTrailingDot = allowTrailingDot;
+            _fileRequestIntent = fileRequestIntent;
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 

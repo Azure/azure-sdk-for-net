@@ -1,8 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
-    "DOCUMENT_TRANSLATION_ENDPOINT": "https://document-translator.cognitiveservices.azure.com/",
-    "RandomSeed": "642571950"
-  }
-}

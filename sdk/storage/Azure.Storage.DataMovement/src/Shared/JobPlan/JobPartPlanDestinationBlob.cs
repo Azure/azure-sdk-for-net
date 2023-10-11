@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     /// <summary>
     /// Describes the structure of a destination blob.
@@ -149,8 +149,8 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                 blockBlobTier: blockBlobTier,
                 pageBlobTier: pageBlobTier,
                 putMd5: putMd5,
-                metadata: StringToDictionary(metadata, nameof(metadata)),
-                blobTags: StringToDictionary(blobTags, nameof(blobTags)),
+                metadata: metadata.ToDictionary(nameof(metadata)),
+                blobTags: blobTags.ToDictionary(nameof(blobTags)),
                 isSourceEncrypted: isSourceEncrypted,
                 cpkScopeInfo: cpkScopeInfo,
                 blockSize: blockSize)
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         {
             BlobType = blobType;
             NoGuessMimeType = noGuessMimeType;
-            if (contentType.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (contentType.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 ContentType = contentType;
                 ContentTypeLength = (ushort) contentType.Length;
@@ -185,10 +185,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentType),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: contentType.Length);
             }
-            if (contentEncoding.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (contentEncoding.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 ContentEncoding = contentEncoding;
                 ContentEncodingLength = (ushort) contentEncoding.Length;
@@ -197,10 +197,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentEncoding),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: contentEncoding.Length);
             }
-            if (contentLanguage.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (contentLanguage.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 ContentLanguage = contentLanguage;
                 ContentLanguageLength = (ushort) contentLanguage.Length;
@@ -209,10 +209,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentLanguage),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: contentLanguage.Length);
             }
-            if (contentDisposition.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (contentDisposition.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 ContentDisposition = contentDisposition;
                 ContentDispositionLength = (ushort) contentDisposition.Length;
@@ -221,10 +221,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentDisposition),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: contentDisposition.Length);
             }
-            if (cacheControl.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (cacheControl.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 CacheControl = cacheControl;
                 CacheControlLength = (ushort) cacheControl.Length;
@@ -233,14 +233,14 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CacheControl),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: cacheControl.Length);
             }
             BlockBlobTier = blockBlobTier;
             PageBlobTier = pageBlobTier;
             PutMd5 = putMd5;
-            string metadataConvert = DictionaryToString(metadata);
-            if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxLength)
+            string metadataConvert = metadata.DictionaryToString();
+            if (metadataConvert.Length <= DataMovementConstants.JobPartPlanFile.MetadataStrMaxLength)
             {
                 Metadata = metadataConvert;
                 MetadataLength = (ushort) metadataConvert.Length;
@@ -249,11 +249,11 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(Metadata),
-                    expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.MetadataStrMaxLength,
                     actualSize: metadataConvert.Length);
             }
-            string blobTagsConvert = DictionaryToString(blobTags);
-            if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxLength)
+            string blobTagsConvert = blobTags.DictionaryToString();
+            if (blobTagsConvert.Length <= DataMovementConstants.JobPartPlanFile.BlobTagsStrMaxLength)
             {
                 BlobTags = blobTagsConvert;
                 BlobTagsLength = blobTagsConvert.Length;
@@ -262,11 +262,11 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(blobTags),
-                    expectedSize: DataMovementConstants.PlanFile.BlobTagsStrMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.BlobTagsStrMaxLength,
                     actualSize: blobTagsConvert.Length);
             }
             IsSourceEncrypted = isSourceEncrypted;
-            if (cpkScopeInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
+            if (cpkScopeInfo.Length <= DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength)
             {
                 CpkScopeInfo = cpkScopeInfo;
                 CpkScopeInfoLength = (ushort) cpkScopeInfo.Length;
@@ -275,40 +275,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CpkScopeInfo),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
+                    expectedSize: DataMovementConstants.JobPartPlanFile.HeaderValueMaxLength,
                     actualSize: cpkScopeInfo.Length);
             }
             BlockSize = blockSize;
-        }
-
-        private static IDictionary<string, string> StringToDictionary(string str, string elementName)
-        {
-            IDictionary<string, string> dictionary = new Dictionary<string, string>();
-            string[] splitSemiColon = str.Split(';');
-            foreach (string value in splitSemiColon)
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    string[] splitEqual = value.Split('=');
-                    if (splitEqual.Length != 2)
-                    {
-                        throw Errors.InvalidStringToDictionary(elementName, str);
-                    }
-                    dictionary.Add(splitEqual[0], splitEqual[1]);
-                }
-            }
-            return dictionary;
-        }
-
-        private static string DictionaryToString(IDictionary<string, string> dict)
-        {
-            string concatStr = "";
-            foreach (KeyValuePair<string, string> kv in dict)
-            {
-                // e.g. store like "header=value;"
-                concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
-            }
-            return concatStr;
         }
     }
 }

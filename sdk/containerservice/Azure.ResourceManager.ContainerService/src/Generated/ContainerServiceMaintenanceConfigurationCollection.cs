@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.ContainerService
             {
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerServiceMaintenanceConfigurationResource>> GetIfExistsAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        public virtual NullableResponse<ContainerServiceMaintenanceConfigurationResource> GetIfExists(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

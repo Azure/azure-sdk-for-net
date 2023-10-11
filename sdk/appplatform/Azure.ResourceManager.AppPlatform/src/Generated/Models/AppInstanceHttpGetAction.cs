@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="scheme">
         /// Scheme to use for connecting to the host. Defaults to HTTP.
-        /// 
+        ///
         /// Possible enum values:
         ///  - `"HTTP"` means that the scheme used will be http://
         ///  - `"HTTPS"` means that the scheme used will be https://
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string Path { get; set; }
         /// <summary>
         /// Scheme to use for connecting to the host. Defaults to HTTP.
-        /// 
+        ///
         /// Possible enum values:
         ///  - `"HTTP"` means that the scheme used will be http://
         ///  - `"HTTPS"` means that the scheme used will be https://

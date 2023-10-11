@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesModelFactory
     {
-
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

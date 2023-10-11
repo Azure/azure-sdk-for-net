@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisModelFactory
     {
-
         /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> networkConnectionStatus = default;
             Optional<string> networkFriendlyName = default;
             Optional<string> subnet = default;
-            Optional<string> recoveryPointId = default;
+            Optional<ResourceIdentifier> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +67,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryPointId"u8))
                 {
-                    recoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryPointTime"u8))

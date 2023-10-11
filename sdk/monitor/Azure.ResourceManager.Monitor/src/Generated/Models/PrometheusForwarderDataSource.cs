@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Label values are matched case-insensitively.
         /// </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal PrometheusForwarderDataSource(IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams, IDictionary<string, string> labelIncludeFilter, string name)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         public IDictionary<string, string> LabelIncludeFilter { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

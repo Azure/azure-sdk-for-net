@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: Regular instance creation.
-        /// 
+        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
         public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The Dns Zone that the managed instance is in. </summary>
         public string DnsZone { get; }
         /// <summary> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </summary>
-        public string DnsZonePartner { get; set; }
+        public ResourceIdentifier ManagedDnsZonePartner { get; set; }
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         public bool? IsPublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>

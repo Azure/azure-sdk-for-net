@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>

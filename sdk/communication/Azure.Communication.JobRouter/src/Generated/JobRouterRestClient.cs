@@ -1540,7 +1540,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="state"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1568,7 +1568,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="state"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1665,7 +1665,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="state"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1700,7 +1700,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="state"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">

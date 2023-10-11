@@ -1,0 +1,12 @@
+steps:
+# Fail the build if any of the packages failed validation. Valid values are
+# "true" or "false". This step will skip if $(DocsMsPackagesAllValid) is not set
+- pwsh: |
+    if ('$(DocsMsPackagesAllValid)' -eq 'true') {
+      Write-Host "All packages passed validation."
+    } else {
+      Write-Error "Some packages failed validation."
+      exit 1
+    }
+  displayName: Check package validation results
+  condition: and(succeeded(), ne(variables['DocsMsPackagesAllValid'], ''))

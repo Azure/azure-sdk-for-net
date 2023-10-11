@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
-                    ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182",
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
                 Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.MonthToDate)

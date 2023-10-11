@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Google AdWords service linked service. </summary>
-    public partial class GoogleAdWordsLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class GoogleAdWordsLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
         public GoogleAdWordsLinkedService()
@@ -29,29 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionProperties"> Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
-        /// <param name="developerToken">
-        /// The developer token associated with the manager account that you use to grant access to the AdWords API.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
-        /// <param name="refreshToken">
-        /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret">
-        /// The client secret of the google application used to acquire the refresh token.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleAdWordsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> clientCustomerId, DataFactorySecretBaseDefinition developerToken, GoogleAdWordsAuthenticationType? authenticationType, DataFactorySecretBaseDefinition refreshToken, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleAdWordsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> clientCustomerId, DataFactorySecretBaseDefinition developerToken, GoogleAdWordsAuthenticationType? authenticationType, DataFactorySecretBaseDefinition refreshToken, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             ClientCustomerId = clientCustomerId;
@@ -101,27 +89,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData ConnectionProperties { get; set; }
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientCustomerId { get; set; }
-        /// <summary>
-        /// The developer token associated with the manager account that you use to grant access to the AdWords API.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The developer token associated with the manager account that you use to grant access to the AdWords API. </summary>
         public DataFactorySecretBaseDefinition DeveloperToken { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
         public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
-        /// <summary>
-        /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </summary>
         public DataFactorySecretBaseDefinition RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary>
-        /// The client secret of the google application used to acquire the refresh token.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
         public DataFactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Email { get; set; }
@@ -131,36 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

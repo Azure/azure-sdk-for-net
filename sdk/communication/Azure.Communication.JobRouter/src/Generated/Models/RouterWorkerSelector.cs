@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
     public partial class RouterWorkerSelector
     {
-
         /// <summary> Initializes a new instance of RouterWorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
@@ -28,7 +27,7 @@ namespace Azure.Communication.JobRouter
             Key = key;
             LabelOperator = labelOperator;
             _value = value;
-            ExpiresAfterSeconds = expiresAfterSeconds;
+            _expiresAfterSeconds = expiresAfterSeconds;
             Expedite = expedite;
             Status = status;
             ExpiresAt = expiresAt;
@@ -38,8 +37,6 @@ namespace Azure.Communication.JobRouter
         public string Key { get; set; }
         /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
         public LabelOperator LabelOperator { get; set; }
-        /// <summary> Describes how long this label selector is valid in seconds. </summary>
-        public double? ExpiresAfterSeconds { get; set; }
         /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
         public bool? Expedite { get; set; }
         /// <summary> The status of the worker selector. </summary>

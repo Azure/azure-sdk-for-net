@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Eloqua server dataset. </summary>
-    public partial class EloquaObjectDataset : DataFactoryDatasetDefinition
+    public partial class EloquaObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of EloquaObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -95,7 +95,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -219,6 +219,229 @@ await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoices
     }
     Console.WriteLine();
 }
+```
+
+### Use Chat Functions
+
+Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
+functionality into external tools and data sources.
+
+You can read more about Chat Functions on OpenAI's blog: https://openai.com/blog/function-calling-and-other-api-updates
+
+**NOTE**: Chat Functions require model versions beginning with gpt-4 and gpt-3.5-turbo's `-0613` labels. They are not
+available with older versions of the models.
+
+**NOTE:** The concurrent use of Chat Functions and [Azure Chat Extensions](#use-your-own-data-with-azure-openai) on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
+
+To use Chat Functions, you first define the function you'd like the model to be able to use when appropriate. Using
+the example from the linked blog post, above:
+
+```C# Snippet:ChatFunctions:DefineFunction
+var getWeatherFuntionDefinition = new FunctionDefinition()
+{
+    Name = "get_current_weather",
+    Description = "Get the current weather in a given location",
+    Parameters = BinaryData.FromObjectAsJson(
+    new
+    {
+        Type = "object",
+        Properties = new
+        {
+            Location = new
+            {
+                Type = "string",
+                Description = "The city and state, e.g. San Francisco, CA",
+            },
+            Unit = new
+            {
+                Type = "string",
+                Enum = new[] { "celsius", "fahrenheit" },
+            }
+        },
+        Required = new[] { "location" },
+    },
+    new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+};
+```
+
+With the function defined, it can then be used in a Chat Completions request via its options. Function data is
+handled across multiple calls that build up data for subsequent stateless requests, so we maintain a list of chat
+messages as a form of conversation history.
+
+```C# Snippet:ChatFunctions:RequestWithFunctions
+var conversationMessages = new List<ChatMessage>()
+{
+    new(ChatRole.User, "What is the weather like in Boston?"),
+};
+
+var chatCompletionsOptions = new ChatCompletionsOptions();
+foreach (ChatMessage chatMessage in conversationMessages)
+{
+    chatCompletionsOptions.Messages.Add(chatMessage);
+}
+chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
+
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+    "gpt-35-turbo-0613",
+    chatCompletionsOptions);
+```
+
+If the model determines that it should call a Chat Function, a finish reason of 'FunctionCall' will be populated on
+the choice and details will be present in the response message's `FunctionCall` property. Usually, the name of the
+function call will be one that was provided and the arguments will be a populated JSON document matching the schema
+included in the `FunctionDefinition` used; it is **not guaranteed** that this data is valid or even properly formatted,
+however, so validation and error checking should always accompany function call processing.
+
+To resolve the function call and continue the user-facing interaction, process the argument payload as needed and then
+serialize appropriate response data into a new message with `ChatRole.Function`. Then make a new request with all of
+the messages so far -- the initial `User` message, the first response's `FunctionCall` message, and the resolving
+`Function` message generated in reply to the function call -- so the model can use the data to better formulate a chat
+completions response.
+
+Note that the function call response you provide does not need to follow any schema provided in the initial call. The
+model will infer usage of the response data based on inferred context of names and fields.
+
+```C# Snippet:ChatFunctions:HandleFunctionCall
+ChatChoice responseChoice = response.Value.Choices[0];
+if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
+{
+    // Include the FunctionCall message in the conversation history
+    conversationMessages.Add(responseChoice.Message);
+
+    if (responseChoice.Message.FunctionCall.Name == "get_current_weather")
+    {
+        // Validate and process the JSON arguments for the function call
+        string unvalidatedArguments = responseChoice.Message.FunctionCall.Arguments;
+        var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
+        // Here, replacing with an example as if returned from GetYourFunctionResultData
+        functionResultData = new
+        {
+            Temperature = 31,
+            Unit = "celsius",
+        };
+        // Serialize the result data from the function into a new chat message with the 'Function' role,
+        // then add it to the messages after the first User message and initial response FunctionCall
+        var functionResponseMessage = new ChatMessage(
+            ChatRole.Function,
+            JsonSerializer.Serialize(
+                functionResultData,
+                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }))
+        {
+            Name = responseChoice.Message.FunctionCall.Name
+        };
+        conversationMessages.Add(functionResponseMessage);
+        // Now make a new request using all three messages in conversationMessages
+    }
+}
+```
+
+### Use your own data with Azure OpenAI
+
+The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
+See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.com/azure/ai-services/openai/use-your-data-quickstart) for conceptual background and detailed setup instructions.
+
+**NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
+
+```C# Snippet:ChatUsingYourOwnData
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatMessage(
+            ChatRole.System,
+            "You are a helpful assistant that answers questions about the Contoso product database."),
+        new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
+    },
+    // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
+    // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
+    // with information from an Azure Cognitive Search resource with documents that have been indexed.
+    AzureExtensionsOptions = new AzureChatExtensionsOptions()
+    {
+        Extensions =
+        {
+            new AzureCognitiveSearchChatExtensionConfiguration()
+            {
+                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+                IndexName = "contoso-products-index",
+                SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
+            }
+        }
+    }
+};
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+    "gpt-35-turbo-0613",
+    chatCompletionsOptions);
+ChatMessage message = response.Value.Choices[0].Message;
+// The final, data-informed response still appears in the ChatMessages as usual
+Console.WriteLine($"{message.Role}: {message.Content}");
+// Responses that used extensions will also have Context information that includes special Tool messages
+// to explain extension activity and provide supplemental information like citations.
+Console.WriteLine($"Citations and other information:");
+foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
+{
+    // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
+    // and need to be parsed as such; that step is omitted here for brevity.
+    Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
+}
+```
+
+### Generate images with DALL-E image generation models
+
+```C# Snippet:GenerateImages
+Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+    new ImageGenerationOptions()
+    {
+        Prompt = "a happy monkey eating a banana, in watercolor",
+        Size = ImageSize.Size256x256,
+    });
+
+// Image Generations responses provide URLs you can use to retrieve requested images
+Uri imageUri = imageGenerations.Value.Data[0].Url;
+```
+
+### Transcribe audio data with Whisper speech models
+
+```C# Snippet:TranscribeAudio
+using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
+BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
+
+var transcriptionOptions = new AudioTranscriptionOptions()
+{
+    AudioData = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
+};
+
+Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    transcriptionOptions);
+AudioTranscription transcription = transcriptionResponse.Value;
+
+// When using Simple, SRT, or VTT formats, only transcription.Text will be populated
+Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+Console.WriteLine(transcription.Text);
+```
+
+### Translate audio data to English with Whisper speech models
+
+```C# Snippet:TranslateAudio
+using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
+BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
+
+var translationOptions = new AudioTranslationOptions()
+{
+    AudioData = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranslationFormat.Verbose,
+};
+
+Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    translationOptions);
+AudioTranslation translation = translationResponse.Value;
+
+// When using Simple, SRT, or VTT formats, only translation.Text will be populated
+Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
+// .Text will be translated to English (ISO-639-1 "en")
+Console.WriteLine(translation.Text);
 ```
 
 ## Troubleshooting

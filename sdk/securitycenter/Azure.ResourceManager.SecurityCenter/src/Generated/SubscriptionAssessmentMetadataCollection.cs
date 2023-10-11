@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "SubscriptionAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "SubscriptionAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "SubscriptionAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "SubscriptionAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscription(Id.SubscriptionId, assessmentMetadataName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionAssessmentMetadataResource>> GetIfExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
+            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscriptionAsync(Id.SubscriptionId, assessmentMetadataName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionAssessmentMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionAssessmentMetadataResource> GetIfExists(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
+            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscription(Id.SubscriptionId, assessmentMetadataName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionAssessmentMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

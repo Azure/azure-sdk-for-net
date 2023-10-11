@@ -1,18 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Storage.DataMovement.Models;
-
 namespace Azure.Storage.DataMovement
 {
-    internal static class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
-        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointerOptions options)
+        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
         {
-            if (!string.IsNullOrEmpty(options.CheckpointerPath))
+            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
             {
                 return new LocalTransferCheckpointer(options.CheckpointerPath);
             }
@@ -22,5 +17,7 @@ namespace Azure.Storage.DataMovement
                 return new LocalTransferCheckpointer(default);
             }
         }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
     }
 }

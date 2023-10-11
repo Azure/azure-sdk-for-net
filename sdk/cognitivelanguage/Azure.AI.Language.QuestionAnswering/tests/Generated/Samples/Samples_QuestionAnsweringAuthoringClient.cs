@@ -6,28 +6,41 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
+namespace Azure.AI.Language.QuestionAnswering.Samples
 {
-    public class Samples_QuestionAnsweringAuthoringClient
+    public partial class Samples_QuestionAnsweringAuthoringClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDetails()
+        public void Example_GetProjectDetails_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetProjectDetails("<projectName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjectDetails_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetProjectDetailsAsync("<projectName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -37,9 +50,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDetails_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetProjectDetails("<projectName>");
 
@@ -56,25 +69,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDetails_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetProjectDetailsAsync("<projectName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjectDetails_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetProjectDetailsAsync("<projectName>");
 
@@ -91,18 +90,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject()
+        public void Example_CreateProject_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 language = "<language>",
-            };
+            });
+            Response response = client.CreateProject("<projectName>", content);
 
-            Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateProject_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                language = "<language>",
+            });
+            Response response = await client.CreateProjectAsync("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -112,11 +128,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -125,9 +141,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 {
                     defaultAnswer = "<defaultAnswer>",
                 },
-            };
-
-            Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+            });
+            Response response = client.CreateProject("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -138,36 +153,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new
-            {
-                language = "<language>",
-            };
-
-            Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateProject_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -176,9 +172,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 {
                     defaultAnswer = "<defaultAnswer>",
                 },
-            };
-
-            Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+            });
+            Response response = await client.CreateProjectAsync("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -193,13 +188,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeleteStatus()
+        public void Example_GetDeleteStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeleteStatus("<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeleteStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetDeleteStatusAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -212,9 +224,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeleteStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeleteStatus("<jobId>");
 
@@ -228,28 +240,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeleteStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetDeleteStatusAsync("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeleteStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetDeleteStatusAsync("<jobId>");
 
@@ -263,13 +258,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportStatus()
+        public void Example_GetExportStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetExportStatus("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExportStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -282,9 +294,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExportStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetExportStatus("<projectName>", "<jobId>");
 
@@ -298,28 +310,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExportStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
@@ -333,13 +328,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportStatus()
+        public void Example_GetImportStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetImportStatus("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetImportStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -352,9 +364,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetImportStatus("<projectName>", "<jobId>");
 
@@ -368,28 +380,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetImportStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 
@@ -403,13 +398,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployStatus()
+        public void Example_GetDeployStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeployStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -422,9 +434,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -438,28 +450,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -473,15 +468,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSynonyms()
+        public void Example_UpdateSynonyms_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new { };
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpdateSynonyms("<projectName>", content);
 
-            Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateSynonyms_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -489,37 +498,26 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSynonyms_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                value = new[] {
-        new {
-            alterations = new[] {
-                "<String>"
+                value = new object[]
+            {
+new
+{
+alterations = new object[]
+{
+"<alterations>"
+},
+}
             },
-        }
-    },
                 nextLink = "<nextLink>",
-            };
+            });
+            Response response = client.UpdateSynonyms("<projectName>", content);
 
-            Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSynonyms_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new { };
-
-            Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -527,35 +525,55 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSynonyms_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                value = new[] {
-        new {
-            alterations = new[] {
-                "<String>"
+                value = new object[]
+            {
+new
+{
+alterations = new object[]
+{
+"<alterations>"
+},
+}
             },
-        }
-    },
                 nextLink = "<nextLink>",
-            };
+            });
+            Response response = await client.UpdateSynonymsAsync("<projectName>", content);
 
-            Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateSourcesStatus()
+        public void Example_GetUpdateSourcesStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUpdateSourcesStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -568,9 +586,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateSourcesStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
 
@@ -584,28 +602,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateSourcesStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateSourcesStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
 
@@ -619,13 +620,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateQnasStatus()
+        public void Example_GetUpdateQnasStatus_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUpdateQnasStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -638,9 +656,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateQnasStatus_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
 
@@ -654,28 +672,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateQnasStatus_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateQnasStatus_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
 
@@ -689,15 +690,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddFeedback()
+        public void Example_AddFeedback_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new { };
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.AddFeedback("<projectName>", content);
 
-            Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddFeedback_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.AddFeedbackAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -705,36 +720,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AddFeedback_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                records = new[] {
-        new {
-            userId = "<userId>",
-            userQuestion = "<userQuestion>",
-            qnaId = 1234,
-        }
-    },
-            };
+                records = new object[]
+            {
+new
+{
+userId = "<userId>",
+userQuestion = "<userQuestion>",
+qnaId = 1234,
+}
+            },
+            });
+            Response response = client.AddFeedback("<projectName>", content);
 
-            Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddFeedback_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new { };
-
-            Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -742,34 +745,51 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddFeedback_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                records = new[] {
-        new {
-            userId = "<userId>",
-            userQuestion = "<userQuestion>",
-            qnaId = 1234,
-        }
-    },
-            };
+                records = new object[]
+            {
+new
+{
+userId = "<userId>",
+userQuestion = "<userQuestion>",
+qnaId = 1234,
+}
+            },
+            });
+            Response response = await client.AddFeedbackAsync("<projectName>", content);
 
-            Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects()
+        public void Example_GetProjects_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetProjects())
+            foreach (BinaryData item in client.GetProjects())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjects_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -780,11 +800,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetProjects())
+            foreach (BinaryData item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -800,13 +820,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_Async()
+        public async Task Example_GetProjects_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetProjectsAsync())
+            await foreach (BinaryData item in client.GetProjectsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+                Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetDeployments_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -815,35 +857,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_AllParameters_Async()
+        public async Task Example_GetDeployments_ShortVersion_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetProjectsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("projectName").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("language").ToString());
-                Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-                Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            foreach (var item in client.GetDeployments("<projectName>"))
+            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -854,30 +874,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetDeployments("<projectName>"))
+            foreach (BinaryData item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());
                 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
@@ -885,11 +890,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployments_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
+            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -899,13 +904,28 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSynonyms()
+        public void Example_GetSynonyms_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSynonyms("<projectName>"))
+            foreach (BinaryData item in client.GetSynonyms("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSynonyms_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("alterations")[0].ToString());
@@ -916,26 +936,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSynonyms_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSynonyms("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSynonyms_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (var item in client.GetSynonymsAsync("<projectName>"))
+            foreach (BinaryData item in client.GetSynonyms("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("alterations")[0].ToString());
@@ -946,11 +951,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSynonyms_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetSynonymsAsync("<projectName>"))
+            await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("alterations")[0].ToString());
@@ -959,13 +964,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSources()
+        public void Example_GetSources_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSources("<projectName>"))
+            foreach (BinaryData item in client.GetSources("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSources_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -977,11 +998,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSources_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSources("<projectName>"))
+            foreach (BinaryData item in client.GetSources("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -989,22 +1010,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
                 Console.WriteLine(result.GetProperty("sourceKind").ToString());
                 Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSources_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (var item in client.GetSourcesAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("sourceUri").ToString());
-                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
@@ -1012,11 +1017,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSources_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetSourcesAsync("<projectName>"))
+            await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -1029,13 +1034,28 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQnas()
+        public void Example_GetQnas_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetQnas("<projectName>"))
+            foreach (BinaryData item in client.GetQnas("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQnas_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1046,18 +1066,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQnas_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetQnas("<projectName>", "<source>"))
+            foreach (BinaryData item in client.GetQnas("<projectName>", source: "<source>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1065,7 +1085,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -1075,21 +1095,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
                 Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQnas_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (var item in client.GetQnasAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1097,18 +1102,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQnas_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetQnasAsync("<projectName>", "<source>"))
+            await foreach (BinaryData item in client.GetQnasAsync("<projectName>", source: "<source>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1116,7 +1121,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -1131,67 +1136,77 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject()
+        public void Example_DeleteProject_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+        }
 
-            Console.WriteLine(operation.GetRawResponse().Status);
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteProject_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteProject_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-
-            Console.WriteLine(operation.GetRawResponse().Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-
-            Console.WriteLine(operation.GetRawResponse().Status);
+            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteProject_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-
-            Console.WriteLine(operation.GetRawResponse().Status);
+            Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Export()
+        public void Example_Export_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.Export(WaitUntil.Completed, "<projectName>");
-
+            Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectName>");
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Export_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1203,34 +1218,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Export_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-
+            Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectName>", format: "json", assetKind: "qnas");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Export_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1240,13 +1237,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Export_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-
+            Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", format: "json", assetKind: "qnas");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1257,17 +1254,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Import()
+        public void Example_Import_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new { };
-
-            var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
+            using RequestContent content = null;
+            Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Import_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            using RequestContent content = null;
+            Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1279,11 +1294,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Import_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1297,94 +1312,89 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 },
                 assets = new
                 {
-                    synonyms = new[] {
-            new {
-                alterations = new[] {
-                    "<String>"
-                },
-            }
-        },
-                    qnas = new[] {
-            new {
-                id = 1234,
-                answer = "<answer>",
-                source = "<source>",
-                questions = new[] {
-                    "<String>"
-                },
-                metadata = new {
-                    key = "<String>",
-                },
-                dialog = new {
-                    isContextOnly = true,
-                    prompts = new[] {
-                        new {
-                            displayOrder = 1234,
-                            qnaId = 1234,
-                            qna = new {
-                                id = 1234,
-                                answer = "<answer>",
-                                source = "<source>",
-                                questions = new[] {
-                                    "<String>"
-                                },
-                                metadata = new {
-                                    key = "<String>",
-                                },
-                                activeLearningSuggestions = new[] {
-                                    new {
-                                        clusterHead = "<clusterHead>",
-                                        suggestedQuestions = new[] {
-                                            new {
-                                                question = "<question>",
-                                                userSuggestedCount = 1234,
-                                                autoSuggestedCount = 1234,
-                                            }
-                                        },
-                                    }
-                                },
-                            },
-                            displayText = "<displayText>",
-                        }
-                    },
-                },
-                activeLearningSuggestions = new[] {
-                    new {
-                        clusterHead = "<clusterHead>",
-                    }
-                },
-            }
-        },
+                    synonyms = new object[]
+            {
+new
+{
+alterations = new object[]
+{
+"<alterations>"
+},
+}
+            },
+                    qnas = new object[]
+            {
+new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+dialog = new
+{
+isContextOnly = true,
+prompts = new object[]
+{
+new
+{
+displayOrder = 1234,
+qnaId = 1234,
+qna = new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+activeLearningSuggestions = new object[]
+{
+new
+{
+clusterHead = "<clusterHead>",
+suggestedQuestions = new object[]
+{
+new
+{
+question = "<question>",
+userSuggestedCount = 1234,
+autoSuggestedCount = 1234,
+}
+},
+}
+},
+},
+displayText = "<displayText>",
+}
+},
+},
+activeLearningSuggestions = new object[]
+{
+null
+},
+}
+            },
                 },
                 fileUri = "<fileUri>",
-            };
-
-            var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-
+            });
+            Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content, format: "json", assetKind: "qnas");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Import_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new { };
-
-            var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1394,11 +1404,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Import_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1412,71 +1422,86 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 },
                 assets = new
                 {
-                    synonyms = new[] {
-            new {
-                alterations = new[] {
-                    "<String>"
-                },
-            }
-        },
-                    qnas = new[] {
-            new {
-                id = 1234,
-                answer = "<answer>",
-                source = "<source>",
-                questions = new[] {
-                    "<String>"
-                },
-                metadata = new {
-                    key = "<String>",
-                },
-                dialog = new {
-                    isContextOnly = true,
-                    prompts = new[] {
-                        new {
-                            displayOrder = 1234,
-                            qnaId = 1234,
-                            qna = new {
-                                id = 1234,
-                                answer = "<answer>",
-                                source = "<source>",
-                                questions = new[] {
-                                    "<String>"
-                                },
-                                metadata = new {
-                                    key = "<String>",
-                                },
-                                activeLearningSuggestions = new[] {
-                                    new {
-                                        clusterHead = "<clusterHead>",
-                                        suggestedQuestions = new[] {
-                                            new {
-                                                question = "<question>",
-                                                userSuggestedCount = 1234,
-                                                autoSuggestedCount = 1234,
-                                            }
-                                        },
-                                    }
-                                },
-                            },
-                            displayText = "<displayText>",
-                        }
-                    },
-                },
-                activeLearningSuggestions = new[] {
-                    new {
-                        clusterHead = "<clusterHead>",
-                    }
-                },
-            }
-        },
+                    synonyms = new object[]
+            {
+new
+{
+alterations = new object[]
+{
+"<alterations>"
+},
+}
+            },
+                    qnas = new object[]
+            {
+new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+dialog = new
+{
+isContextOnly = true,
+prompts = new object[]
+{
+new
+{
+displayOrder = 1234,
+qnaId = 1234,
+qna = new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+activeLearningSuggestions = new object[]
+{
+new
+{
+clusterHead = "<clusterHead>",
+suggestedQuestions = new object[]
+{
+new
+{
+question = "<question>",
+userSuggestedCount = 1234,
+autoSuggestedCount = 1234,
+}
+},
+}
+},
+},
+displayText = "<displayText>",
+}
+},
+},
+activeLearningSuggestions = new object[]
+{
+null
+},
+}
+            },
                 },
                 fileUri = "<fileUri>",
-            };
-
-            var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-
+            });
+            Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content, format: "json", assetKind: "qnas");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1487,15 +1512,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject()
+        public void Example_DeployProject_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
+            Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeployProject_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.ToString());
         }
@@ -1504,44 +1544,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
+            Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeployProject_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
+            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -1549,25 +1574,57 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSources()
+        public void Example_UpdateSources_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            sourceUri = "http://localhost:3000",
-            sourceKind = "file",
-        },
-    }
-};
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+sourceUri = "http://localhost:3000",
+sourceKind = "file",
+},
+}
+            });
+            Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
+            foreach (BinaryData item in operation.Value)
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("sourceUri").ToString());
+                Console.WriteLine(result.GetProperty("sourceKind").ToString());
+            }
+        }
 
-            var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateSources_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+sourceUri = "http://localhost:3000",
+sourceKind = "file",
+},
+}
+            });
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
+            await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1579,26 +1636,28 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSources_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            displayName = "<displayName>",
-            source = "<source>",
-            sourceUri = "http://localhost:3000",
-            sourceKind = "file",
-            contentStructureKind = "unstructured",
-        },
-    }
-};
-
-            var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+displayName = "<displayName>",
+source = "<source>",
+sourceUri = "http://localhost:3000",
+sourceKind = "file",
+contentStructureKind = "unstructured",
+},
+}
+            });
+            Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
+            foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -1606,34 +1665,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
                 Console.WriteLine(result.GetProperty("sourceKind").ToString());
                 Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSources_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            sourceUri = "http://localhost:3000",
-            sourceKind = "file",
-        },
-    }
-};
-
-            var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            await foreach (var item in operation.Value)
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("sourceUri").ToString());
-                Console.WriteLine(result.GetProperty("sourceKind").ToString());
             }
         }
 
@@ -1641,26 +1672,28 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSources_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            displayName = "<displayName>",
-            source = "<source>",
-            sourceUri = "http://localhost:3000",
-            sourceKind = "file",
-            contentStructureKind = "unstructured",
-        },
-    }
-};
-
-            var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            await foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+displayName = "<displayName>",
+source = "<source>",
+sourceUri = "http://localhost:3000",
+sourceKind = "file",
+contentStructureKind = "unstructured",
+},
+}
+            });
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
+            await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -1673,22 +1706,48 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateQnas()
+        public void Example_UpdateQnas_ShortVersion()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {},
-    }
-};
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new object(),
+}
+            });
+            Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
+            foreach (BinaryData item in operation.Value)
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
 
-            var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateQnas_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new object(),
+}
+            });
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
+            await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1699,59 +1758,70 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateQnas_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            id = 1234,
-            answer = "<answer>",
-            source = "<source>",
-            questions = new[] {
-                "<String>"
-            },
-            metadata = new {
-                key = "<String>",
-            },
-            dialog = new {
-                isContextOnly = true,
-                prompts = new[] {
-                    new {
-                        displayOrder = 1234,
-                        qnaId = 1234,
-                        displayText = "<displayText>",
-                    }
-                },
-            },
-            activeLearningSuggestions = new[] {
-                new {
-                    clusterHead = "<clusterHead>",
-                    suggestedQuestions = new[] {
-                        new {
-                            question = "<question>",
-                            userSuggestedCount = 1234,
-                            autoSuggestedCount = 1234,
-                        }
-                    },
-                }
-            },
-        },
-    }
-};
-
-            var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+dialog = new
+{
+isContextOnly = true,
+prompts = new object[]
+{
+new
+{
+displayOrder = 1234,
+qnaId = 1234,
+displayText = "<displayText>",
+}
+},
+},
+activeLearningSuggestions = new object[]
+{
+new
+{
+clusterHead = "<clusterHead>",
+suggestedQuestions = new object[]
+{
+new
+{
+question = "<question>",
+userSuggestedCount = 1234,
+autoSuggestedCount = 1234,
+}
+},
+}
+},
+},
+}
+            });
+            Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
+            foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1759,7 +1829,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -1774,85 +1844,72 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateQnas_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {},
-    }
-};
-
-            var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            await foreach (var item in operation.Value)
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateQnas_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var data = new[] {
-    new {
-        op = "add",
-        value = new {
-            id = 1234,
-            answer = "<answer>",
-            source = "<source>",
-            questions = new[] {
-                "<String>"
-            },
-            metadata = new {
-                key = "<String>",
-            },
-            dialog = new {
-                isContextOnly = true,
-                prompts = new[] {
-                    new {
-                        displayOrder = 1234,
-                        qnaId = 1234,
-                        displayText = "<displayText>",
-                    }
-                },
-            },
-            activeLearningSuggestions = new[] {
-                new {
-                    clusterHead = "<clusterHead>",
-                    suggestedQuestions = new[] {
-                        new {
-                            question = "<question>",
-                            userSuggestedCount = 1234,
-                            autoSuggestedCount = 1234,
-                        }
-                    },
-                }
-            },
-        },
-    }
-};
-
-            var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-            await foreach (var item in operation.Value)
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+op = "add",
+value = new
+{
+id = 1234,
+answer = "<answer>",
+source = "<source>",
+questions = new object[]
+{
+"<questions>"
+},
+metadata = new
+{
+key = "<metadata>",
+},
+dialog = new
+{
+isContextOnly = true,
+prompts = new object[]
+{
+new
+{
+displayOrder = 1234,
+qnaId = 1234,
+displayText = "<displayText>",
+}
+},
+},
+activeLearningSuggestions = new object[]
+{
+new
+{
+clusterHead = "<clusterHead>",
+suggestedQuestions = new object[]
+{
+new
+{
+question = "<question>",
+userSuggestedCount = 1234,
+autoSuggestedCount = 1234,
+}
+},
+}
+},
+},
+}
+            });
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
+            await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1860,7 +1917,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());

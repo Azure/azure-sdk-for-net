@@ -8,13 +8,14 @@ using Azure.Core;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Linked service reference type. </summary>
-    [TypeReferenceType]
+    [PropertyReferenceType]
     public partial class DataFactoryLinkedServiceReference
     {
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
         /// <param name="referenceType"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        [InitializationConstructor]
         public DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
@@ -28,6 +29,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="referenceType"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
+        [SerializationConstructor]
         internal DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string? referenceName, IDictionary<string, BinaryData?> parameters)
         {
             ReferenceType = referenceType;

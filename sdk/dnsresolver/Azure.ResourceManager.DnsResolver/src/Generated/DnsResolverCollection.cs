@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,6 +322,80 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsResolverResource>> GetIfExistsAsync(string dnsResolverName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+
+            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolverCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsResolverRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        public virtual NullableResponse<DnsResolverResource> GetIfExists(string dnsResolverName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+
+            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolverCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A class representing the ContainerRegistryTaskRun data model.
-    /// The task run that has the ARM resource and properties. 
+    /// The task run that has the ARM resource and properties.
     /// The task run will have the information of request and result of a run.
     /// </summary>
     public partial class ContainerRegistryTaskRunData : ResourceData

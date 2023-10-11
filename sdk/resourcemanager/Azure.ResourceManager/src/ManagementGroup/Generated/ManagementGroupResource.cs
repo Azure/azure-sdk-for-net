@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Update a management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Update a management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List all entities that descend from a management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -323,9 +324,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,12 +335,12 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all entities that descend from a management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -352,9 +353,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -363,7 +364,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
     }
 }

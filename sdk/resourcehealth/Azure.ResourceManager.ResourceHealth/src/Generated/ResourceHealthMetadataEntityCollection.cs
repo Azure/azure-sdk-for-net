@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthMetadataEntityMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthMetadataEntityMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,6 +234,80 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 var response = _resourceHealthMetadataEntityMetadataRestClient.GetEntity(name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceHealthMetadataEntityResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceHealthMetadataEntityMetadataRestClient.GetEntityAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthMetadataEntityResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of metadata entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<ResourceHealthMetadataEntityResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceHealthMetadataEntityMetadataRestClient.GetEntity(name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthMetadataEntityResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

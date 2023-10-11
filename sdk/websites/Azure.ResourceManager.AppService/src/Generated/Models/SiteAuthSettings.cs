@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="clientId">
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="validateIssuer"> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </param>
         /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="googleClientSecretSettingName">
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </param>
         /// <param name="googleOAuthScopes">
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService.Models
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary>
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </summary>
         public bool? ValidateIssuer { get; set; }
         /// <summary>
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public string GoogleClientSecret { get; set; }
         /// <summary>
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </summary>
         public string GoogleClientSecretSettingName { get; set; }

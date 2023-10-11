@@ -1,6 +1,6 @@
 # Release History
 
-## 11.5.0-beta.3 (Unreleased)
+## 11.5.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.5.0-beta.5 (2023-10-09)
+
+### Features Added
+- Added support for `VectorSearch.Vectorizers`, which contains configuration options for vectorizing text vector queries, and `VectorSearch.Profiles`, which define combinations of configurations to use with vector search.
+- Added the `VectorSearchAlgorithmConfiguration` base type, containing configuration options specific to the algorithm used during indexing and/or querying. Derived classes include `ExhaustiveKnnVectorSearchAlgorithmConfiguration` and `HnswVectorSearchAlgorithmConfiguration`.
+- Added the `SearchOptions.VectorQueries` base type, which is used for the query parameters for vector and hybrid search queries. Derived classes include `VectorizableTextQuery` and `RawVectorQuery`. With `RawVectorQuery`, users can pass raw vector values for vector search, while `VectorizableTextQuery` allows the passing of text values to be vectorized for vector search.
+- Added `SearchOptions.VectorFilterMode`, determining whether filters are applied before or after vector search is executed.
+- Added `SearchOptions.SemanticQuery`, which enables the setting of a dedicated search query for semantic reranking, semantic captions, and semantic answers.
+- Added support for `AzureOpenAIEmbeddingSkill`, which enables the generation of vector embeddings for given text inputs using the Azure Open AI service.
+- Added `SearchIndexStatistics.VectorIndexSize`, which reports the amount of memory consumed by vectors in the index.
+- Added `KnowledgeStore.Parameters`, which defines a dictionary of knowledge store-specific configuration properties.
+- Added `SearchIndexerSkillset.IndexProjections`, which specifies additional projections to secondary search indexes.
+
+### Breaking Changes
+- In `SearchOptions`, the `IList<SearchQueryVector> Vectors` property has been removed in favor of the abstract base type `IList<VectorQuery> VectorQueries`.
+- In `SearchField`, the `vectorSearchConfiguration` property has been removed in favor of the new `VectorSearchProfile` property.
+- In `VectorSearch`, `AlgorithmConfigurations` has been renamed to `Algorithms`.
+
+## 11.5.0-beta.4 (2023-08-07)
+
+### Features Added
+- Added the ability to perform multiple vectors query searches.
+- Added support for vector queries over multiple fields.
+
+## 11.5.0-beta.3 (2023-07-11)
+
+### Features Added
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+
+### Bugs Fixed
+- Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service ([#37164](https://github.com/Azure/azure-sdk-for-net/issues/37164)).
 
 ## 11.5.0-beta.2 (2022-10-11)
 

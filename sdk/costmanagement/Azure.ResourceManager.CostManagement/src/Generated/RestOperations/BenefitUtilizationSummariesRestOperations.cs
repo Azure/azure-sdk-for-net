@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByBillingAccountIdRequest(string billingAccountId, GrainParameter? grainParameter, string filter)
+        internal HttpMessage CreateListByBillingAccountIdRequest(string billingAccountId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdAsync(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountId(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListByBillingProfileIdRequest(string billingAccountId, string billingProfileId, GrainParameter? grainParameter, string filter)
+        internal HttpMessage CreateListByBillingProfileIdRequest(string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileId(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListBySavingsPlanOrderRequest(string savingsPlanOrderId, string filter, GrainParameter? grainParameter)
+        internal HttpMessage CreateListBySavingsPlanOrderRequest(string savingsPlanOrderId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListBySavingsPlanIdRequest(string savingsPlanOrderId, string savingsPlanId, string filter, GrainParameter? grainParameter)
+        internal HttpMessage CreateListBySavingsPlanIdRequest(string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListByBillingAccountIdNextPageRequest(string nextLink, string billingAccountId, GrainParameter? grainParameter, string filter)
+        internal HttpMessage CreateListByBillingAccountIdNextPageRequest(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdNextPageAsync(string nextLink, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdNextPageAsync(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountIdNextPage(string nextLink, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountIdNextPage(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListByBillingProfileIdNextPageRequest(string nextLink, string billingAccountId, string billingProfileId, GrainParameter? grainParameter, string filter)
+        internal HttpMessage CreateListByBillingProfileIdNextPageRequest(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdNextPageAsync(string nextLink, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdNextPageAsync(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileIdNextPage(string nextLink, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileIdNextPage(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListBySavingsPlanOrderNextPageRequest(string nextLink, string savingsPlanOrderId, string filter, GrainParameter? grainParameter)
+        internal HttpMessage CreateListBySavingsPlanOrderNextPageRequest(string nextLink, string savingsPlanOrderId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderNextPageAsync(string nextLink, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderNextPageAsync(string nextLink, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrderNextPage(string nextLink, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrderNextPage(string nextLink, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateListBySavingsPlanIdNextPageRequest(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter, GrainParameter? grainParameter)
+        internal HttpMessage CreateListBySavingsPlanIdNextPageRequest(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdNextPageAsync(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdNextPageAsync(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanIdNextPage(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanIdNextPage(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));

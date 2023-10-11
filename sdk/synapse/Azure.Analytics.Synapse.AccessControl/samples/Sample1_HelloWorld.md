@@ -19,7 +19,7 @@ RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endp
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
 ```C# Snippet:PrepCreateRoleAssignment
-Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(true);
+Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(true, null, new());
 BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
 using JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
@@ -70,7 +70,7 @@ Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAs
 To enumerate all role assignments in the Synapse workspace call `GetRoleAssignments`.
 
 ```C# Snippet:ListRoleAssignments
-Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
+Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments(null, null, null, null, new());
 BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
 using JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 

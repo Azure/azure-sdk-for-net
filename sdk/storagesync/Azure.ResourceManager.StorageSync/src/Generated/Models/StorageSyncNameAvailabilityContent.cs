@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Parameters for a check name availability request. </summary>
     public partial class StorageSyncNameAvailabilityContent
     {
-
         /// <summary> The name to check for availability. </summary>
         public string Name { get; }
         /// <summary> The resource type. Must be set to Microsoft.StorageSync/storageSyncServices. </summary>

@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
+    [CodeGenModel("ScoringRuleOptions")]
     public partial class ScoringRuleOptions
     {
         internal ScoringRuleOptions()
@@ -21,6 +22,6 @@ namespace Azure.Communication.JobRouter
         /// are added to the payload of the scoring rule by default.
         /// Note: Worker labels are always sent with scoring payload.
         /// </summary>
-        internal IList<ScoringRuleParameterSelector> ScoringParameters { get; }
+        public IList<ScoringRuleParameterSelector> ScoringParameters { get; }
     }
 }

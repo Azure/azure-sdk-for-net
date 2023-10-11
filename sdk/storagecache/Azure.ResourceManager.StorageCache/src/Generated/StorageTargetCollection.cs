@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a list of Storage Targets for the specified Cache.
+        /// Returns a list of Storage Targets for the specified cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,11 +228,11 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns a list of Storage Targets for the specified Cache.
+        /// Returns a list of Storage Targets for the specified cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.StorageCache
             {
                 var response = _storageTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageTargetName"> Name of Storage Target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageTargetResource>> GetIfExistsAsync(string storageTargetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageTargetResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageTargetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageTargetName"> Name of Storage Target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        public virtual NullableResponse<StorageTargetResource> GetIfExists(string storageTargetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageTargetResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -104,6 +104,7 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
+          EnvVars: ${{ parameters.EnvVars }}
 
       - pwsh: |
           $project = "${{ parameters.Project }}"

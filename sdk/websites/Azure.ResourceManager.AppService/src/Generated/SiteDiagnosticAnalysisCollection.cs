@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,6 +233,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteAnalysis</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteDiagnosticAnalysisResource>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
+            using var scope = _siteDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticAnalysisCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDiagnosticAnalysisResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteAnalysis</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual NullableResponse<SiteDiagnosticAnalysisResource> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
+            using var scope = _siteDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticAnalysisCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDiagnosticAnalysisResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

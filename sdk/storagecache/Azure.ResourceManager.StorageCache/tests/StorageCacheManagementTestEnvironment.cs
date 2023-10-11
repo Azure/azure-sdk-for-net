@@ -7,5 +7,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
 {
     public class StorageCacheManagementTestEnvironment : TestEnvironment
     {
+        public string vnetName => GetRecordedVariable("vnet_name");
+        public string storageAccountName => GetRecordedVariable("storage_account_name");
     }
 }

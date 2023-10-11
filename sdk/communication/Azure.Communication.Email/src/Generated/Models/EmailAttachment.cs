@@ -13,7 +13,6 @@ namespace Azure.Communication.Email
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
-
         /// <summary> Name of the attachment. </summary>
         public string Name { get; }
         /// <summary> MIME type of the content being attached. </summary>

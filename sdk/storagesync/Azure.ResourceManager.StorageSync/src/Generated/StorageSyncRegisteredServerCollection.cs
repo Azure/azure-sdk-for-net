@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncRegisteredServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncRegisteredServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -293,6 +294,72 @@ namespace Azure.ResourceManager.StorageSync
             {
                 var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<StorageSyncRegisteredServerResource>> GetIfExistsAsync(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageSyncRegisteredServerResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<StorageSyncRegisteredServerResource> GetIfExists(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageSyncRegisteredServerResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

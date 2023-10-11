@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -76,7 +77,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetWorkflowAsync(Guid workflowId, RequestContext context = null)
+        public virtual async Task<Response> GetWorkflowAsync(Guid workflowId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflow");
             scope.Start();
@@ -107,7 +108,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflow(Guid,RequestContext)']/*" />
-        public virtual Response GetWorkflow(Guid workflowId, RequestContext context = null)
+        public virtual Response GetWorkflow(Guid workflowId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflow");
             scope.Start();
@@ -338,7 +339,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetWorkflowRunAsync(Guid workflowRunId, RequestContext context = null)
+        public virtual async Task<Response> GetWorkflowRunAsync(Guid workflowRunId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowRun");
             scope.Start();
@@ -369,7 +370,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRun(Guid,RequestContext)']/*" />
-        public virtual Response GetWorkflowRun(Guid workflowRunId, RequestContext context = null)
+        public virtual Response GetWorkflowRun(Guid workflowRunId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowRun");
             scope.Start();
@@ -470,7 +471,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTaskAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetWorkflowTaskAsync(Guid taskId, RequestContext context = null)
+        public virtual async Task<Response> GetWorkflowTaskAsync(Guid taskId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowTask");
             scope.Start();
@@ -501,7 +502,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTask(Guid,RequestContext)']/*" />
-        public virtual Response GetWorkflowTask(Guid taskId, RequestContext context = null)
+        public virtual Response GetWorkflowTask(Guid taskId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.GetWorkflowTask");
             scope.Start();
@@ -811,11 +812,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetWorkflowsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -832,11 +833,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflows(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflows(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetWorkflows(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -858,11 +859,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -884,11 +885,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -913,11 +914,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -942,11 +943,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetWorkflowsRequest(RequestContext context)

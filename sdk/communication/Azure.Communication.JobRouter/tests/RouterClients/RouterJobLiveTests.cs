@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
-    [Ignore("enable after deployment with matching changes")]
     public class RouterJobLiveTests : RouterLiveTestBase
     {
         public RouterJobLiveTests(bool isAsync) : base(isAsync)
@@ -53,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAtUtc = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
                     }
                 });
             }
@@ -63,7 +62,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAtUtc = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
                     }
                 });
             }
@@ -160,7 +159,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
                     Priority = 1,
-                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
+                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
                 });
 
             AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
@@ -187,7 +186,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Temporarily skipped")]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -203,7 +201,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             // Setup Classification Policies
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}-CP_StaticPriority");
             var classificationPolicyName = $"StaticPriority-ClassificationPolicy";
-            var priorityRule = new StaticRule(new LabelValue(10));
+            var priorityRule = new StaticRouterRule(new LabelValue(10));
             var createClassificationPolicyResponse = await routerAdministrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
@@ -291,7 +289,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Temporarily skipped")]
         public async Task CreateJobWithClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -338,7 +335,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Temporarily skipped")]
         public async Task CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -410,6 +406,189 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var retrievedJob = await routerClient.GetJobAsync(jobId1);
 
             Assert.True(string.IsNullOrWhiteSpace(retrievedJob.Value.ChannelReference));
+        }
+
+        [Test]
+        public async Task CreateJobWithQueueAndMatchMode()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(CreateJobWithQueueAndMatchMode)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobWithQueueAndMatchMode));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobWithQueueAndMatchMode)}1");
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ChannelReference = "IncorrectValue",
+                    MatchingMode = new JobMatchingMode(new QueueAndMatchMode()),
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.QueueAndMatchMode);
+            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
+            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
+            Assert.IsNotNull(createJob1.MatchingMode.QueueAndMatchMode);
+        }
+
+        [Test]
+        public async Task CreateJobWithSuspendMode()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(CreateJobWithSuspendMode)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobWithSuspendMode));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobWithSuspendMode)}1");
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ChannelReference = "IncorrectValue",
+                    MatchingMode = new JobMatchingMode(new SuspendMode()),
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.SuspendMode);
+            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
+            Assert.IsNotNull(createJob1.MatchingMode.SuspendMode);
+            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+        }
+
+        [Test]
+        public async Task CreateJobWithScheduleAndSuspendMode()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(CreateJobWithScheduleAndSuspendMode)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobWithScheduleAndSuspendMode));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobWithScheduleAndSuspendMode)}1");
+            var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddSeconds(7));
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ChannelReference = "IncorrectValue",
+                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.ScheduleAndSuspendMode);
+            Assert.IsNotNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
+            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
+            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+        }
+
+        [Test]
+        public async Task UpdateJobTest()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(UpdateJobTest)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(UpdateJobTest));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(UpdateJobTest)}1");
+            var labels = new Dictionary<string, LabelValue?>
+            {
+                ["Label_1"] = new LabelValue("Value_1"),
+                ["Label_2"] = new LabelValue(2),
+                ["Label_3"] = new LabelValue(true)
+            };
+            var tags = new Dictionary<string, LabelValue?>
+            {
+                ["Tag_1"] = new LabelValue("Value_1"),
+                ["Tag_2"] = new LabelValue(2),
+                ["Tag_3"] = new LabelValue(true)
+            };
+
+            var createJobOptions = new CreateJobOptions(jobId1, channelId, createQueue.Id);
+            createJobOptions.Labels.Append(labels);
+            createJobOptions.Tags.Append(tags);
+
+            var createJobResponse = await routerClient.CreateJobAsync(createJobOptions);
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJobResponse.Value.Id)));
+
+            var updatedLabels = new Dictionary<string, LabelValue?>
+            {
+                ["Label_1"] = null,
+                ["Label_2"] = new LabelValue(null),
+                ["Label_3"] = new LabelValue("Value_Updated_3"),
+                ["Label_4"] = new LabelValue("Value_4")
+            };
+            var updatedTags = new Dictionary<string, LabelValue?>
+            {
+                ["Tag_1"] = null,
+                ["Tag_2"] = new LabelValue(null),
+                ["Tag_3"] = new LabelValue("Value_Updated_3"),
+                ["Tag_4"] = new LabelValue("Value_4")
+            };
+
+            var updateOptions = new UpdateJobOptions(jobId1);
+            updateOptions.Labels.Append(updatedLabels);
+            updateOptions.Tags.Append(updatedTags);
+
+            var updateJobResponse = await routerClient.UpdateJobAsync(updateOptions);
+
+            Assert.AreEqual(updateJobResponse.Value.Labels, new Dictionary<string, LabelValue?>
+            {
+                ["Label_3"] = new LabelValue("Value_Updated_3"),
+                ["Label_4"] = new LabelValue("Value_4")
+            });
+            Assert.AreEqual(updateJobResponse.Value.Tags, new Dictionary<string, LabelValue?>
+            {
+                ["Tag_3"] = new LabelValue("Value_Updated_3"),
+                ["Tag_4"] = new LabelValue("Value_4")
+            });
+        }
+
+        [Test]
+        public async Task ReclassifyJob()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient routerAdminClient = CreateRouterAdministrationClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(ReclassifyJob)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(ReclassifyJob));
+            var createQueue = createQueueResponse.Value;
+
+            var classificationPolicy = await routerAdminClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}{nameof(ReclassifyJob)}-policy"))
+                {
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
+                });
+            AddForCleanup(new Task(async () => await routerAdminClient.DeleteClassificationPolicyAsync(classificationPolicy.Value.Id)));
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(ReclassifyJob)}-job");
+            var createJob1Response = await routerClient.CreateJobWithClassificationPolicyAsync(
+                new CreateJobWithClassificationPolicyOptions(jobId1, channelId, classificationPolicy.Value.Id)
+                {
+                    QueueId = createQueue.Id
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            await routerClient.ReclassifyJobAsync(jobId1);
+
+            Assert.AreEqual(createJob1.QueueId, createQueue.Id);
         }
 
         #endregion Job Tests

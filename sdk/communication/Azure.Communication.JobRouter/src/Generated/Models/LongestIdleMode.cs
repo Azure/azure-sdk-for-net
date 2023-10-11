@@ -10,7 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
     public partial class LongestIdleMode : DistributionMode
     {
-
         /// <summary> Initializes a new instance of LongestIdleMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>

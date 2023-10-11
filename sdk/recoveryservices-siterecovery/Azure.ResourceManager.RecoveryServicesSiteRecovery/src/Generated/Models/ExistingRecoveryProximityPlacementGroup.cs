@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Existing recovery proximity placement group input. </summary>
@@ -19,13 +21,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ExistingRecoveryProximityPlacementGroup. </summary>
         /// <param name="resourceType"> The class type. </param>
         /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. Will throw error, if resource does not exist. </param>
-        internal ExistingRecoveryProximityPlacementGroup(string resourceType, string recoveryProximityPlacementGroupId) : base(resourceType)
+        internal ExistingRecoveryProximityPlacementGroup(string resourceType, ResourceIdentifier recoveryProximityPlacementGroupId) : base(resourceType)
         {
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             ResourceType = resourceType ?? "Existing";
         }
 
         /// <summary> The recovery proximity placement group Id. Will throw error, if resource does not exist. </summary>
-        public string RecoveryProximityPlacementGroupId { get; set; }
+        public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
     }
 }

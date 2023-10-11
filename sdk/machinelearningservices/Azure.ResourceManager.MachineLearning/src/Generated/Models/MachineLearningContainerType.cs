@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningContainerType. </summary>
+    /// <summary> The type of container to retrieve logs from. </summary>
     public readonly partial struct MachineLearningContainerType : IEquatable<MachineLearningContainerType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string StorageInitializerValue = "StorageInitializer";
         private const string InferenceServerValue = "InferenceServer";
+        private const string ModelDataCollectorValue = "ModelDataCollector";
 
-        /// <summary> StorageInitializer. </summary>
+        /// <summary> The container used to download models and score script. </summary>
         public static MachineLearningContainerType StorageInitializer { get; } = new MachineLearningContainerType(StorageInitializerValue);
-        /// <summary> InferenceServer. </summary>
+        /// <summary> The container used to serve user's request. </summary>
         public static MachineLearningContainerType InferenceServer { get; } = new MachineLearningContainerType(InferenceServerValue);
+        /// <summary> The container used to collect payload and custom logging when mdc is enabled. </summary>
+        public static MachineLearningContainerType ModelDataCollector { get; } = new MachineLearningContainerType(ModelDataCollectorValue);
         /// <summary> Determines if two <see cref="MachineLearningContainerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningContainerType left, MachineLearningContainerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningContainerType"/> values are not the same. </summary>

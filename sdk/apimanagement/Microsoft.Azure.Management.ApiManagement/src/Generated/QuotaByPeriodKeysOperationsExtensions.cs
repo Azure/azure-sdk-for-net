@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.

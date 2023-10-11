@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<DatasetReference>> inputs = default;
             Optional<IList<DatasetReference>> outputs = default;
             Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             CopyActivitySource source = default;
             CopySink sink = default;
             Optional<BinaryData> translator = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<bool>> enableSkipIncompatibleRow = default;
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<LogSettings> logSettings = default;
+            Optional<DataFactoryLogSettings> logSettings = default;
             Optional<IList<BinaryData>> preserveRules = default;
             Optional<IList<BinaryData>> preserve = default;
             Optional<DataFactoryElement<bool>> validateDataConsistency = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    state = new ActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onInactiveMarkAs"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logSettings = LogSettings.DeserializeLogSettings(property0.Value);
+                            logSettings = DataFactoryLogSettings.DeserializeDataFactoryLogSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preserveRules"u8))
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
         }
     }
 }

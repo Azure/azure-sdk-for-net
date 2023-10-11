@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> memoryInGB = default;
             Optional<int> maxDataDiskCount = default;
             Optional<int> maxNicsCount = default;
-            Optional<IReadOnlyList<ComputeSizeErrorDetails>> errors = default;
+            Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
             Optional<string> highIopsSupported = default;
             Optional<IReadOnlyList<string>> hyperVGenerations = default;
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ComputeSizeErrorDetails> array = new List<ComputeSizeErrorDetails>();
+                    List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSizeErrorDetails.DeserializeComputeSizeErrorDetails(item));
+                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
                     }
                     errors = array;
                     continue;

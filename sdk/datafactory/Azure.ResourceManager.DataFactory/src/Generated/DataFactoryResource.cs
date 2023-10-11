@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -666,6 +667,61 @@ namespace Azure.ResourceManager.DataFactory
             return GetDataFactoryGlobalParameters().Get(globalParameterName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DataFactoryChangeDataCaptureResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryChangeDataCaptureResources and their operations over a DataFactoryChangeDataCaptureResource. </returns>
+        public virtual DataFactoryChangeDataCaptureCollection GetDataFactoryChangeDataCaptures()
+        {
+            return GetCachedClient(Client => new DataFactoryChangeDataCaptureCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a change data capture.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChangeDataCapture_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="changeDataCaptureName"> The change data capture name. </param>
+        /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataFactoryChangeDataCaptureResource>> GetDataFactoryChangeDataCaptureAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return await GetDataFactoryChangeDataCaptures().GetAsync(changeDataCaptureName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a change data capture.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChangeDataCapture_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="changeDataCaptureName"> The change data capture name. </param>
+        /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataFactoryChangeDataCaptureResource> GetDataFactoryChangeDataCapture(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataFactoryChangeDataCaptures().Get(changeDataCaptureName, ifNoneMatch, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a factory.
         /// <list type="bullet">
@@ -1162,7 +1218,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1187,7 +1243,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1350,14 +1406,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataFactoryActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataFactoryActivityRunInfo> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PipelineActivityRunInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PipelineActivityRunInformation> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryActivityRunInfo.DeserializeDataFactoryActivityRunInfo, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1378,14 +1434,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataFactoryActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataFactoryActivityRunInfo> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PipelineActivityRunInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PipelineActivityRunInformation> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryActivityRunInfo.DeserializeDataFactoryActivityRunInfo, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1410,7 +1466,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1435,7 +1491,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1460,7 +1516,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triggerRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1485,7 +1541,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triggerRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1583,7 +1639,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1605,7 +1661,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1838,7 +1894,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1859,7 +1915,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

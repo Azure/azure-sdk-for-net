@@ -113,7 +113,22 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2023-01-03 service version.
             /// </summary>
-            V2023_01_03 = 17
+            V2023_01_03 = 17,
+
+            /// <summary>
+            /// The 2023-05-03 service version.
+            /// </summary>
+            V2023_05_03 = 18,
+
+            /// <summary>
+            /// The 2023-08-03 service version.
+            /// </summary>
+            V2023_08_03 = 19,
+
+            /// <summary>
+            /// The 2023-11-03 service version.
+            /// </summary>
+            V2023_11_03 = 20
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -255,5 +270,11 @@ namespace Azure.Storage.Files.Shares
             Diagnostics.LoggedQueryParameters.Add("copyid");
             Diagnostics.LoggedQueryParameters.Add("restype");
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="ShareAudience.DefaultAudience" /> will be assumed.</value>
+        public ShareAudience? Audience { get; set; }
     }
 }

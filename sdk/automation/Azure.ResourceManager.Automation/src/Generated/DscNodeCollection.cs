@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeResource(Client, DscNodeData.DeserializeDscNodeData(e)), _dscNodeClientDiagnostics, Pipeline, "DscNodeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,6 +241,80 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _dscNodeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeId"> The node id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        public virtual async Task<NullableResponse<DscNodeResource>> GetIfExistsAsync(string nodeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dscNodeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DscNodeResource>(response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeId"> The node id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        public virtual NullableResponse<DscNodeResource> GetIfExists(string nodeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dscNodeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DscNodeResource>(response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

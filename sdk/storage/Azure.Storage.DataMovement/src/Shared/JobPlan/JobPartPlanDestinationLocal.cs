@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     /// <summary>
     /// This matching the JobPartPlanDstLocal of azcopy
