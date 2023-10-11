@@ -25,7 +25,7 @@ namespace Azure.AI.Chat
 
             Index = index;
             Message = message;
-            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
+            Context = new ChangeTrackingDictionary<string, BinaryData>();
             FinishReason = finishReason;
         }
 
@@ -33,14 +33,14 @@ namespace Azure.AI.Chat
         /// <param name="index"> placeholder. </param>
         /// <param name="message"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
+        /// <param name="context"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> extraArguments, FinishReason finishReason)
+        internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> context, FinishReason finishReason)
         {
             Index = index;
             Message = message;
             SessionState = sessionState;
-            ExtraArguments = extraArguments;
+            Context = context;
             FinishReason = finishReason;
         }
 
@@ -109,7 +109,7 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ExtraArguments { get; }
+        public IReadOnlyDictionary<string, BinaryData> Context { get; }
         /// <summary> placeholder. </summary>
         public FinishReason FinishReason { get; }
     }

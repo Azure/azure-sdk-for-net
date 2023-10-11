@@ -24,21 +24,21 @@ namespace Azure.AI.Chat
 
             Index = index;
             Delta = delta;
-            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
+            Context = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ChoiceDelta. </summary>
         /// <param name="index"> placeholder. </param>
         /// <param name="delta"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
+        /// <param name="context"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        internal ChoiceDelta(long index, ChatMessageDelta delta, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> extraArguments, FinishReason? finishReason)
+        internal ChoiceDelta(long index, ChatMessageDelta delta, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> context, FinishReason? finishReason)
         {
             Index = index;
             Delta = delta;
             SessionState = sessionState;
-            ExtraArguments = extraArguments;
+            Context = context;
             FinishReason = finishReason;
         }
 
@@ -107,7 +107,7 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ExtraArguments { get; }
+        public IReadOnlyDictionary<string, BinaryData> Context { get; }
         /// <summary> placeholder. </summary>
         public FinishReason? FinishReason { get; }
     }

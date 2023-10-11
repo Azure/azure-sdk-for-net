@@ -16,22 +16,22 @@ public partial class ChatCompletionOptions
     /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
     /// <param name="messages"> placeholder. </param>
     /// <param name="sessionState"> placeholder. </param>
-    /// <param name="extraArguments"> placeholder. </param>
-    public  ChatCompletionOptions(IList<ChatMessage> messages, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments = null)
+    /// <param name="context"> placeholder. </param>
+    public  ChatCompletionOptions(IList<ChatMessage> messages, BinaryData sessionState, IDictionary<string, BinaryData> context = null)
     {
         Argument.AssertNotNull(messages, nameof(messages));
         Messages = messages;
         SessionState = sessionState;
-        ExtraArguments = extraArguments;
+        Context = context;
     }
 
     /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
     /// <param name="messages"> placeholder. </param>
-    /// <param name="extraArguments"> placeholder. </param>
-    public  ChatCompletionOptions(IList<ChatMessage> messages, IDictionary<string, BinaryData> extraArguments)
+    /// <param name="context"> placeholder. </param>
+    public  ChatCompletionOptions(IList<ChatMessage> messages, IDictionary<string, BinaryData> context)
     {
         Argument.AssertNotNull(messages, nameof(messages));
         Messages = messages;
-        ExtraArguments = extraArguments;
+        Context = context;
     }
 }

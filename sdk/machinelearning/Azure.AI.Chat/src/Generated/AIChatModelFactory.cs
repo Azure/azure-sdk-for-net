@@ -28,14 +28,14 @@ namespace Azure.AI.Chat
         /// <param name="index"> placeholder. </param>
         /// <param name="message"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
+        /// <param name="context"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
         /// <returns> A new <see cref="Chat.ChatChoice"/> instance for mocking. </returns>
-        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> extraArguments = null, FinishReason finishReason = default)
+        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason finishReason = default)
         {
-            extraArguments ??= new Dictionary<string, BinaryData>();
+            context ??= new Dictionary<string, BinaryData>();
 
-            return new ChatChoice(index, message, sessionState, extraArguments, finishReason);
+            return new ChatChoice(index, message, sessionState, context, finishReason);
         }
 
         /// <summary> Initializes a new instance of ChatCompletionChunk. </summary>
@@ -52,14 +52,14 @@ namespace Azure.AI.Chat
         /// <param name="index"> placeholder. </param>
         /// <param name="delta"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
+        /// <param name="context"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
         /// <returns> A new <see cref="Chat.ChoiceDelta"/> instance for mocking. </returns>
-        public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> extraArguments = null, FinishReason? finishReason = null)
+        public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason? finishReason = null)
         {
-            extraArguments ??= new Dictionary<string, BinaryData>();
+            context ??= new Dictionary<string, BinaryData>();
 
-            return new ChoiceDelta(index, delta, sessionState, extraArguments, finishReason);
+            return new ChoiceDelta(index, delta, sessionState, context, finishReason);
         }
 
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>

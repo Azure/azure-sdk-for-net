@@ -24,7 +24,7 @@ namespace Azure.AI.Chat
             long index = default;
             ChatMessageDelta delta = default;
             Optional<BinaryData> sessionState = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> extraArgs = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> context = default;
             Optional<FinishReason> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.Chat
                     sessionState = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("extra_args"u8))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.AI.Chat
                             dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
-                    extraArgs = dictionary;
+                    context = dictionary;
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
@@ -78,7 +78,7 @@ namespace Azure.AI.Chat
                     continue;
                 }
             }
-            return new ChoiceDelta(index, delta, sessionState.Value, Optional.ToDictionary(extraArgs), Optional.ToNullable(finishReason));
+            return new ChoiceDelta(index, delta, sessionState.Value, Optional.ToDictionary(context), Optional.ToNullable(finishReason));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

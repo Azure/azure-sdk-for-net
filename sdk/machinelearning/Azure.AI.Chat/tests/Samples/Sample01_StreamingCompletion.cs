@@ -33,7 +33,7 @@ namespace Azure.AI.Chat.Tests.Samples
                     new ChatMessage("Hello", ChatRole.Assistant),
                 },
                 sessionState: BinaryData.FromString("Hello"),
-                extraArguments: new Dictionary<string, BinaryData>
+                context: new Dictionary<string, BinaryData>
                 {
                     ["key"] = BinaryData.FromString("value")
                 }
@@ -47,7 +47,7 @@ namespace Azure.AI.Chat.Tests.Samples
                     PrintIfNotNull("Content: ", choiceDelta.Delta?.Content);
                     PrintIfNotNull("Role: ", choiceDelta.Delta?.Role);
                     PrintIfNotNull("SessionState: ", choiceDelta.SessionState);
-                    PrintIfNotNull("ExtraArguments: ", choiceDelta.ExtraArguments);
+                    PrintIfNotNull("Context: ", choiceDelta.Context);
                 }
             }
             #endregion

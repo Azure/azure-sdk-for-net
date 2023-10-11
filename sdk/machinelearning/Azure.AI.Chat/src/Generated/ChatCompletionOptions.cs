@@ -23,20 +23,20 @@ namespace Azure.AI.Chat
             Argument.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
-            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
+            Context = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
         /// <param name="messages"> placeholder. </param>
         /// <param name="stream"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
-        internal ChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments)
+        /// <param name="context"> placeholder. </param>
+        internal ChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, IDictionary<string, BinaryData> context)
         {
             Messages = messages;
             Stream = stream;
             SessionState = sessionState;
-            ExtraArguments = extraArguments;
+            Context = context;
         }
 
         /// <summary> placeholder. </summary>
@@ -103,6 +103,6 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ExtraArguments { get; }
+        public IDictionary<string, BinaryData> Context { get; }
     }
 }
