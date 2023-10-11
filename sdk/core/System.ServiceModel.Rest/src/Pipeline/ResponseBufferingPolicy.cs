@@ -12,7 +12,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
+public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
@@ -31,13 +31,13 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         _networkTimeout = networkTimeout;
     }
 
-    public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
+    public override void Process(PipelineMessage message, IPipelineEnumerator pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IPipelineEnumerator pipeline, bool async)

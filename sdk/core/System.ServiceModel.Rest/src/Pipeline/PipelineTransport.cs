@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
+public abstract class PipelineTransport<TMessage> : PipelinePolicy<TMessage>
+    where TMessage : PipelineMessage
 {
     /// <summary>
     /// TBD: needed for inheritdoc.
@@ -25,14 +26,16 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
     /// </summary>
     public abstract TMessage CreateMessage();
 
-    public void Process(TMessage message, IPipelineEnumerator pipeline)
+    // These methods from PipelinePolicy just say "you've reached the end
+    // of the line", i.e. they stop the invocation of the policy chain.
+    public override void Process(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
         Process(message);
     }
 
-    public async ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 

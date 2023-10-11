@@ -13,15 +13,15 @@ namespace System.ServiceModel.Rest;
 public class PipelineOptions
 {
     #region Pipeline creation: Customer-specified policies
-    public IPipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
+    public PipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
 
-    public IPipelinePolicy<PipelineMessage>[]? PerCallPolicies { get; set; }
+    public PipelinePolicy<PipelineMessage>[]? PerCallPolicies { get; set; }
     #endregion
 
     #region Pipeline creation: Required policy overrides
-    public IPipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
+    public PipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
 
-    public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
+    public PipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
 
     public PipelineTransport<PipelineMessage>? Transport { get; set; }
     #endregion
@@ -30,10 +30,10 @@ public class PipelineOptions
     public TimeSpan? NetworkTimeout { get; set; }
     #endregion
 
-    #region Defaults for pipeline creation
-    public static IPipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
+    #region Defaults for pipeline creation - "always-there" policies.
+    public static PipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
 
-    public static IPipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
+    public static PipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
 
     public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
 

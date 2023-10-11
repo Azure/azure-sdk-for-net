@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class MessagePipeline : Pipeline<PipelineMessage>
+public class MessagePipeline
 {
-    private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
+    private readonly ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
 
     public MessagePipeline(
         PipelineTransport<PipelineMessage> transport,
-        ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
+        ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies)
     {
         _transport = transport;
-        var larger = new IPipelinePolicy<PipelineMessage>[policies.Length + 1];
+        var larger = new PipelinePolicy<PipelineMessage>[policies.Length + 1];
         policies.Span.CopyTo(larger);
         larger[policies.Length] = transport;
         _policies = larger;
     }
 
-    private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
+    private MessagePipeline(ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies)
     {
         _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length - 1];
         _policies = policies;
@@ -29,13 +29,13 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public static MessagePipeline Create(
         PipelineOptions options,
-        params IPipelinePolicy<PipelineMessage>[] perTryPolicies)
-        => Create(options, perTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
+        params PipelinePolicy<PipelineMessage>[] perTryPolicies)
+        => Create(options, perTryPolicies, ReadOnlySpan<PipelinePolicy<PipelineMessage>>.Empty);
 
     public static MessagePipeline Create(
         PipelineOptions options,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perCallPolicies,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perTryPolicies)
+        ReadOnlySpan<PipelinePolicy<PipelineMessage>> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy<PipelineMessage>> perTryPolicies)
     {
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
@@ -55,8 +55,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
-        IPipelinePolicy<PipelineMessage>[] pipeline
-            = new IPipelinePolicy<PipelineMessage>[pipelineLength];
+        PipelinePolicy<PipelineMessage>[] pipeline
+            = new PipelinePolicy<PipelineMessage>[pipelineLength];
 
         int index = 0;
 
@@ -106,31 +106,29 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage()
-    {
-        return _transport.CreateMessage();
-    }
+    public virtual PipelineMessage CreateMessage()
+        => _transport.CreateMessage();
 
-    public override void Send(PipelineMessage message)
+    public virtual void Send(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public override async ValueTask SendAsync(PipelineMessage message)
+    public virtual async ValueTask SendAsync(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    internal struct MessagePipelineExecutor : IPipelineEnumerator
+    private struct MessagePipelineExecutor : IPipelineEnumerator
     {
         private PipelineMessage _message;
-        private ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
+        private ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
 
         public MessagePipelineExecutor(
             PipelineMessage message,
-            ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies )
+            ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies )
         {
             _message = message;
             _policies = policies;
