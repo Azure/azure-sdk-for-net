@@ -53,13 +53,6 @@ function NpmInstallForProject([string]$workingDirectory) {
             Copy-Item -Path $emitterPackageLock -Destination "package-lock.json" -Force
         }
 
-        $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
-
-        if($useAlphaNpmRegistry) {
-            Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
-            "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
-        }
-
         if ($usingLockFile) {
             Invoke-LoggedCommand "npm ci"
         }
