@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -13,7 +15,7 @@ namespace Azure
     /// <summary>
     /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
-    public class RequestContext : InvocationOptions
+    public class RequestContext : RequestOptions
     {
         private bool _frozen;
 
@@ -70,6 +72,37 @@ namespace Azure
         /// </summary>
         /// <param name="options"></param>
         public static implicit operator RequestContext(ErrorOptions options) => new RequestContext { ErrorOptions = options };
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Apply(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Unexpected message type: '{message.GetType()}'.");
+            }
+
+            Apply(httpMessage);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public void Apply(HttpMessage message)
+        {
+            message.CancellationToken = CancellationToken;
+
+            // TODO: Note, we don't set response classifier here, but need to rethink this
+            // story e2e.
+
+            if (NetworkTimeout.HasValue)
+            {
+                ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+            }
+        }
 
         /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.

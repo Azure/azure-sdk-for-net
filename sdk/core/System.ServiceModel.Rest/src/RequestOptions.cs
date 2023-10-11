@@ -13,11 +13,10 @@ namespace System.ServiceModel.Rest;
 /// this may change some behaviors in various pipeline policies and the transport.
 /// </summary>
 // TODO: Make options freezable
-// TODO: This was RequestOptions, I'm changing it for now, we can change it back if
-// if we want.
-public class InvocationOptions : PipelineOptions
+// Note: I was calling this InvocationOptions, but I'm changing it back to RequestOptions.
+public class RequestOptions : PipelineOptions
 {
-    public void Apply(PipelineMessage message)
+    public virtual void Apply(PipelineMessage message)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;

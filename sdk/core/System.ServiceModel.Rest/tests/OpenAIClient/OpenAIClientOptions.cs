@@ -5,6 +5,6 @@ using System.ServiceModel.Rest;
 
 namespace OpenAI;
 
-public class OpenAIClientOptions : InvocationOptions
+public class OpenAIClientOptions : RequestOptions
 {
 }
