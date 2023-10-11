@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.Quota
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
         /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.Quota
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
         /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.Quota
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.Quota
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>

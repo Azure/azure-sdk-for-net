@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for unassigning a job. </summary>
-    public partial class UnassignJobRequest
+    internal partial class UnassignJobRequest
     {
         /// <summary> Initializes a new instance of UnassignJobRequest. </summary>
         public UnassignJobRequest()

@@ -15,19 +15,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of ExpressRouteConnectionInformation. </summary>
         /// <param name="expressRouteCircuitId"> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </param>
-        /// <param name="expressRouteAuthorizationKey"> Authorization key for the circuit, must be of type Microsoft.Network/expressRouteCircuits/authorizations. The Auth Key is a mandatory attribute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitId"/> or <paramref name="expressRouteAuthorizationKey"/> is null. </exception>
-        public ExpressRouteConnectionInformation(string expressRouteCircuitId, string expressRouteAuthorizationKey)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitId"/> is null. </exception>
+        public ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId)
         {
             Argument.AssertNotNull(expressRouteCircuitId, nameof(expressRouteCircuitId));
-            Argument.AssertNotNull(expressRouteAuthorizationKey, nameof(expressRouteAuthorizationKey));
 
+            ExpressRouteCircuitId = expressRouteCircuitId;
+        }
+
+        /// <summary> Initializes a new instance of ExpressRouteConnectionInformation. </summary>
+        /// <param name="expressRouteCircuitId"> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </param>
+        /// <param name="expressRouteAuthorizationKey"> Authorization key for the circuit, must be of type Microsoft.Network/expressRouteCircuits/authorizations. The Auth Key is a mandatory attribute. </param>
+        internal ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId, string expressRouteAuthorizationKey)
+        {
             ExpressRouteCircuitId = expressRouteCircuitId;
             ExpressRouteAuthorizationKey = expressRouteAuthorizationKey;
         }
 
         /// <summary> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </summary>
-        public string ExpressRouteCircuitId { get; set; }
+        public ResourceIdentifier ExpressRouteCircuitId { get; set; }
         /// <summary> Authorization key for the circuit, must be of type Microsoft.Network/expressRouteCircuits/authorizations. The Auth Key is a mandatory attribute. </summary>
         public string ExpressRouteAuthorizationKey { get; set; }
     }

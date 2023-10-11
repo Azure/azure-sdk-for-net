@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network configuration group resource. </summary>
@@ -19,11 +21,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState)
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid)
         {
             Id = id;
             Description = description;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
         }
 
         /// <summary> Network group ID. </summary>
@@ -32,5 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Description { get; }
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
     }
 }

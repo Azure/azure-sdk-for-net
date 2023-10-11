@@ -1,14 +1,17 @@
 # Release History
 
-## 12.15.0-beta.2 (Unreleased)
+## 12.17.0-beta.1 (Unreleased)
+- Added support for service version 2023-11-03.
+- Added support for ShareClientOptions.Audience
 
-### Features Added
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
 
-### Breaking Changes
+## 12.16.0-beta.1 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
 
-### Bugs Fixed
-
-### Other Changes
+## 12.15.0 (2023-07-23)
+- Includes all features from 12.15.0-beta.1.
 
 ## 12.15.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.

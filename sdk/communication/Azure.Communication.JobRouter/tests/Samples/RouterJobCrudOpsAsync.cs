@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
                             new LabelValue(jobQueue.Value.Id))),
                     },
-                    PrioritizationRule = new StaticRule(new LabelValue(10))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(10))
                 });
 
             string jobWithCpId = "job-with-cp-id";
@@ -116,7 +116,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
 
-            Response<ReclassifyJobResult> reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId);
+            Response reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
 
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     AvailableForOffers = true, // if a worker is not registered, no offer will be issued
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(100), },
-                    QueueIds = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
                 });
 
             // now that we have a registered worker, we can expect offer to be sent to the worker
@@ -162,7 +162,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // A worker can also choose to decline an offer
 
-            Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
+            Response declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
 
@@ -170,7 +170,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Once a worker completes the job, it needs to mark the job as completed
 
-            Response<CompleteJobResult> completedJobResult = await routerClient.CompleteJobAsync(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+            Response completedJobResult = await routerClient.CompleteJobAsync(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = await routerClient.GetJobAsync(jobId);
             Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
@@ -179,7 +179,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob_Async
 
-            Response<CloseJobResult> closeJobResult = await routerClient.CloseJobAsync(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+            Response closeJobResult = await routerClient.CloseJobAsync(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = await routerClient.GetJobAsync(jobId);
             Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"

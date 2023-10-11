@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -304,6 +305,80 @@ namespace Azure.ResourceManager.Blueprint
             {
                 var response = _blueprintRestClient.Get(Id, blueprintName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Blueprints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blueprintName"> Name of the blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BlueprintResource>> GetIfExistsAsync(string blueprintName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+
+            using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _blueprintRestClient.GetAsync(Id, blueprintName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Blueprints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blueprintName"> Name of the blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        public virtual NullableResponse<BlueprintResource> GetIfExists(string blueprintName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+
+            using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _blueprintRestClient.Get(Id, blueprintName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

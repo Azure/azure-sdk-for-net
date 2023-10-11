@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlModelFactory
     {
-
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

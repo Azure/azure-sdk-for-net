@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Kusto.Models
             TableLevelSharingProperties = tableLevelSharingProperties;
             OriginalDatabaseName = originalDatabaseName;
             DatabaseShareOrigin = databaseShareOrigin;
+            SuspensionDetails = suspensionDetails;
             Kind = kind;
         }
 
@@ -79,5 +81,12 @@ namespace Azure.ResourceManager.Kusto.Models
         public string OriginalDatabaseName { get; }
         /// <summary> The origin of the following setup. </summary>
         public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
+        /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
+        internal SuspensionDetails SuspensionDetails { get; }
+        /// <summary> The starting date and time of the suspension state. </summary>
+        public DateTimeOffset? SuspensionStartOn
+        {
+            get => SuspensionDetails?.SuspensionStartOn;
+        }
     }
 }

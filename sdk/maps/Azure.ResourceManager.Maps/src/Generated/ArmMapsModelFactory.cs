@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Models;
@@ -25,13 +26,14 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
+        /// <param name="identity"> Sets the identity property for maps account. </param>
         /// <param name="properties"> The map account properties. </param>
         /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
-        public static MapsAccountData MapsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MapsSku sku = null, MapsAccountKind? kind = null, MapsAccountProperties properties = null)
+        public static MapsAccountData MapsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MapsSku sku = null, MapsAccountKind? kind = null, ManagedServiceIdentity identity = null, MapsAccountProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MapsAccountData(id, name, resourceType, systemData, tags, location, sku, kind, properties);
+            return new MapsAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, properties);
         }
 
         /// <summary> Initializes a new instance of MapsSku. </summary>
@@ -46,11 +48,24 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
-        /// <param name="provisioningState"> the state of the provisioning. </param>
+        /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
+        /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
+        /// <param name="corsRulesValue"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null)
         {
-            return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState);
+            linkedResources ??= new List<MapsLinkedResource>();
+            corsRulesValue ??= new List<MapsCorsRule>();
+
+            return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList()) : null);
+        }
+
+        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        /// <param name="accountSasToken"> The shared access signature access token. </param>
+        /// <returns> A new <see cref="Models.MapsAccountSasToken"/> instance for mocking. </returns>
+        public static MapsAccountSasToken MapsAccountSasToken(string accountSasToken = null)
+        {
+            return new MapsAccountSasToken(accountSasToken);
         }
 
         /// <summary> Initializes a new instance of MapsAccountKeys. </summary>

@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -35,9 +35,19 @@ namespace Azure.Communication.JobRouter.Models
         /// </summary>
         public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
 
+        /// <summary> The name of this queue. </summary>
+        public string Name { get; internal set; }
+
+        /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
+        public string DistributionPolicyId { get; internal set; }
+
+        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
+        public string ExceptionPolicyId { get; internal set; }
+
         /// <summary> Initializes a new instance of JobQueue. </summary>
         internal RouterQueue()
         {
+            _labels = new ChangeTrackingDictionary<string, object>();
         }
     }
 }

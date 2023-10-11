@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    nbf = property.Value.GetDateTimeOffset("U");
+                    nbf = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("exp"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    exp = property.Value.GetDateTimeOffset("U");
+                    exp = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("created"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("U");
+                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("updated"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("U");
+                    updated = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
             }

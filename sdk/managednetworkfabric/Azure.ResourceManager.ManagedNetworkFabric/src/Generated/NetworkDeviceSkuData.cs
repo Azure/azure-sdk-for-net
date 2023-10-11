@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
-            SupportedVersions = new ChangeTrackingList<NetworkDeviceSkuPropertiesSupportedVersionsItem>();
+            SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new ChangeTrackingList<NetworkDeviceSkuPropertiesInterfacesItem>();
+            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
@@ -39,17 +39,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="model"> Model of the network device. </param>
         /// <param name="manufacturer"> Manufacturer of the network device. </param>
-        /// <param name="supportedVersions"> List of network device interfaces. </param>
-        /// <param name="limits"> Network device limits. </param>
+        /// <param name="supportedVersions"> List of supported version details of network device. </param>
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> supportedVersions, NetworkDeviceSkuPropertiesLimits limits, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceSkuPropertiesInterfacesItem> interfaces, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceInterfaceProperties> interfaces, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Model = model;
             Manufacturer = manufacturer;
             SupportedVersions = supportedVersions;
-            Limits = limits;
             SupportedRoleTypes = supportedRoleTypes;
             Interfaces = interfaces;
             ProvisioningState = provisioningState;
@@ -59,15 +57,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string Model { get; set; }
         /// <summary> Manufacturer of the network device. </summary>
         public string Manufacturer { get; set; }
-        /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> SupportedVersions { get; }
-        /// <summary> Network device limits. </summary>
-        public NetworkDeviceSkuPropertiesLimits Limits { get; set; }
+        /// <summary> List of supported version details of network device. </summary>
+        public IList<SupportedVersionProperties> SupportedVersions { get; }
         /// <summary> Available roles for the network device. </summary>
         public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesInterfacesItem> Interfaces { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public IList<NetworkDeviceInterfaceProperties> Interfaces { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

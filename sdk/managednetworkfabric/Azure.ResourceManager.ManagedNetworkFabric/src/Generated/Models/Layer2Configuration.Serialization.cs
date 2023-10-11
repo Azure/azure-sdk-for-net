@@ -16,13 +16,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PortCount))
+            if (Optional.IsDefined(Mtu))
             {
-                writer.WritePropertyName("portCount"u8);
-                writer.WriteNumberValue(PortCount.Value);
+                writer.WritePropertyName("mtu"u8);
+                writer.WriteNumberValue(Mtu.Value);
             }
-            writer.WritePropertyName("mtu"u8);
-            writer.WriteNumberValue(Mtu);
+            if (Optional.IsCollectionDefined(Interfaces))
+            {
+                writer.WritePropertyName("interfaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in Interfaces)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -32,22 +45,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<int> portCount = default;
-            int mtu = default;
-            Optional<IReadOnlyList<string>> interfaces = default;
+            Optional<int> mtu = default;
+            Optional<IList<ResourceIdentifier>> interfaces = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("portCount"u8))
+                if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    portCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("mtu"u8))
-                {
                     mtu = property.Value.GetInt32();
                     continue;
                 }
@@ -57,16 +64,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     interfaces = array;
                     continue;
                 }
             }
-            return new Layer2Configuration(Optional.ToNullable(portCount), mtu, Optional.ToList(interfaces));
+            return new Layer2Configuration(Optional.ToNullable(mtu), Optional.ToList(interfaces));
         }
     }
 }

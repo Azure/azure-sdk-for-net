@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
         /// <param name="syncOn">
         /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="configurationChangeOn">
         /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
         internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId) : base(id, name, resourceType, systemData)
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? IsGitEnabled { get; set; }
         /// <summary>
         /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? SyncOn { get; set; }
         /// <summary>
         /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? ConfigurationChangeOn { get; set; }
         /// <summary> Most recent tenant configuration operation identifier. </summary>

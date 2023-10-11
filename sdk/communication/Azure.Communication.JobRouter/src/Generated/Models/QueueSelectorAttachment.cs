@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class QueueSelectorAttachment
     {
-
         /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         internal QueueSelectorAttachment(string kind)

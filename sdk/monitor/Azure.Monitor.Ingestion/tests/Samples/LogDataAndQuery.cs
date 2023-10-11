@@ -104,5 +104,44 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 queryResponse.Value.GetResult<int>(countQueryId).Single());
             #endregion
         }
+
+        public void UploadWithMaxConcurrency(){
+            #region Snippet:UploadWithMaxConcurrency
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var ruleId = "<data_collection_rule_id>";
+            var streamName = "<stream_name>";
+
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+#else
+            TokenCredential credential = new DefaultAzureCredential();
+            endpoint = new Uri(TestEnvironment.DCREndpoint);
+            credential = TestEnvironment.Credential;
+#endif
+            var client = new LogsIngestionClient(endpoint, credential);
+
+            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+            var entries = new List<object>();
+            for (int i = 0; i < 100; i++)
+            {
+                entries.Add(
+                    new {
+                        Time = currentTime,
+                        Computer = "Computer" + i.ToString(),
+                        AdditionalContext = i
+                    }
+                );
+            }
+            // Set concurrency in LogsUploadOptions
+            var options = new LogsUploadOptions
+            {
+                MaxConcurrency = 10
+            };
+
+            // Upload our logs
+            Response response = client.Upload(ruleId, streamName, entries, options);
+            #endregion
+        }
     }
 }

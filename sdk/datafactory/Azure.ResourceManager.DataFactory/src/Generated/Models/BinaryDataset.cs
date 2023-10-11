@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Binary dataset. </summary>
-    public partial class BinaryDataset : DataFactoryDatasetDefinition
+    public partial class BinaryDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of BinaryDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

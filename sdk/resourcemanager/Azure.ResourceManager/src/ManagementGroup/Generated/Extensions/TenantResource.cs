@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

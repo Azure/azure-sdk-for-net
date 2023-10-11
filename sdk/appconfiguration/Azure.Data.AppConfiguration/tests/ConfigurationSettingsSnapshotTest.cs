@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
@@ -15,12 +12,11 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingConstructor()
         {
-            var settingSnapshot = new ConfigurationSettingsSnapshot(
+            var settingSnapshot = new ConfigurationSnapshot(
                 "name",
-                SnapshotStatus.Ready,
-                1,
-                new List<SnapshotSettingFilter>(),
-                new CompositionType(),
+                ConfigurationSnapshotStatus.Ready,
+                new List<ConfigurationSettingsFilter>(),
+                new SnapshotComposition(),
                 DateTime.UtcNow,
                 DateTime.UtcNow,
                 10675199, // retention period
@@ -36,9 +32,9 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingSetter()
         {
-            List<SnapshotSettingFilter> filters = new() { new SnapshotSettingFilter("key", "val") };
+            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val") };
 
-            var settingSnapshot = new ConfigurationSettingsSnapshot(filters);
+            var settingSnapshot = new ConfigurationSnapshot(filters);
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);
 
             Assert.AreEqual(settingSnapshot.RetentionPeriod, TimeSpan.FromSeconds(10675199));

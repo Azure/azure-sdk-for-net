@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
@@ -166,6 +165,8 @@ namespace Azure.AI.OpenAI
         public CompletionsOptions()
             : this(new ChangeTrackingList<string>())
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
         }
     }
 }

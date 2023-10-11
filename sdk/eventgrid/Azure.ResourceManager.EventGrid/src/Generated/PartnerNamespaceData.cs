@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this partner namespace. </param>
         /// <param name="endpoint"> Endpoint for the partner namespace. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
@@ -51,11 +52,12 @@ namespace Azure.ResourceManager.EventGrid
         /// This determines if events published to this partner namespace should use the source attribute in the event payload
         /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
         /// </param>
-        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode) : base(id, name, resourceType, systemData, tags, location)
+        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode) : base(id, name, resourceType, systemData, tags, location)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             PartnerRegistrationFullyQualifiedId = partnerRegistrationFullyQualifiedId;
+            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
             Endpoint = endpoint;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
@@ -72,6 +74,8 @@ namespace Azure.ResourceManager.EventGrid
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </summary>
         public ResourceIdentifier PartnerRegistrationFullyQualifiedId { get; set; }
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this partner namespace. </summary>
+        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> Endpoint for the partner namespace. </summary>
         public Uri Endpoint { get; }
         /// <summary>

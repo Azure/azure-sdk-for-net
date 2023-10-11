@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     internal enum JobPartPlanPageBlobTier
     {
@@ -15,8 +15,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         P10 = 10,
         /// <summary> P15. </summary>
         P15 = 15,
-        /// <summary> P16. </summary>
-        P16 = 16,
         /// <summary> P20. </summary>
         P20 = 20,
         /// <summary> P30. </summary>

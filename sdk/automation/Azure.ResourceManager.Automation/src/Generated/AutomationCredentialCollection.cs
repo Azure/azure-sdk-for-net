@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationCredentialCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationCredentialResource>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationCredentialCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual NullableResponse<AutomationCredentialResource> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationCredentialCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

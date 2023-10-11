@@ -44,7 +44,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="dataSources"> Optional section. Reference geometry id for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </param>
         /// <param name="matchType">
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange
@@ -89,7 +89,7 @@ namespace Azure.Maps.Search.Models
         public MapsDataSource DataSources { get; }
         /// <summary>
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange

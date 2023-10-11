@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/containerinstance/Azure.ResourceManager.ContainerInstance",
+  "Tag": "net/containerinstance/Azure.ResourceManager.ContainerInstance_4302f25c1f"
+}

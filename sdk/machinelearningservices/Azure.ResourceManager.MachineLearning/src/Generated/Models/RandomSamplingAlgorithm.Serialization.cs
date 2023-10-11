@@ -15,6 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Logbase))
+            {
+                if (Logbase != null)
+                {
+                    writer.WritePropertyName("logbase"u8);
+                    writer.WriteStringValue(Logbase);
+                }
+                else
+                {
+                    writer.WriteNull("logbase");
+                }
+            }
             if (Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
@@ -43,11 +55,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            Optional<string> logbase = default;
             Optional<RandomSamplingAlgorithmRule> rule = default;
             Optional<int?> seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("logbase"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logbase = null;
+                        continue;
+                    }
+                    logbase = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("rule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -73,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, Optional.ToNullable(rule), Optional.ToNullable(seed));
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, logbase.Value, Optional.ToNullable(rule), Optional.ToNullable(seed));
         }
     }
 }

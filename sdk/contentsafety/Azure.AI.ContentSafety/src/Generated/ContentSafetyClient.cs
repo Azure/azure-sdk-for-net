@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -78,7 +79,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeTextAsync(body.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = body.ToRequestContent();
+            Response response = await AnalyzeTextAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
 
@@ -93,7 +95,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeText(body.ToRequestContent(), context);
+            using RequestContent content = body.ToRequestContent();
+            Response response = AnalyzeText(content, context);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
 
@@ -186,7 +189,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeImageAsync(body.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = body.ToRequestContent();
+            Response response = await AnalyzeImageAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
 
@@ -201,7 +205,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeImage(body.ToRequestContent(), context);
+            using RequestContent content = body.ToRequestContent();
+            Response response = AnalyzeImage(content, context);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
 
@@ -469,6 +474,7 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Text Blocklist By blocklistName
         /// <list type="bullet">
@@ -504,6 +510,7 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Text Blocklist By blocklistName
         /// <list type="bullet">
@@ -553,7 +560,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(addBlockItemsOptions, nameof(addBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddBlockItemsAsync(blocklistName, addBlockItemsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = addBlockItemsOptions.ToRequestContent();
+            Response response = await AddBlockItemsAsync(blocklistName, content, context).ConfigureAwait(false);
             return Response.FromValue(AddBlockItemsResult.FromResponse(response), response);
         }
 
@@ -571,7 +579,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(addBlockItemsOptions, nameof(addBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddBlockItems(blocklistName, addBlockItemsOptions.ToRequestContent(), context);
+            using RequestContent content = addBlockItemsOptions.ToRequestContent();
+            Response response = AddBlockItems(blocklistName, content, context);
             return Response.FromValue(AddBlockItemsResult.FromResponse(response), response);
         }
 
@@ -673,7 +682,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(removeBlockItemsOptions, nameof(removeBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RemoveBlockItemsAsync(blocklistName, removeBlockItemsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = removeBlockItemsOptions.ToRequestContent();
+            Response response = await RemoveBlockItemsAsync(blocklistName, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -691,7 +701,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(removeBlockItemsOptions, nameof(removeBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RemoveBlockItems(blocklistName, removeBlockItemsOptions.ToRequestContent(), context);
+            using RequestContent content = removeBlockItemsOptions.ToRequestContent();
+            Response response = RemoveBlockItems(blocklistName, content, context);
             return response;
         }
 
@@ -908,7 +919,7 @@ namespace Azure.AI.ContentSafety
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TextBlocklist.DeserializeTextBlocklist, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TextBlocklist.DeserializeTextBlocklist, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
         }
 
         /// <summary> Get All Text Blocklists. </summary>
@@ -920,7 +931,7 @@ namespace Azure.AI.ContentSafety
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TextBlocklist.DeserializeTextBlocklist, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TextBlocklist.DeserializeTextBlocklist, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -946,7 +957,7 @@ namespace Azure.AI.ContentSafety
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -972,7 +983,7 @@ namespace Azure.AI.ContentSafety
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklists", "value", "nextLink", context);
         }
 
         /// <summary> Get All BlockItems By blocklistName. </summary>
@@ -992,7 +1003,7 @@ namespace Azure.AI.ContentSafety
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(blocklistName, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, blocklistName, maxCount, skip, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TextBlockItem.DeserializeTextBlockItem, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TextBlockItem.DeserializeTextBlockItem, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
         }
 
         /// <summary> Get All BlockItems By blocklistName. </summary>
@@ -1012,7 +1023,7 @@ namespace Azure.AI.ContentSafety
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(blocklistName, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, blocklistName, maxCount, skip, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TextBlockItem.DeserializeTextBlockItem, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TextBlockItem.DeserializeTextBlockItem, ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1046,7 +1057,7 @@ namespace Azure.AI.ContentSafety
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(blocklistName, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, blocklistName, maxCount, skip, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1080,7 +1091,7 @@ namespace Azure.AI.ContentSafety
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(blocklistName, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, blocklistName, maxCount, skip, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ContentSafetyClient.GetTextBlocklistItems", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, RequestContext context)

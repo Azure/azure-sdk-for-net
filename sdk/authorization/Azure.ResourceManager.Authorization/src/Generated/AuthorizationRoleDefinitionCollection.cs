@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,6 +301,78 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Get(Id, roleDefinitionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<AuthorizationRoleDefinitionResource>> GetIfExistsAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.GetAsync(Id, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual NullableResponse<AuthorizationRoleDefinitionResource> GetIfExists(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Get(Id, roleDefinitionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

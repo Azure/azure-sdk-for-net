@@ -82,6 +82,25 @@ namespace Azure.ResourceManager.EventGrid
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
+        #region CaCertificateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CaCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CaCertificateResource.CreateResourceIdentifier" /> to create a <see cref="CaCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CaCertificateResource" /> object. </returns>
+        public static CaCertificateResource GetCaCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CaCertificateResource.ValidateResourceId(id);
+                return new CaCertificateResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region PartnerNamespaceChannelResource
         /// <summary>
         /// Gets an object representing a <see cref="PartnerNamespaceChannelResource" /> along with the instance operations that can be performed on it but with no data.
@@ -96,6 +115,44 @@ namespace Azure.ResourceManager.EventGrid
             {
                 PartnerNamespaceChannelResource.ValidateResourceId(id);
                 return new PartnerNamespaceChannelResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventGridNamespaceClientGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridNamespaceClientGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceClientGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridNamespaceClientGroupResource" /> object. </returns>
+        public static EventGridNamespaceClientGroupResource GetEventGridNamespaceClientGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventGridNamespaceClientGroupResource.ValidateResourceId(id);
+                return new EventGridNamespaceClientGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventGridNamespaceClientResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridNamespaceClientResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceClientResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridNamespaceClientResource" /> object. </returns>
+        public static EventGridNamespaceClientResource GetEventGridNamespaceClientResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventGridNamespaceClientResource.ValidateResourceId(id);
+                return new EventGridNamespaceClientResource(client, id);
             }
             );
         }
@@ -134,6 +191,25 @@ namespace Azure.ResourceManager.EventGrid
             {
                 DomainTopicResource.ValidateResourceId(id);
                 return new DomainTopicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DomainTopicEventSubscriptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource" /> object. </returns>
+        public static DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DomainTopicEventSubscriptionResource.ValidateResourceId(id);
+                return new DomainTopicEventSubscriptionResource(client, id);
             }
             );
         }
@@ -196,25 +272,6 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region DomainTopicEventSubscriptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DomainTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DomainTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource" /> object. </returns>
-        public static DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DomainTopicEventSubscriptionResource.ValidateResourceId(id);
-                return new DomainTopicEventSubscriptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region SystemTopicEventSubscriptionResource
         /// <summary>
         /// Gets an object representing a <see cref="SystemTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -253,20 +310,58 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region EventGridTopicResource
+        #region NamespaceTopicEventSubscriptionResource
         /// <summary>
-        /// Gets an object representing an <see cref="EventGridTopicResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NamespaceTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridTopicResource" /> object. </returns>
-        public static EventGridTopicResource GetEventGridTopicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource" /> object. </returns>
+        public static NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventGridTopicResource.ValidateResourceId(id);
-                return new EventGridTopicResource(client, id);
+                NamespaceTopicEventSubscriptionResource.ValidateResourceId(id);
+                return new NamespaceTopicEventSubscriptionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventGridNamespaceResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridNamespaceResource" /> object. </returns>
+        public static EventGridNamespaceResource GetEventGridNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventGridNamespaceResource.ValidateResourceId(id);
+                return new EventGridNamespaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region NamespaceTopicResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceTopicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceTopicResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceTopicResource" /> object. </returns>
+        public static NamespaceTopicResource GetNamespaceTopicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                NamespaceTopicResource.ValidateResourceId(id);
+                return new NamespaceTopicResource(client, id);
             }
             );
         }
@@ -286,6 +381,25 @@ namespace Azure.ResourceManager.EventGrid
             {
                 PartnerConfigurationResource.ValidateResourceId(id);
                 return new PartnerConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PartnerDestinationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PartnerDestinationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerDestinationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PartnerDestinationResource" /> object. </returns>
+        public static PartnerDestinationResource GetPartnerDestinationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PartnerDestinationResource.ValidateResourceId(id);
+                return new PartnerDestinationResource(client, id);
             }
             );
         }
@@ -343,6 +457,25 @@ namespace Azure.ResourceManager.EventGrid
             {
                 PartnerTopicResource.ValidateResourceId(id);
                 return new PartnerTopicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventGridNamespacePermissionBindingResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridNamespacePermissionBindingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespacePermissionBindingResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespacePermissionBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridNamespacePermissionBindingResource" /> object. </returns>
+        public static EventGridNamespacePermissionBindingResource GetEventGridNamespacePermissionBindingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventGridNamespacePermissionBindingResource.ValidateResourceId(id);
+                return new EventGridNamespacePermissionBindingResource(client, id);
             }
             );
         }
@@ -481,6 +614,25 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
+        #region EventGridTopicResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridTopicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicResource" /> object. </returns>
+        public static EventGridTopicResource GetEventGridTopicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventGridTopicResource.ValidateResourceId(id);
+                return new EventGridTopicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ExtensionTopicResource
         /// <summary>
         /// Gets an object representing an <see cref="ExtensionTopicResource" /> along with the instance operations that can be performed on it but with no data.
@@ -495,6 +647,25 @@ namespace Azure.ResourceManager.EventGrid
             {
                 ExtensionTopicResource.ValidateResourceId(id);
                 return new ExtensionTopicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TopicSpaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TopicSpaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicSpaceResource.CreateResourceIdentifier" /> to create a <see cref="TopicSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicSpaceResource" /> object. </returns>
+        public static TopicSpaceResource GetTopicSpaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TopicSpaceResource.ValidateResourceId(id);
+                return new TopicSpaceResource(client, id);
             }
             );
         }
@@ -662,60 +833,60 @@ namespace Azure.ResourceManager.EventGrid
             return resourceGroupResource.GetEventGridDomains().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
-        public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
+        public static EventGridNamespaceCollection GetEventGridNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridTopics();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridNamespaces();
         }
 
         /// <summary>
-        /// Get properties of a topic.
+        /// Get properties of a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridNamespaceResource>> GetEventGridNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get properties of a topic.
+        /// Get properties of a namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        public static Response<EventGridNamespaceResource> GetEventGridNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridTopics().Get(topicName, cancellationToken);
+            return resourceGroupResource.GetEventGridNamespaces().Get(namespaceName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
@@ -724,6 +895,62 @@ namespace Azure.ResourceManager.EventGrid
         public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
         {
             return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerConfiguration();
+        }
+
+        /// <summary> Gets a collection of PartnerDestinationResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PartnerDestinationResources and their operations over a PartnerDestinationResource. </returns>
+        public static PartnerDestinationCollection GetPartnerDestinations(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPartnerDestinations();
+        }
+
+        /// <summary>
+        /// Get properties of a partner destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerDestinations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PartnerDestinationResource>> GetPartnerDestinationAsync(this ResourceGroupResource resourceGroupResource, string partnerDestinationName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetPartnerDestinations().GetAsync(partnerDestinationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a partner destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerDestinations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PartnerDestinationResource> GetPartnerDestination(this ResourceGroupResource resourceGroupResource, string partnerDestinationName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetPartnerDestinations().Get(partnerDestinationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
@@ -950,6 +1177,62 @@ namespace Azure.ResourceManager.EventGrid
             return resourceGroupResource.GetSystemTopics().Get(systemTopicName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
+        public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridTopics();
+        }
+
+        /// <summary>
+        /// Get properties of a topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetEventGridTopics().Get(topicName, cancellationToken);
+        }
+
         /// <summary>
         /// List all the domains under an Azure subscription.
         /// <list type="bullet">
@@ -997,15 +1280,15 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// List all the topics under an Azure subscription.
+        /// List all the namespaces under an Azure subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/namespaces</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Topics_ListBySubscription</description>
+        /// <description>Namespaces_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,22 +1296,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridNamespaceResource> GetEventGridNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridNamespacesAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
-        /// List all the topics under an Azure subscription.
+        /// List all the namespaces under an Azure subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/namespaces</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Topics_ListBySubscription</description>
+        /// <description>Namespaces_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1036,10 +1319,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridNamespaceResource> GetEventGridNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridNamespaces(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1086,6 +1369,52 @@ namespace Azure.ResourceManager.EventGrid
         public static Pageable<PartnerConfigurationResource> GetPartnerConfigurations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerConfigurations(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner destinations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerDestinations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerDestinations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PartnerDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PartnerDestinationResource> GetPartnerDestinationsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerDestinationsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the partner destinations under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/partnerDestinations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerDestinations_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PartnerDestinationResource> GetPartnerDestinations(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPartnerDestinations(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1270,6 +1599,52 @@ namespace Azure.ResourceManager.EventGrid
         public static Pageable<SystemTopicResource> GetSystemTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSystemTopics(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopicsAsync(filter, top, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the topics under an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/topics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridTopicResource> GetEventGridTopics(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
         }
 
         /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>

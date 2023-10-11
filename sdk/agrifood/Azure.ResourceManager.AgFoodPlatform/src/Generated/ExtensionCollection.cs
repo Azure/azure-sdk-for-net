@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,6 +325,80 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 var response = _extensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionId"> Id of extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExtensionResource>> GetIfExistsAsync(string extensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+
+            using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _extensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Extensions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionId"> Id of extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        public virtual NullableResponse<ExtensionResource> GetIfExists(string extensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+
+            using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _extensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

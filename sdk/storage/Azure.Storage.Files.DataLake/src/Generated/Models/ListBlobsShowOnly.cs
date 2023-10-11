@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The ListBlobsShowOnly. </summary>
-    public readonly partial struct ListBlobsShowOnly : IEquatable<ListBlobsShowOnly>
+    internal readonly partial struct ListBlobsShowOnly : IEquatable<ListBlobsShowOnly>
     {
         private readonly string _value;
 

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
-    public partial class SapOpenHubTableDataset : DataFactoryDatasetDefinition
+    public partial class SapOpenHubTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

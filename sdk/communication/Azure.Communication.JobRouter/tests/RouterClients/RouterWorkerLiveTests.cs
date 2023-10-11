@@ -34,22 +34,22 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var channelConfig1 = new ChannelConfiguration(20) { MaxNumberOfJobs = 5 };
 
-            var channelConfigList = new Dictionary<string, ChannelConfiguration>()
+            var channelConfigList = new Dictionary<string, ChannelConfiguration?>()
             {
                 ["ACS_Chat_Channel"] = channelConfig1
             };
-            var workerLabels = new Dictionary<string, LabelValue>()
+            var workerLabels = new Dictionary<string, LabelValue?>()
             {
                 ["test_label_1"] = new LabelValue("testLabel"),
                 ["test_label_2"] = new LabelValue(12),
             };
 
-            var queueAssignmentList = new string[] { createQueueResponse.Value.Id };
+            var queueAssignments = new Dictionary<string, RouterQueueAssignment?> {{ createQueueResponse.Value.Id, new RouterQueueAssignment() }};
 
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId, totalCapacity)
                 {
-                    QueueIds = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
+                    QueueAssignments = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
                     Labels =
                     {
                         ["test_label_1"] = new LabelValue("testLabel"),
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
-            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignmentList,
+            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignments,
                 totalCapacity, workerLabels, channelConfigList);
         }
 
@@ -80,7 +80,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Pagination doesn't get generated correctly")]
         public async Task GetWorkersTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -104,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker1Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId1, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
                         ["WebChat"] = new ChannelConfiguration(1),
@@ -118,11 +117,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker2Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId2, 10)
                 {
-                    QueueIds = { [createQueue2.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue2.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
-                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 4 },
-                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 9 }
+                        ["WebChat"] = new ChannelConfiguration(5) { MaxNumberOfJobs = 1 },
+                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 1 }
                     },
                     AvailableForOffers = true,
                 });
@@ -130,9 +129,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId2) { AvailableForOffers = false })));
 
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId3, 10)
+                new CreateWorkerOptions(workerId3, 12)
                 {
-                    QueueIds =
+                    QueueAssignments =
                     {
                         [createQueue1.Id] = new RouterQueueAssignment(),
                         [createQueue2.Id] = new RouterQueueAssignment()
@@ -150,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker4Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId4, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations = { ["WebChat"] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });
@@ -248,6 +247,77 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[2]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[3]);
         }
+
+        [Test]
+        public async Task UpdateWorkerTest()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(UpdateWorkerTest));
+
+            // Register worker
+            var workerId = GenerateUniqueId($"{IdPrefix}{nameof(UpdateWorkerTest)}");
+            var totalCapacity = 100;
+            var channelConfigList = new Dictionary<string, ChannelConfiguration?>()
+            {
+                ["ACS_Chat_Channel"] = new(20) { MaxNumberOfJobs = 5 },
+                ["ACS_Voice_Channel"] = new(10) { MaxNumberOfJobs = 3}
+            };
+            var workerLabels = new Dictionary<string, LabelValue?>()
+            {
+                ["test_label_1"] = new("testLabel"),
+                ["test_label_2"] = new(12),
+            };
+            var workerTags = new Dictionary<string, LabelValue?>()
+            {
+                ["test_tag_1"] = new("tag"),
+                ["test_tag_2"] = new(12),
+            };
+
+            var queueAssignments = new Dictionary<string, RouterQueueAssignment?> {{ createQueueResponse.Value.Id, new RouterQueueAssignment() }};
+
+            var createWorkerOptions = new CreateWorkerOptions(workerId, totalCapacity)
+            {
+                AvailableForOffers = true
+            };
+            createWorkerOptions.Labels.Append(workerLabels);
+            createWorkerOptions.ChannelConfigurations.Append(channelConfigList);
+            createWorkerOptions.QueueAssignments.Append(queueAssignments);
+            createWorkerOptions.Tags.Append(workerTags);
+
+            var routerWorkerResponse = await routerClient.CreateWorkerAsync(createWorkerOptions);
+            AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
+
+            Assert.NotNull(routerWorkerResponse.Value);
+            AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queueAssignments,
+                totalCapacity, workerLabels, channelConfigList, workerTags);
+
+            // Remove queue assignment, channel configuration and label
+            queueAssignments[createQueueResponse.Value.Id] = null;
+            channelConfigList[channelConfigList.First().Key] = null;
+            workerLabels[workerLabels.First().Key] = null;
+            workerTags[workerTags.First().Key] = null;
+
+            var updateWorkerOptions = new UpdateWorkerOptions(workerId)
+            {
+                AvailableForOffers = false
+            };
+            updateWorkerOptions.Labels.Append(workerLabels);
+            updateWorkerOptions.ChannelConfigurations.Append(channelConfigList);
+            updateWorkerOptions.QueueAssignments.Append(queueAssignments);
+            updateWorkerOptions.Tags.Append(workerTags);
+
+            var updateWorkerResponse = await routerClient.UpdateWorkerAsync(updateWorkerOptions);
+
+            updateWorkerOptions.ChannelConfigurations.Remove(channelConfigList.First().Key);
+            updateWorkerOptions.Labels.Remove(workerLabels.First().Key);
+            updateWorkerOptions.Tags.Remove(workerTags.First().Key);
+
+            AssertRegisteredWorkerIsValid(updateWorkerResponse, workerId, new Dictionary<string, RouterQueueAssignment?>(),
+                totalCapacity, updateWorkerOptions.Labels, updateWorkerOptions.ChannelConfigurations, updateWorkerOptions.Tags);
+        }
+
         #endregion Worker Tests
     }
 }

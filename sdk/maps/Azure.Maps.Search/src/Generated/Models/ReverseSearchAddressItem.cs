@@ -26,7 +26,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="roadUse"></param>
         /// <param name="matchType">
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange
@@ -48,7 +48,7 @@ namespace Azure.Maps.Search.Models
         public IReadOnlyList<RoadKind> RoadUse { get; }
         /// <summary>
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange

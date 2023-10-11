@@ -25,13 +25,29 @@ namespace Azure.ResourceManager.EventGrid.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> Identity information for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The Sku pricing tier for the domain. </summary>
+        internal ResourceSku Sku { get; set; }
+        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        public EventGridSku? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new ResourceSku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary>
-        /// This determines if traffic is allowed over public network. By default it is enabled. 
+        /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
+        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </summary>
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
@@ -56,5 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public bool? AutoDeleteTopicWithLastSubscription { get; set; }
         /// <summary> The data residency boundary for the domain. </summary>
         public DataResidencyBoundary? DataResidencyBoundary { get; set; }
+        /// <summary> The eventTypeInfo for the domain. </summary>
+        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
     }
 }

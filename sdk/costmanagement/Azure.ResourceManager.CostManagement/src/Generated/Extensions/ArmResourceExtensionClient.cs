@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementDimension> GetDimensions(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -326,15 +327,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -357,15 +358,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityByScopeScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, checkNameAvailabilityRequest, cancellationToken);
+                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Notification details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NotificationContract : Resource
+    public partial class NotificationContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the NotificationContract class.

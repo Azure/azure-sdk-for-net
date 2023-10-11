@@ -2,27 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Used to specify a match mode for scheduled jobs. After reaching the scheduled time, no matching will be started by default.
-    /// </summary>
-    public class ScheduleAndSuspendMode : JobMatchingMode
+    [CodeGenSuppress("ScheduleAndSuspendMode")]
+    [CodeGenSuppress("ScheduleAndSuspendMode", typeof(DateTimeOffset?))]
+    public partial class ScheduleAndSuspendMode
     {
-        /// <inheritdoc />
-        public override string Kind => nameof(ScheduleAndSuspendMode);
-
-        /// <summary>
-        /// public constructor;
-        /// </summary>
-        /// <param name="scheduleAt"></param>
-        public ScheduleAndSuspendMode(DateTimeOffset? scheduleAt)
+        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <param name="scheduleAt">The time at which the job will be scheduled.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
+        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt)
         {
+            Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
             ScheduleAt = scheduleAt;
         }
 
         /// <summary> Gets or sets the schedule at. </summary>
-        public DateTimeOffset? ScheduleAt { get; }
+        public DateTimeOffset ScheduleAt { get; }
     }
 }

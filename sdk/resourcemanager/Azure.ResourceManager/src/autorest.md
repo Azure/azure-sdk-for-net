@@ -12,22 +12,26 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
 #   show-serialized-names: true
 
 batch:
-  - tag: package-common-type-2022-04
-  - tag: package-resources-2022-09
-  - tag: package-management-2022-04
+  - tag: package-common-type
+  - tag: package-resources
+  - tag: package-management
 ```
 
-### Tag: package-common-type-2022-04
+### Tag: package-common-type
 
-These settings apply only when `--tag=package-common-type-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-common-type` is specified on the command line.
 
-``` yaml $(tag) == 'package-common-type-2022-04'
+``` yaml $(tag) == 'package-common-type'
 output-folder: $(this-folder)/Common/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
@@ -40,7 +44,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -161,24 +165,27 @@ directive:
       $["x-csharp-usage"] = "model,input,output";
 ```
 
-### Tag: package-resources-2022-09
+### Tag: package-resources
 
-These settings apply only when `--tag=package-resources-2022-09` is specified on the command line.
+These settings apply only when `--tag=package-resources` is specified on the command line.
 
-``` yaml $(tag) == 'package-resources-2022-09'
+``` yaml $(tag) == 'package-resources'
 output-folder: $(this-folder)/Resources/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/969fd0c2634fbcc1975d7abe3749330a5145a97c/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/subscriptions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
   - /{resourceId}
 request-path-to-resource-data:
@@ -247,7 +254,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ResourceTypeAliasPathAttributes
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -480,7 +487,7 @@ directive:
           "description": "Gets details about the default tenant.",
           "parameters": [
             {
-              "$ref": "#/parameters/ApiVersionParameter"
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
             }
           ],
           "responses": {
@@ -682,12 +689,15 @@ directive:
       $["x-ms-format"] = "azure-location"
 ```
 
-### Tag: package-management-2022-04
+### Tag: package-management
 
-These settings apply only when `--tag=package-management-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-management` is specified on the command line.
 
-``` yaml $(tag) == 'package-management-2022-04'
+``` yaml $(tag) == 'package-management'
 output-folder: $(this-folder)/ManagementGroup/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
@@ -710,7 +720,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

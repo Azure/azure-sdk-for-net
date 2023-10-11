@@ -13,26 +13,24 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The protected constructor for the abstract StorageResource class (to allow for mocking).
         /// </summary>
-        protected StorageResource() { }
-
-        /// <summary>
-        /// Defines whether we can produce a Uri.
-        /// </summary>
-        public abstract ProduceUriType CanProduceUri { get; }
-
-        /// <summary>
-        /// Gets the Uri.
-        /// </summary>
-        public abstract Uri Uri { get; }
-
-        /// <summary>
-        /// Gets the path.
-        /// </summary>
-        public abstract string Path { get; }
+        protected StorageResource()
+        {
+        }
 
         /// <summary>
         /// Defines whether the storage resource is a container.
         /// </summary>
-        public abstract bool IsContainer { get; }
+        protected internal abstract bool IsContainer { get; }
+
+        /// <summary>
+        /// Gets the Uri of the Storage Resource.
+        /// </summary>
+        public abstract Uri Uri { get; }
+
+        /// <summary>
+        /// A string ID for the resource provider that should be used for rehydration.
+        /// NOTE: Must be no more than 5 characters long.
+        /// </summary>
+        public abstract string ProviderId { get; }
     }
 }

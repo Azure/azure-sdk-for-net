@@ -6,6 +6,7 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
@@ -48,13 +49,15 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
-        private readonly TransferType _transferType;
+        private readonly DataTransferOrder _transferOrder;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         public CommitChunkHandler(
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            TransferType transferType,
+            DataTransferOrder transferOrder,
+            ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
@@ -62,6 +65,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
+            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             _queuePutBlockTask = behaviors.QueuePutBlockTask
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueuePutBlockTask));
@@ -93,12 +97,13 @@ namespace Azure.Storage.DataMovement
             _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
-            _transferType = transferType;
-            if (_transferType == TransferType.Sequential)
+            _transferOrder = transferOrder;
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler += SequentialBlockEvent;
             }
             _commitBlockHandler += ConcurrentBlockEvent;
+            _clientDiagnostics = clientDiagnostics;
         }
 
         public async ValueTask DisposeAsync()
@@ -116,7 +121,7 @@ namespace Azure.Storage.DataMovement
 
         private void DipsoseHandlers()
         {
-            if (_transferType == TransferType.Sequential)
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler -= SequentialBlockEvent;
             }
@@ -229,7 +234,11 @@ namespace Azure.Storage.DataMovement
             // was already disposed, and we should just ignore any more incoming events.
             if (_commitBlockHandler != null)
             {
-                await _commitBlockHandler.Invoke(args).ConfigureAwait(false);
+                await _commitBlockHandler.RaiseAsync(
+                    args,
+                    nameof(CommitChunkHandler),
+                    nameof(_commitBlockHandler),
+                    _clientDiagnostics).ConfigureAwait(false);
             }
         }
     }

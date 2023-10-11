@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Gateway hostname configuration details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GatewayHostnameConfigurationContract : Resource
+    public partial class GatewayHostnameConfigurationContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the

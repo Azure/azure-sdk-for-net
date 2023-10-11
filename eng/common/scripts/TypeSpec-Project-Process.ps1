@@ -16,7 +16,7 @@ param (
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
-function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecProjectDirectory, [string]$CommitHash, [string]$repo, [string]$repoRoot) {
+function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecProjectDirectory, [string]$CommitHash, [string]$repo, [string]$repoRoot, [ref]$isNewSdkProject) {
   $additionalDirs = @()
   if ($tspConfig["parameters"]["dependencies"] -and $tspConfig["parameters"]["dependencies"]["additionalDirectories"]) {
     $additionalDirs = $tspConfig["parameters"]["dependencies"]["additionalDirectories"];
@@ -35,6 +35,7 @@ function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecPr
   if (!(Test-Path -Path $packageDir)) {
     New-Item -Path $packageDir -ItemType Directory | Out-Null
     Write-Host "created package folder $packageDir"
+    $isNewSdkProject.Value = $true
   }
 
   # Load tsp-location.yaml if exist
@@ -110,6 +111,7 @@ $tmpTspConfigPath = $tspConfigPath
 $repo = ""
 $specRepoRoot = ""
 $generateFromLocalTypeSpec = $false
+$isNewSdkProject = $false
 # remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
 if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
@@ -147,7 +149,7 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-re
   }
   
   if ($RepoUrl) {
-    if ($RepoUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
+    if ($RepoUrl -match "^(https://github.com/|git@github.com:)(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
       $repo = $Matches["repo"]
     }
     else {
@@ -193,26 +195,34 @@ if ($generateFromLocalTypeSpec) {
     finally {
       Pop-Location
     }
-    $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath  
+    $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath -isNewSdkProject ([ref]$isNewSdkProject)
   }
 } else {
   # call CreateUpdate-TspLocation function
-  $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
+  $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath -isNewSdkProject ([ref]$isNewSdkProject)
 }
 
-# checking skip switch
-if ($SkipSyncAndGenerate) {
+# checking skip switch, only skip when it's not a new sdk project as project scaffolding is supported by emitter
+if ($SkipSyncAndGenerate -and !$isNewSdkProject) {
   Write-Host "Skip calling TypeSpec-Project-Sync.ps1 and TypeSpec-Project-Generate.ps1."
 } else {
   # call TypeSpec-Project-Sync.ps1
   $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
-  & $syncScript $sdkProjectFolder $specRepoRoot
-  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+  Write-Host "Calling TypeSpec-Project-Sync.ps1"
+  & $syncScript $sdkProjectFolder $specRepoRoot | Out-Null
+  if ($LASTEXITCODE) {
+    Write-Error "Failed to sync sdk project from $specRepoRoot to $sdkProjectFolder"
+    exit $LASTEXITCODE
+  }
 
   # call TypeSpec-Project-Generate.ps1
+  Write-Host "Calling TypeSpec-Project-Generate.ps1"
   $generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
-  & $generateScript $sdkProjectFolder
-  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+  & $generateScript $sdkProjectFolder | Out-Null
+  if ($LASTEXITCODE) {
+    Write-Error "Failed to generate sdk project at $sdkProjectFolder"
+    exit $LASTEXITCODE
+  }
 }
 
 return $sdkProjectFolder

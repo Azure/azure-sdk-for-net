@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest)
+        internal HttpMessage CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.CostManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(benefitUtilizationSummariesRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided savings plan. </summary>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateBenefitUtilizationSummariesReportAsyncAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateBenefitUtilizationSummariesReportAsyncAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest);
+            using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided savings plan. </summary>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="benefitUtilizationSummariesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateBenefitUtilizationSummariesReportAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public Response GenerateBenefitUtilizationSummariesReportAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(benefitUtilizationSummariesRequest, nameof(benefitUtilizationSummariesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest);
+            using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -27,7 +26,6 @@ namespace Azure.Communication.CallAutomation
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
             DialogId = internalEvent.DialogId;
-            SensitiveFlag = internalEvent.SensitiveFlag;
         }
 
         /// <summary> Determines the type of the dialog. </summary>
@@ -35,9 +33,6 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
-
-        /// <summary> SensitiveFlag data </summary>
-        public SensitiveFlag SensitiveFlag { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogSensitivityUpdate"/> event.

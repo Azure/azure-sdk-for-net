@@ -61,11 +61,11 @@ namespace Azure.Core.Shared
         /// <returns>The created diagnostic scope containing the common set of messaging attributes that are knowable upon creation.</returns>
         public DiagnosticScope CreateScope(
             string activityName,
-            DiagnosticScope.ActivityKind kind,
+            ActivityKind kind,
             MessagingDiagnosticOperation operation = default)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
-            if (ActivityExtensions.SupportsActivitySource())
+            if (ActivityExtensions.SupportsActivitySource)
             {
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
@@ -94,15 +94,15 @@ namespace Azure.Core.Shared
         /// <param name="traceparent">The trace parent of the message.</param>
         /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object> properties, out string? traceparent, out string? tracestate)
+        public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object?> properties, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                if (properties.TryGetValue(TraceState, out object? state) && state is string stateString)
                 {
                     tracestate = stateString;
                 }
@@ -126,15 +126,15 @@ namespace Azure.Core.Shared
         /// <param name="traceparent">The trace parent of the message.</param>
         /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractTraceContext(IDictionary<string, object> properties, out string? traceparent, out string? tracestate)
+        public static bool TryExtractTraceContext(IDictionary<string, object?> properties, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                if (properties.TryGetValue(TraceState, out object? state) && state is string stateString)
                 {
                     tracestate = stateString;
                 }
@@ -158,7 +158,7 @@ namespace Azure.Core.Shared
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
         /// <param name="traceparent">The traceparent that was either added, or that already existed in the message properties.</param>
         /// <param name="tracestate">The tracestate that was either added, or that already existed in the message properties.</param>
-        public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out string? traceparent, out string? tracestate)
+        public void InstrumentMessage(IDictionary<string, object?> properties, string activityName, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;
@@ -167,15 +167,15 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
-                    DiagnosticScope.ActivityKind.Producer);
+                    ActivityKind.Producer);
                 messageScope.Start();
 
-                Activity activity = Activity.Current;
+                Activity? activity = Activity.Current;
                 if (activity != null)
                 {
-                    traceparent = activity.Id;
+                    traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
-                    if (ActivityExtensions.SupportsActivitySource())
+                    if (ActivityExtensions.SupportsActivitySource)
                     {
                         properties[TraceParent] = traceparent;
                         if (activity.TraceStateString != null)

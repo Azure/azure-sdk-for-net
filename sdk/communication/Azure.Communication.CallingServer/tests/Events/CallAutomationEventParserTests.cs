@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
             var correlationId = Guid.NewGuid().ToString();
             var resultInformation = new ResultInformation(200, 0, "success");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            CallConnected @event = CallAutomationModelFactory.CallConnected(resultInformation: resultInformation, callConnectionId: callConnectionId, serverCallId: serverCallId, correlationId: correlationId);
+            CallConnected @event = CommunicationCallingServerModelFactory.CallConnected(resultInformation: resultInformation, callConnectionId: callConnectionId, serverCallId: serverCallId, correlationId: correlationId);
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             // act
@@ -177,7 +177,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void RecordingStateChangedEventParsed_Test()
         {
-            CallRecordingStateChanged @event = CallAutomationModelFactory.CallRecordingStateChanged(
+            CallRecordingStateChanged @event = CommunicationCallingServerModelFactory.CallRecordingStateChanged(
                 recordingId: "recordingId",
                 state: RecordingState.Active,
                 startDateTime: DateTimeOffset.UtcNow,
@@ -203,7 +203,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void PlayCompletedEventParsed_Test()
         {
-            PlayCompleted @event = CallAutomationModelFactory.PlayCompleted(
+            PlayCompleted @event = CommunicationCallingServerModelFactory.PlayCompleted(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 200, message: "Action completed successfully"),
                 callConnectionId: "callConnectionId",
@@ -227,7 +227,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void PlayFailedEventParsed_Test()
         {
-            PlayFailed @event = CallAutomationModelFactory.PlayFailed(
+            PlayFailed @event = CommunicationCallingServerModelFactory.PlayFailed(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."),
                 callConnectionId: "callConnectionId",
@@ -251,7 +251,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void RecognizeCompletedEventParsed_Test()
         {
-            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
+            RecognizeCompleted @event = CommunicationCallingServerModelFactory.RecognizeCompleted(
                 operationContext: "operationContext",
                 recognitionType: CallMediaRecognitionType.Dtmf,
                 collectTonesResult: new CollectTonesResult(new DtmfTone[] { DtmfTone.Five }),
@@ -284,7 +284,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         [Test]
         public void RecognizeFailedEventParsed_Test()
         {
-            RecognizeFailed @event = CallAutomationModelFactory.RecognizeFailed(
+            RecognizeFailed @event = CommunicationCallingServerModelFactory.RecognizeFailed(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 400, subCode: 8510, message: "Action failed, initial silence timeout reached."),
                 callConnectionId: "callConnectionId",

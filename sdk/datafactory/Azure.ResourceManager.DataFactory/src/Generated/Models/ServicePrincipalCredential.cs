@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Service principal credential. </summary>
-    public partial class ServicePrincipalCredential : Credential
+    public partial class ServicePrincipalCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
         public ServicePrincipalCredential()
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
         /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
-        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData servicePrincipalId, AzureKeyVaultSecretReference servicePrincipalKey, BinaryData tenant) : base(credentialType, description, annotations, additionalProperties)
+        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData servicePrincipalId, DataFactoryKeyVaultSecretReference servicePrincipalKey, BinaryData tenant) : base(credentialType, description, annotations, additionalProperties)
         {
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate. </summary>
-        public AzureKeyVaultSecretReference ServicePrincipalKey { get; set; }
+        public DataFactoryKeyVaultSecretReference ServicePrincipalKey { get; set; }
         /// <summary>
         /// The ID of the tenant to which the service principal belongs
         /// <para>

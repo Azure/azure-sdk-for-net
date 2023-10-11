@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
-    /// Contact information for domain registration. If 'Domain Privacy' option is not selected then the contact information is made publicly available through the Whois 
+    /// Contact information for domain registration. If 'Domain Privacy' option is not selected then the contact information is made publicly available through the Whois
     /// directories as per ICANN requirements.
     /// </summary>
     public partial class RegistrationContactInfo

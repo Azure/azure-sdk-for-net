@@ -13,7 +13,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class RouterQueue
     {
-
         /// <summary> Initializes a new instance of RouterQueue. </summary>
         /// <param name="id"> The Id of this queue. </param>
         /// <param name="name"> The name of this queue. </param>
@@ -31,11 +30,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }
-        /// <summary> The name of this queue. </summary>
-        public string Name { get; set; }
-        /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
-        public string DistributionPolicyId { get; set; }
-        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
-        public string ExceptionPolicyId { get; set; }
     }
 }

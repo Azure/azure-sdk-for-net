@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogSensitivityUpdate. </summary>
     internal partial class DialogSensitivityUpdateInternal
@@ -25,8 +23,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        /// <param name="sensitiveFlag"> SensitiveFlag data from the Conversation Conductor. </param>
-        internal DialogSensitivityUpdateInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, SensitiveFlag sensitiveFlag)
+        /// <param name="sensitiveMask"> SensitiveMask. </param>
+        internal DialogSensitivityUpdateInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, bool? sensitiveMask)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -35,7 +33,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
-            SensitiveFlag = sensitiveFlag;
+            SensitiveMask = sensitiveMask;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -52,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> SensitiveFlag data from the Conversation Conductor. </summary>
-        public SensitiveFlag SensitiveFlag { get; }
+        /// <summary> SensitiveMask. </summary>
+        public bool? SensitiveMask { get; }
     }
 }

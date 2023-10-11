@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2023-08-08)
+
+### Features Added
+
+- Upgrade to API version 2023-07-01-preview
+- Added support for SMB endpoint and SMB file share endpoint.
 
 ## 1.1.0-beta.1 (2023-05-31)
 

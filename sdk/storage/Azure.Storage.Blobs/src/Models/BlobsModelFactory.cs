@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// This class holds BlobModelFactory overloads we need for backwards compatibility.
     /// </summary>
-    [CodeGenType("AzureBlobStorageModelFactory")]
+    [CodeGenType("StorageBlobsModelFactory")]
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo

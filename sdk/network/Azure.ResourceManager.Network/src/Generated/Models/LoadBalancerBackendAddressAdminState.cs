@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Network.Models
         private const string NoneValue = "None";
         private const string UpValue = "Up";
         private const string DownValue = "Down";
-        private const string DrainValue = "Drain";
 
         /// <summary> None. </summary>
         public static LoadBalancerBackendAddressAdminState None { get; } = new LoadBalancerBackendAddressAdminState(NoneValue);
@@ -33,8 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancerBackendAddressAdminState Up { get; } = new LoadBalancerBackendAddressAdminState(UpValue);
         /// <summary> Down. </summary>
         public static LoadBalancerBackendAddressAdminState Down { get; } = new LoadBalancerBackendAddressAdminState(DownValue);
-        /// <summary> Drain. </summary>
-        public static LoadBalancerBackendAddressAdminState Drain { get; } = new LoadBalancerBackendAddressAdminState(DrainValue);
         /// <summary> Determines if two <see cref="LoadBalancerBackendAddressAdminState"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerBackendAddressAdminState left, LoadBalancerBackendAddressAdminState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerBackendAddressAdminState"/> values are not the same. </summary>

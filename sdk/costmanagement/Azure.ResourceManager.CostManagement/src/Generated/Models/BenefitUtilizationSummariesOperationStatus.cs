@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="input"> Input given to create the benefit utilization summaries report. </param>
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
-        internal BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesRequest input, OperationStatusType? status, AsyncOperationStatusProperties properties)
+        internal BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input, OperationStatusType? status, AsyncOperationStatusProperties properties)
         {
             Input = input;
             Status = status;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Input given to create the benefit utilization summaries report. </summary>
-        public BenefitUtilizationSummariesRequest Input { get; }
+        public BenefitUtilizationSummariesContent Input { get; }
         /// <summary> The status of the creation of the benefit utilization summaries report. </summary>
         public OperationStatusType? Status { get; }
         /// <summary> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </summary>

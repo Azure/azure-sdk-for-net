@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         private const string HttpStatus404Value = "HttpStatus404";
         private const string HttpStatus405Value = "HttpStatus405";
         private const string HttpStatus408Value = "HttpStatus408";
-        private const string HttpStatus499Value = "HttpStatus499";
         private const string HttpStatus500Value = "HttpStatus500";
         private const string HttpStatus502Value = "HttpStatus502";
         private const string HttpStatus503Value = "HttpStatus503";
@@ -43,8 +42,6 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus405 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus405Value);
         /// <summary> HttpStatus408. </summary>
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus408 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus408Value);
-        /// <summary> HttpStatus499. </summary>
-        public static ApplicationGatewayCustomErrorStatusCode HttpStatus499 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus499Value);
         /// <summary> HttpStatus500. </summary>
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus500 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus500Value);
         /// <summary> HttpStatus502. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -33,12 +34,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="description"> A description of the admin rule collection. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal AdminRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkManagerSecurityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, ETag? etag) : base(id, name, resourceType, systemData)
+        internal AdminRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkManagerSecurityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AppliesToGroups = appliesToGroups;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
             ETag = etag;
         }
 
@@ -48,6 +51,8 @@ namespace Azure.ResourceManager.Network
         public IList<NetworkManagerSecurityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
     }

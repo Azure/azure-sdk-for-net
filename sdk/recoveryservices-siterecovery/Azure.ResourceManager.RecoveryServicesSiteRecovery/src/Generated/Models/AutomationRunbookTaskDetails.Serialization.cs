@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> accountName = default;
             Optional<string> runbookId = default;
             Optional<string> runbookName = default;
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<string> jobOutput = default;
             Optional<bool> isPrimarySideScript = default;
             string instanceType = default;
@@ -62,7 +62,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobOutput"u8))

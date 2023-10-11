@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="message"> Details of the error else empty. </param>
         /// <param name="timeStampUtc">
         /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         internal KeyVaultLastAccessStatusContractProperties(string code, string message, DateTimeOffset? timeStampUtc)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Message { get; set; }
         /// <summary>
         /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? TimeStampUtc { get; set; }
     }

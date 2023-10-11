@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 #nullable enable
@@ -20,7 +21,11 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
 
+#if NETCOREAPP2_1
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
+#else
+        private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
+#endif
 
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
@@ -45,7 +50,12 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The DiagnosticScope constructor is marked as RequiresUnreferencedCode because of the usage of the diagnosticSourceArgs parameter. Since we are passing in null here we can suppress this warning.")]
+#if NETCOREAPP2_1
         public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
+#else
+        public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
+#endif
         {
             if (_source == null)
             {
@@ -74,9 +84,17 @@ namespace Azure.Core.Pipeline
         ///     name: BlobClient.DownloadTo
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
+#if NETCOREAPP2_1
         private static object? GetActivitySource(string ns, string name)
+#else
+        private static ActivitySource? GetActivitySource(string ns, string name)
+#endif
         {
+#if NETCOREAPP2_1
             if (!ActivityExtensions.SupportsActivitySource())
+#else
+            if (!ActivityExtensions.SupportsActivitySource)
+#endif
             {
                 return null;
             }
@@ -87,7 +105,11 @@ namespace Azure.Core.Pipeline
             {
                 clientName += "." + name.Substring(0, indexOfDot);
             }
+#if NETCOREAPP2_1
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
+#else
+            return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
+#endif
         }
     }
 }

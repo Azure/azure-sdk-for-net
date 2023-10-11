@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectUnivariateLastPointAsync(options.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectUnivariateLastPointAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(UnivariateLastDetectionResult.FromResponse(response), response);
         }
 
@@ -167,7 +169,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectUnivariateLastPoint(options.ToRequestContent(), context);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectUnivariateLastPoint(content, context);
             return Response.FromValue(UnivariateLastDetectionResult.FromResponse(response), response);
         }
 
@@ -260,7 +263,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectUnivariateChangePointAsync(options.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectUnivariateChangePointAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(UnivariateChangePointDetectionResult.FromResponse(response), response);
         }
 
@@ -275,7 +279,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectUnivariateChangePoint(options.ToRequestContent(), context);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectUnivariateChangePoint(content, context);
             return Response.FromValue(UnivariateChangePointDetectionResult.FromResponse(response), response);
         }
 
@@ -481,7 +486,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TrainMultivariateModelAsync(modelInfo.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = modelInfo.ToRequestContent();
+            Response response = await TrainMultivariateModelAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
         }
 
@@ -507,7 +513,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = TrainMultivariateModel(modelInfo.ToRequestContent(), context);
+            using RequestContent content = modelInfo.ToRequestContent();
+            Response response = TrainMultivariateModel(content, context);
             return Response.FromValue(AnomalyDetectionModel.FromResponse(response), response);
         }
 
@@ -589,6 +596,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Multivariate Model
         /// <list type="bullet">
@@ -624,6 +632,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Multivariate Model
         /// <list type="bullet">
@@ -798,7 +807,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectMultivariateBatchAnomalyAsync(modelId, options.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectMultivariateBatchAnomalyAsync(modelId, content, context).ConfigureAwait(false);
             return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
         }
 
@@ -823,7 +833,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectMultivariateBatchAnomaly(modelId, options.ToRequestContent(), context);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectMultivariateBatchAnomaly(modelId, content, context);
             return Response.FromValue(MultivariateDetectionResult.FromResponse(response), response);
         }
 
@@ -930,7 +941,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectMultivariateLastAnomalyAsync(modelId, options.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectMultivariateLastAnomalyAsync(modelId, content, context).ConfigureAwait(false);
             return Response.FromValue(MultivariateLastDetectionResult.FromResponse(response), response);
         }
 
@@ -953,7 +965,8 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectMultivariateLastAnomaly(modelId, options.ToRequestContent(), context);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectMultivariateLastAnomaly(modelId, content, context);
             return Response.FromValue(MultivariateLastDetectionResult.FromResponse(response), response);
         }
 
@@ -1052,7 +1065,7 @@ namespace Azure.AI.AnomalyDetector
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary> List Multivariate Models. </summary>
@@ -1066,7 +1079,7 @@ namespace Azure.AI.AnomalyDetector
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary>
@@ -1094,7 +1107,7 @@ namespace Azure.AI.AnomalyDetector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary>
@@ -1122,7 +1135,7 @@ namespace Azure.AI.AnomalyDetector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)

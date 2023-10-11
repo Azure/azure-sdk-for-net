@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Check whether the scopes from request is valid for `Reservation`.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Check whether the scopes from request is valid for `Reservation`.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Restores a `Reservation` to the state it was before archiving.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Restores a `Reservation` to the state it was before archiving.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
