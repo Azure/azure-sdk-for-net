@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppAccountTests: NetAppTestBase
     {
         private const string namePrefix = "testNetAppNetSDKmgmt";
-        public static new AzureLocation DefaultLocation = " eastus2euap";
+        public static new AzureLocation DefaultLocation = " eastus2";
 
         public NetAppAccountTests(bool isAsync) : base(isAsync)
         {
