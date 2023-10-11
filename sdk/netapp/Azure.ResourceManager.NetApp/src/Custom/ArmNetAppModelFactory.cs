@@ -9,6 +9,7 @@ using System;
 using Azure.ResourceManager.NetApp.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
