@@ -9,12 +9,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new object[]
+RequestContent content = RequestContent.Create(new List<object>()
 {
     new object()
 });
 Response response = await client.UploadAsync("<ruleId>", "<streamName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UploadAsync with all parameters and request content.
@@ -23,12 +22,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new object[]
+RequestContent content = RequestContent.Create(new List<object>()
 {
     new object()
 });
 Response response = await client.UploadAsync("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -40,12 +38,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new object[]
+RequestContent content = RequestContent.Create(new List<object>()
 {
     new object()
 });
 Response response = client.Upload("<ruleId>", "<streamName>", content);
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Upload with all parameters and request content.
@@ -54,12 +51,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-using RequestContent content = RequestContent.Create(new object[]
+RequestContent content = RequestContent.Create(new List<object>()
 {
     new object()
 });
 Response response = client.Upload("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
