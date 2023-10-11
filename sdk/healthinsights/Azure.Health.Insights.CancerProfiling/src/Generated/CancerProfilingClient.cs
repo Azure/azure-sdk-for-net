@@ -73,8 +73,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = oncoPhenotypeData.ToRequestContent();
-            Operation<BinaryData> response = await InferCancerProfileAsync(waitUntil, content, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await InferCancerProfileAsync(waitUntil, oncoPhenotypeData.ToRequestContent(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, OncoPhenotypeResult.FromResponse, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 
@@ -90,8 +89,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = oncoPhenotypeData.ToRequestContent();
-            Operation<BinaryData> response = InferCancerProfile(waitUntil, content, context);
+            Operation<BinaryData> response = InferCancerProfile(waitUntil, oncoPhenotypeData.ToRequestContent(), context);
             return ProtocolOperationHelpers.Convert(response, OncoPhenotypeResult.FromResponse, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile");
         }
 

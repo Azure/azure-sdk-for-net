@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,25 +17,25 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.ClinicalMatching.Samples
 {
-    public partial class Samples_ClinicalMatchingClient
+    public class Samples_ClinicalMatchingClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_ShortVersion()
+        public void Example_MatchTrials()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
-            {
+                patients = new List<object>()
+{
 new
 {
 id = "<id>",
 }
-            },
+},
             });
             Operation<BinaryData> operation = client.MatchTrials(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -49,21 +50,21 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_ShortVersion_Async()
+        public async Task Example_MatchTrials_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
-            {
+                patients = new List<object>()
+{
 new
 {
 id = "<id>",
 }
-            },
+},
             });
             Operation<BinaryData> operation = await client.MatchTrialsAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -78,32 +79,32 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_ShortVersion_Convenience()
+        public void Example_MatchTrials_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
-            {
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
 new PatientRecord("<id>")
-            });
+});
             Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
             TrialMatcherResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_ShortVersion_Convenience_Async()
+        public async Task Example_MatchTrials_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
-            {
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
 new PatientRecord("<id>")
-            });
+});
             Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
             TrialMatcherResult responseData = operation.Value;
         }
@@ -116,10 +117,10 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
-            {
+                patients = new List<object>()
+{
 new
 {
 id = "<id>",
@@ -127,7 +128,7 @@ info = new
 {
 sex = "female",
 birthDate = "2022-05-10",
-clinicalInfo = new object[]
+clinicalInfo = new List<object>()
 {
 new
 {
@@ -138,7 +139,7 @@ value = "<value>",
 }
 },
 },
-data = new object[]
+data = new List<object>()
 {
 new
 {
@@ -155,15 +156,15 @@ value = "<value>",
 }
 },
 }
-            },
+},
                 configuration = new
                 {
                     verbose = true,
                     includeEvidence = true,
                     clinicalTrials = new
                     {
-                        customTrials = new object[]
-            {
+                        customTrials = new List<object>()
+{
 new
 {
 id = "<id>",
@@ -182,21 +183,21 @@ value = 123.45F,
 },
 metadata = new
 {
-phases = new object[]
+phases = new List<object>()
 {
 "notApplicable"
 },
 studyType = "interventional",
 recruitmentStatus = "unknownStatus",
-conditions = new object[]
+conditions = new List<object>()
 {
 "<conditions>"
 },
-sponsors = new object[]
+sponsors = new List<object>()
 {
 "<sponsors>"
 },
-contacts = new object[]
+contacts = new List<object>()
 {
 new
 {
@@ -205,7 +206,7 @@ email = "<email>",
 phone = "<phone>",
 }
 },
-facilities = new object[]
+facilities = new List<object>()
 {
 new
 {
@@ -217,48 +218,48 @@ countryOrRegion = "<countryOrRegion>",
 },
 },
 }
-            },
-                        registryFilters = new object[]
-            {
+},
+                        registryFilters = new List<object>()
+{
 new
 {
-conditions = new object[]
+conditions = new List<object>()
 {
 "<conditions>"
 },
-studyTypes = new object[]
+studyTypes = new List<object>()
 {
 "interventional"
 },
-recruitmentStatuses = new object[]
+recruitmentStatuses = new List<object>()
 {
 "unknownStatus"
 },
-sponsors = new object[]
+sponsors = new List<object>()
 {
 "<sponsors>"
 },
-phases = new object[]
+phases = new List<object>()
 {
 "notApplicable"
 },
-purposes = new object[]
+purposes = new List<object>()
 {
 "notApplicable"
 },
-ids = new object[]
+ids = new List<object>()
 {
 "<ids>"
 },
-sources = new object[]
+sources = new List<object>()
 {
 "custom"
 },
-facilityNames = new object[]
+facilityNames = new List<object>()
 {
 "<facilityNames>"
 },
-facilityLocations = new object[]
+facilityLocations = new List<object>()
 {
 new
 {
@@ -267,7 +268,7 @@ state = "<state>",
 countryOrRegion = "<countryOrRegion>",
 }
 },
-facilityAreas = new object[]
+facilityAreas = new List<object>()
 {
 new
 {
@@ -275,7 +276,7 @@ type = "Feature",
 geometry = new
 {
 type = "Point",
-coordinates = new object[]
+coordinates = new List<object>()
 {
 123.45F
 },
@@ -288,7 +289,7 @@ radius = 123.45,
 }
 },
 }
-            },
+},
                     },
                 },
             });
@@ -352,10 +353,10 @@ radius = 123.45,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
-            {
+                patients = new List<object>()
+{
 new
 {
 id = "<id>",
@@ -363,7 +364,7 @@ info = new
 {
 sex = "female",
 birthDate = "2022-05-10",
-clinicalInfo = new object[]
+clinicalInfo = new List<object>()
 {
 new
 {
@@ -374,7 +375,7 @@ value = "<value>",
 }
 },
 },
-data = new object[]
+data = new List<object>()
 {
 new
 {
@@ -391,15 +392,15 @@ value = "<value>",
 }
 },
 }
-            },
+},
                 configuration = new
                 {
                     verbose = true,
                     includeEvidence = true,
                     clinicalTrials = new
                     {
-                        customTrials = new object[]
-            {
+                        customTrials = new List<object>()
+{
 new
 {
 id = "<id>",
@@ -418,21 +419,21 @@ value = 123.45F,
 },
 metadata = new
 {
-phases = new object[]
+phases = new List<object>()
 {
 "notApplicable"
 },
 studyType = "interventional",
 recruitmentStatus = "unknownStatus",
-conditions = new object[]
+conditions = new List<object>()
 {
 "<conditions>"
 },
-sponsors = new object[]
+sponsors = new List<object>()
 {
 "<sponsors>"
 },
-contacts = new object[]
+contacts = new List<object>()
 {
 new
 {
@@ -441,7 +442,7 @@ email = "<email>",
 phone = "<phone>",
 }
 },
-facilities = new object[]
+facilities = new List<object>()
 {
 new
 {
@@ -453,48 +454,48 @@ countryOrRegion = "<countryOrRegion>",
 },
 },
 }
-            },
-                        registryFilters = new object[]
-            {
+},
+                        registryFilters = new List<object>()
+{
 new
 {
-conditions = new object[]
+conditions = new List<object>()
 {
 "<conditions>"
 },
-studyTypes = new object[]
+studyTypes = new List<object>()
 {
 "interventional"
 },
-recruitmentStatuses = new object[]
+recruitmentStatuses = new List<object>()
 {
 "unknownStatus"
 },
-sponsors = new object[]
+sponsors = new List<object>()
 {
 "<sponsors>"
 },
-phases = new object[]
+phases = new List<object>()
 {
 "notApplicable"
 },
-purposes = new object[]
+purposes = new List<object>()
 {
 "notApplicable"
 },
-ids = new object[]
+ids = new List<object>()
 {
 "<ids>"
 },
-sources = new object[]
+sources = new List<object>()
 {
 "custom"
 },
-facilityNames = new object[]
+facilityNames = new List<object>()
 {
 "<facilityNames>"
 },
-facilityLocations = new object[]
+facilityLocations = new List<object>()
 {
 new
 {
@@ -503,7 +504,7 @@ state = "<state>",
 countryOrRegion = "<countryOrRegion>",
 }
 },
-facilityAreas = new object[]
+facilityAreas = new List<object>()
 {
 new
 {
@@ -511,7 +512,7 @@ type = "Feature",
 geometry = new
 {
 type = "Point",
-coordinates = new object[]
+coordinates = new List<object>()
 {
 123.45F
 },
@@ -524,7 +525,7 @@ radius = 123.45,
 }
 },
 }
-            },
+},
                     },
                 },
             });
@@ -588,79 +589,142 @@ radius = 123.45,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
-            {
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
 new PatientRecord("<id>")
 {
-Info = new PatientInfo
+Info = new PatientInfo()
 {
 Sex = PatientInfoSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+ClinicalInfo =
+{
+new ClinicalCodedElement("<system>","<code>")
 {
 Name = "<name>",
 Value = "<value>",
-}},
+}
 },
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+},
+Data =
+{
+new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-}},
 }
-            })
+},
+}
+})
             {
-                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
+                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
                 {
-                    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+                    CustomTrials =
 {
-Phases = {ClinicalTrialPhase.NotApplicable},
+new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
+{
+"<conditions>"
+})
+{
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
 StudyType = ClinicalTrialStudyType.Interventional,
 RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-Sponsors = {"<sponsors>"},
-Contacts = {new ContactDetails
+Sponsors =
+{
+"<sponsors>"
+},
+Contacts =
+{
+new ContactDetails()
 {
 Name = "<name>",
 Email = "<email>",
 Phone = "<phone>",
-}},
-Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+}
+},
+Facilities =
+{
+new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
 {
 City = "<city>",
 State = "<state>",
-}},
+}
+},
 })
 {
 EligibilityCriteriaText = "<eligibilityCriteriaText>",
-Demographics = new ClinicalTrialDemographics
+Demographics = new ClinicalTrialDemographics()
 {
 AcceptedSex = ClinicalTrialAcceptedSex.All,
-AcceptedAgeRange = new AcceptedAgeRange
+AcceptedAgeRange = new AcceptedAgeRange()
 {
-MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
-MaximumAge = default,
+MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
+MaximumAge = null,
 },
 },
-}},
-                    RegistryFilters = {new ClinicalTrialRegistryFilter
+}
+},
+                    RegistryFilters =
 {
-Conditions = {"<conditions>"},
-StudyTypes = {ClinicalTrialStudyType.Interventional},
-RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
-Sponsors = {"<sponsors>"},
-Phases = {ClinicalTrialPhase.NotApplicable},
-Purposes = {ClinicalTrialPurpose.NotApplicable},
-Ids = {"<ids>"},
-Sources = {ClinicalTrialSource.Custom},
-FacilityNames = {"<facilityNames>"},
-FacilityLocations = {new GeographicLocation("<countryOrRegion>")
+new ClinicalTrialRegistryFilter()
+{
+Conditions =
+{
+"<conditions>"
+},
+StudyTypes =
+{
+ClinicalTrialStudyType.Interventional
+},
+RecruitmentStatuses =
+{
+ClinicalTrialRecruitmentStatus.UnknownStatus
+},
+Sponsors =
+{
+"<sponsors>"
+},
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
+Purposes =
+{
+ClinicalTrialPurpose.NotApplicable
+},
+Ids =
+{
+"<ids>"
+},
+Sources =
+{
+ClinicalTrialSource.Custom
+},
+FacilityNames =
+{
+"<facilityNames>"
+},
+FacilityLocations =
+{
+new GeographicLocation("<countryOrRegion>")
 {
 City = "<city>",
 State = "<state>",
-}},
-FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
-}},
+}
+},
+FacilityAreas =
+{
+new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
+{
+123.45F
+}),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
+},
+}
+},
                 })
                 {
                     Verbose = true,
@@ -679,79 +743,142 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
-            {
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
 new PatientRecord("<id>")
 {
-Info = new PatientInfo
+Info = new PatientInfo()
 {
 Sex = PatientInfoSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+ClinicalInfo =
+{
+new ClinicalCodedElement("<system>","<code>")
 {
 Name = "<name>",
 Value = "<value>",
-}},
+}
 },
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+},
+Data =
+{
+new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-}},
 }
-            })
+},
+}
+})
             {
-                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
+                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
                 {
-                    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+                    CustomTrials =
 {
-Phases = {ClinicalTrialPhase.NotApplicable},
+new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
+{
+"<conditions>"
+})
+{
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
 StudyType = ClinicalTrialStudyType.Interventional,
 RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-Sponsors = {"<sponsors>"},
-Contacts = {new ContactDetails
+Sponsors =
+{
+"<sponsors>"
+},
+Contacts =
+{
+new ContactDetails()
 {
 Name = "<name>",
 Email = "<email>",
 Phone = "<phone>",
-}},
-Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+}
+},
+Facilities =
+{
+new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
 {
 City = "<city>",
 State = "<state>",
-}},
+}
+},
 })
 {
 EligibilityCriteriaText = "<eligibilityCriteriaText>",
-Demographics = new ClinicalTrialDemographics
+Demographics = new ClinicalTrialDemographics()
 {
 AcceptedSex = ClinicalTrialAcceptedSex.All,
-AcceptedAgeRange = new AcceptedAgeRange
+AcceptedAgeRange = new AcceptedAgeRange()
 {
-MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
-MaximumAge = default,
+MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
+MaximumAge = null,
 },
 },
-}},
-                    RegistryFilters = {new ClinicalTrialRegistryFilter
+}
+},
+                    RegistryFilters =
 {
-Conditions = {"<conditions>"},
-StudyTypes = {ClinicalTrialStudyType.Interventional},
-RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
-Sponsors = {"<sponsors>"},
-Phases = {ClinicalTrialPhase.NotApplicable},
-Purposes = {ClinicalTrialPurpose.NotApplicable},
-Ids = {"<ids>"},
-Sources = {ClinicalTrialSource.Custom},
-FacilityNames = {"<facilityNames>"},
-FacilityLocations = {new GeographicLocation("<countryOrRegion>")
+new ClinicalTrialRegistryFilter()
+{
+Conditions =
+{
+"<conditions>"
+},
+StudyTypes =
+{
+ClinicalTrialStudyType.Interventional
+},
+RecruitmentStatuses =
+{
+ClinicalTrialRecruitmentStatus.UnknownStatus
+},
+Sponsors =
+{
+"<sponsors>"
+},
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
+Purposes =
+{
+ClinicalTrialPurpose.NotApplicable
+},
+Ids =
+{
+"<ids>"
+},
+Sources =
+{
+ClinicalTrialSource.Custom
+},
+FacilityNames =
+{
+"<facilityNames>"
+},
+FacilityLocations =
+{
+new GeographicLocation("<countryOrRegion>")
 {
 City = "<city>",
 State = "<state>",
-}},
-FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
-}},
+}
+},
+FacilityAreas =
+{
+new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
+{
+123.45F
+}),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
+},
+}
+},
                 })
                 {
                     Verbose = true,
