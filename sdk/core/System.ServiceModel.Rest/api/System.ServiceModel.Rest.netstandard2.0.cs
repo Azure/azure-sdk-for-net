@@ -193,14 +193,14 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
     }
-    public partial class MessagePipeline
+    public partial class MessagePipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public MessagePipeline(System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage> transport, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> policies) { }
         public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.PipelineOptions options, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> perCallPolicies, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> perTryPolicies) { throw null; }
         public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.PipelineOptions options, params System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[] perTryPolicies) { throw null; }
-        public virtual System.ServiceModel.Rest.Core.PipelineMessage CreateMessage() { throw null; }
-        public virtual void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
-        public virtual System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage() { throw null; }
+        public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
     public abstract partial class PipelinePolicy<TMessage> where TMessage : System.ServiceModel.Rest.Core.PipelineMessage
     {
@@ -216,6 +216,13 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
+    }
+    public abstract partial class Pipeline<TMessage> where TMessage : System.ServiceModel.Rest.Core.PipelineMessage
+    {
+        protected Pipeline() { }
+        public abstract TMessage CreateMessage();
+        public abstract void Send(TMessage message);
+        public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
     }
     public partial class ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {

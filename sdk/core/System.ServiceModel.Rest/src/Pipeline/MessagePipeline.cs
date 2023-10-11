@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class MessagePipeline
+public class MessagePipeline : Pipeline<PipelineMessage>
 {
     private readonly ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
@@ -106,16 +106,16 @@ public class MessagePipeline
         return new MessagePipeline(pipeline);
     }
 
-    public virtual PipelineMessage CreateMessage()
+    public override PipelineMessage CreateMessage()
         => _transport.CreateMessage();
 
-    public virtual void Send(PipelineMessage message)
+    public override void Send(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public virtual async ValueTask SendAsync(PipelineMessage message)
+    public override async ValueTask SendAsync(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
