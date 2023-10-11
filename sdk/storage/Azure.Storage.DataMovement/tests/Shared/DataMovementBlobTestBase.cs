@@ -297,6 +297,8 @@ namespace Azure.Storage.DataMovement.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
+        public StorageSharedKeyCredential GetSharedKeyCredential() => Tenants.GetNewSharedKeyCredentials();
+
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
