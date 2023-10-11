@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFilesStorageResourceProvider(Azure.Storage.DataMovement.Files.Shares.ShareFilesStorageResourceProvider.GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.DataMovement.Files.Shares.ShareFilesStorageResourceProvider.GetTokenCredential getTokenCredentialAsync) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
-        protected override string TypeId { get { throw null; } }
+        protected override string ProviderId { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }

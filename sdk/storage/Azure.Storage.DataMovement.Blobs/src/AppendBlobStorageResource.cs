@@ -20,15 +20,11 @@ namespace Azure.Storage.DataMovement.Blobs
         internal long? _length;
         internal ETag? _etagDownloadLock = default;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected override string ResourceId => "AppendBlob";
 
-        /// <summary>
-        /// Gets the Uri of the Storage Resource
-        /// </summary>
         public override Uri Uri => BlobClient.Uri;
+
+        public override string ProviderId => "blob";
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.

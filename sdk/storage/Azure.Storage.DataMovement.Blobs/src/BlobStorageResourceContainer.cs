@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "blob";
+
         /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>

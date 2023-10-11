@@ -2717,7 +2717,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateTypeDefinitionsAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2729,7 +2729,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {
@@ -3388,7 +3388,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateTypeDefinitions(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3400,7 +3400,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {
@@ -4059,7 +4059,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4071,7 +4071,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {
@@ -4730,7 +4730,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateAtlasTypeDefinitions(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4742,7 +4742,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {
@@ -5401,7 +5401,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.DeleteTypeDefinitionsAsync(content);
 
 Console.WriteLine(response.Status);
@@ -5412,7 +5412,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {
@@ -5738,7 +5738,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.DeleteTypeDefinitions(content);
 
 Console.WriteLine(response.Status);
@@ -5749,7 +5749,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     businessMetadataDefs = new object[]
     {

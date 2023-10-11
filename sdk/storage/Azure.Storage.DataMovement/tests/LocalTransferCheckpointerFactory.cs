@@ -17,9 +17,11 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long _testPartNumber = 5;
         internal static readonly DateTimeOffset _testStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string _testSourceProviderId = "test";
         internal const string _testSourceResourceId = "LocalFile";
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testSourceQuery = "sourcequery";
+        internal const string _testDestinationProviderId = "test";
         internal const string _testDestinationResourceId = "LocalFile";
         internal const string _testDestinationPath = "C:/sample-destination";
         internal const string _testDestinationQuery = "destquery";
@@ -148,6 +150,8 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId,
             string parentSourcePath = _testSourcePath,
             string parentDestinationPath = _testDestinationPath,
+            string sourceProviderId = _testSourceProviderId,
+            string destinationProviderId = _testDestinationProviderId,
             DataTransferStatus status = default)
         {
             status ??= new DataTransferStatus();
@@ -156,6 +160,8 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId,
                 DateTimeOffset.UtcNow,
                 JobPlanOperation.ServiceToService,
+                sourceProviderId,
+                destinationProviderId,
                 false, /* enumerationComplete */
                 status,
                 parentSourcePath,

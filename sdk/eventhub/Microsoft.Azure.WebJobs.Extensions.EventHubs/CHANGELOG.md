@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 6.0.1 (2023-10-10)
+
+### Bugs Fixed
+
+- Added support for the legacy checkpoint format when making scaling decisions.
+
 ## 6.0.0 (2023-09-12)
 
 ### Breaking Changes

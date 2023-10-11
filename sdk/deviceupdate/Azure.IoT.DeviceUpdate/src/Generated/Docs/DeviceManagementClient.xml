@@ -79,7 +79,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -95,7 +95,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -122,7 +122,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -138,7 +138,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     friendlyName = "<friendlyName>",
 });
@@ -765,7 +765,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deploymentId = "<deploymentId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -796,7 +796,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deploymentId = "<deploymentId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -858,7 +858,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deploymentId = "<deploymentId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -889,7 +889,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deploymentId = "<deploymentId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -1841,7 +1841,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deviceList = new object[]
     {
@@ -1862,7 +1862,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     operationId = "<operationId>",
     deviceList = new object[]
@@ -1895,7 +1895,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     deviceList = new object[]
     {
@@ -1916,7 +1916,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     operationId = "<operationId>",
     deviceList = new object[]
@@ -3037,7 +3037,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create("Devices");
+using RequestContent content = RequestContent.Create("Devices");
 Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
 ]]></code>
 This sample shows how to call ImportDevicesAsync with all parameters and request content.
@@ -3046,7 +3046,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create("Devices");
+using RequestContent content = RequestContent.Create("Devices");
 Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
@@ -3058,7 +3058,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create("Devices");
+using RequestContent content = RequestContent.Create("Devices");
 Operation operation = client.ImportDevices(WaitUntil.Completed, content);
 ]]></code>
 This sample shows how to call ImportDevices with all parameters and request content.
@@ -3067,7 +3067,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create("Devices");
+using RequestContent content = RequestContent.Create("Devices");
 Operation operation = client.ImportDevices(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
