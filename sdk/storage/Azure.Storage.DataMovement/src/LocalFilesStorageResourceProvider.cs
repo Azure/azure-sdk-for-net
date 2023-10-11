@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     public class LocalFilesStorageResourceProvider : StorageResourceProvider
     {
         /// <inheritdoc/>
-        protected internal override string TypeId => "LocalFile";
+        protected internal override string ProviderId => "local";
 
         /// <summary>
         /// Default constructor.

@@ -1,12 +1,11 @@
 # Release History
 
-## 7.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.16.2 (2023-10-11)
 
 ### Bugs Fixed
+
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental 
+  flag was set.
 
 ### Other Changes
 

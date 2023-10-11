@@ -22,6 +22,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override Uri Uri => ShareFileClient.Uri;
 
+        public override string ProviderId => "share";
+
         protected override string ResourceId => "ShareFile";
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;

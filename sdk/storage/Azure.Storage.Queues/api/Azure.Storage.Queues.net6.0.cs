@@ -193,12 +193,12 @@ namespace Azure.Storage.Queues.Models
         private readonly int _dummyPrimitive;
         public QueueAudience(string value) { throw null; }
         public static Azure.Storage.Queues.Models.QueueAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueAudience CreateQueueServiceAccountAudience(string storageAccountName) { throw null; }
         public bool Equals(Azure.Storage.Queues.Models.QueueAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static Azure.Storage.Queues.Models.QueueAudience GetQueueServiceAccountAudience(string storageAccountName) { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }
         public static implicit operator Azure.Storage.Queues.Models.QueueAudience (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }

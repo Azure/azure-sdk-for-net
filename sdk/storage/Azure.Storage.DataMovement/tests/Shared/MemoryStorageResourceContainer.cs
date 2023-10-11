@@ -18,6 +18,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override Uri Uri { get; }
 
+        public override string ProviderId => "mock";
+
         public MemoryStorageResourceContainer(Uri uri)
         {
             Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath-{Guid.NewGuid()}/resource-item-{Guid.NewGuid()}");

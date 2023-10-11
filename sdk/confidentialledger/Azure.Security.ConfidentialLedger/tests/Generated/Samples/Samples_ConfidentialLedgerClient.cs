@@ -147,7 +147,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
             });
@@ -164,7 +164,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
             });
@@ -181,7 +181,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
             });
@@ -198,7 +198,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 contents = "<contents>",
             });
@@ -565,7 +565,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 assignedRole = "Administrator",
             });
@@ -582,7 +582,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 assignedRole = "Administrator",
             });
@@ -599,7 +599,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 assignedRole = "Administrator",
             });
@@ -617,7 +617,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 assignedRole = "Administrator",
             });

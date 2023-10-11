@@ -46,7 +46,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <param name="input">The serialized representation of the message.</param>
         /// <returns>A <see cref="WebPubSubMessage"/></returns>
-        public override WebPubSubMessage ParseMessage(ReadOnlySequence<byte> input)
+        public override IReadOnlyList<WebPubSubMessage> ParseMessage(ReadOnlySequence<byte> input)
         {
             return _processor.ParseMessage(input);
         }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,8 +12,8 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Authenticates by redeeming an authorization code previously obtained from Azure Active Directory. See
-    /// <seealso href="https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
+    /// Authenticates by redeeming an authorization code previously obtained from Microsoft Entra ID. See
+    /// <seealso href="https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
     /// about the authorization code authentication flow.
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
@@ -35,7 +35,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -48,7 +48,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -65,7 +65,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -107,7 +107,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
+        /// Obtains a token from Microsoft Entra ID, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
+        /// Obtains a token from Microsoft Entra ID, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>

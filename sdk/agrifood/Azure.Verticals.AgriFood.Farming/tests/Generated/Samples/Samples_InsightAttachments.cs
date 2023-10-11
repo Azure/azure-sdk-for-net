@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             InsightAttachments client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create("<insightId>");
+            using RequestContent content = RequestContent.Create("<insightId>");
             Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -40,7 +40,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             InsightAttachments client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create("<insightId>");
+            using RequestContent content = RequestContent.Create("<insightId>");
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -54,7 +54,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             InsightAttachments client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -83,7 +83,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             InsightAttachments client = new FarmBeatsClient(credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;

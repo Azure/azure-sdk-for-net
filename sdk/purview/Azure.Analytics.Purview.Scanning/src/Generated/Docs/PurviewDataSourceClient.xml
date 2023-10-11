@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 Response response = await client.CreateOrUpdateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -21,7 +21,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
@@ -77,7 +77,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 Response response = client.CreateOrUpdate(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -89,7 +89,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {

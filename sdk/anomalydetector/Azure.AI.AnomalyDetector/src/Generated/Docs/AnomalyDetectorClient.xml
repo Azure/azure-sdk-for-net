@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -75,7 +75,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -102,7 +102,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -219,7 +219,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -247,7 +247,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -287,7 +287,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -315,7 +315,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -427,7 +427,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -449,7 +449,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -481,7 +481,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -503,7 +503,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     series = new object[]
     {
@@ -739,7 +739,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -758,7 +758,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     dataSchema = "OneTable",
@@ -810,7 +810,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -829,7 +829,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     dataSchema = "OneTable",
@@ -1113,7 +1113,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -1135,7 +1135,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     topContributorCount = 1234,
@@ -1177,7 +1177,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -1199,7 +1199,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     dataSource = "http://localhost:3000",
     topContributorCount = 1234,
@@ -1301,7 +1301,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     variables = new object[]
     {
@@ -1330,7 +1330,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     variables = new object[]
     {
@@ -1376,7 +1376,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     variables = new object[]
     {
@@ -1405,7 +1405,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     variables = new object[]
     {

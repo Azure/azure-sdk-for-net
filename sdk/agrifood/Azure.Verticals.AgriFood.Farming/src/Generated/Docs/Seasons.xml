@@ -82,7 +82,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -93,7 +93,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -135,7 +135,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -146,7 +146,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
