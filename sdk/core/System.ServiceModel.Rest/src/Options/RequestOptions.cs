@@ -13,7 +13,7 @@ namespace System.ServiceModel.Rest;
 /// this may change some behaviors in various pipeline policies and the transport.
 /// </summary>
 // TODO: Make options freezable
-// Note: I was calling this InvocationOptions, but I'm changing it back to RequestOptions.
+// Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
 public class RequestOptions : PipelineOptions
 {
     public virtual void Apply(PipelineMessage message)

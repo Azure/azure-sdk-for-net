@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core
@@ -28,33 +29,58 @@ namespace Azure.Core
         public override void Dispose() => _request.Dispose();
 
         protected internal override void AddHeader(string name, string value)
-        {
-            throw new NotImplementedException();
-        }
+            // TODO: I think we want to add `Add` to Headers.
+            => _request.Headers.Set(name, value);
 
         protected internal override bool ContainsHeader(string name)
-        {
-            throw new NotImplementedException();
-        }
+            => _request.Headers.TryGetHeader(name, out _);
 
         protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
         {
-            throw new NotImplementedException();
+            _request.Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
+            foreach (var header in headers)
+            {
+                yield return new HttpHeader(header.Name, GetHeaderValueString(header.Name, header.Value));
+            }
         }
 
-        protected internal override bool RemoveHeader(string name)
+        // TODO: avoid copying this?
+        private static string GetHeaderValueString(string name, object value) => value switch
         {
-            throw new NotImplementedException();
+            string s => s,
+            List<string> l => string.Join(",", l),
+            _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value?.GetType()}")
+        };
+
+        protected internal override bool RemoveHeader(string name)
+        // TODO: can this fail?  If so, come back and return something sensible.
+        {
+            _request.Headers.Remove(name);
+            return true;
         }
 
         protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-        {
-            throw new NotImplementedException();
-        }
+            => _request.Headers.TryGetHeader(name, out value);
 
         protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
-            throw new NotImplementedException();
+            // TODO: we can optimize this, come back to it
+            _request.Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
+
+            var header = headers.Where(h => h.Name == name);
+            if (header == null || !header.Any())
+            {
+                values = null;
+                return false;
+            }
+
+            values = header.First().Value switch
+            {
+                string s => new string[] { s },
+                List<string> l => l,
+                _ => throw new InvalidOperationException($"Unexpected type for header {name}: {header.First().Value?.GetType()}")
+            };
+            return true;
         }
     }
 }

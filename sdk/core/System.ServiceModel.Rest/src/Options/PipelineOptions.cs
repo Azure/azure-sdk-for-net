@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 
 /// <summary>
 /// Controls the creation of the pipeline.
-/// Works with RequestOptions (TODO: InvocationOptions), which controls the behavior of the pipeline.
+/// Works with RequestOptions (TODO: RequestOptions), which controls the behavior of the pipeline.
 /// </summary>
 public class PipelineOptions
 {

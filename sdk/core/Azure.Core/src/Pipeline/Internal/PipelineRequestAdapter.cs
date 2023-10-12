@@ -33,6 +33,7 @@ namespace Azure.Core
             set => _request.Content = (RequestContent?)value;
         }
 
+        // TODO: implement this, will need a new adapter for headers
         public override MessageHeaders Headers => throw new NotImplementedException();
 
         public override void Dispose()

@@ -15,7 +15,7 @@ namespace Azure.Core
     public abstract class Request : IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private RequestUriBuilder? _uri;
+        private RequestUriBuilder? _uriBuilder;
         private string? _clientRequestId;
 
         /// <summary>
@@ -25,12 +25,12 @@ namespace Azure.Core
         {
             get
             {
-                return _uri ??= new RequestUriBuilder();
+                return _uriBuilder ??= new RequestUriBuilder();
             }
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-                _uri = value;
+                _uriBuilder = value;
             }
         }
 
