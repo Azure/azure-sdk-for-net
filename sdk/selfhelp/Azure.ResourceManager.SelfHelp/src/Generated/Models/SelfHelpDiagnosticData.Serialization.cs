@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp
             Optional<IDictionary<string, string>> globalParameters = default;
             Optional<IList<SelfHelpDiagnosticInvocation>> insights = default;
             Optional<DateTimeOffset> acceptedAt = default;
-            Optional<DiagnosticProvisioningState> provisioningState = default;
+            Optional<SelfHelpProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<SelfHelpDiagnosticInfo>> diagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            provisioningState = new DiagnosticProvisioningState(property0.Value.GetString());
+                            provisioningState = new SelfHelpProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))

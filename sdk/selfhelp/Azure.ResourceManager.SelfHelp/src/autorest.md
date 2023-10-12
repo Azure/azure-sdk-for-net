@@ -76,7 +76,7 @@ rename-mapping:
   Error: SelfHelpError
   DiagnosticInvocation: SelfHelpDiagnosticInvocation
   ImportanceLevel: SelfHelpImportanceLevel
-  ProvisioningState: SelfHelpProvisioningState
+  DiagnosticProvisioningState: SelfHelpProvisioningState
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability
