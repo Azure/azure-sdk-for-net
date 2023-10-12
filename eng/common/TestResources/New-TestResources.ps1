@@ -805,7 +805,7 @@ try {
         }
 
         Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be ffected."
-        $_ = $deployment | Remove-AzResourceGroupDeployment
+        $null = $deployment | Remove-AzResourceGroupDeployment
     }
 
 } finally {
