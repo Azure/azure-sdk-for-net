@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_GetAssociation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CommitmentPlanAccountAssociationResource>> GetIfExistsAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+
+            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CommitmentPlanAccountAssociationResource>(response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_GetAssociation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        public virtual NullableResponse<CommitmentPlanAccountAssociationResource> GetIfExists(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+
+            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CommitmentPlanAccountAssociationResource>(response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

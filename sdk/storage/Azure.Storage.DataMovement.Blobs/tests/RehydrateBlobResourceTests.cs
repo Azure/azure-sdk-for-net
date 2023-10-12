@@ -41,6 +41,18 @@ namespace Azure.Storage.DataMovement.Tests
             };
         }
 
+        private static string ToProviderId(StorageResourceType type)
+        {
+            return type switch
+            {
+                StorageResourceType.BlockBlob => "blob",
+                StorageResourceType.PageBlob => "blob",
+                StorageResourceType.AppendBlob => "blob",
+                StorageResourceType.Local => "local",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         private static Mock<DataTransferProperties> GetProperties(
             string checkpointerPath,
             string transferId,
@@ -48,6 +60,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath,
             string sourceResourceId,
             string destinationResourceId,
+            string sourceProviderId,
+            string destinationProviderId,
             bool isContainer)
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
@@ -57,6 +71,8 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
             mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
             mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
+            mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -107,9 +123,16 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
 
-            JobPlanOperation fromTo = GetPlanOperation(sourceType, destinationType);
+            JobPlanOperation operationType = GetPlanOperation(sourceType, destinationType);
 
-            await checkpointer.AddNewJobAsync(transferId);
+            // Use mock resources that don't correspond to correct paths
+            var sourceMock = new Mock<StorageResource>();
+            sourceMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebSourcePath));
+            sourceMock.Setup(s => s.ProviderId).Returns(ToProviderId(sourceType));
+            var destMock = new Mock<StorageResource>();
+            destMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebDestinationPath));
+            destMock.Setup(s => s.ProviderId).Returns(ToProviderId(destinationType));
+            await checkpointer.AddNewJobAsync(transferId, sourceMock.Object, destMock.Object);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
@@ -118,7 +141,7 @@ namespace Azure.Storage.DataMovement.Tests
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
                     destinationPath: destinationPaths[currentPart],
-                    fromTo: fromTo);
+                    fromTo: operationType);
 
                 using (Stream stream = new MemoryStream())
                 {
@@ -154,6 +177,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -191,6 +216,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -245,6 +272,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -282,6 +311,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -336,6 +367,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -373,6 +406,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -436,6 +471,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationParentPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: true).Object;
 
             await AddJobPartToCheckpointer(

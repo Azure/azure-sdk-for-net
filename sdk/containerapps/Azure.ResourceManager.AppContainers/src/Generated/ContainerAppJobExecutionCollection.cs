@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,6 +240,80 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppJobExecutionRestClient.JobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobExecution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobExecutionName"> Job execution name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppJobExecutionResource>> GetIfExistsAsync(string jobExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
+
+            using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppJobExecutionRestClient.JobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppJobExecutionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobExecutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobExecution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobExecutionName"> Job execution name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppJobExecutionResource> GetIfExists(string jobExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
+
+            using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppJobExecutionRestClient.JobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppJobExecutionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

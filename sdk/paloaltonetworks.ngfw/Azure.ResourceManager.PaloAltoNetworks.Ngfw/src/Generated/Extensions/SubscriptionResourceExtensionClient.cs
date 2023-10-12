@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
         }
     }
 }

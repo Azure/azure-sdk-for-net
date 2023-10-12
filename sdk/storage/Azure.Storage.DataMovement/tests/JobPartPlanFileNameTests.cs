@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new JobPartPlanFileName("invalidJobId--001.steV01"),
-                e => e.Message.Contains("Invalid Job Part Plan File"));
+                e => e.Message.Contains("Invalid Checkpoint File"));
 
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--XY.steV01"),

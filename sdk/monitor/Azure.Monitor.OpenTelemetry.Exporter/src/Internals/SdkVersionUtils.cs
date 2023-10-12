@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string? s_sdkVersion = GetSdkVersion();
+        internal static bool s_isDistro = false;
 
         internal static string? SdkVersionPrefix
         {
@@ -21,6 +22,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             set
             {
                 s_prefix = value;
+                s_sdkVersion = GetSdkVersion();
+            }
+        }
+
+        internal static bool IsDistro
+        {
+            get => s_isDistro;
+            set
+            {
+                s_isDistro = value;
                 s_sdkVersion = GetSdkVersion();
             }
         }
@@ -63,6 +74,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? dotnetSdkVersion = GetVersion(typeof(object));
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
+
+                if (IsDistro)
+                {
+                    extensionVersion += "-d";
+                }
 
                 return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
             }

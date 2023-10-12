@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 var response = _healthcareApisIotConnectorIotConnectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthcareApisIotConnectorResource>> GetIfExistsAsync(string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthcareApisIotConnectorIotConnectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisIotConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual NullableResponse<HealthcareApisIotConnectorResource> GetIfExists(string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthcareApisIotConnectorIotConnectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisIotConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

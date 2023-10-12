@@ -74,7 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("poolName"u8);
             JsonSerializer.Serialize(writer, PoolName);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(EncryptedCredential))
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);

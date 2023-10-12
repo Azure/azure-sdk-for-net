@@ -44,6 +44,9 @@ namespace Azure.DigitalTwins.Core.Samples
             var modelLifecycleSamples = new ModelLifecycleSamples();
             await modelLifecycleSamples.RunSamplesAsync(dtClient);
 
+            var jobLifecycleSamples = new JobLifecycleSamples();
+            await jobLifecycleSamples.RunSamplesAsync(dtClient, options);
+
             var componentSamples = new ComponentSamples();
             await componentSamples.RunSamplesAsync(dtClient);
 

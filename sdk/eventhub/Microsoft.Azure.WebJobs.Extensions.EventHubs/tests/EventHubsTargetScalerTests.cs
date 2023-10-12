@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        // Using default concurrency of 10.
+        // Using concurrency of 10.
         [TestCase(10, 10, 1)]
         [TestCase(20, 10, 2)]
         [TestCase(30, 10, 3)]
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(150, 10, 10)]
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int expectedTargetWorkerCount)
         {
-            TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { }, eventCount, partitionCount);
+            TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { InstanceConcurrency = 10 }, eventCount, partitionCount);
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(10, 20, 30, 10)] // InstanceConcurrency defined in TargetScalerContext takes precedence
         [TestCase(null, 20, 30, 30)] // TargetUnprocessedEventThreshold takes second precendence
         [TestCase(null, 20, null, 20)] // Finally MaxEventBatchSize is only used if InstanceConcurrency and TargetUnprocessedEventThreshold are both undefined
-        [TestCase(null, null, null, 10)] // Using default value of MaxEventBatchSize
+        [TestCase(null, null, null, 100)] // Using default value of MaxEventBatchSize
         public void GetDesiredConcurrencyInternal_ReturnsExpected(int? instanceConcurrency, int? maxEventBatchSize, int? targetUnprocessedEventThreshold, int expectedConcurrency)
         {
             TargetScalerContext context = new TargetScalerContext() { InstanceConcurrency = instanceConcurrency };

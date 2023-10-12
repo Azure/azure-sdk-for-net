@@ -26,11 +26,15 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long DefaultPartNumber = 5;
         internal static readonly DateTimeOffset DefaultStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string DefaultSourceProviderId = "test";
         internal const string DefaultSourceResourceId = "LocalFile";
         internal const string DefaultSourcePath = "C:/sample-source";
+        internal const string DefaultWebSourcePath = "https://example.com/source";
         internal const string DefaultSourceQuery = "sourcequery";
+        internal const string DefaultDestinationProviderId = "test";
         internal const string DefaultDestinationResourceId = "LocalFile";
         internal const string DefaultDestinationPath = "C:/sample-destination";
+        internal const string DefaultWebDestinationPath = "https://example.com/destination";
         internal const string DefaultDestinationQuery = "destquery";
         internal const byte DefaultPriority = 0;
         internal static readonly DateTimeOffset DefaultTtlAfterCompletion = DateTimeOffset.MaxValue;
@@ -52,8 +56,9 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption DefaultPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType DefaultRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const DataTransferStatus DefaultJobStatus = DataTransferStatus.Queued;
-        internal const DataTransferStatus DefaultPartStatus = DataTransferStatus.Queued;
+        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DateTimeOffset DefaultCreateTime = new DateTimeOffset(2023, 08, 28, 17, 26, 0, default);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
@@ -101,8 +106,8 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = DefaultDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = DefaultPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = DefaultRehydratePriorityType,
-            DataTransferStatus atomicJobStatus = DefaultJobStatus,
-            DataTransferStatus atomicPartStatus = DefaultPartStatus)
+            DataTransferStatus atomicJobStatus = default,
+            DataTransferStatus atomicPartStatus = default)
         {
             if (startTime == default)
             {
@@ -114,6 +119,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
             metadata ??= DataProvider.BuildMetadata();
             blobTags ??= DataProvider.BuildTags();
+            atomicJobStatus ??= DefaultJobStatus;
+            atomicPartStatus ??= DefaultPartStatus;
 
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: blobType,
@@ -169,6 +176,37 @@ namespace Azure.Storage.DataMovement.Tests
                 rehydratePriorityType: rehydratePriorityType,
                 atomicJobStatus: atomicJobStatus,
                 atomicPartStatus: atomicPartStatus);
+        }
+
+        internal static JobPlanHeader CreateDefaultJobHeader(
+            string version = DataMovementConstants.JobPlanFile.SchemaVersion,
+            string transferId = DefaultTransferId,
+            DateTimeOffset createTime = default,
+            JobPlanOperation operationType = DefaultJobPlanOperation,
+            string sourceProviderId = DefaultSourceProviderId,
+            string destinationProviderId = DefaultDestinationProviderId,
+            bool enumerationComplete = false,
+            DataTransferStatus jobStatus = default,
+            string parentSourcePath = DefaultSourcePath,
+            string parentDestinationPath = DefaultDestinationPath)
+        {
+            if (createTime == default)
+            {
+                createTime = DefaultCreateTime;
+            }
+            jobStatus ??= DefaultJobStatus;
+
+            return new JobPlanHeader(
+                version,
+                transferId,
+                createTime,
+                operationType,
+                sourceProviderId,
+                destinationProviderId,
+                enumerationComplete,
+                jobStatus,
+                parentSourcePath,
+                parentDestinationPath);
         }
 
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)

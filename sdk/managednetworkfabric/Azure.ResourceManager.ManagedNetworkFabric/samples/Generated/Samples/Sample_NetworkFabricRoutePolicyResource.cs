@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricRoutePolicyPatch patch = new NetworkFabricRoutePolicyPatch()
             {
+                DefaultAction = CommunityActionType.Deny,
                 Statements =
 {
 new RoutePolicyStatementProperties(7,new StatementConditionProperties()

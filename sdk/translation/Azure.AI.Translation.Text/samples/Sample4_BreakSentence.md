@@ -6,7 +6,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 When the input language is known, you can provide those to the service call.
 
-```C# Snippet:GetTextTranslationSentencesSourceAsync
+```C# Snippet:GetTextTranslationSentencesSource
 try
 {
     string sourceLanguage = "zh-Hans";
@@ -16,12 +16,12 @@ try
         "zhè shì gè cè shì。"
     };
 
-    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements, language: sourceLanguage, script: sourceScript).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceItem>> response = client.FindSentenceBoundaries(inputTextElements, language: sourceLanguage, script: sourceScript);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -34,7 +34,7 @@ catch (RequestFailedException exception)
 
 You can ommit source languge of the input text. In this case, API will try to auto-detect the language.
 
-```C# Snippet:GetTextTranslationSentencesAutoAsync
+```C# Snippet:GetTextTranslationSentencesAuto
 try
 {
     IEnumerable<string> inputTextElements = new[]
@@ -42,12 +42,12 @@ try
         "How are you? I am fine. What did you do today?"
     };
 
-    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceItem>> response = client.FindSentenceBoundaries(inputTextElements);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
 }
 catch (RequestFailedException exception)
 {

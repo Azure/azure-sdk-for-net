@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+                writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
+                writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
             writer.WriteEndObject();
         }

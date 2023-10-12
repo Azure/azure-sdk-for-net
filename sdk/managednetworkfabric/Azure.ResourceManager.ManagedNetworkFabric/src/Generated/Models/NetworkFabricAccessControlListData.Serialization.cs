@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("aclsUrl"u8);
                 writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(DefaultAction))
+            {
+                writer.WritePropertyName("defaultAction"u8);
+                writer.WriteStringValue(DefaultAction.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(MatchConfigurations))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<NetworkFabricConfigurationType> configurationType = default;
             Optional<Uri> aclsUrl = default;
+            Optional<CommunityActionType> defaultAction = default;
             Optional<IList<AccessControlListMatchConfiguration>> matchConfigurations = default;
             Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
             Optional<DateTimeOffset> lastSyncedTime = default;
@@ -171,6 +177,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             aclsUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("defaultAction"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultAction = new CommunityActionType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("matchConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -239,7 +254,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

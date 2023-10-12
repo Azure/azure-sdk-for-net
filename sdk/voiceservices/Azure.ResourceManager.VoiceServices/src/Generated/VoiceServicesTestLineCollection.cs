@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 var response = _voiceServicesTestLineTestLinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VoiceServicesTestLineResource>> GetIfExistsAsync(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _voiceServicesTestLineTestLinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual NullableResponse<VoiceServicesTestLineResource> GetIfExists(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _voiceServicesTestLineTestLinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

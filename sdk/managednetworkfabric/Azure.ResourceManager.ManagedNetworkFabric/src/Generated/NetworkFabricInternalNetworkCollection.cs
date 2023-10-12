@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternalNetworkInternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternalNetworkInternalNetworksRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternalNetworkResource(Client, NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(e)), _networkFabricInternalNetworkInternalNetworksClientDiagnostics, Pipeline, "NetworkFabricInternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternalNetworkResource(Client, NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(e)), _networkFabricInternalNetworkInternalNetworksClientDiagnostics, Pipeline, "NetworkFabricInternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternalNetworkInternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternalNetworkInternalNetworksRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternalNetworkResource(Client, NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(e)), _networkFabricInternalNetworkInternalNetworksClientDiagnostics, Pipeline, "NetworkFabricInternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternalNetworkResource(Client, NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(e)), _networkFabricInternalNetworkInternalNetworksClientDiagnostics, Pipeline, "NetworkFabricInternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkFabricInternalNetworkInternalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, internalNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricInternalNetworkResource>> GetIfExistsAsync(string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricInternalNetworkInternalNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, internalNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricInternalNetworkResource> GetIfExists(string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricInternalNetworkInternalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, internalNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternalNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

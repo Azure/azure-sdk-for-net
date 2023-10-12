@@ -87,7 +87,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -305,7 +305,7 @@ rename-mapping:
   CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
   NodeGroupProperties.diskSizeGB: DiskSizeInGB
-
+  IpAddressOrRange: CosmosDBIPAddressOrRange
 
 prepend-rp-prefix:
 - UniqueKey
@@ -320,7 +320,6 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
-- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath

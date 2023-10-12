@@ -1,14 +1,27 @@
 # Release History
 
-## 4.18.0-beta.1 (Unreleased)
+## 4.19.0 (2023-10-11)
 
 ### Features Added
 
+- Added new system events for Resource Notifications and Azure Communication Services.
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.18.0-beta.1 (2023-07-16)
 
 ### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
 
 ## 4.17.0 (2023-06-08)
 

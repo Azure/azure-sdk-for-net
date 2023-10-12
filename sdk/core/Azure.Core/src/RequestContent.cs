@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -18,6 +19,7 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : IDisposable
     {
+        internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
         /// <summary>
@@ -84,23 +86,9 @@ namespace Azure.Core
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
-
-        /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
-        /// </summary>
-        /// <param name="model">The <see cref="IModelSerializable{T}"/> to serialize.</param>
-        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(IModelSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
-
-        /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
-        /// </summary>
-        /// <param name="model">The <see cref="IModelJsonSerializable{T}"/> to serialize.</param>
-        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default) => new ModelJsonSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -108,6 +96,8 @@ namespace Azure.Core
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
 
         /// <summary>
@@ -117,6 +107,8 @@ namespace Azure.Core
         /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
         /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = new()
@@ -234,63 +226,6 @@ namespace Azure.Core
             {
                 _stream.Dispose();
             }
-        }
-
-        private sealed class ModelJsonSerializableContent : RequestContent
-        {
-            private readonly IModelJsonSerializable<object> _model;
-            private readonly ModelSerializerOptions _options;
-
-            public ModelJsonSerializableContent(IModelJsonSerializable<object> model, ModelSerializerOptions options)
-            {
-                _model = model;
-                _options = options;
-            }
-
-            private ModelWriter? _writer;
-            private ModelWriter Writer => _writer ??= new ModelWriter(_model, _options);
-
-            public override void Dispose() => _writer?.Dispose();
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => Writer.CopyTo(stream, cancellation);
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
-
-            public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
-        }
-
-        private sealed class ModelSerializableContent : RequestContent
-        {
-            private readonly IModelSerializable<object> _model;
-            private readonly ModelSerializerOptions _options;
-
-            public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
-            {
-                _model = model;
-                _options = options;
-            }
-
-            public override void Dispose() { }
-
-            private BinaryData? _data;
-            private BinaryData Data => _data ??= _model.Serialize(_options);
-
-#if NETFRAMEWORK || NETSTANDARD2_0
-            private byte[]? _bytes;
-            private byte[] Bytes => _bytes ??= Data.ToArray();
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Bytes, 0, Bytes.Length);
-#else
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Data.ToMemory().Span);
-#endif
-
-            public override bool TryComputeLength(out long length)
-            {
-                length = Data.ToMemory().Length;
-                return true;
-            }
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
         }
 
         private sealed class ArrayContent : RequestContent

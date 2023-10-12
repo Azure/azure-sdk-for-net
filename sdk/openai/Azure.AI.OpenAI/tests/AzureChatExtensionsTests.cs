@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Azure;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests;

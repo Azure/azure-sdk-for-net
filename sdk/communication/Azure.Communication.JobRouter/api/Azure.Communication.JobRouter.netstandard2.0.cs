@@ -4,6 +4,8 @@ namespace Azure.Communication.JobRouter
     {
         public BestWorkerMode() { }
         public BestWorkerMode(Azure.Communication.JobRouter.RouterRule scoringRule, System.Collections.Generic.IList<Azure.Communication.JobRouter.ScoringRuleParameterSelector> scoringParameterSelectors = null, bool allowScoringBatchOfWorkers = false, int? batchSize = default(int?), bool descendingOrder = true) { }
+        public Azure.Communication.JobRouter.RouterRule ScoringRule { get { throw null; } }
+        public Azure.Communication.JobRouter.Models.ScoringRuleOptions ScoringRuleOptions { get { throw null; } }
     }
     public partial class CancelExceptionAction : Azure.Communication.JobRouter.ExceptionAction
     {
@@ -193,11 +195,15 @@ namespace Azure.Communication.JobRouter
     {
         public FunctionRouterRule(System.Uri functionAppUri) { }
         public Azure.Communication.JobRouter.FunctionRouterRuleCredential Credential { get { throw null; } set { } }
+        public System.Uri FunctionUri { get { throw null; } }
     }
     public partial class FunctionRouterRuleCredential
     {
         public FunctionRouterRuleCredential(string functionKey) { }
         public FunctionRouterRuleCredential(string appKey, string clientId) { }
+        public string AppKey { get { throw null; } }
+        public string ClientId { get { throw null; } }
+        public string FunctionKey { get { throw null; } }
     }
     public partial class GetJobsOptions
     {
@@ -431,6 +437,7 @@ namespace Azure.Communication.JobRouter
     {
         public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
         public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, System.TimeSpan? expiresAfter = default(System.TimeSpan?)) { }
+        public System.TimeSpan? ExpiresAfter { get { throw null; } }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
     }
@@ -938,6 +945,7 @@ namespace Azure.Communication.JobRouter.Models
         public bool? AllowScoringBatchOfWorkers { get { throw null; } set { } }
         public int? BatchSize { get { throw null; } set { } }
         public bool? DescendingOrder { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Communication.JobRouter.ScoringRuleParameterSelector> ScoringParameters { get { throw null; } }
     }
     public partial class UnassignJobResult
     {

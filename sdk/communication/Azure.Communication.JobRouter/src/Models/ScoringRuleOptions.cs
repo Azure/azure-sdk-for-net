@@ -22,6 +22,6 @@ namespace Azure.Communication.JobRouter.Models
         /// are added to the payload of the scoring rule by default.
         /// Note: Worker labels are always sent with scoring payload.
         /// </summary>
-        internal IList<ScoringRuleParameterSelector> ScoringParameters { get; }
+        public IList<ScoringRuleParameterSelector> ScoringParameters { get; }
     }
 }

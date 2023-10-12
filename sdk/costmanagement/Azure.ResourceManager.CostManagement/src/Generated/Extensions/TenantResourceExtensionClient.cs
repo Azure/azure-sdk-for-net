@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +285,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -771,7 +772,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -794,7 +795,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -884,7 +885,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -906,7 +907,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

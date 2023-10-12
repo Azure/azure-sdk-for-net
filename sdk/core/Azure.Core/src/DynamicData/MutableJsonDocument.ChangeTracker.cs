@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+#nullable enable
+
 namespace Azure.Core.Json
 {
     internal partial class MutableJsonDocument

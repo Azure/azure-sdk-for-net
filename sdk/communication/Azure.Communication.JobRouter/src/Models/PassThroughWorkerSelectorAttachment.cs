@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Describes how long the attached label selector is valid in seconds. </summary>
-        internal TimeSpan? ExpiresAfter { get; set; }
+        public TimeSpan? ExpiresAfter { get; internal set; }
 
         [CodeGenMember("ExpiresAfterSeconds")]
         internal double? _expiresAfterSeconds {

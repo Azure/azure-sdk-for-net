@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2023-09-26)
+
+### Features Added
+
+- Added support for AKS workload.
+- Added support for secure score
+
+### Other Changes
+
+- Add property `identityDetails` to class `DataProtectionBackupInstanceProperties`.
+- Add property `RehydrationPriority ` to class `DataProtectionBackupJobProperties`.
+- Add property `FeatureSettings ` to class `DataProtectionBackupVaultPatchProperties`, replace the `CrossSubscriptionRestoreState`.
+- Add property `IdentityDetails  ` to class `DeletedDataProtectionBackupInstanceProperties`.
 
 ## 1.2.0 (2023-07-20)
 
