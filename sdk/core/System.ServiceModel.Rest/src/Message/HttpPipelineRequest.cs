@@ -69,8 +69,11 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message = default)
     {
+        // TODO: this is confusing where we are passing in message and also
+        // using private members on the request.
+
         HttpMethod method = ToHttpMethod(Method);
-        Uri uri = Uri;
+        Uri uri = message!.Request.Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
         CancellationToken cancellationToken = message?.CancellationToken ?? default;
 

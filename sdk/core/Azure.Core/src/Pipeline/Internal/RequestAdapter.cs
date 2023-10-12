@@ -6,15 +6,16 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.ServiceModel.Rest.Core;
+using static Azure.Core.Pipeline.HttpClientTransport;
 
 namespace Azure.Core
 {
     internal class RequestAdapter : Request
     {
-        private readonly PipelineRequest _request;
-        private RequestUriBuilder? _uriBuilder;
+        private readonly HttpClientTransportRequest _request;
+        //private RequestUriBuilder? _uriBuilder;
 
-        public RequestAdapter(PipelineRequest request)
+        public RequestAdapter(HttpClientTransportRequest request)
         {
             _request = request;
         }
@@ -29,22 +30,34 @@ namespace Azure.Core
 
         public override RequestUriBuilder Uri
         {
-            get
-            {
-                if (_uriBuilder == null)
-                {
-                    _uriBuilder = new RequestUriBuilder();
-                    _uriBuilder.SetPipelineRequest(_request);
-                }
-                return _uriBuilder;
-            }
-            set
-            {
-                Argument.AssertNotNull(value, nameof(value));
-                _uriBuilder = value;
-                _uriBuilder.SetPipelineRequest(_request);
-            }
+            get => _request.UriBuilder;
+            set => _request.UriBuilder = value;
         }
+
+        //public override RequestUriBuilder Uri
+        //{
+        //    get
+        //    {
+        //        if (_uriBuilder == null)
+        //        {
+        //            _uriBuilder = new RequestUriBuilder();
+        //            _uriBuilder.SetPipelineRequest(_request);
+        //        }
+
+        //        if (_uriBuilder.IsValidUri)
+        //        {
+        //            _request.Uri = _uriBuilder.ToUri();
+        //        }
+
+        //        return _uriBuilder;
+        //    }
+        //    set
+        //    {
+        //        Argument.AssertNotNull(value, nameof(value));
+        //        _uriBuilder = value;
+        //        _uriBuilder.SetPipelineRequest(_request);
+        //    }
+        //}
 
         public override RequestContent? Content
         {

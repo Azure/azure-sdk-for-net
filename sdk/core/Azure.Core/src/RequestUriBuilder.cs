@@ -40,6 +40,8 @@ namespace Azure.Core
             }
         }
 
+        internal bool IsValidUri => Scheme != null && Host != null;
+
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// </summary>
@@ -174,10 +176,12 @@ namespace Azure.Core
             {
                 _uri = new Uri(ToString());
             }
-
-            if (_pipelineRequest != null)
+            else
             {
-                _pipelineRequest.Uri = _uri;
+                if (_pipelineRequest != null)
+                {
+                    _pipelineRequest.Uri = _uri;
+                }
             }
 
             return _uri;
@@ -360,8 +364,14 @@ namespace Azure.Core
             }
 
             stringBuilder.Append(_pathAndQuery);
+            string uriString = stringBuilder.ToString();
 
-            return stringBuilder.ToString();
+            //if (_pipelineRequest != null)
+            //{
+            //    _pipelineRequest.Uri = new Uri(uriString);
+            //}
+
+            return uriString;
         }
 
         private bool HasDefaultPortForScheme =>
@@ -371,6 +381,11 @@ namespace Azure.Core
         private void ResetUri()
         {
             _uri = null;
+
+            if (_pipelineRequest != null)
+            {
+                _pipelineRequest.Uri = null!;
+            }
         }
     }
 }

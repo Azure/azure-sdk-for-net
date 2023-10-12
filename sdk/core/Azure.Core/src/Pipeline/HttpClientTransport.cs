@@ -64,7 +64,13 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public sealed override Request CreateRequest()
-            => new RequestAdapter(new HttpClientTransportRequest());
+        {
+            HttpClientTransportRequest requestImpl = new HttpClientTransportRequest();
+            RequestAdapter request = new RequestAdapter(requestImpl);
+            //requestImpl.UriBuilder = request.Uri;
+
+            return request;
+        }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)

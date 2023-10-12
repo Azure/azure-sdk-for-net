@@ -14,8 +14,43 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        private sealed class HttpClientTransportRequest : HttpPipelineRequest
+        // TODO: is there a way to still do this with this private?  Come back to this.
+        internal sealed class HttpClientTransportRequest : HttpPipelineRequest
         {
+            private RequestUriBuilder? _uriBuilder;
+
+            public override Uri Uri
+            {
+                get
+                {
+                    if (_uriBuilder is null)
+                    {
+                        throw new InvalidOperationException("RequestUriBuilder has not been initialized; please call SetUriBuilder()");
+                    }
+
+                    return _uriBuilder.ToUri();
+                }
+                set
+                {
+                    if (_uriBuilder is null)
+                    {
+                        throw new InvalidOperationException("RequestUriBuilder has not been initialized; please call SetUriBuilder()");
+                    }
+
+                    _uriBuilder.Reset(value);
+                }
+            }
+
+            public RequestUriBuilder UriBuilder
+            {
+                get => _uriBuilder ??= new RequestUriBuilder();
+                set
+                {
+                    Argument.AssertNotNull(value, nameof(value));
+                    _uriBuilder = value;
+                }
+            }
+
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
             internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
