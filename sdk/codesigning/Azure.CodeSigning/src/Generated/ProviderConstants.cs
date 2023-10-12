@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.CodeSigning
+namespace Microsoft.TrustedSigning
 {
     internal static class ProviderConstants
     {
