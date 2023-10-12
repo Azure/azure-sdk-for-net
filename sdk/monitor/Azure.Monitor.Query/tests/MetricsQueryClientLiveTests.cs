@@ -17,7 +17,6 @@ namespace Azure.Monitor.Query.Tests
 
         public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
-            SaveDebugRecordingsOnFailure = true;
         }
 
         private MetricsQueryClient CreateClient()
