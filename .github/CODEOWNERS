@@ -334,7 +334,7 @@
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/ @dkkapur
 
 # ServiceLabel: %Container Registry
-/sdk/containerregistry/                                            @ShivangiReja @pallavit @annelo-msft @azsdk-acr
+/sdk/containerregistry/                                            @ShivangiReja @pallavit @annelo-msft @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry %Service Attention
 /sdk/containerregistry/Microsoft.*/                                @toddysm @yugangw-MSFT
@@ -507,7 +507,7 @@
 #/<NotInRepo>/          @RandalliLama @jlichwa
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @heaths @schaabs @azsdk-keyvault
+/sdk/keyvault/                                                     @heaths @schaabs @Azure/azsdk-keyvault
 
 # ServiceLabel: %Kubernetes Configuration %Service Attention
 /sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration/ @NarayanThiru
@@ -704,7 +704,7 @@
 #/<NotInRepo>/          @amirkeren
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @heaths @azsdk-search
+/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @heaths @Azure/azsdk-search
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                                           @arv100kri @bleroy @tjacobhi
