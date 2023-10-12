@@ -36,11 +36,12 @@ namespace Azure.Core
 
         private static PipelineRequest ToPipelineRequest(Request request)
         {
-            if (request is RequestAdapter requestAdapter)
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
             {
-                return requestAdapter.PipelineRequest;
+                return pipelineRequest!;
             }
 
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
             return new PipelineRequestAdapter(request);
         }
 

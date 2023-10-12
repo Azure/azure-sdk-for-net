@@ -29,17 +29,6 @@ namespace Azure.Core
 
         private string? _scheme;
 
-        private PipelineRequest? _pipelineRequest;
-
-        internal void SetPipelineRequest(PipelineRequest request)
-        {
-            _pipelineRequest = request;
-            if (Scheme != null && Host != null)
-            {
-                _pipelineRequest.Uri = ToUri();
-            }
-        }
-
         internal bool IsValidUri => Scheme != null && Host != null;
 
         /// <summary>
@@ -157,11 +146,6 @@ namespace Azure.Core
             Path = value.AbsolutePath;
             Query = value.Query;
             _uri = value;
-
-            if (_pipelineRequest != null)
-            {
-                _pipelineRequest.Uri = _uri;
-            }
         }
 
         /// <summary>
@@ -175,13 +159,6 @@ namespace Azure.Core
             if (_uri == null)
             {
                 _uri = new Uri(ToString());
-            }
-            else
-            {
-                if (_pipelineRequest != null)
-                {
-                    _pipelineRequest.Uri = _uri;
-                }
             }
 
             return _uri;
@@ -364,14 +341,8 @@ namespace Azure.Core
             }
 
             stringBuilder.Append(_pathAndQuery);
-            string uriString = stringBuilder.ToString();
 
-            //if (_pipelineRequest != null)
-            //{
-            //    _pipelineRequest.Uri = new Uri(uriString);
-            //}
-
-            return uriString;
+            return stringBuilder.ToString();
         }
 
         private bool HasDefaultPortForScheme =>
@@ -381,11 +352,6 @@ namespace Azure.Core
         private void ResetUri()
         {
             _uri = null;
-
-            if (_pipelineRequest != null)
-            {
-                _pipelineRequest.Uri = null!;
-            }
         }
     }
 }
