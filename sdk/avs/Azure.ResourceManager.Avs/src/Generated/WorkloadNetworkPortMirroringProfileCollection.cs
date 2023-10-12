@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPortMirroringProfileResource(Client, WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(e)), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPortMirroringProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkloadNetworkPortMirroringProfileResource>> GetIfExistsAsync(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+
+            using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkPortMirroringProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPortMirroringProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        public virtual NullableResponse<WorkloadNetworkPortMirroringProfileResource> GetIfExists(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+
+            using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkPortMirroringProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPortMirroringProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

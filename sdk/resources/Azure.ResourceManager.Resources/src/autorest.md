@@ -10,6 +10,9 @@ title: ResourceManagementClient
 tag: package-resources-2022-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 model-namespace: true
 public-clients: false
@@ -66,7 +69,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ScriptCleanupOptions
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

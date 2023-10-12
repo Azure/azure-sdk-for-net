@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Storage.DataMovement
@@ -14,14 +13,13 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the local directory to transfer to or from
     /// </summary>
-    public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
         private Uri _uri;
 
-        /// <summary>
-        /// Gets the path
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Constructor

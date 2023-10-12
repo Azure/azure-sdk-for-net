@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AutoMLVerticalRegressionModel SGD { get; } = new AutoMLVerticalRegressionModel(SGDValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static AutoMLVerticalRegressionModel RandomForest { get; } = new AutoMLVerticalRegressionModel(RandomForestValue);

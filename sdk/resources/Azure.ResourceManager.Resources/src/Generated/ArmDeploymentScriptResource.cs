@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<ScriptLogResource> GetLogsAsync(CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<ScriptLogResource> GetLogs(CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
         }
 
         /// <summary>

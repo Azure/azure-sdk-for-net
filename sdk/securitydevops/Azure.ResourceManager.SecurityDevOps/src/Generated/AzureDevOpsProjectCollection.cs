@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsProjectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsProjectRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsProjectResource(Client, AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(e)), _azureDevOpsProjectClientDiagnostics, Pipeline, "AzureDevOpsProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsProjectResource(Client, AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(e)), _azureDevOpsProjectClientDiagnostics, Pipeline, "AzureDevOpsProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsProjectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsProjectRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsProjectResource(Client, AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(e)), _azureDevOpsProjectClientDiagnostics, Pipeline, "AzureDevOpsProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsProjectResource(Client, AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(e)), _azureDevOpsProjectClientDiagnostics, Pipeline, "AzureDevOpsProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,6 +313,80 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _azureDevOpsProjectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, azureDevOpsProjectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}/projects/{azureDevOpsProjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsProject_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AzureDevOpsProjectResource>> GetIfExistsAsync(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsProjectName, nameof(azureDevOpsProjectName));
+
+            using var scope = _azureDevOpsProjectClientDiagnostics.CreateScope("AzureDevOpsProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _azureDevOpsProjectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, azureDevOpsProjectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsProjectResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}/projects/{azureDevOpsProjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsProject_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        public virtual NullableResponse<AzureDevOpsProjectResource> GetIfExists(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsProjectName, nameof(azureDevOpsProjectName));
+
+            using var scope = _azureDevOpsProjectClientDiagnostics.CreateScope("AzureDevOpsProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _azureDevOpsProjectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, azureDevOpsProjectName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

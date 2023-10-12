@@ -3381,15 +3381,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, Uri healthCheckUri = null, IDictionary<string, ContainerInfo> containers = null, string kind = null)
+        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, string healthCheckUrlString = null, IDictionary<string, ContainerInfo> containers = null, string kind = null)
         {
             containers ??= new Dictionary<string, ContainerInfo>();
 
-            return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUri, containers, kind);
+            return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUrlString, containers, kind);
         }
 
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>

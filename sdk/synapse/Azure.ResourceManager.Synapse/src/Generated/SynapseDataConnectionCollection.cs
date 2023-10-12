@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -312,6 +313,80 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseDataConnectionKustoPoolDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDataConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The name of the data connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseDataConnectionResource>> GetIfExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseDataConnectionKustoPoolDataConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDataConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The name of the data connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        public virtual NullableResponse<SynapseDataConnectionResource> GetIfExists(string dataConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseDataConnectionKustoPoolDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

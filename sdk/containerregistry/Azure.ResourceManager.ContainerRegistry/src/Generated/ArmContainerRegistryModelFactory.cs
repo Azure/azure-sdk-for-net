@@ -490,8 +490,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
         /// <param name="step">
         /// The properties of a task step.
-        /// Please note <see cref="ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/> and <see cref="ContainerRegistryFileTaskStep"/>.
+        /// Please note <see cref="Models.ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryEncodedTaskStep"/> and <see cref="Models.ContainerRegistryFileTaskStep"/>.
         /// </param>
         /// <param name="trigger"> The properties that describe all triggers for the task. </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>

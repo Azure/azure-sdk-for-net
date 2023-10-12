@@ -126,7 +126,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2023-08-03 service version.
             /// </summary>
-            V2023_08_03 = 19
+            V2023_08_03 = 19,
+
+            /// <summary>
+            /// The 2023-11-03 service version.
+            /// </summary>
+            V2023_11_03 = 20
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -339,5 +344,11 @@ namespace Azure.Storage.Blobs
 
         /// <inheritdoc />
         public bool EnableTenantDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="BlobAudience.DefaultAudience" /> will be assumed.</value>
+        public BlobAudience? Audience { get; set; }
     }
 }

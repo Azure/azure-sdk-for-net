@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRequest(Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRequest(Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRevisionsRequest(Guid.Parse(Id.Name), reservationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListRevisionsNextPageRequest(nextLink, Guid.Parse(Id.Name), reservationId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRevisionsRequest(Guid.Parse(Id.Name), reservationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListRevisionsNextPageRequest(nextLink, Guid.Parse(Id.Name), reservationId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,6 +267,74 @@ namespace Azure.ResourceManager.Reservations
             {
                 var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Name), reservationId, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="expand"> Supported value of this query is renewProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ReservationDetailResource>> GetIfExistsAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _reservationDetailReservationRestClient.GetAsync(Guid.Parse(Id.Name), reservationId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ReservationDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="expand"> Supported value of this query is renewProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ReservationDetailResource> GetIfExists(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Name), reservationId, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ReservationDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

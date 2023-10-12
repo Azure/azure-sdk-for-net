@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             Optional<ResourceIdentifier> internetGatewayRuleId = default;
-            Optional<IPAddress> ipv4Address = default;
+            Optional<string> ipv4Address = default;
             Optional<int> port = default;
             InternetGatewayType type0 = default;
             ResourceIdentifier networkFabricControllerId = default;
@@ -141,11 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("ipv4Address"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipv4Address = IPAddress.Parse(property0.Value.GetString());
+                            ipv4Address = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("port"u8))

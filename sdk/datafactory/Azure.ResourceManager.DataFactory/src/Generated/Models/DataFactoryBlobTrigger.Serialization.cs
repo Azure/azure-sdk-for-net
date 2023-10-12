@@ -61,7 +61,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            JsonSerializer.Serialize(writer, LinkedService); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, LinkedService);
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDatadogModelFactory
     {
-        /// <summary> Initializes a new instance of DatadogAgreementResource. </summary>
+        /// <summary> Initializes a new instance of DatadogAgreementResourceProperties. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <returns> A new <see cref="Models.DatadogAgreementResource"/> instance for mocking. </returns>
-        public static DatadogAgreementResource DatadogAgreementResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
+        /// <returns> A new <see cref="Models.DatadogAgreementResourceProperties"/> instance for mocking. </returns>
+        public static DatadogAgreementResourceProperties DatadogAgreementResourceProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
         {
-            return new DatadogAgreementResource(id, name, resourceType, systemData, properties);
+            return new DatadogAgreementResourceProperties(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of DatadogHost. </summary>
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogInstallMethod(tool, toolVersion, installerVersion);
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>
-        public static MonitoredResource MonitoredResource(string id = null, bool? sendingMetrics = null, string reasonForMetricsStatus = null, bool? sendingLogs = null, string reasonForLogsStatus = null)
+        /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
+        public static MonitoredResourceContent MonitoredResourceContent(string id = null, bool? sendingMetrics = null, string reasonForMetricsStatus = null, bool? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResource(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
+            return new MonitoredResourceContent(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
         }
 
         /// <summary> Initializes a new instance of DatadogMonitorResourceData. </summary>

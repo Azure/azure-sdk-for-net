@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL2IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l2IsolationDomainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricL2IsolationDomainResource>> GetIfExistsAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l2IsolationDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricL2IsolationDomainResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricL2IsolationDomainResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricL2IsolationDomainResource> GetIfExists(string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricL2IsolationDomainL2IsolationDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l2IsolationDomainName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricL2IsolationDomainResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricL2IsolationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

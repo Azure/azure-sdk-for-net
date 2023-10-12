@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Marketplace
         public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
+            AppliedRules = new ChangeTrackingList<MarketplaceRule>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
-        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
+        /// <param name="appliedRules"> Gets list of collection rules. </param>
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.Marketplace
             SubscriptionsList = subscriptionsList;
             IsEnabled = isEnabled;
             NumberOfOffers = numberOfOffers;
+            AppliedRules = appliedRules;
         }
 
         /// <summary> Gets collection Id. </summary>
@@ -69,5 +73,7 @@ namespace Azure.ResourceManager.Marketplace
         public bool? IsEnabled { get; set; }
         /// <summary> Gets the number of offers associated with the collection. </summary>
         public long? NumberOfOffers { get; }
+        /// <summary> Gets list of collection rules. </summary>
+        public IReadOnlyList<MarketplaceRule> AppliedRules { get; }
     }
 }

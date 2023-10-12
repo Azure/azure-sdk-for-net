@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityContactRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityContactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityContactResource(Client, SecurityContactData.DeserializeSecurityContactData(e)), _securityContactClientDiagnostics, Pipeline, "SecurityContactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityContactResource(Client, SecurityContactData.DeserializeSecurityContactData(e)), _securityContactClientDiagnostics, Pipeline, "SecurityContactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityContactRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityContactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityContactResource(Client, SecurityContactData.DeserializeSecurityContactData(e)), _securityContactClientDiagnostics, Pipeline, "SecurityContactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityContactResource(Client, SecurityContactData.DeserializeSecurityContactData(e)), _securityContactClientDiagnostics, Pipeline, "SecurityContactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityContactRestClient.Get(Id.SubscriptionId, securityContactName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityContactResource>> GetIfExistsAsync(string securityContactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
+
+            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityContactRestClient.GetAsync(Id.SubscriptionId, securityContactName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityContactResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityContacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityContactName"> Name of the security contact object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        public virtual NullableResponse<SecurityContactResource> GetIfExists(string securityContactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
+
+            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityContactRestClient.Get(Id.SubscriptionId, securityContactName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityContactResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -2,14 +2,25 @@
 <doc>
   <members>
     <member name="GetRoleDefinitionsAsync(bool?,string,RequestContext)">
-<example>
-This sample shows how to call GetRoleDefinitionsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetRoleDefinitionsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = await client.GetRoleDefinitionsAsync(true, "<scope>", new RequestContext());
+Response response = await client.GetRoleDefinitionsAsync(null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code>
+This sample shows how to call GetRoleDefinitionsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = await client.GetRoleDefinitionsAsync(true, "<scope>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -22,18 +33,28 @@ Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActio
 Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
 Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
 Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetRoleDefinitions(bool?,string,RequestContext)">
-<example>
-This sample shows how to call GetRoleDefinitions with required parameters and parse the result.
+      <example>
+This sample shows how to call GetRoleDefinitions and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = client.GetRoleDefinitions(true, "<scope>", new RequestContext());
+Response response = client.GetRoleDefinitions(null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code>
+This sample shows how to call GetRoleDefinitions with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = client.GetRoleDefinitions(true, "<scope>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -46,18 +67,28 @@ Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActio
 Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
 Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
 Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetRoleDefinitionByIdAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetRoleDefinitionByIdAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", new RequestContext());
+Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRoleDefinitionByIdAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -70,18 +101,28 @@ Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions"
 Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
 Console.WriteLine(result.GetProperty("scopes")[0].ToString());
 Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetRoleDefinitionById(string,RequestContext)">
-<example>
-This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
+      <example>
+This sample shows how to call GetRoleDefinitionById and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = client.GetRoleDefinitionById("<roleDefinitionId>", new RequestContext());
+Response response = client.GetRoleDefinitionById("<roleDefinitionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetRoleDefinitionById with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = client.GetRoleDefinitionById("<roleDefinitionId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -94,38 +135,57 @@ Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions"
 Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
 Console.WriteLine(result.GetProperty("scopes")[0].ToString());
 Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetScopesAsync(RequestContext)">
-<example>
-This sample shows how to call GetScopesAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetScopesAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = await client.GetScopesAsync(new RequestContext());
+Response response = await client.GetScopesAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].ToString());
 ]]></code>
-</example>
+This sample shows how to call GetScopesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = await client.GetScopesAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
     </member>
     <member name="GetScopes(RequestContext)">
-<example>
-This sample shows how to call GetScopes with required parameters and parse the result.
+      <example>
+This sample shows how to call GetScopes and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-Response response = client.GetScopes(new RequestContext());
+Response response = client.GetScopes(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].ToString());
 ]]></code>
-</example>
+This sample shows how to call GetScopes with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+Response response = client.GetScopes(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
     </member>
   </members>
 </doc>

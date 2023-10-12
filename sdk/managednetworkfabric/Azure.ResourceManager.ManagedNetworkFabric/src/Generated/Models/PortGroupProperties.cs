@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of PortGroupProperties. </summary>
         /// <param name="name"> The name of the port group. </param>
-        /// <param name="ports"> List of the ports that needs to be matched. </param>
+        /// <param name="ports"> List of the ports that need to be matched. </param>
         internal PortGroupProperties(string name, IList<string> ports)
         {
             Name = name;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> The name of the port group. </summary>
         public string Name { get; set; }
-        /// <summary> List of the ports that needs to be matched. </summary>
+        /// <summary> List of the ports that need to be matched. </summary>
         public IList<string> Ports { get; }
     }
 }

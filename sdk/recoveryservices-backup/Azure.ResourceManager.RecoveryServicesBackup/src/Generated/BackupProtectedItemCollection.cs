@@ -283,5 +283,81 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupProtectedItemResource>> GetIfExistsAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+
+            using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupProtectedItemProtectedItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectedItemResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        public virtual NullableResponse<BackupProtectedItemResource> GetIfExists(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+
+            using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupProtectedItemProtectedItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectedItemResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

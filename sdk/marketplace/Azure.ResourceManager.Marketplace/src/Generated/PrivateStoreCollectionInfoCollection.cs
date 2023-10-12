@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -292,6 +293,72 @@ namespace Azure.ResourceManager.Marketplace
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PrivateStoreCollectionInfoResource>> GetIfExistsAsync(Guid collectionId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.GetAsync(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreCollectionInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PrivateStoreCollectionInfoResource> GetIfExists(Guid collectionId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreCollectionInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

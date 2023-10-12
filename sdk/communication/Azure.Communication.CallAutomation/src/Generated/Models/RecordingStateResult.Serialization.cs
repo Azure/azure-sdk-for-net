@@ -20,6 +20,7 @@ namespace Azure.Communication.CallAutomation
             }
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
+            Optional<RecordingType> recordingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -36,8 +37,17 @@ namespace Azure.Communication.CallAutomation
                     recordingState = new RecordingState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("recordingType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingType = new RecordingType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState));
+            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState), Optional.ToNullable(recordingType));
         }
     }
 }

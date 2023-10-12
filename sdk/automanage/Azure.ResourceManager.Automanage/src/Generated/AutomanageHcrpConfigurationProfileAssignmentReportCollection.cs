@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -230,6 +231,80 @@ namespace Azure.ResourceManager.Automanage
             {
                 var response = _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCRPReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageHcrpConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHcrpConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCRPReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHcrpConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

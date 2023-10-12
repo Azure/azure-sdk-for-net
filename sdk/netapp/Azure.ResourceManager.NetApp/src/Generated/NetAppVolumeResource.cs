@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -1029,7 +1030,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1050,7 +1051,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2023-09-07)
+
+### Bugs Fixed
+
+- Added getter for ScoringParameters in ScoringRuleOptions
+
+## 1.0.0-beta.2 (2023-09-06)
+
+### Bugs Fixed
+
+- Added getters for ScoringRuleOptions, ScoringRule in BestWorkerMode, FunctionUri in FunctionRouterRule, AppKey, ClientId and FunctionKey in FunctionRouterRuleCredential, and ExpiresAfter in PassThroughWorkerSelectorAttachment
 
 ## 1.0.0-beta.1 (2023-07-27)
 

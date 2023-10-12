@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<StreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<StreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

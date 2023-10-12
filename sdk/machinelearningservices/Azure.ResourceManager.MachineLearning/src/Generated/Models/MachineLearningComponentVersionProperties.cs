@@ -22,15 +22,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="componentSpec">
         /// Defines Component definition details.
         /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
         /// </param>
-        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="provisioningState"> Provisioning state for the component version. </param>
+        /// <param name="stage"> Stage in the component lifecycle. </param>
+        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, BinaryData componentSpec, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             ComponentSpec = componentSpec;
+            ProvisioningState = provisioningState;
+            Stage = stage;
         }
 
         /// <summary>
@@ -65,5 +70,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         public BinaryData ComponentSpec { get; set; }
+        /// <summary> Provisioning state for the component version. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
+        /// <summary> Stage in the component lifecycle. </summary>
+        public string Stage { get; set; }
     }
 }

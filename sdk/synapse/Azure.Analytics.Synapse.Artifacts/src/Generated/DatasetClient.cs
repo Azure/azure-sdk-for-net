@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -105,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDatasetsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDatasetsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists datasets. </summary>
@@ -114,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDatasetsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDatasetsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a dataset. </summary>

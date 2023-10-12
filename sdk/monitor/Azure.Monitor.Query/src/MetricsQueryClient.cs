@@ -70,7 +70,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/> for mocking.
+        /// Creates an instance of <see cref="MetricsQueryClient"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected MetricsQueryClient()
         {

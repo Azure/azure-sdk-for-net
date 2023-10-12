@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,7 +11,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using a client secret that was generated for an App Registration. More information on how
+    /// Enables authentication to Microsoft Entra ID using a client secret that was generated for an App Registration. More information on how
     /// to configure a client secret can be found here:
     /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
@@ -24,7 +24,7 @@ namespace Azure.Identity
         internal MsalConfidentialClient Client { get; }
 
         /// <summary>
-        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// Gets the Microsoft Entra tenant (directory) Id of the service principal
         /// </summary>
         internal string TenantId { get; }
 
@@ -46,7 +46,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -57,7 +57,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -69,7 +69,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -102,7 +102,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// Obtains a token from Microsoft Entra ID, using the specified client secret to authenticate. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -125,7 +125,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// Obtains a token from Microsoft Entra ID, using the specified client secret to authenticate. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
