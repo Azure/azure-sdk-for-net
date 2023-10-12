@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.ModelSerializationTests.Models;
@@ -28,6 +29,62 @@ namespace Azure.Core.Tests.ModelSerialization
 
             Assert.Throws<ArgumentNullException>(() => ModelSerializer.SerializeCore(null, new ModelSerializerOptions()));
             Assert.Throws<ArgumentNullException>(() => ModelSerializer.SerializeCore(new ModelX(), null));
+        }
+
+        [TestCaseSource(typeof(SerializationTestSource), "InvalidOperationBinaryData")]
+        public void ValidateInvalidOperationBinaryData(BinaryData data)
+        {
+            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize<ModelX>(data));
+            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize(data, typeof(ModelX)));
+        }
+
+        [TestCaseSource(typeof(SerializationTestSource), "JsonExceptionBinaryData")]
+        public void ValidateJsonExceptionBinaryData(BinaryData data)
+        {
+            bool gotException = false;
+            try
+            {
+                ModelX x = ModelSerializer.Deserialize<ModelX>(data);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.GetType().IsSubclassOf(typeof(JsonException)), $"Expected a subclass of {nameof(JsonException)} but got {ex.GetType().Name}");
+                gotException = true;
+            }
+
+            Assert.IsTrue(gotException, "Did not recieve exception");
+
+            gotException = false;
+            try
+            {
+                object x = ModelSerializer.Deserialize(data, typeof(ModelX));
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.GetType().IsSubclassOf(typeof(JsonException)), $"Expected a subclass of {nameof(JsonException)} but got {ex.GetType().Name}");
+                gotException = true;
+            }
+
+            Assert.IsTrue(gotException, "Did not recieve exception");
+        }
+
+        [TestCaseSource(typeof(SerializationTestSource), "NullBinaryData")]
+        public void ValidateNullBinaryData(BinaryData data)
+        {
+            Assert.IsNull(ModelSerializer.Deserialize<ModelX>(data));
+            Assert.IsNull(ModelSerializer.Deserialize(data, typeof(ModelX)));
+        }
+
+        [TestCaseSource(typeof(SerializationTestSource), "EmptyObjectBinaryData")]
+        public void ValidateEmptyObjectBinaryData(BinaryData data)
+        {
+            ModelX x = ModelSerializer.Deserialize<ModelX>(data);
+            Assert.IsNotNull(x);
+            Assert.IsNull(x.Kind);
+
+            object obj = ModelSerializer.Deserialize(data, typeof(ModelX));
+            Assert.IsNotNull(obj);
+            Assert.IsNull(((ModelX)obj).Kind);
         }
 
         [Test]
