@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class TransferValidator
+    internal partial class TransferValidator
     {
         public interface IResourceEnumerationItem
         {
@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Tests
             Task<Stream> OpenReadAsync(CancellationToken cancellationToken);
         }
 
-        public delegate Task<List<IResourceEnumerationItem>> GetFilesAsync(CancellationToken cancellationToken);
+        public delegate Task<List<IResourceEnumerationItem>> ListFilesAsync(CancellationToken cancellationToken);
 
         public TransferManager TransferManager { get; init; } = new(new TransferManagerOptions()
         {
@@ -28,8 +28,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TransferAndVerifyAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
-            GetFilesAsync getSourceFilesAsync,
-            GetFilesAsync getDestinationFilesAsync,
+            ListFilesAsync getSourceFilesAsync,
+            ListFilesAsync getDestinationFilesAsync,
             int expectedItemTransferCount,
             DataTransferOptions options = default,
             CancellationToken cancellationToken = default)

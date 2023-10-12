@@ -115,25 +115,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private class LocalFileResourceEnumerationItem : TransferValidator.IResourceEnumerationItem
-        {
-            private readonly string _localFilePath;
-
-            public string RelativePath { get; }
-
-            public LocalFileResourceEnumerationItem(string localFilePath, string relativePath)
-            {
-                _localFilePath = localFilePath;
-                RelativePath = relativePath;
-            }
-
-            public Task<Stream> OpenReadAsync(CancellationToken cancellationToken)
-            {
-                return Task.FromResult(File.OpenRead(_localFilePath) as Stream);
-            }
-        }
-
-        private TransferValidator.GetFilesAsync GetResourceLister(BlobContainerClient container, string blobPrefix)
+        private TransferValidator.ListFilesAsync GetResourceLister(BlobContainerClient container, string blobPrefix)
         {
             async Task<List<TransferValidator.IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
             {
@@ -145,30 +127,6 @@ namespace Azure.Storage.DataMovement.Tests
                 return result;
             }
             return ListBlobs;
-        }
-
-        private TransferValidator.GetFilesAsync GetResourceLister(string directoryPath)
-        {
-            Task<List<TransferValidator.IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
-            {
-                List<TransferValidator.IResourceEnumerationItem> result = new();
-                Queue<string> directories = new();
-                directories.Enqueue(directoryPath);
-                while (directories.Count > 0)
-                {
-                    string workingDir = directories.Dequeue();
-                    foreach (string dirPath in Directory.GetDirectories(workingDir))
-                    {
-                        directories.Enqueue(dirPath);
-                    }
-                    foreach (string filePath in Directory.GetFiles(workingDir))
-                    {
-                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(workingDir.Length)));
-                    }
-                }
-                return Task.FromResult(result);
-            }
-            return ListFiles;
         }
 
         /// <summary>
@@ -203,7 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceResource,
                 destResource,
                 GetResourceLister(container, sourcePrefix),
-                GetResourceLister(disposingLocalDirectory.DirectoryPath),
+                TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                 blobCount);
         }
 
