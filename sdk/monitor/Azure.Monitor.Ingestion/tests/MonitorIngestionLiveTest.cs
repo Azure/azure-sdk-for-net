@@ -51,6 +51,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var clientOptions = InstrumentClientOptions(options);
             // Set audience for testing including sovereign cloud support
             clientOptions.Audience = TestEnvironment.GetAudience();
+
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 
