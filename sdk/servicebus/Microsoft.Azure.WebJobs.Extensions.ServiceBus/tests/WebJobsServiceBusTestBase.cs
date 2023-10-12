@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -335,6 +336,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
                 Assert.AreEqual(ExpectedRemainingMessages, properties.ActiveMessageCount);
+
+                var provider = _host.Services.GetService<MessagingProvider>();
+                Assert.AreEqual(0, provider.ClientCache.Count);
+                Assert.AreEqual(0, provider.MessageReceiverCache.Count);
+                Assert.AreEqual(0, provider.MessageSenderCache.Count);
+                Assert.AreEqual(0, provider.ActionsCache.Count);
             }
 
             private static bool IsError(LogMessage logMessage)
