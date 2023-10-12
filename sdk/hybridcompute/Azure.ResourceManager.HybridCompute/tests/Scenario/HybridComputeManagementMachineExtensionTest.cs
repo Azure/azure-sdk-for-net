@@ -26,12 +26,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             }
         }
 
-        // [OneTimeTearDown]
-        // public void Cleanup()
-        // {
-        //     CleanupResourceGroups();
-        // }
-
         [TestCase]
         [RecordedTest]
         public async Task CanCreateMachineExtension()
