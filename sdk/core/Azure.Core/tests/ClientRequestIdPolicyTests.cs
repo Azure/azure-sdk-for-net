@@ -22,8 +22,8 @@ namespace Azure.Core.Tests
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
             await task;
 
-            Assert.True(request.TryGetHeaderInternal("x-ms-client-request-id", out string requestId));
-            Assert.True(request.TryGetHeaderInternal("x-ms-return-client-request-id", out string returnRequestId));
+            Assert.True(request.TryGetHeader("x-ms-client-request-id", out string requestId));
+            Assert.True(request.TryGetHeader("x-ms-return-client-request-id", out string returnRequestId));
             Assert.AreEqual(request.ClientRequestId, requestId);
             Assert.AreEqual("true", returnRequestId);
         }
@@ -37,7 +37,7 @@ namespace Azure.Core.Tests
                 .Callback<HttpMessage>(message =>
                 {
                     Assert.AreEqual("ExternalClientId",message.Request.ClientRequestId);
-                    Assert.True(message.Request.TryGetHeaderInternal("x-ms-client-request-id", out string requestId));
+                    Assert.True(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId));
                     Assert.AreEqual("ExternalClientId", requestId);
                 }).Verifiable();
 

@@ -520,7 +520,7 @@ namespace Azure.Core
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
-        public string ClientRequestId { get { throw null; } set { } }
+        public virtual string ClientRequestId { get { throw null; } set { } }
         public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
         public Azure.Core.RequestHeaders Headers { get { throw null; } }
         public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }

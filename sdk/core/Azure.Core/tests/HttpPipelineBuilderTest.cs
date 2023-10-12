@@ -168,7 +168,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, telemetryPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeaderInternal("User-Agent", out var userAgent));
+            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
             StringAssert.IsMatch(Regex.Escape("azsdk-net-Core.Tests/") +
                                  "[.\\-0-9a-z]+" +
                                  Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"), userAgent);
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests
                 .Callback<HttpMessage>(message =>
                 {
                     Assert.AreEqual("ExternalClientId", message.Request.ClientRequestId);
-                    Assert.True(message.Request.TryGetHeaderInternal("x-ms-client-request-id", out string requestId));
+                    Assert.True(message.Request.TryGetHeader("x-ms-client-request-id", out string requestId));
                     Assert.AreEqual("ExternalClientId", requestId);
                 }).Verifiable();
 

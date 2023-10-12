@@ -47,7 +47,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
-        public string ClientRequestId
+        public virtual string ClientRequestId
         {
             get => _clientRequestId ??= Guid.NewGuid().ToString();
             set

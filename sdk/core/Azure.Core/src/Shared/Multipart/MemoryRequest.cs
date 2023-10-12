@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Core
 {
@@ -17,31 +18,60 @@ namespace Azure.Core
 
         public override RequestContent Content
         {
-            get => base.Content;
-            set => base.Content = value;
+            get { return base.Content; }
+            set
+            {
+                base.Content = value;
+            }
         }
 
-        protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+
+       protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
 
         protected override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+
         protected override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
+
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
 
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
 
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+
         protected override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
+
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
 
         protected override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
+
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
 
         public override string ClientRequestId { get; set; }
 
         public override string ToString() => $"{Method} {Uri}";
 
-        public override void Dispose() { }
+        public override void Dispose()
+        { }
     }
 }
