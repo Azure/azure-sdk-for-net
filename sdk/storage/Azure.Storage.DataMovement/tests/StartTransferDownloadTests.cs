@@ -118,11 +118,11 @@ namespace Azure.Storage.DataMovement.Tests
             await SetupContainerAsync(container, sourcePrefix, blobCount, size);
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            StorageResource sourceResource = new BlobStorageResourceContainer(container, new()
+            BlobStorageResourceContainer sourceResource = new(container, new()
             {
                 BlobDirectoryPrefix = sourcePrefix,
             });
-            StorageResource destResource = new LocalDirectoryStorageResourceContainer(disposingLocalDirectory.DirectoryPath);
+            LocalDirectoryStorageResourceContainer destResource = new(disposingLocalDirectory.DirectoryPath);
 
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
@@ -131,6 +131,28 @@ namespace Azure.Storage.DataMovement.Tests
                 TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                 blobCount);
         }
+
+        //private async Task DownloadBlockBlobAndVerify(
+        //    BlockBlobClient blob,
+        //    long size = Constants.KB,
+        //    int waitTimeInSec = 30,
+        //    int blobCount = 1,
+        //    TransferManagerOptions transferManagerOptions = default,
+        //    List<DataTransferOptions> options = default)
+        //{
+        //    await blob.UploadAsync(new MemoryStream(GetRandomBuffer(size)));
+        //    using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+
+        //    BlockBlobStorageResource sourceResource = new(blob);
+        //    LocalDirectoryStorageResourceContainer destResource = new(disposingLocalDirectory.DirectoryPath);
+
+        //    await new TransferValidator().TransferAndVerifyAsync(
+        //        sourceResource,
+        //        destResource,
+        //        null,//TransferValidator.GetBlobLister(blob),
+        //        TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
+        //        blobCount);
+        //}
 
         [RecordedTest]
         public async Task BlockBlobToLocal()

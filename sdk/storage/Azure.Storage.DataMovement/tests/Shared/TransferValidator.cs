@@ -26,8 +26,8 @@ namespace Azure.Storage.DataMovement.Tests
         });
 
         public async Task TransferAndVerifyAsync(
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceContainer sourceResource,
+            StorageResourceContainer destinationResource,
             ListFilesAsync getSourceFilesAsync,
             ListFilesAsync getDestinationFilesAsync,
             int expectedItemTransferCount,
