@@ -4,18 +4,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query.Models;
-using Azure.Monitor.Query;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
@@ -24,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         private const int Kb = 1024;
 
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync,RecordedTestMode.Live)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -118,7 +112,8 @@ namespace Azure.Monitor.Ingestion.Tests
             for (int i = 0; i < numEntries; i++)
             {
                 entries.Add(
-                    new {
+                    new
+                    {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
@@ -131,10 +126,10 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
-           LogsIngestionClient client = CreateClient();
+            LogsIngestionClient client = CreateClient();
 
-           // Make the request
-           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
+            // Make the request
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
             Assert.IsNotNull(response);
@@ -245,50 +240,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 isTriggered = true;
                 return Task.CompletedTask;
             }
-        }
-
-        //[LiveOnly]
-        [Test]
-        public async Task EndToEndTest()
-        {
-            LogsIngestionClient client = CreateClient();
-
-            var data = new[]
-            {
-                new MyLogEntry { Name = "Test1", Value = 1 },
-                new MyLogEntry { Name = "Test2", Value = 2 }
-            };
-
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response
-            Assert.AreEqual(204, response.Status);
-            Assert.IsFalse(response.IsError);
-
-            LogsQueryClient logsQueryClient = new(TestEnvironment.Credential);
-            var queryResult = logsQueryClient.QueryWorkspace<MyLogEntry>(TestEnvironment.Ingestion_WorkspaceId, @"
-              MyTable_CL
-              | order by TimeGenerated desc
-              | take 10",
-              new QueryTimeRange(TimeSpan.FromDays(1)));
-
-            //LogsBatchQuery batch = new();
-            //string query = TestEnvironment.TableName + " | Count;";
-            //string countQueryId = batch.AddWorkspaceQuery(
-            //    TestEnvironment.Ingestion_WorkspaceId,
-            //    query,
-            //    new QueryTimeRange(TimeSpan.FromDays(1)));
-
-            //Response<LogsBatchQueryResultCollection> queryResponse =
-            //    await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
-
-            //Console.WriteLine("Table entry count: " +
-            //    queryResponse.Value.GetResult<int>(countQueryId).Single());
-        }
-
-        private class MyLogEntry
-        {
-            public string Name { get; set; }
-            public decimal? Value { get; set; }
         }
     }
 }
