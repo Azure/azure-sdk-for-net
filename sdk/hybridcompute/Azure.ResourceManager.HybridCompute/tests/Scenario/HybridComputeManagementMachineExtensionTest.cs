@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdatePrivateEndpointConnection()
         {
             HybridComputePrivateEndpointConnectionData endpointData = await updatePrivateEndpointConnection();
-            Assert.AreEqual("hybridcompute", endpointData.Name);
+            Assert.AreEqual(privateEndpointConnectionName, endpointData.Name);
         }
 
         [TestCase]

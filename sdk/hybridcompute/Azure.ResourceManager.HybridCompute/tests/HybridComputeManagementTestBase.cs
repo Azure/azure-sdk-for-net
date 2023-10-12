@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string scopeName = "myPrivateLinkScope";
         public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
-        public string privateEndpointConnectionName = "myPrivateEndpointConnection";
+        // need to run private-endpoint-connection list and obtain from the 'name' property
+        public string privateEndpointConnectionName = "pe-test.2a976c30-2ae8-48a4-9f25-d13236dfe849";
 
         protected HybridComputeManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
