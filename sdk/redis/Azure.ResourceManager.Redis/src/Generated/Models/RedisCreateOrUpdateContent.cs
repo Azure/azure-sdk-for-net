@@ -57,6 +57,8 @@ namespace Azure.ResourceManager.Redis.Models
         public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
         public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
+        public UpdateChannel? UpdateChannel { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
         public RedisSku Sku { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>

@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(UpdateChannel))
+            {
+                writer.WritePropertyName("updateChannel"u8);
+                writer.WriteStringValue(UpdateChannel.Value.ToString());
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(SubnetId))
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.Redis
             Optional<int> shardCount = default;
             Optional<RedisTlsVersion> minimumTlsVersion = default;
             Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<UpdateChannel> updateChannel = default;
             RedisSku sku = default;
             Optional<ResourceIdentifier> subnetId = default;
             Optional<IPAddress> staticIP = default;
@@ -310,6 +316,15 @@ namespace Azure.ResourceManager.Redis
                             publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("updateChannel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updateChannel = new UpdateChannel(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             sku = RedisSku.DeserializeRedisSku(property0.Value);
@@ -421,7 +436,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, Optional.ToList(linkedServers), Optional.ToList(instances), Optional.ToList(privateEndpointConnections));
+            return new RedisData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, Optional.ToList(linkedServers), Optional.ToList(instances), Optional.ToList(privateEndpointConnections));
         }
     }
 }
