@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.ElasticSan
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
+            if (Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteObjectValue(ManagedBy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -45,6 +50,8 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
             long sizeGiB = default;
             Optional<IscsiTargetInfo> storageTarget = default;
+            Optional<ManagedByInfo> managedBy = default;
+            Optional<ElasticSanProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,11 +119,29 @@ namespace Azure.ResourceManager.ElasticSan
                             storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("managedBy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value);
+            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value, managedBy.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

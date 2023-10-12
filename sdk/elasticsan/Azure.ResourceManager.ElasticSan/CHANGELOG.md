@@ -1,12 +1,13 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2023-10-27)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded to API version 2023-01-01
+- Supported snapshot and CMK for ElasticSan
 
-### Bugs Fixed
+### Breaking Changes
 
 ### Other Changes
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -17,10 +18,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
         }
 
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
         public ElasticSanEncryptionType? Encryption { get; set; }
+        /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
+        public EncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>

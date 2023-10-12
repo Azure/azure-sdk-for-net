@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteNumberValue(BaseSizeTiB);
             writer.WritePropertyName("extendedCapacitySizeTiB"u8);
             writer.WriteNumberValue(ExtendedCapacitySizeTiB);
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<long> totalMbps = default;
             Optional<long> totalSizeTiB = default;
             Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -227,11 +233,20 @@ namespace Azure.ResourceManager.ElasticSan
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections));
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

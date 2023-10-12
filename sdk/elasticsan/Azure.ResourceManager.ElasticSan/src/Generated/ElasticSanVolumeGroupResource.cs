@@ -140,6 +140,59 @@ namespace Azure.ResourceManager.ElasticSan
             return GetElasticSanVolumes().Get(volumeName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ElasticSanSnapshotResources in the ElasticSanVolumeGroup. </summary>
+        /// <returns> An object representing collection of ElasticSanSnapshotResources and their operations over a ElasticSanSnapshotResource. </returns>
+        public virtual ElasticSanSnapshotCollection GetElasticSanSnapshots()
+        {
+            return GetCachedClient(Client => new ElasticSanSnapshotCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a Volume Snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ElasticSanSnapshotResource>> GetElasticSanSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            return await GetElasticSanSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Volume Snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ElasticSanSnapshotResource> GetElasticSanSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            return GetElasticSanSnapshots().Get(snapshotName, cancellationToken);
+        }
+
         /// <summary>
         /// Get an VolumeGroups.
         /// <list type="bullet">
