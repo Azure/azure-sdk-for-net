@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
             }
+            if (Optional.IsDefined(AadEnabled))
+            {
+                writer.WritePropertyName("aad-enabled"u8);
+                writer.WriteStringValue(AadEnabled);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
