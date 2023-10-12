@@ -14,7 +14,6 @@ using NUnit.Framework;
 using System.Threading;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using System.Linq;
-using System.Drawing;
 using Azure.Storage.Tests;
 using Azure.Storage.Blobs.Models;
 
@@ -97,50 +96,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private class BlobResourceEnumerationItem : TransferValidator.IResourceEnumerationItem
-        {
-            private readonly BlobBaseClient _client;
-
-            public string RelativePath { get; }
-
-            public BlobResourceEnumerationItem(BlobBaseClient client, string relativePath)
-            {
-                _client = client;
-                RelativePath = relativePath;
-            }
-
-            public async Task<Stream> OpenReadAsync(CancellationToken cancellationToken)
-            {
-                return await _client.OpenReadAsync(cancellationToken: cancellationToken);
-            }
-        }
-
-        private TransferValidator.ListFilesAsync GetResourceLister(BlobContainerClient container, string blobPrefix)
-        {
-            async Task<List<TransferValidator.IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
-            {
-                List<TransferValidator.IResourceEnumerationItem> result = new();
-                await foreach (BlobItem blobItem in container.GetBlobsAsync(prefix: blobPrefix, cancellationToken: cancellationToken))
-                {
-                    result.Add(new BlobResourceEnumerationItem(container.GetBlobClient(blobItem.Name), blobItem.Name.Substring(blobPrefix.Length)));
-                }
-                return result;
-            }
-            return ListBlobs;
-        }
-
-        private TransferValidator.ListFilesAsync GetResourceLister(BlobBaseClient blob, string relativePath)
-        {
-            Task<List<TransferValidator.IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
-            {
-                return Task.FromResult(new List<TransferValidator.IResourceEnumerationItem>
-                {
-                    new BlobResourceEnumerationItem(blob, relativePath)
-                });
-            }
-            return ListBlobs;
-        }
-
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
@@ -172,7 +127,7 @@ namespace Azure.Storage.DataMovement.Tests
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
                 destResource,
-                GetResourceLister(container, sourcePrefix),
+                TransferValidator.GetBlobLister(container, sourcePrefix),
                 TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                 blobCount);
         }
