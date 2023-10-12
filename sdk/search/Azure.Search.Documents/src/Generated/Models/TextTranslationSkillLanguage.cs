@@ -54,8 +54,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string JaValue = "ja";
         private const string SwValue = "sw";
         private const string TlhValue = "tlh";
-        private const string TlhLatnValue = "tlh-Latn";
-        private const string TlhPiqdValue = "tlh-Piqd";
         private const string KoValue = "ko";
         private const string LvValue = "lv";
         private const string LtValue = "lt";
@@ -66,8 +64,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string FaValue = "fa";
         private const string PlValue = "pl";
         private const string PtValue = "pt";
-        private const string PtBrValue = "pt-br";
-        private const string PtPTValue = "pt-PT";
         private const string OtqValue = "otq";
         private const string RoValue = "ro";
         private const string RuValue = "ru";
@@ -89,11 +85,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string ViValue = "vi";
         private const string CyValue = "cy";
         private const string YuaValue = "yua";
-        private const string GaValue = "ga";
-        private const string KnValue = "kn";
-        private const string MiValue = "mi";
-        private const string MlValue = "ml";
-        private const string PaValue = "pa";
 
         /// <summary> Afrikaans. </summary>
         public static TextTranslationSkillLanguage Af { get; } = new TextTranslationSkillLanguage(AfValue);
@@ -159,10 +150,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TextTranslationSkillLanguage Sw { get; } = new TextTranslationSkillLanguage(SwValue);
         /// <summary> Klingon. </summary>
         public static TextTranslationSkillLanguage Tlh { get; } = new TextTranslationSkillLanguage(TlhValue);
-        /// <summary> Klingon (Latin script). </summary>
-        public static TextTranslationSkillLanguage TlhLatn { get; } = new TextTranslationSkillLanguage(TlhLatnValue);
-        /// <summary> Klingon (Klingon script). </summary>
-        public static TextTranslationSkillLanguage TlhPiqd { get; } = new TextTranslationSkillLanguage(TlhPiqdValue);
         /// <summary> Korean. </summary>
         public static TextTranslationSkillLanguage Ko { get; } = new TextTranslationSkillLanguage(KoValue);
         /// <summary> Latvian. </summary>
@@ -183,10 +170,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TextTranslationSkillLanguage Pl { get; } = new TextTranslationSkillLanguage(PlValue);
         /// <summary> Portuguese. </summary>
         public static TextTranslationSkillLanguage Pt { get; } = new TextTranslationSkillLanguage(PtValue);
-        /// <summary> Portuguese (Brazil). </summary>
-        public static TextTranslationSkillLanguage PtBr { get; } = new TextTranslationSkillLanguage(PtBrValue);
-        /// <summary> Portuguese (Portugal). </summary>
-        public static TextTranslationSkillLanguage PtPT { get; } = new TextTranslationSkillLanguage(PtPTValue);
         /// <summary> Queretaro Otomi. </summary>
         public static TextTranslationSkillLanguage Otq { get; } = new TextTranslationSkillLanguage(OtqValue);
         /// <summary> Romanian. </summary>
@@ -229,16 +212,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TextTranslationSkillLanguage Cy { get; } = new TextTranslationSkillLanguage(CyValue);
         /// <summary> Yucatec Maya. </summary>
         public static TextTranslationSkillLanguage Yua { get; } = new TextTranslationSkillLanguage(YuaValue);
-        /// <summary> Irish. </summary>
-        public static TextTranslationSkillLanguage Ga { get; } = new TextTranslationSkillLanguage(GaValue);
-        /// <summary> Kannada. </summary>
-        public static TextTranslationSkillLanguage Kn { get; } = new TextTranslationSkillLanguage(KnValue);
-        /// <summary> Maori. </summary>
-        public static TextTranslationSkillLanguage Mi { get; } = new TextTranslationSkillLanguage(MiValue);
-        /// <summary> Malayalam. </summary>
-        public static TextTranslationSkillLanguage Ml { get; } = new TextTranslationSkillLanguage(MlValue);
-        /// <summary> Punjabi. </summary>
-        public static TextTranslationSkillLanguage Pa { get; } = new TextTranslationSkillLanguage(PaValue);
         /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(TextTranslationSkillLanguage left, TextTranslationSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are not the same. </summary>

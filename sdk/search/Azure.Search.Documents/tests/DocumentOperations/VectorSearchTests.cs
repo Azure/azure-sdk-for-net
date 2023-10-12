@@ -110,7 +110,6 @@ namespace Azure.Search.Documents.Tests
                         VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
-                        QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
                         QueryCaption = QueryCaptionType.Extractive,
                         QueryAnswer = QueryAnswerType.Extractive,

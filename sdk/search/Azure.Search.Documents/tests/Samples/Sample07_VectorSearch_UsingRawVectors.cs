@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
     public partial class VectorSearchUsingRawVectors : SearchTestBase
     {
         public VectorSearchUsingRawVectors(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d52c50c22ec7f573d49fc3b4c6c931491d92ec8b/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d52c50c22ec7f573d49fc3b4c6c931491d92ec8b/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -123,17 +123,6 @@ directive:
 - from: searchindex.json
   where: $.definitions.VectorQuery.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
-```
-
-### Rename QueryResultDocumentSemanticFieldState
-
- Simplify `QueryResultDocumentSemanticFieldState` name by renaming it to `SemanticFieldState`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.QueryResultDocumentSemanticFieldState
-  transform: $["x-ms-enum"].name = "SemanticFieldState";
 ```
 
 ### Rename one of SearchMode definitions

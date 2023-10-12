@@ -76,7 +76,6 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchableField genreField = new SearchableField("genre")
             {
                 AnalyzerName = LexicalAnalyzerName.Values.EnLucene,
-                NormalizerName = LexicalNormalizerName.Lowercase,
                 IsFacetable = true,
                 IsFilterable = true
             };

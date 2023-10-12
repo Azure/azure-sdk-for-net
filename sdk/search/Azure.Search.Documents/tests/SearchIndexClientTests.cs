@@ -454,31 +454,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
-        public async Task AnalyzeTextWithNormalizer()
-        {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-
-            SearchIndexClient client = resources.GetIndexClient();
-
-            AnalyzeTextOptions request = new("I dARe YoU tO reAd It IN A nORmAl vOiCE.", LexicalNormalizerName.Lowercase);
-
-            Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
-            IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
-
-            Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual("i dare you to read it in a normal voice.", tokens[0].Token);
-
-            request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.", LexicalNormalizerName.AsciiFolding);
-
-            result = await client.AnalyzeTextAsync(resources.IndexName, request);
-            tokens = result.Value;
-
-            Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual("Item 1 in my (10) point rant is that 750F is uncomfortably warm.", tokens[0].Token);
-        }
-
-        [Test]
         public async Task SetScoringProfile()
         {
             // Testing: https://github.com/Azure/azure-sdk-for-net/issues/16570
