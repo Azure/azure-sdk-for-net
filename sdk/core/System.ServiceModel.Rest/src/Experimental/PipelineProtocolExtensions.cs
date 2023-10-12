@@ -10,7 +10,7 @@ namespace System.ServiceModel.Rest.Internal;
 
 public static class PipelineProtocolExtensions
 {
-    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, InvocationOptions requestContext, CancellationToken cancellationToken = default)
+    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -27,7 +27,7 @@ public static class PipelineProtocolExtensions
         throw new MessageFailedException(message.Response);
     }
 
-    public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, InvocationOptions requestContext, CancellationToken cancellationToken = default)
+    public static PipelineResponse ProcessMessage(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         pipeline.Send(message);
 
@@ -44,7 +44,7 @@ public static class PipelineProtocolExtensions
         throw new MessageFailedException(message.Response);
     }
 
-    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, InvocationOptions requestContext)
+    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions requestContext)
     {
         PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
@@ -58,7 +58,7 @@ public static class PipelineProtocolExtensions
         }
     }
 
-    public static NullableResult<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage, InvocationOptions> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, InvocationOptions requestContext)
+    public static NullableResult<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions requestContext)
     {
         PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)

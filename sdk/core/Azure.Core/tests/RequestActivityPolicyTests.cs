@@ -179,7 +179,7 @@ namespace Azure.Core.Tests
 
                 await requestTask;
 
-                Assert.True(mockTransport.SingleRequest.TryGetHeaderInternal("traceparent", out string requestId));
+                Assert.True(mockTransport.SingleRequest.TryGetHeader("traceparent", out string requestId));
                 Assert.AreEqual(activity.Id, requestId);
             }
             finally
@@ -203,9 +203,9 @@ namespace Azure.Core.Tests
             activity.Stop();
 
 #if NET5_0_OR_GREATER
-            Assert.True(transport.SingleRequest.TryGetHeaderInternal("traceparent", out string requestId));
+            Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
 #else
-            Assert.True(transport.SingleRequest.TryGetHeaderInternal("Request-Id", out string requestId));
+            Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
 #endif
             Assert.AreEqual(activity.Id, requestId);
         }
@@ -229,10 +229,10 @@ namespace Azure.Core.Tests
 
                 activity.Stop();
 
-                Assert.True(transport.SingleRequest.TryGetHeaderInternal("traceparent", out string requestId));
+                Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
                 Assert.AreEqual(activity.Id, requestId);
 
-                Assert.True(transport.SingleRequest.TryGetHeaderInternal("tracestate", out string traceState));
+                Assert.True(transport.SingleRequest.TryGetHeader("tracestate", out string traceState));
                 Assert.AreEqual("trace", traceState);
             }
             finally

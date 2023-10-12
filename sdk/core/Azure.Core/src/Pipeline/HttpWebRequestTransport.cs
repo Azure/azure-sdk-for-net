@@ -9,23 +9,19 @@ using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel.Rest;
-using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
 #if NETFRAMEWORK
-
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
     internal class HttpWebRequestTransport : HttpPipelineTransport
     {
-        internal static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
-
         private readonly Action<HttpWebRequest> _configureRequest;
+        public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
         private readonly IWebProxy? _environmentProxy;
 
         /// <summary>
@@ -48,29 +44,32 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        /// <inheritdoc />
         public override void Process(HttpMessage message)
-            => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
+        {
+            ProcessSyncOrAsync(message, false).EnsureCompleted();
+        }
 
+        /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
-            => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
-
-        public override Request CreateRequest()
-            => new HttpWebRequestTransportRequest();
+        {
+            await ProcessSyncOrAsync(message, true).ConfigureAwait(false);
+        }
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {
-            HttpWebRequest request = CreateWebRequest(message.Request);
+            var request = CreateRequest(message.Request);
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
             message.ClearResponse();
 
-            using CancellationTokenRegistration registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
+            using var registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
             try
             {
                 if (message.Request.Content != null)
                 {
-                    using Stream requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
+                    using var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
 
                     if (async)
                     {
@@ -105,7 +104,7 @@ namespace Azure.Core.Pipeline
                     webResponse = exception.Response;
                 }
 
-                message.Response = new HttpWebRequestTransportResponse(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
+                message.Response = new HttpWebTransportResponse(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
             }
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
@@ -120,9 +119,9 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private HttpWebRequest CreateWebRequest(Request messageRequest)
+        private HttpWebRequest CreateRequest(Request messageRequest)
         {
-            HttpWebRequest request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
+            var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
 
             // Timeouts are handled by the pipeline
             request.Timeout = Timeout.Infinite;
@@ -142,7 +141,7 @@ namespace Azure.Core.Pipeline
             _configureRequest(request);
 
             request.Method = messageRequest.Method.Method;
-            foreach (HttpHeader messageRequestHeader in messageRequest.Headers)
+            foreach (var messageRequestHeader in messageRequest.Headers)
             {
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.ContentLength, StringComparison.OrdinalIgnoreCase))
                 {
@@ -213,13 +212,13 @@ namespace Azure.Core.Pipeline
 
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Range, StringComparison.OrdinalIgnoreCase))
                 {
-                    RangeHeaderValue value = RangeHeaderValue.Parse(messageRequestHeader.Value);
+                    var value = RangeHeaderValue.Parse(messageRequestHeader.Value);
                     if (value.Unit != "bytes")
                     {
                         throw new InvalidOperationException("Only ranges with bytes unit supported.");
                     }
 
-                    foreach (RangeItemHeaderValue? rangeItem in value.Ranges)
+                    foreach (var rangeItem in value.Ranges)
                     {
                         if (rangeItem.From == null)
                         {
@@ -243,7 +242,7 @@ namespace Azure.Core.Pipeline
 
             if (request.ContentLength == -1 &&
                 messageRequest.Content != null &&
-                messageRequest.Content.TryComputeLength(out long length))
+                messageRequest.Content.TryComputeLength(out var length))
             {
                 request.ContentLength = length;
             }
@@ -257,69 +256,40 @@ namespace Azure.Core.Pipeline
             return request;
         }
 
-        private static void ApplyOptionsToRequest(HttpWebRequest request, HttpPipelineTransportOptions options)
+        /// <inheritdoc />
+        public override Request CreateRequest()
         {
-            if (options == null)
-            {
-                return;
-            }
-
-            // ServerCertificateCustomValidationCallback
-            if (options.ServerCertificateCustomValidationCallback != null)
-            {
-                request.ServerCertificateValidationCallback =
-                    (request, certificate, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(
-                        new ServerCertificateCustomValidationArgs(
-                            new X509Certificate2(certificate),
-                            x509Chain,
-                            sslPolicyErrors));
-            }
-            // Set ClientCertificates
-            foreach (X509Certificate2 cert in options.ClientCertificates)
-            {
-                request.ClientCertificates.Add(cert);
-            }
+            return new HttpWebTransportRequest();
         }
 
-        private sealed class HttpWebRequestTransportRequest : Request
+        private sealed class HttpWebTransportRequest : Request
         {
-            public HttpWebRequestTransportRequest()
+            public HttpWebTransportRequest()
             {
                 Method = RequestMethod.Get;
             }
 
-            private string? _clientRequestId;
             private readonly DictionaryHeaders _headers = new();
 
-            protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
-            protected override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
+            protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 
-            protected override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
 
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
 
-            protected override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
+            protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
 
-            protected override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
+            protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
-
-            public override string ClientRequestId
-            {
-                get => _clientRequestId ??= Guid.NewGuid().ToString();
-                set
-                {
-                    Argument.AssertNotNull(value, nameof(value));
-                    _clientRequestId = value;
-                }
-            }
 
             public override RequestContent? Content { get; set; }
 
             public override void Dispose()
             {
-                RequestContent? content = Content;
+                var content = Content;
                 if (content != null)
                 {
                     Content = null;
@@ -328,13 +298,13 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private sealed class HttpWebRequestTransportResponse : Response
+        private sealed class HttpWebTransportResponse : Response
         {
             private readonly HttpWebResponse _webResponse;
             private Stream? _contentStream;
             private Stream? _originalContentStream;
 
-            public HttpWebRequestTransportResponse(string clientRequestId, HttpWebResponse webResponse)
+            public HttpWebTransportResponse(string clientRequestId, HttpWebResponse webResponse)
             {
                 _webResponse = webResponse;
                 _originalContentStream = _webResponse.GetResponseStream();
@@ -388,13 +358,36 @@ namespace Azure.Core.Pipeline
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                foreach (string? key in _webResponse.Headers.AllKeys)
+                foreach (var key in _webResponse.Headers.AllKeys)
                 {
                     yield return new HttpHeader(key, _webResponse.Headers.Get(key));
                 }
             }
         }
-    }
 
+        private static void ApplyOptionsToRequest(HttpWebRequest request, HttpPipelineTransportOptions options)
+        {
+            if (options == null)
+            {
+                return;
+            }
+
+            // ServerCertificateCustomValidationCallback
+            if (options.ServerCertificateCustomValidationCallback != null)
+            {
+                request.ServerCertificateValidationCallback =
+                    (request, certificate, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(
+                        new ServerCertificateCustomValidationArgs(
+                            new X509Certificate2(certificate),
+                            x509Chain,
+                            sslPolicyErrors));
+            }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+                request.ClientCertificates.Add(cert);
+            }
+        }
+    }
 #endif
 }

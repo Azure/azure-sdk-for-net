@@ -7,19 +7,17 @@ namespace System.ServiceModel.Rest.Core;
 // What are the implications of this being abstract for Azure.Core's Request?
 // What are the implications for HttpMessage needing a Request not a PipelineRequest?
 // Multiple inheritance here, will need a pattern to address that.
-public abstract class PipelineRequest
+public abstract class PipelineRequest : IDisposable
 {
-    // TODO: generator constraint requires us to make this settable, revisit later?
-    public abstract void SetMethod(string method);
+    public abstract string Method { get; set; }
 
-    // TODO: generator constraint requires us to make this settable, revisit later?
     public abstract Uri Uri { get; set; }
-
-    // TODO: this stinks, can we make it go away?  It needs a step back and more rework.
-    protected internal virtual Uri GetUri() => Uri;
 
     // TODO: Can we change this to BinaryData?
     public abstract RequestBody? Content { get; set; }
 
-    public abstract void SetHeaderValue(string name, string value);
+    public abstract MessageHeaders Headers { get; }
+
+    // TODO: this is required by Azure.Core RequestAdapter constraint.  Revisit?
+    public abstract void Dispose();
 }

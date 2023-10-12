@@ -208,7 +208,7 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : System.ServiceModel.Rest.InvocationOptions
+    public partial class RequestContext : System.ServiceModel.Rest.RequestOptions
     {
         public RequestContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -216,6 +216,8 @@ namespace Azure
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+        public void Apply(Azure.Core.HttpMessage message) { }
+        public override void Apply(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.ServiceModel.Rest.MessageFailedException, System.Runtime.Serialization.ISerializable
@@ -515,17 +517,22 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineRequest
+    public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
-        public abstract string ClientRequestId { get; set; }
-        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public virtual string ClientRequestId { get { throw null; } set { } }
+        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
         public Azure.Core.RequestHeaders Headers { get { throw null; } }
         public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        protected internal abstract void AddHeader(string name, string value);
+        protected internal abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
-        protected override System.Uri GetUri() { throw null; }
-        public override void SetHeaderValue(string name, string value) { }
+        protected internal abstract bool RemoveHeader(string name);
+        protected internal virtual void SetHeader(string name, string value) { }
+        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
+        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class RequestContent : System.ServiceModel.Rest.Core.RequestBody
     {
@@ -591,9 +598,26 @@ namespace Azure.Core
         public static Azure.Core.RequestMethod Parse(string method) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestUriBuilder : System.ServiceModel.Rest.Internal.RequestUri
+    public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
+        public string? Host { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public string PathAndQuery { get { throw null; } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string? Scheme { get { throw null; } set { } }
+        public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
+        public void AppendPath(string value) { }
+        public void AppendPath(string value, bool escape) { }
+        public void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
+        public void AppendQuery(string name, string value) { }
+        public void AppendQuery(string name, string value, bool escapeValue) { }
+        public void Reset(System.Uri value) { }
+        public override string ToString() { throw null; }
+        public System.Uri ToUri() { throw null; }
     }
     public sealed partial class ResourceIdentifier : System.IComparable<Azure.Core.ResourceIdentifier>, System.IEquatable<Azure.Core.ResourceIdentifier>
     {
@@ -961,14 +985,14 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<Azure.Core.HttpMessage, Azure.RequestContext>
+    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<Azure.Core.HttpMessage>
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage() { throw null; }
-        public override Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
+        public override Azure.Core.HttpMessage CreateMessage() { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext context) { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public override void Send(Azure.Core.HttpMessage message) { }

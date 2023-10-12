@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline : Pipeline<HttpMessage, RequestContext>
+    public class HttpPipeline : Pipeline<HttpMessage>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -93,14 +92,14 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()
+        public override HttpMessage CreateMessage()
             => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override HttpMessage CreateMessage(RequestContext context)
+        public HttpMessage CreateMessage(RequestContext context)
             => CreateMessage(context, default);
 
         /// <summary>

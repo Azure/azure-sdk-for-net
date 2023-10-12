@@ -16,7 +16,6 @@ namespace Azure.Core
     public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
-
         private Response? _response;
 
         /// <summary>
@@ -25,18 +24,31 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : base(request)
+            : base(ToPipelineRequest(request))
         {
             Argument.AssertNotNull(request, nameof(request));
 
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+
+            Request = request;
             ResponseClassifier = responseClassifier;
+        }
+
+        private static PipelineRequest ToPipelineRequest(Request request)
+        {
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            {
+                return pipelineRequest!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
+            return new PipelineRequestAdapter(request);
         }
 
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public new Request Request { get => (Request)base.Request; }
+        public new Request Request { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -132,6 +144,9 @@ namespace Azure.Core
 
             context.Freeze();
 
+            context.Apply(this);
+
+            // Azure-specific extensibility piece
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);

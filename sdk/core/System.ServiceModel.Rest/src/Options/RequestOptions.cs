@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 
 namespace System.ServiceModel.Rest;
@@ -12,10 +13,24 @@ namespace System.ServiceModel.Rest;
 /// this may change some behaviors in various pipeline policies and the transport.
 /// </summary>
 // TODO: Make options freezable
-// TODO: This was RequestOptions, I'm changing it for now, we can change it back if
-// if we want.
-public class InvocationOptions : PipelineOptions
+// Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
+public class RequestOptions : PipelineOptions
 {
+    public virtual void Apply(PipelineMessage message)
+    {
+        // Wire up options on message
+        message.CancellationToken = CancellationToken;
+        message.ResponseClassifier = ResponseClassifier;
+
+        // TODO: note that this is a lot of *ways* to set values on the
+        // message, policy, etc.  Let's get clear on how many ways we need and why
+        // and when we use what, etc., then simplify it back to that per reasons.
+        if (NetworkTimeout.HasValue)
+        {
+            ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+        }
+    }
+
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
     // TODO: handle duplication across message and options
