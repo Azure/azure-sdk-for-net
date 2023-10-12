@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         internal NetworkInterface()
         {
-            IpAddresses = new ChangeTrackingList<IpAddress>();
+            IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
-        internal NetworkInterface(IReadOnlyList<IpAddress> ipAddresses)
+        internal NetworkInterface(IReadOnlyList<IPAddress> ipAddresses)
         {
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> The list of IP addresses in this interface. </summary>
-        public IReadOnlyList<IpAddress> IpAddresses { get; }
+        public IReadOnlyList<IPAddress> IPAddresses { get; }
     }
 }

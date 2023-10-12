@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class IpAddress
+    public partial class IPAddress
     {
-        internal static IpAddress DeserializeIpAddress(JsonElement element)
+        internal static IPAddress DeserializeIPAddress(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new IpAddress(address.Value, ipAddressVersion.Value, subnet.Value);
+            return new IPAddress(address.Value, ipAddressVersion.Value, subnet.Value);
         }
     }
 }

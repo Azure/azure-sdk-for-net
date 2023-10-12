@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<string> privateIpAddress = default;
+            Optional<string> privateIPAddress = default;
             Optional<string> linkIdentifier = default;
             Optional<string> groupId = default;
             Optional<string> memberName = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("linkIdentifier"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new ConnectionDetail(id.Value, privateIpAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
+            return new ConnectionDetail(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
         }
     }
 }

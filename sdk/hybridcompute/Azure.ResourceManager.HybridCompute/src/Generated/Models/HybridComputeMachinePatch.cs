@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         public LocationData LocationData { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
         internal CloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
