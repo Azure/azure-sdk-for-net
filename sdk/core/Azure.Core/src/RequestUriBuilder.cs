@@ -34,7 +34,10 @@ namespace Azure.Core
         internal void SetPipelineRequest(PipelineRequest request)
         {
             _pipelineRequest = request;
-            _pipelineRequest.Uri = ToUri();
+            if (Scheme != null && Host != null)
+            {
+                _pipelineRequest.Uri = ToUri();
+            }
         }
 
         /// <summary>
