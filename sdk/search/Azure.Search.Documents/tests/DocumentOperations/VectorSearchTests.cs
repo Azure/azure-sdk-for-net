@@ -225,10 +225,8 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
         }
 
-        // TODO: Add tests for updating an index to modify the vectorizer within a profile.
-        // TODO: Add a test for duplicate profile names, which should throw an error.
+        // TODO: Add a test for VectorFilterMode using both simple and hybrid vector search
         // TODO: Add a test for updating the profile name of a vector field, which should throw an error.
-        // TODO: Add tests for VectorizableTextQuery
 
         [Test]
         public async Task CreateIndexUsingFieldBuilder()
