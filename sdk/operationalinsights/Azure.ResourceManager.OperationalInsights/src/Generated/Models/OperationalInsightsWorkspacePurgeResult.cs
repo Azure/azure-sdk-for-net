@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsWorkspacePurgeResult
     {
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeResult. </summary>
-        /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
-        internal OperationalInsightsWorkspacePurgeResult(Guid operationId)
+        /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
+        internal OperationalInsightsWorkspacePurgeResult(string operationStringId)
         {
-            OperationId = operationId;
+            Argument.AssertNotNull(operationStringId, nameof(operationStringId));
+
+            OperationStringId = operationStringId;
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>
-        public Guid OperationId { get; }
+        public string OperationStringId { get; }
     }
 }
