@@ -771,7 +771,6 @@ try {
                     -TemplateParameterObject $templateFileParameters `
                     -Force:$Force
         }
- 
         if ($deployment.ProvisioningState -ne 'Succeeded') {
             Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
             Write-Host @'
@@ -804,7 +803,7 @@ try {
             Remove-Item $templateFile.jsonFilePath
         }
 
-        Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be ffected."
+        Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be affected."
         $null = $deployment | Remove-AzResourceGroupDeployment
     }
 
