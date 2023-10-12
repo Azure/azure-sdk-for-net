@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public HybridComputeMachineCollection collection { get; set; }
         public SubscriptionResource Subscription { get; set; }
         public HybridComputePrivateLinkScopeCollection scopeCollection { get; set; }
-        public ArmClient client { get; set; }
         public string subscriptionId = "e6fe6705-4c9c-4b54-81d2-e455780e20b8";
         public string resourceGroupName = "az-sdk-test";
         public string scopeName = "myPrivateLinkScope";
@@ -51,14 +50,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task InitializeClients()
         {
-            // get azure access token
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate client
-            client = new ArmClient(cred);
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
-
             resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            resourceGroupResource = ArmClient.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HybridComputeMachineResource
             collection = resourceGroupResource.GetHybridComputeMachines();
@@ -108,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                         VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Security
                         },
                     // The maximum published date for patches must be a DateTime value between last patch Tuesday and a week from today
-                    MaxPatchPublishOn = DateTimeOffset.Parse("2023-10-01T02:36:43.0539904+00:00"),
+                    MaxPatchPublishOn = DateTimeOffset.Parse("2023-10-13T02:36:43.0539904+00:00"),
                 },
             };
             ArmOperation<MachineInstallPatchesResult> lro = await hybridComputeMachine.InstallPatchesAsync(WaitUntil.Completed, content);
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
        protected async Task<HybridComputeMachineExtensionData> updateMachineExtension()
        {
             ResourceIdentifier hybridComputeMachineExtensionResourceId = HybridComputeMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, extensionName);
-            HybridComputeMachineExtensionResource hybridComputeMachineExtension = client.GetHybridComputeMachineExtensionResource(hybridComputeMachineExtensionResourceId);
+            HybridComputeMachineExtensionResource hybridComputeMachineExtension = ArmClient.GetHybridComputeMachineExtensionResource(hybridComputeMachineExtensionResourceId);
 
             HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch()
             {
@@ -215,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateLinkScopeData> updatePrivateLinkScope()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             // invoke the operation
             HybridComputePrivateLinkScopePatch patch = new HybridComputePrivateLinkScopePatch()
@@ -254,7 +248,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateLinkResourceData> getPrivateLinkResource()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             HybridComputePrivateLinkResourceCollection collection = hybridComputePrivateLinkScope.GetHybridComputePrivateLinkResources();
 
@@ -267,7 +261,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateLinkResourceCollection> getPrivateLinkResourceCollection()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             HybridComputePrivateLinkResourceCollection privateLinkResourcecollection = hybridComputePrivateLinkScope.GetHybridComputePrivateLinkResources();
 
@@ -282,7 +276,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateEndpointConnectionData> updatePrivateEndpointConnection()
         {
             ResourceIdentifier hybridComputePrivateEndpointConnectionResourceId = HybridComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName, privateEndpointConnectionName);
-            HybridComputePrivateEndpointConnectionResource hybridComputePrivateEndpointConnection = client.GetHybridComputePrivateEndpointConnectionResource(hybridComputePrivateEndpointConnectionResourceId);
+            HybridComputePrivateEndpointConnectionResource hybridComputePrivateEndpointConnection = ArmClient.GetHybridComputePrivateEndpointConnectionResource(hybridComputePrivateEndpointConnectionResourceId);
 
             HybridComputePrivateEndpointConnectionData data = new HybridComputePrivateEndpointConnectionData()
             {
@@ -300,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateEndpointConnectionData> getPrivateEndpointConnection()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             HybridComputePrivateEndpointConnectionCollection connectionCollection = hybridComputePrivateLinkScope.GetHybridComputePrivateEndpointConnections();
             HybridComputePrivateEndpointConnectionResource result = await connectionCollection.GetAsync(privateEndpointConnectionName);
@@ -311,7 +305,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task<HybridComputePrivateEndpointConnectionCollection> getPrivateEndpointConnectionCollection()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             HybridComputePrivateEndpointConnectionCollection connectionCollection = hybridComputePrivateLinkScope.GetHybridComputePrivateEndpointConnections();
 
@@ -327,7 +321,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task deletePrivateLinkScope()
         {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
-            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = client.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
 
             await hybridComputePrivateLinkScope.DeleteAsync(WaitUntil.Completed);
         }
@@ -335,7 +329,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task deletePrivateEndpointConnection()
         {
             ResourceIdentifier hybridComputePrivateEndpointConnectionResourceId = HybridComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName, privateEndpointConnectionName);
-            HybridComputePrivateEndpointConnectionResource hybridComputePrivateEndpointConnection = client.GetHybridComputePrivateEndpointConnectionResource(hybridComputePrivateEndpointConnectionResourceId);
+            HybridComputePrivateEndpointConnectionResource hybridComputePrivateEndpointConnection = ArmClient.GetHybridComputePrivateEndpointConnectionResource(hybridComputePrivateEndpointConnectionResourceId);
 
             await hybridComputePrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
         }

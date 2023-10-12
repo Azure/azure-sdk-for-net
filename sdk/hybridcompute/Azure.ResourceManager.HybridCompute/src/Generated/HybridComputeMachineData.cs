@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string domainName, string adFqdn, string dnsFqdn, string privateLinkScopeResourceId, string parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Resources = resources;
             Identity = identity;
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Specifies the DNS fully qualified display name. </summary>
         public string DnsFqdn { get; }
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
-        public string PrivateLinkScopeResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
-        public string ParentClusterResourceId { get; set; }
+        public ResourceIdentifier ParentClusterResourceId { get; set; }
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
         public string MssqlDiscovered { get; set; }
         /// <summary> Detected properties from the machine. </summary>
