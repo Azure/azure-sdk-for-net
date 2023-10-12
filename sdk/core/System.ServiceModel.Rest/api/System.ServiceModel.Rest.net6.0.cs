@@ -67,6 +67,24 @@ namespace System.ServiceModel.Rest
 }
 namespace System.ServiceModel.Rest.Core
 {
+    public abstract partial class MessageHeaders
+    {
+        protected MessageHeaders() { }
+        public abstract int Count { get; }
+        public abstract void Remove(string name);
+        public abstract void Set(string name, string value);
+        public abstract bool TryGetHeader(string name, out string value);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.ServiceModel.Rest.Core.MessageHeader<string, object>> values);
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MessageHeader<TName, TValue>
+    {
+        private readonly TName _Name_k__BackingField;
+        private readonly TValue _Value_k__BackingField;
+        public MessageHeader(TName name, TValue value) { throw null; }
+        public TName Name { get { throw null; } }
+        public TValue Value { get { throw null; } }
+    }
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request) { }
@@ -80,14 +98,14 @@ namespace System.ServiceModel.Rest.Core
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
-    public abstract partial class PipelineRequest
+    public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
         public abstract System.ServiceModel.Rest.Core.RequestBody? Content { get; set; }
+        public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
+        public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
-        protected internal virtual System.Uri GetUri() { throw null; }
-        public abstract void SetHeaderValue(string name, string value);
-        public abstract void SetMethod(string method);
+        public abstract void Dispose();
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -154,20 +172,11 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     {
         public HttpPipelineRequest() { }
         public override System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
+        public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
+        public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
-        protected virtual void AddHeader(string name, string value) { }
-        protected virtual bool ContainsHeader(string name) { throw null; }
-        public virtual void Dispose() { }
-        protected virtual bool RemoveHeader(string name) { throw null; }
-        protected virtual void SetHeader(string name, string value) { }
-        public override void SetHeaderValue(string name, string value) { }
-        public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
-        public override void SetMethod(string method) { }
+        public override void Dispose() { }
         public override string ToString() { throw null; }
-        protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
-        protected bool TryGetHeaderNames(out System.Collections.Generic.IEnumerable<string> headerNames) { throw null; }
-        protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-        public virtual bool TryGetMethod(out System.Net.Http.HttpMethod method) { throw null; }
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {

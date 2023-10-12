@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.ServiceModel.Rest.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {
@@ -13,35 +14,9 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        private sealed class HttpClientTransportRequest : Request
+        private sealed class HttpClientTransportRequest : HttpPipelineRequest
         {
             private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
-
-            private string? _clientRequestId;
-
-            public override string ClientRequestId
-            {
-                get => _clientRequestId ??= Guid.NewGuid().ToString();
-                set
-                {
-                    Argument.AssertNotNull(value, nameof(value));
-                    _clientRequestId = value;
-                }
-            }
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                TryGetHeaderNames(out IEnumerable<string> headerNames);
-                foreach (string name in headerNames)
-                {
-                    if (!TryGetHeader(name, out string? value))
-                    {
-                        throw new InvalidOperationException("Enumerator returned a header name that was not present in the collection.");
-                    }
-
-                    yield return new HttpHeader(name, value!);
-                }
-            }
 
             internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
             {

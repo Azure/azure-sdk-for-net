@@ -63,7 +63,8 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public sealed override Request CreateRequest() => new HttpClientTransportRequest();
+        public sealed override Request CreateRequest()
+            => new RequestAdapter(new HttpClientTransportRequest());
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)

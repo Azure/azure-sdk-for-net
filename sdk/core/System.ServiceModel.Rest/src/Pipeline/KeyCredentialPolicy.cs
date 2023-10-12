@@ -32,7 +32,7 @@ public class KeyCredentialPolicy : PipelinePolicy<PipelineMessage>
     public override void Process(PipelineMessage message, IPipelineEnumerator pipeline)
     {
         _credential.TryGetKey(out string key);
-        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {key}" : key);
+        message.Request.Headers.Set(_name, _prefix != null ? $"{_prefix} {key}" : key);
 
         pipeline.ProcessNext();
     }
@@ -40,7 +40,7 @@ public class KeyCredentialPolicy : PipelinePolicy<PipelineMessage>
     public override async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
     {
         _credential.TryGetKey(out string key);
-        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {key}" : key);
+        message.Request.Headers.Set(_name, _prefix != null ? $"{_prefix} {key}" : key);
 
         await pipeline.ProcessNextAsync().ConfigureAwait(false);
     }
