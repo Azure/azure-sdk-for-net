@@ -51,5 +51,17 @@ namespace Azure.Storage.DataMovement.Tests
             }
             return ListFiles;
         }
+
+        public static ListFilesAsync GetLocalFileListerSingle(string filePath, string relativePath)
+        {
+            Task<List<IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
+            {
+                return Task.FromResult(new List<IResourceEnumerationItem>()
+                {
+                    new LocalFileResourceEnumerationItem(filePath, relativePath)
+                });
+            }
+            return ListFiles;
+        }
     }
 }

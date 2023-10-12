@@ -99,11 +99,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         private class BlobResourceEnumerationItem : TransferValidator.IResourceEnumerationItem
         {
-            private readonly BlobClient _client;
+            private readonly BlobBaseClient _client;
 
             public string RelativePath { get; }
 
-            public BlobResourceEnumerationItem(BlobClient client, string relativePath)
+            public BlobResourceEnumerationItem(BlobBaseClient client, string relativePath)
             {
                 _client = client;
                 RelativePath = relativePath;
@@ -125,6 +125,18 @@ namespace Azure.Storage.DataMovement.Tests
                     result.Add(new BlobResourceEnumerationItem(container.GetBlobClient(blobItem.Name), blobItem.Name.Substring(blobPrefix.Length)));
                 }
                 return result;
+            }
+            return ListBlobs;
+        }
+
+        private TransferValidator.ListFilesAsync GetResourceLister(BlobBaseClient blob, string relativePath)
+        {
+            Task<List<TransferValidator.IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
+            {
+                return Task.FromResult(new List<TransferValidator.IResourceEnumerationItem>
+                {
+                    new BlobResourceEnumerationItem(blob, relativePath)
+                });
             }
             return ListBlobs;
         }
