@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/>. Uses the default 'https://metrics.monitor.azure.com/.default' endpoint.
         /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
-        /// var client = new MetricsBatchQueryClient(new DefaultAzureCredential());
+        /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         /// </code>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
