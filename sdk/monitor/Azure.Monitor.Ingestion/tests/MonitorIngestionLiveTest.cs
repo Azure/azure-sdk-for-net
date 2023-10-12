@@ -49,9 +49,6 @@ namespace Azure.Monitor.Ingestion.Tests
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             }
             var clientOptions = InstrumentClientOptions(options);
-            // Set audience for testing including sovereign cloud support
-            clientOptions.Audience = TestEnvironment.GetAudience();
-
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 
@@ -112,8 +109,7 @@ namespace Azure.Monitor.Ingestion.Tests
             for (int i = 0; i < numEntries; i++)
             {
                 entries.Add(
-                    new
-                    {
+                    new {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
@@ -126,10 +122,10 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
-            LogsIngestionClient client = CreateClient();
+           LogsIngestionClient client = CreateClient();
 
-            // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
+           // Make the request
+           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
             Assert.IsNotNull(response);
