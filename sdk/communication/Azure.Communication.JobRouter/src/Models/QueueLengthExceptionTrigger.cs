@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold of number of jobs queued to for this trigger. Must be greater than 0</param>
         public QueueLengthExceptionTrigger(int threshold)
-            : this(null, threshold)
+            : this("queue-length", threshold)
         {
         }
 

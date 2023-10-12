@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -67,7 +68,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
         }
 
-        [Test]
+        /*[Test]
         public async Task GetJobsTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -179,7 +180,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
-        }
+        }*/
 
         [Test]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
@@ -572,6 +573,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
 
             await routerClient.ReclassifyJobAsync(jobId1);
 

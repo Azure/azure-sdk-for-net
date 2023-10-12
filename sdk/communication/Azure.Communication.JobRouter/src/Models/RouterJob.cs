@@ -11,10 +11,9 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterJob")]
-    [CodeGenSuppress("RouterJob")]
     public partial class RouterJob : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /*/// <summary> Initializes a new instance of RouterJob. </summary>
         internal RouterJob()
         {
             AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             _labels = new ChangeTrackingDictionary<string, BinaryData>();
             _tags = new ChangeTrackingDictionary<string, BinaryData>();
             _notes = new ChangeTrackingDictionary<string, string>();
-        }
+        }*/
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
@@ -75,7 +74,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -96,7 +95,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
+                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -195,7 +194,7 @@ namespace Azure.Communication.JobRouter
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
                 }
                 writer.WriteEndObject();
             }
@@ -211,7 +210,7 @@ namespace Azure.Communication.JobRouter
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
                 }
                 writer.WriteEndObject();
             }

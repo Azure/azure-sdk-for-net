@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        public WaitTimeExceptionTrigger(TimeSpan threshold) : this(null, threshold.TotalSeconds)
+        public WaitTimeExceptionTrigger(TimeSpan threshold) : this("wait-time", threshold.TotalSeconds)
         {
         }
 

@@ -147,6 +147,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.UpsertJobAsync(
                         id:options.JobId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
 
@@ -204,6 +205,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertJob(
                     id:options.JobId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: new RequestContext(){ CancellationToken = cancellationToken });
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -263,6 +265,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.UpsertJobAsync(
                         id: options.JobId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: new RequestContext() { CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
 
@@ -319,6 +322,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertJob(
                     id: options.JobId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: new RequestContext() { CancellationToken = cancellationToken });
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -380,7 +384,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.UpsertJobAsync(
                         id: options.JobId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
 
@@ -441,7 +445,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertJob(
                     id: options.JobId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: new RequestContext() { CancellationToken = cancellationToken });
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -472,7 +476,7 @@ using Azure.Core.Pipeline;
                 return await RestClient.UpsertJobAsync(
                         id: jobId,
                         content: content,
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -502,7 +506,7 @@ using Azure.Core.Pipeline;
                 return RestClient.UpsertJob(
                     id: jobId,
                     content: content,
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)
@@ -1092,6 +1096,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.UpsertWorkerAsync(
                         workerId: options.WorkerId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
 
@@ -1145,6 +1150,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertWorker(
                     workerId: options.WorkerId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: new RequestContext() { CancellationToken = cancellationToken });
 
                 return Response.FromValue(RouterWorker.FromResponse(response), response);
@@ -1199,7 +1205,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.UpsertWorkerAsync(
                         workerId: options.WorkerId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: new RequestContext(){ CancellationToken = cancellationToken })
                     .ConfigureAwait(false);
 
@@ -1255,7 +1261,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.UpsertWorker(
                     workerId: options.WorkerId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: new RequestContext() { CancellationToken = cancellationToken });
 
                 return Response.FromValue(RouterWorker.FromResponse(response), response);
@@ -1286,7 +1292,7 @@ using Azure.Core.Pipeline;
                 return await RestClient.UpsertWorkerAsync(
                         workerId: workerId,
                         content: content,
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -1316,7 +1322,7 @@ using Azure.Core.Pipeline;
                 return RestClient.UpsertWorker(
                     workerId: workerId,
                     content: content,
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)

@@ -84,6 +84,7 @@ namespace Azure.Communication.JobRouter
 
         private JobRouterAdministrationClient(Uri endpoint, HttpPipeline httpPipeline, JobRouterClientOptions options)
         {
+            _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new JobRouterAdministrationRestClient(endpoint, options, httpPipeline);
         }
 
@@ -123,6 +124,7 @@ namespace Azure.Communication.JobRouter
                 var result = await RestClient.UpsertClassificationPolicyAsync(
                         id: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -160,6 +162,7 @@ namespace Azure.Communication.JobRouter
                 var result = RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
@@ -198,7 +201,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertClassificationPolicyAsync(
                         id: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -238,7 +241,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
@@ -269,6 +272,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertClassificationPolicyAsync(
                         id: classificationPolicyId,
                         content: content,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -298,6 +302,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertClassificationPolicy(
                     id: classificationPolicyId,
                     content: content,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)
@@ -435,6 +440,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertDistributionPolicyAsync(
                         id: options.DistributionPolicyId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -467,6 +473,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertDistributionPolicy(
                     id: options.DistributionPolicyId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -502,7 +509,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertDistributionPolicyAsync(
                         id: options.DistributionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -539,7 +546,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertDistributionPolicy(
                     id: options.DistributionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -570,7 +577,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertDistributionPolicyAsync(
                         id: distributionPolicyId,
                         content: content,
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -600,7 +607,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertDistributionPolicy(
                     id: distributionPolicyId,
                     content: content,
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)
@@ -744,6 +751,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertExceptionPolicyAsync(
                         id: options.ExceptionPolicyId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -781,6 +789,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertExceptionPolicy(
                     id: options.ExceptionPolicyId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -819,7 +828,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertExceptionPolicyAsync(
                         id: options.ExceptionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -859,7 +868,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertExceptionPolicy(
                     id: options.ExceptionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -890,7 +899,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertExceptionPolicyAsync(
                         id: exceptionPolicyId,
                         content: content,
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -920,7 +929,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertExceptionPolicy(
                     id: exceptionPolicyId,
                     content: content,
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)
@@ -1068,6 +1077,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertQueueAsync(
                         id: options.QueueId,
                         content: request.ToRequestContent(),
+                        requestConditions: new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -1107,6 +1117,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertQueue(
                     id: options.QueueId,
                     content: request.ToRequestContent(),
+                    requestConditions: new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -1148,7 +1159,7 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpsertQueueAsync(
                         id: options.QueueId,
                         content: request.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -1191,7 +1202,7 @@ namespace Azure.Communication.JobRouter
                 var response = RestClient.UpsertQueue(
                     id: options.QueueId,
                     content: request.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -1223,7 +1234,7 @@ namespace Azure.Communication.JobRouter
                 return await RestClient.UpsertQueueAsync(
                         id: queueId,
                         content: content,
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: context)
                     .ConfigureAwait(false);
             }
@@ -1254,7 +1265,7 @@ namespace Azure.Communication.JobRouter
                 return RestClient.UpsertQueue(
                     id: queueId,
                     content: content,
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: context);
             }
             catch (Exception ex)

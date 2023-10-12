@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value);
+                writer.WriteObjectValue(_value.ToObjectFromJson<object>());
             }
             if (Optional.IsDefined(_expiresAfterSeconds))
             {

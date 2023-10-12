@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
         /// <param name="labelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
         public ReclassifyExceptionAction(string classificationPolicyId, IDictionary<string, LabelValue> labelsToUpsert = default)
-            : this(null, classificationPolicyId, null)
+            : this("reclassify", classificationPolicyId, null)
         {
             Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
 

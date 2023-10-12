@@ -333,33 +333,6 @@ namespace Azure.Communication.JobRouter
             return new QueueLengthExceptionTrigger("queue-length", threshold);
         }
 
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
-        /// <param name="note">
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </param>
-        /// <param name="dispositionCode">
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
-        /// custom values.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
-        public static CancelExceptionAction CancelExceptionAction(string note = null, string dispositionCode = null)
-        {
-            return new CancelExceptionAction("cancel", note, dispositionCode);
-        }
-
-        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        /// <param name="queueId"> Updated QueueId. </param>
-        /// <param name="priority"> Updated Priority. </param>
-        /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        /// <returns> A new <see cref="JobRouter.ManualReclassifyExceptionAction"/> instance for mocking. </returns>
-        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string queueId = null, int? priority = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
-        {
-            workerSelectors ??= new List<RouterWorkerSelector>();
-
-            return new ManualReclassifyExceptionAction("manual-reclassify", queueId, priority, workerSelectors?.ToList());
-        }
-
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
         /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="workerId"> The Id of the Worker assigned to the job. </param>

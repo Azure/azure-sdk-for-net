@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter
             }
             string id = default;
             Optional<RouterWorkerState> state = default;
-            Optional<IDictionary<string, BinaryData>> queueAssignments = default;
+            Optional<IReadOnlyDictionary<string, RouterQueueAssignment>> queueAssignments = default;
             Optional<int> totalCapacity = default;
             Optional<IDictionary<string, BinaryData>> labels = default;
             Optional<IDictionary<string, BinaryData>> tags = default;
@@ -54,17 +54,10 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, RouterQueueAssignment> dictionary = new Dictionary<string, RouterQueueAssignment>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
+                        dictionary.Add(property0.Name, RouterQueueAssignment.DeserializeRouterQueueAssignment(property0.Value));
                     }
                     queueAssignments = dictionary;
                     continue;

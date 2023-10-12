@@ -4,6 +4,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
@@ -12,7 +13,8 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueueSelector : IUtf8JsonSerializable
     {
         [CodeGenMember("Value")]
-        private BinaryData _value {
+        private BinaryData _value
+        {
             get
             {
                 return BinaryData.FromObjectAsJson(Value.Value);
@@ -20,7 +22,8 @@ namespace Azure.Communication.JobRouter
             set
             {
                 Value = new LabelValue(value.ToObjectFromJson());
-            } }
+            }
+        }
 
         /// <summary> The value to compare against the actual label value with the given operator. </summary>
         public LabelValue Value { get; set; }
@@ -46,7 +49,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value);
+                writer.WriteObjectValue(_value.ToObjectFromJson());
             }
             writer.WriteEndObject();
         }

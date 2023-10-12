@@ -15,6 +15,17 @@ namespace Azure.Communication.JobRouter
     public partial class RouterWorker
     {
         /// <summary> Initializes a new instance of RouterWorker. </summary>
+        internal RouterWorker()
+        {
+            _queueAssignments = new ChangeTrackingDictionary<string, RouterQueueAssignment>();
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
+            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
+            Offers = new ChangeTrackingList<RouterJobOffer>();
+            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+        }
+
+        /// <summary> Initializes a new instance of RouterWorker. </summary>
         /// <param name="id"> Id of the worker. </param>
         /// <param name="state"> The current state of the worker. </param>
         /// <param name="queueAssignments"> The queue(s) that this worker can receive work from. </param>
@@ -32,7 +43,7 @@ namespace Azure.Communication.JobRouter
         /// consumed. A value of '0' means no capacity is currently consumed.
         /// </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, BinaryData> queueAssignments, int? totalCapacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        internal RouterWorker(string id, RouterWorkerState? state, IReadOnlyDictionary<string, RouterQueueAssignment> queueAssignments, int? totalCapacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
             Id = id;
             State = state;

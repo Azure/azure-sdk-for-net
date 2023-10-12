@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
             }
 
             ScoringRule = scoringRule;
-            ScoringRuleOptions = new ScoringRuleOptions(batchSize, scoringParameterSelectors ?? new ChangeTrackingList<ScoringRuleParameterSelector>(), allowScoringBatchOfWorkers, descendingOrder);
+            ScoringRuleOptions = new ScoringRuleOptions(batchSize,new ChangeTrackingList<ScoringRuleParameterSelector>(), allowScoringBatchOfWorkers, descendingOrder);
 
             if (scoringParameterSelectors is not null)
             {

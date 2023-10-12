@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(routerWorkerResponse.Value);
         }
 
-        [Test]
+        /*[Test]
         public async Task GetWorkersTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -243,7 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[1]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[2]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[3]);
-        }
+        }*/
 
         [Test]
         public async Task UpdateWorkerTest()

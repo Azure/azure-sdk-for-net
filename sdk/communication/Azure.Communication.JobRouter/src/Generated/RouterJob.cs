@@ -15,6 +15,17 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJob
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>
+        internal RouterJob()
+        {
+            _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
+            _notes = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of RouterJob. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
         /// <param name="status"> The status of the Job. </param>
