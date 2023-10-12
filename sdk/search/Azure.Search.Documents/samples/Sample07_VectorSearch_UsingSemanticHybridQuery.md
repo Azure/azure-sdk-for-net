@@ -171,7 +171,6 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
         QueryType = SearchQueryType.Semantic,
-        QueryLanguage = QueryLanguage.EnUs,
         SemanticConfigurationName = "my-semantic-config",
         QueryCaption = QueryCaptionType.Extractive,
         QueryAnswer = QueryAnswerType.Extractive,

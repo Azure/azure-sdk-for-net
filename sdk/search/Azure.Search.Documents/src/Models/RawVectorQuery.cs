@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The query parameters for vector and hybrid search queries. </summary>
     public partial class RawVectorQuery : VectorQuery
     {
         /// <summary> The vector representation of a search query. </summary>

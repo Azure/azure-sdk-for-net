@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
     public partial class VectorSearchUsingFieldBuilder : SearchTestBase
     {
         public VectorSearchUsingFieldBuilder(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

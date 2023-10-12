@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
