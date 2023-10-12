@@ -14,6 +14,9 @@ using NUnit.Framework;
 using System.Threading;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using System.Linq;
+using System.Drawing;
+using Azure.Storage.Tests;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -59,6 +62,115 @@ namespace Azure.Storage.DataMovement.Tests
         };
 
         #region SingleDownload Block Blob
+        private async Task SetupContainerAsync(
+            BlobContainerClient container,
+            string blobPrefix,
+            int blobCount,
+            long blobSize,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<(string BlobName, byte[] BlobData)> GetBlobDatas(int count, long size)
+            {
+                foreach (var _ in Enumerable.Range(0, count))
+                {
+                    yield return (BlobName: GetNewBlobName(), BlobData: GetRandomBuffer(size));
+                }
+            }
+            await SetupContainerAsync(
+                container,
+                blobPrefix,
+                GetBlobDatas(blobCount, blobSize),
+                cancellationToken);
+        }
+
+        private async Task SetupContainerAsync(
+            BlobContainerClient container,
+            string blobPrefix,
+            IEnumerable<(string BlobName, byte[] BlobData)> blobs,
+            CancellationToken cancellationToken = default)
+        {
+            // Upload set of VerifyDownloadBlobContentInfo blobs to download
+            foreach ((string blobName, byte[] blobData) in blobs)
+            {
+                await container.GetBlobClient(string.IsNullOrEmpty(blobPrefix) ? blobName : $"{blobPrefix}/{blobName}")
+                    .UploadAsync(new BinaryData(blobData), cancellationToken);
+            }
+        }
+
+        private class BlobResourceEnumerationItem : TransferValidator.IResourceEnumerationItem
+        {
+            private readonly BlobClient _client;
+
+            public string RelativePath { get; }
+
+            public BlobResourceEnumerationItem(BlobClient client, string relativePath)
+            {
+                _client = client;
+                RelativePath = relativePath;
+            }
+
+            public async Task<Stream> OpenReadAsync(CancellationToken cancellationToken)
+            {
+                return await _client.OpenReadAsync(cancellationToken: cancellationToken);
+            }
+        }
+
+        private class LocalFileResourceEnumerationItem : TransferValidator.IResourceEnumerationItem
+        {
+            private readonly string _localFilePath;
+
+            public string RelativePath { get; }
+
+            public LocalFileResourceEnumerationItem(string localFilePath, string relativePath)
+            {
+                _localFilePath = localFilePath;
+                RelativePath = relativePath;
+            }
+
+            public Task<Stream> OpenReadAsync(CancellationToken cancellationToken)
+            {
+                return Task.FromResult(File.OpenRead(_localFilePath) as Stream);
+            }
+        }
+
+        private TransferValidator.GetFilesAsync GetResourceLister(BlobContainerClient container, string blobPrefix)
+        {
+            async Task<List<TransferValidator.IResourceEnumerationItem>> ListBlobs(CancellationToken cancellationToken)
+            {
+                List<TransferValidator.IResourceEnumerationItem> result = new();
+                await foreach (BlobItem blobItem in container.GetBlobsAsync(prefix: blobPrefix, cancellationToken: cancellationToken))
+                {
+                    result.Add(new BlobResourceEnumerationItem(container.GetBlobClient(blobItem.Name), blobItem.Name.Substring(blobPrefix.Length)));
+                }
+                return result;
+            }
+            return ListBlobs;
+        }
+
+        private TransferValidator.GetFilesAsync GetResourceLister(string directoryPath)
+        {
+            Task<List<TransferValidator.IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
+            {
+                List<TransferValidator.IResourceEnumerationItem> result = new();
+                Queue<string> directories = new();
+                directories.Enqueue(directoryPath);
+                while (directories.Count > 0)
+                {
+                    string workingDir = directories.Dequeue();
+                    foreach (string dirPath in Directory.GetDirectories(workingDir))
+                    {
+                        directories.Enqueue(dirPath);
+                    }
+                    foreach (string filePath in Directory.GetFiles(workingDir))
+                    {
+                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(workingDir.Length)));
+                    }
+                }
+                return Task.FromResult(result);
+            }
+            return ListFiles;
+        }
+
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
@@ -75,106 +187,24 @@ namespace Azure.Storage.DataMovement.Tests
             int waitTimeInSec = 30,
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
-            List<string> blobNames = default,
             List<DataTransferOptions> options = default)
         {
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            // Populate blobNames list for number of blobs to be created
-            if (blobNames == default || blobNames?.Count < 0)
+            string sourcePrefix = Recording.Random.NextString(8);
+            await SetupContainerAsync(container, sourcePrefix, blobCount, size);
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+
+            StorageResource sourceResource = new BlobStorageResourceContainer(container, new()
             {
-                blobNames ??= new List<string>();
-                for (int i = 0; i < blobCount; i++)
-                {
-                    blobNames.Add(GetNewBlobName());
-                }
-            }
-            else
-            {
-                // If blobNames is popluated make sure these number of blobs match
-                Assert.AreEqual(blobCount, blobNames.Count);
-            }
+                BlobDirectoryPrefix = sourcePrefix,
+            });
+            StorageResource destResource = new LocalDirectoryStorageResourceContainer(disposingLocalDirectory.DirectoryPath);
 
-            // Populate Options and TestRaisedOptions
-            List<TestEventsRaised> eventRaisedList = TestEventsRaised.PopulateTestOptions(blobCount, ref options);
-
-            transferManagerOptions ??= new TransferManagerOptions()
-            {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
-            };
-
-            List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
-
-            // Initialize TransferManager
-            TransferManager transferManager = new TransferManager(transferManagerOptions);
-            // Upload set of VerifyDownloadBlobContentInfo blobs to download
-            for (int i = 0; i < blobCount; i++)
-            {
-                // Set up Blob to be downloaded
-                bool completed = false;
-                var data = GetRandomBuffer(size);
-                using Stream originalStream = await CreateLimitedMemoryStream(size);
-                string localSourceFile = Path.Combine(testDirectory.DirectoryPath, blobNames[i]);
-                await CreateBlockBlob(container, localSourceFile, blobNames[i], size);
-
-                // Set up event handler for the respective blob
-                options[i].TransferStatusChanged += (TransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.TransferStatus.HasCompletedSuccessfully)
-                    {
-                        completed = true;
-                    }
-                    return Task.CompletedTask;
-                };
-
-                // Create destination file path
-                string destFile = string.Concat(localSourceFile, "-dest");
-
-                downloadedBlobInfo.Add(new VerifyDownloadBlobContentInfo(
-                    localSourceFile,
-                    destFile,
-                    eventRaisedList[i],
-                    completed));
-            }
-
-            // Schedule all download blobs consecutively
-            for (int i = 0; i < downloadedBlobInfo.Count; i++)
-            {
-                // Create a special blob client for downloading that will
-                // assign client request IDs based on the range so that out
-                // of order operations still get predictable IDs and the
-                // recordings work correctly
-                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(container.Uri)
-                {
-                    BlobName = blobNames[i]
-                };
-                BlockBlobClient sourceBlobClient = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
-                StorageResourceItem sourceResource = new BlockBlobStorageResource(sourceBlobClient);
-                StorageResourceItem destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
-
-                // Act
-                DataTransfer transfer = await transferManager.StartTransferAsync(
-                    sourceResource,
-                    destinationResource,
-                    options[i]).ConfigureAwait(false);
-
-                downloadedBlobInfo[i].DataTransfer = transfer;
-            }
-
-            for (int i = 0; i < downloadedBlobInfo.Count; i++)
-            {
-                // Assert
-                Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
-                CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await downloadedBlobInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
-                Assert.IsTrue(downloadedBlobInfo[i].DataTransfer.HasCompleted);
-
-                // Verify Download
-                await downloadedBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
-                Assert.AreEqual(DataTransferState.Completed, downloadedBlobInfo[i].DataTransfer.TransferStatus.State);
-                CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
-            };
+            await new TransferValidator().TransferAndVerifyAsync(
+                sourceResource,
+                destResource,
+                GetResourceLister(container, sourcePrefix),
+                GetResourceLister(disposingLocalDirectory.DirectoryPath),
+                blobCount);
         }
 
         [RecordedTest]
