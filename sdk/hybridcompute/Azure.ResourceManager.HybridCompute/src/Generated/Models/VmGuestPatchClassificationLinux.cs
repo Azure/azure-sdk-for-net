@@ -10,14 +10,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The VmGuestPatchClassificationLinux. </summary>
-    public readonly partial struct VmGuestPatchClassificationLinux : IEquatable<VmGuestPatchClassificationLinux>
+    /// <summary> The VMGuestPatchClassificationLinux. </summary>
+    public readonly partial struct VMGuestPatchClassificationLinux : IEquatable<VMGuestPatchClassificationLinux>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VmGuestPatchClassificationLinux"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMGuestPatchClassificationLinux"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmGuestPatchClassificationLinux(string value)
+        public VMGuestPatchClassificationLinux(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string OtherValue = "Other";
 
         /// <summary> Critical. </summary>
-        public static VmGuestPatchClassificationLinux Critical { get; } = new VmGuestPatchClassificationLinux(CriticalValue);
+        public static VMGuestPatchClassificationLinux Critical { get; } = new VMGuestPatchClassificationLinux(CriticalValue);
         /// <summary> Security. </summary>
-        public static VmGuestPatchClassificationLinux Security { get; } = new VmGuestPatchClassificationLinux(SecurityValue);
+        public static VMGuestPatchClassificationLinux Security { get; } = new VMGuestPatchClassificationLinux(SecurityValue);
         /// <summary> Other. </summary>
-        public static VmGuestPatchClassificationLinux Other { get; } = new VmGuestPatchClassificationLinux(OtherValue);
-        /// <summary> Determines if two <see cref="VmGuestPatchClassificationLinux"/> values are the same. </summary>
-        public static bool operator ==(VmGuestPatchClassificationLinux left, VmGuestPatchClassificationLinux right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VmGuestPatchClassificationLinux"/> values are not the same. </summary>
-        public static bool operator !=(VmGuestPatchClassificationLinux left, VmGuestPatchClassificationLinux right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationLinux"/>. </summary>
-        public static implicit operator VmGuestPatchClassificationLinux(string value) => new VmGuestPatchClassificationLinux(value);
+        public static VMGuestPatchClassificationLinux Other { get; } = new VMGuestPatchClassificationLinux(OtherValue);
+        /// <summary> Determines if two <see cref="VMGuestPatchClassificationLinux"/> values are the same. </summary>
+        public static bool operator ==(VMGuestPatchClassificationLinux left, VMGuestPatchClassificationLinux right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VMGuestPatchClassificationLinux"/> values are not the same. </summary>
+        public static bool operator !=(VMGuestPatchClassificationLinux left, VMGuestPatchClassificationLinux right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="VMGuestPatchClassificationLinux"/>. </summary>
+        public static implicit operator VMGuestPatchClassificationLinux(string value) => new VMGuestPatchClassificationLinux(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmGuestPatchClassificationLinux other && Equals(other);
+        public override bool Equals(object obj) => obj is VMGuestPatchClassificationLinux other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(VmGuestPatchClassificationLinux other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VMGuestPatchClassificationLinux other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

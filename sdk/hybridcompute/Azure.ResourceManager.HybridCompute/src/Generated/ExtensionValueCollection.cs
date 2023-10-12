@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual AsyncPageable<ExtensionValueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Pageable<ExtensionValueResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExtensionValueResource(Client, ExtensionValueData.DeserializeExtensionValueData(e)), _extensionValueExtensionMetadataClientDiagnostics, Pipeline, "ExtensionValueCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -243,80 +242,6 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 var response = _extensionValueExtensionMetadataRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType, version, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtensionMetadata_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> The version of the Extension being received. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual async Task<NullableResponse<ExtensionValueResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            using var scope = _extensionValueExtensionMetadataClientDiagnostics.CreateScope("ExtensionValueCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _extensionValueExtensionMetadataRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<ExtensionValueResource>(response.GetRawResponse());
-                return Response.FromValue(new ExtensionValueResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtensionMetadata_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> The version of the Extension being received. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual NullableResponse<ExtensionValueResource> GetIfExists(string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            using var scope = _extensionValueExtensionMetadataClientDiagnostics.CreateScope("ExtensionValueCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _extensionValueExtensionMetadataRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType, version, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<ExtensionValueResource>(response.GetRawResponse());
-                return Response.FromValue(new ExtensionValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

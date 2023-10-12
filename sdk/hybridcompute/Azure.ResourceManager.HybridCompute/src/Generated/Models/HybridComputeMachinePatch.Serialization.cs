@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue(OsProfile);
             }
             if (Optional.IsDefined(CloudMetadata))
             {

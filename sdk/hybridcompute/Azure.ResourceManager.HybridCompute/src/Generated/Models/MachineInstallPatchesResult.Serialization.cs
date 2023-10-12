@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             Optional<PatchOperationStatus> status = default;
             Optional<string> installationActivityId = default;
-            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
+            Optional<VMGuestPatchRebootStatus> rebootStatus = default;
             Optional<bool> maintenanceWindowExceeded = default;
             Optional<int> excludedPatchCount = default;
             Optional<int> notSelectedPatchCount = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<PatchOperationStartedBy> startedBy = default;
             Optional<PatchServiceUsed> patchServiceUsed = default;
-            Optional<OSType> osType = default;
+            Optional<OsType> osType = default;
             Optional<ResponseError> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    rebootStatus = new VmGuestPatchRebootStatus(property.Value.GetString());
+                    rebootStatus = new VMGuestPatchRebootStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowExceeded"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new OsType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))

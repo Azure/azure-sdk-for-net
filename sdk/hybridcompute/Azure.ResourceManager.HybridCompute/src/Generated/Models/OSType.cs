@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The operating system type of the machine. </summary>
-    public readonly partial struct OSType : IEquatable<OSType>
+    public readonly partial struct OsType : IEquatable<OsType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="OSType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OsType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OSType(string value)
+        public OsType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string LinuxValue = "Linux";
 
         /// <summary> Windows. </summary>
-        public static OSType Windows { get; } = new OSType(WindowsValue);
+        public static OsType Windows { get; } = new OsType(WindowsValue);
         /// <summary> Linux. </summary>
-        public static OSType Linux { get; } = new OSType(LinuxValue);
-        /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
-        public static bool operator ==(OSType left, OSType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>
-        public static bool operator !=(OSType left, OSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
-        public static implicit operator OSType(string value) => new OSType(value);
+        public static OsType Linux { get; } = new OsType(LinuxValue);
+        /// <summary> Determines if two <see cref="OsType"/> values are the same. </summary>
+        public static bool operator ==(OsType left, OsType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="OsType"/> values are not the same. </summary>
+        public static bool operator !=(OsType left, OsType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="OsType"/>. </summary>
+        public static implicit operator OsType(string value) => new OsType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OSType other && Equals(other);
+        public override bool Equals(object obj) => obj is OsType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(OSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

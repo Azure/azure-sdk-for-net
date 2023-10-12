@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes properties of the IP address. </summary>
-    public partial class IPAddress
+    public partial class IpAddress
     {
-        /// <summary> Initializes a new instance of IPAddress. </summary>
-        internal IPAddress()
+        /// <summary> Initializes a new instance of IpAddress. </summary>
+        internal IpAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of IpAddress. </summary>
         /// <param name="address"> Represents the IP Address. </param>
         /// <param name="ipAddressVersion"> Represents the Ip Address Version. </param>
         /// <param name="subnet"> The subnet to which this IP address belongs. </param>
-        internal IPAddress(string address, string ipAddressVersion, Subnet subnet)
+        internal IpAddress(string address, string ipAddressVersion, Subnet subnet)
         {
             Address = address;
-            IPAddressVersion = ipAddressVersion;
+            IpAddressVersion = ipAddressVersion;
             Subnet = subnet;
         }
 
         /// <summary> Represents the IP Address. </summary>
         public string Address { get; }
         /// <summary> Represents the Ip Address Version. </summary>
-        public string IPAddressVersion { get; }
+        public string IpAddressVersion { get; }
         /// <summary> The subnet to which this IP address belongs. </summary>
         internal Subnet Subnet { get; }
         /// <summary> Represents address prefix. </summary>

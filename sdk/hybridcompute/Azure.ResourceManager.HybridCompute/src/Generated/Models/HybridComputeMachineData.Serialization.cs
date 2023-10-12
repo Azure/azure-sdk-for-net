@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("agentUpgrade"u8);
                 writer.WriteObjectValue(AgentUpgrade);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue(OsProfile);
             }
             if (Optional.IsDefined(VmId))
             {
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("clientPublicKey"u8);
                 writer.WriteStringValue(ClientPublicKey);
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType);
+                writer.WriteStringValue(OsType);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {

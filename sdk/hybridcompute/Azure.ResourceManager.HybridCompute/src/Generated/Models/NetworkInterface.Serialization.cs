@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            Optional<IReadOnlyList<IpAddress>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddresses"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<IpAddress> array = new List<IpAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item));
+                        array.Add(IpAddress.DeserializeIpAddress(item));
                     }
                     ipAddresses = array;
                     continue;

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal MachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OSType? osType, ResponseError errorDetails)
+        internal MachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VMGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OsType? osType, ResponseError errorDetails)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LastModifiedOn = lastModifiedOn;
             StartedBy = startedBy;
             PatchServiceUsed = patchServiceUsed;
-            OSType = osType;
+            OsType = osType;
             ErrorDetails = errorDetails;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The activity ID of the operation that produced this result. </summary>
         public string InstallationActivityId { get; }
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
-        public VmGuestPatchRebootStatus? RebootStatus { get; }
+        public VMGuestPatchRebootStatus? RebootStatus { get; }
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
         public bool? MaintenanceWindowExceeded { get; }
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the patch service used for the operation. </summary>
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
-        public OSType? OSType { get; }
+        public OsType? OsType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ResponseError ErrorDetails { get; }
     }

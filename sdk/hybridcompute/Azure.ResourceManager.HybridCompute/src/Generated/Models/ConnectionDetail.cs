@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of ConnectionDetail. </summary>
         /// <param name="id"> Azure resource Id. </param>
-        /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
+        /// <param name="privateIpAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
         /// <param name="groupId"> The private endpoint connection group id. </param>
         /// <param name="memberName"> The private endpoint connection member name. </param>
-        internal ConnectionDetail(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName)
+        internal ConnectionDetail(string id, string privateIpAddress, string linkIdentifier, string groupId, string memberName)
         {
             Id = id;
-            PrivateIPAddress = privateIPAddress;
+            PrivateIpAddress = privateIpAddress;
             LinkIdentifier = linkIdentifier;
             GroupId = groupId;
             MemberName = memberName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Azure resource Id. </summary>
         public string Id { get; }
         /// <summary> The private endpoint connection private ip address. </summary>
-        public string PrivateIPAddress { get; }
+        public string PrivateIpAddress { get; }
         /// <summary> The private endpoint connection link identifier. </summary>
         public string LinkIdentifier { get; }
         /// <summary> The private endpoint connection group id. </summary>

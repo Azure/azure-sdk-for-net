@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <returns> A new <see cref="Models.MachineAssessPatchesResult"/> instance for mocking. </returns>
-        public static MachineAssessPatchesResult MachineAssessPatchesResult(PatchOperationStatus? status = null, Guid? assessmentActivityId = null, bool? rebootPending = null, AvailablePatchCountByClassification availablePatchCountByClassification = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
+        public static MachineAssessPatchesResult MachineAssessPatchesResult(PatchOperationStatus? status = null, Guid? assessmentActivityId = null, bool? rebootPending = null, AvailablePatchCountByClassification availablePatchCountByClassification = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OsType? osType = null, ResponseError errorDetails = null)
         {
             return new MachineAssessPatchesResult(status, assessmentActivityId, rebootPending, availablePatchCountByClassification, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <returns> A new <see cref="Models.MachineInstallPatchesResult"/> instance for mocking. </returns>
-        public static MachineInstallPatchesResult MachineInstallPatchesResult(PatchOperationStatus? status = null, string installationActivityId = null, VmGuestPatchRebootStatus? rebootStatus = null, bool? maintenanceWindowExceeded = null, int? excludedPatchCount = null, int? notSelectedPatchCount = null, int? pendingPatchCount = null, int? installedPatchCount = null, int? failedPatchCount = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OSType? osType = null, ResponseError errorDetails = null)
+        public static MachineInstallPatchesResult MachineInstallPatchesResult(PatchOperationStatus? status = null, string installationActivityId = null, VMGuestPatchRebootStatus? rebootStatus = null, bool? maintenanceWindowExceeded = null, int? excludedPatchCount = null, int? notSelectedPatchCount = null, int? pendingPatchCount = null, int? installedPatchCount = null, int? failedPatchCount = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, PatchOperationStartedBy? startedBy = null, PatchServiceUsed? patchServiceUsed = null, OsType? osType = null, ResponseError errorDetails = null)
         {
             return new MachineInstallPatchesResult(status, installationActivityId, rebootStatus, maintenanceWindowExceeded, excludedPatchCount, notSelectedPatchCount, pendingPatchCount, installedPatchCount, failedPatchCount, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
         }
@@ -228,21 +228,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.NetworkInterface"/> instance for mocking. </returns>
-        public static NetworkInterface NetworkInterface(IEnumerable<IPAddress> ipAddresses = null)
+        public static NetworkInterface NetworkInterface(IEnumerable<IpAddress> ipAddresses = null)
         {
-            ipAddresses ??= new List<IPAddress>();
+            ipAddresses ??= new List<IpAddress>();
 
             return new NetworkInterface(ipAddresses?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of IpAddress. </summary>
         /// <param name="address"> Represents the IP Address. </param>
         /// <param name="ipAddressVersion"> Represents the Ip Address Version. </param>
         /// <param name="subnetAddressPrefix"> The subnet to which this IP address belongs. </param>
-        /// <returns> A new <see cref="Models.IPAddress"/> instance for mocking. </returns>
-        public static IPAddress IPAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null)
+        /// <returns> A new <see cref="Models.IpAddress"/> instance for mocking. </returns>
+        public static IpAddress IpAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null)
         {
-            return new IPAddress(address, ipAddressVersion, subnetAddressPrefix != null ? new Subnet(subnetAddressPrefix) : null);
+            return new IpAddress(address, ipAddressVersion, subnetAddressPrefix != null ? new Subnet(subnetAddressPrefix) : null);
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>
@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of ConnectionDetail. </summary>
         /// <param name="id"> Azure resource Id. </param>
-        /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
+        /// <param name="privateIpAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
         /// <param name="groupId"> The private endpoint connection group id. </param>
         /// <param name="memberName"> The private endpoint connection member name. </param>
         /// <returns> A new <see cref="Models.ConnectionDetail"/> instance for mocking. </returns>
-        public static ConnectionDetail ConnectionDetail(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
+        public static ConnectionDetail ConnectionDetail(string id = null, string privateIpAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
         {
-            return new ConnectionDetail(id, privateIPAddress, linkIdentifier, groupId, memberName);
+            return new ConnectionDetail(id, privateIpAddress, linkIdentifier, groupId, memberName);
         }
     }
 }

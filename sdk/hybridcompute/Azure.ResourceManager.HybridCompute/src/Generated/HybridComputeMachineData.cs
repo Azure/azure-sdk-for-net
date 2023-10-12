@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridCompute
             ServiceStatuses = serviceStatuses;
             CloudMetadata = cloudMetadata;
             AgentUpgrade = agentUpgrade;
-            OSProfile = osProfile;
+            OsProfile = osProfile;
             ProvisioningState = provisioningState;
             Status = status;
             LastStatusChange = lastStatusChange;
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.HybridCompute
             DisplayName = displayName;
             MachineFqdn = machineFqdn;
             ClientPublicKey = clientPublicKey;
-            OSName = osName;
-            OSVersion = osVersion;
-            OSType = osType;
+            OsName = osName;
+            OsVersion = osVersion;
+            OsType = osType;
             VmUuid = vmUuid;
             Extensions = extensions;
-            OSSku = osSku;
+            OsSku = osSku;
             DomainName = domainName;
             AdFqdn = adFqdn;
             DnsFqdn = dnsFqdn;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
         public AgentUpgrade AgentUpgrade { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public OSProfile OsProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The status of the hybrid machine agent. </summary>
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Public Key that the client provides to be used during initial resource onboarding. </summary>
         public string ClientPublicKey { get; set; }
         /// <summary> The Operating System running on the hybrid machine. </summary>
-        public string OSName { get; }
+        public string OsName { get; }
         /// <summary> The version of Operating System running on the hybrid machine. </summary>
-        public string OSVersion { get; }
+        public string OsVersion { get; }
         /// <summary> The type of Operating System (windows/linux). </summary>
-        public string OSType { get; set; }
+        public string OsType { get; set; }
         /// <summary> Specifies the Arc Machine's unique SMBIOS ID. </summary>
         public Guid? VmUuid { get; }
         /// <summary> Machine Extensions information (deprecated field). </summary>
         public IList<MachineExtensionInstanceView> Extensions { get; }
         /// <summary> Specifies the Operating System product SKU. </summary>
-        public string OSSku { get; }
+        public string OsSku { get; }
         /// <summary> Specifies the Windows domain name. </summary>
         public string DomainName { get; }
         /// <summary> Specifies the AD fully qualified display name. </summary>
