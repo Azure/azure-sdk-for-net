@@ -359,51 +359,6 @@ namespace System.ServiceModel.Rest.Internal
         public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RequestUri
-    {
-        public RequestUri() { }
-        protected bool HasPath { get { throw null; } }
-        protected bool HasQuery { get { throw null; } }
-        public virtual string? Host { get { throw null; } set { } }
-        public virtual string Path { get { throw null; } set { } }
-        public string PathAndQuery { get { throw null; } }
-        public virtual int Port { get { throw null; } set { } }
-        public virtual string Query { get { throw null; } set { } }
-        public virtual string? Scheme { get { throw null; } set { } }
-        public void AppendPath(bool value, bool escape = false) { }
-        public void AppendPath(byte[] value, string format, bool escape = true) { }
-        public void AppendPath(System.Collections.Generic.IEnumerable<string> value, bool escape = true) { }
-        public void AppendPath(System.DateTimeOffset value, string format, bool escape = true) { }
-        public void AppendPath(double value, bool escape = true) { }
-        public void AppendPath(System.Guid value, bool escape = true) { }
-        public void AppendPath(int value, bool escape = true) { }
-        public void AppendPath(long value, bool escape = true) { }
-        public virtual void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
-        public void AppendPath(float value, bool escape = true) { }
-        public virtual void AppendPath(string value) { }
-        public virtual void AppendPath(string value, bool escape) { }
-        public void AppendPath(System.TimeSpan value, string format, bool escape = true) { }
-        public virtual void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
-        public void AppendQuery(string name, bool value, bool escape = false) { }
-        public void AppendQuery(string name, byte[] value, string format, bool escape = true) { }
-        public void AppendQuery(string name, System.DateTimeOffset value, string format, bool escape = true) { }
-        public void AppendQuery(string name, decimal value, bool escape = true) { }
-        public void AppendQuery(string name, double value, bool escape = true) { }
-        public void AppendQuery(string name, System.Guid value, bool escape = true) { }
-        public void AppendQuery(string name, int value, bool escape = true) { }
-        public void AppendQuery(string name, long value, bool escape = true) { }
-        public void AppendQuery(string name, float value, bool escape = true) { }
-        public virtual void AppendQuery(string name, string value) { }
-        public virtual void AppendQuery(string name, string value, bool escapeValue) { }
-        public void AppendQuery(string name, System.TimeSpan value, bool escape = true) { }
-        public void AppendQuery(string name, System.TimeSpan value, string format, bool escape = true) { }
-        public void AppendQueryDelimited<T>(string name, System.Collections.Generic.IEnumerable<T> value, string delimiter, bool escape = true) { }
-        public void AppendQueryDelimited<T>(string name, System.Collections.Generic.IEnumerable<T> value, string delimiter, string format, bool escape = true) { }
-        public void AppendRawPathOrQueryOrHostOrScheme(string value, bool escape) { }
-        public virtual void Reset(System.Uri value) { }
-        public override string ToString() { throw null; }
-        public virtual System.Uri ToUri() { throw null; }
-    }
     public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
     {
         public Utf8JsonRequestBody() { }

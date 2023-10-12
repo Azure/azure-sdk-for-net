@@ -598,9 +598,26 @@ namespace Azure.Core
         public static Azure.Core.RequestMethod Parse(string method) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestUriBuilder : System.ServiceModel.Rest.Internal.RequestUri
+    public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
+        public string? Host { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public string PathAndQuery { get { throw null; } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string? Scheme { get { throw null; } set { } }
+        public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
+        public void AppendPath(string value) { }
+        public void AppendPath(string value, bool escape) { }
+        public void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
+        public void AppendQuery(string name, string value) { }
+        public void AppendQuery(string name, string value, bool escapeValue) { }
+        public void Reset(System.Uri value) { }
+        public override string ToString() { throw null; }
+        public System.Uri ToUri() { throw null; }
     }
     public sealed partial class ResourceIdentifier : System.IComparable<Azure.Core.ResourceIdentifier>, System.IEquatable<Azure.Core.ResourceIdentifier>
     {

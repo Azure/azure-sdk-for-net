@@ -12,6 +12,7 @@ namespace Azure.Core
     internal class RequestAdapter : Request
     {
         private readonly PipelineRequest _request;
+        private RequestUriBuilder? _uriBuilder;
 
         public RequestAdapter(PipelineRequest request)
         {
@@ -24,6 +25,25 @@ namespace Azure.Core
         {
             get => RequestMethod.Parse(_request.Method);
             set => _request.Method = value.Method;
+        }
+
+        public override RequestUriBuilder Uri
+        {
+            get
+            {
+                if (_uriBuilder == null)
+                {
+                    _uriBuilder = new RequestUriBuilder();
+                    _uriBuilder.SetPipelineRequest(_request);
+                }
+                return _uriBuilder;
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _uriBuilder = value;
+                _uriBuilder.SetPipelineRequest(_request);
+            }
         }
 
         public override void Dispose() => _request.Dispose();

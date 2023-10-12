@@ -10,6 +10,7 @@ namespace System.ServiceModel.Rest.Core;
 public abstract class PipelineRequest : IDisposable
 {
     public abstract string Method { get; set; }
+
     public abstract Uri Uri { get; set; }
 
     // TODO: Can we change this to BinaryData?
