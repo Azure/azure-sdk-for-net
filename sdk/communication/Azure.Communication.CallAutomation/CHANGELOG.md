@@ -3,7 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-- StartRecording now accepts ChannelAffinity.
+- StartRecording now accepts PauseOnStart.
 
 ### Breaking Changes
 
