@@ -34,6 +34,7 @@ namespace Azure.Core
         internal void SetPipelineRequest(PipelineRequest request)
         {
             _pipelineRequest = request;
+            _pipelineRequest.Uri = ToUri();
         }
 
         /// <summary>
