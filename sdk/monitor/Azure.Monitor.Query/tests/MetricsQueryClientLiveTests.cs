@@ -3,13 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
-using Castle.Components.DictionaryAdapter.Xml;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
@@ -18,8 +15,9 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
+            SaveDebugRecordingsOnFailure = true;
         }
 
         private MetricsQueryClient CreateClient()
@@ -338,49 +336,47 @@ namespace Azure.Monitor.Query.Tests
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
 
-        //[RecordedTest]
+        [RecordedTest]
         [Test]
         public async Task MetricsBatchQueryAsync()
         {
             MetricsBatchQueryClient client = CreateBatchClient();
-            string resourceId = TestEnvironment.ResourceId;
-            resourceId = resourceId.Substring(resourceId.IndexOf("/subscriptions"));
 
-            //try
-            //{
-            //    client.GetComponentType(resourceId);
-            //    configClient.getConfigurationSetting("foo", "bar");
-            //}
-            //catch (Exception)
-            //{
-            //    // ignore as this is only to generate some metrics
-            //}
-
-            //MetricsQueryOptions options = new MetricsQueryOptions();
-            //options.Granularity = TimeSpan.FromMinutes(10);
-            //options.Size = 10;
-            //options.TimeRange = new QueryTimeRange(TimeSpan.FromDays(1));
-            ////lic Mono<MetricsBatchResult> queryBatch(List<String> resourceUris, List<String> metricsNames, String metricsNamespace)
-            //var metricsQueryResults = client.BatchAsync(
-            //    TestEnvironment.SubscriptionId,
-            //    "microsoft.appconfiguration/configurationstores",
-            //    new List<string> { resourceId },
-            //    options).getValue();
+            var resourceId = TestEnvironment.StorageAccountId;
 
             Response<MetricResultsResponse> metricsResultsResponse = await client.BatchAsync(
                 resourceIds: new List<string> { resourceId },
-                metricNames: new List<string> { "HttpIncomingRequestCount" },
-                metricNamespace: "microsoft.insights/components").ConfigureAwait(false);
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
             MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].Resourceid);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+            for (int i = 0; i < metricsQueryResults.Values.Count; i++)
+            {
+                foreach (var value in metricsQueryResults.Values[i].Value)
+                {
+                    for (int j = 0; j < value.Timeseries.Count; j++)
+                    {
+                        Assert.GreaterOrEqual(value.Timeseries[j].Data[i].Total, 0);
+                    }
+                }
+            }
+        }
 
-            //Assert.AreEqual(1, metricsQueryResults.Values.Count);
-            Assert.AreEqual(0, metricsQueryResults.Values.Count);
-            ////Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().size());
-            //MetricResultsResponseValuesItem metricResultResponse = metricsQueryResults.Values.ElementAtOrDefault(0);
-            //QueryBatchMetric metric = metricResultResponse.Value.ElementAtOrDefault(0);
-            //Assert.AreEqual("HttpIncomingRequestCount", metric.Name);
-            //Assert.NotNull(metric.Timeseries);
+        [RecordedTest]
+        public void MetricsBatchInvalid()
+        {
+            MetricsBatchQueryClient client = CreateBatchClient();
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                client.Batch(
+                resourceIds: new List<string>(),
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts");
+            });
         }
     }
 }
