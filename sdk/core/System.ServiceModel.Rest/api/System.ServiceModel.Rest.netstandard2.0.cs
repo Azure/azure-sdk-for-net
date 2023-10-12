@@ -71,9 +71,10 @@ namespace System.ServiceModel.Rest.Core
     {
         protected MessageHeaders() { }
         public abstract int Count { get; }
-        public abstract void Remove(string name);
+        public abstract void Add(string name, string value);
+        public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
-        public abstract bool TryGetHeader(string name, out string value);
+        public abstract bool TryGetHeader(string name, out string? value);
         public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.ServiceModel.Rest.Core.MessageHeader<string, object>> values);
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

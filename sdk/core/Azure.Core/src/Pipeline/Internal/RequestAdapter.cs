@@ -46,11 +46,16 @@ namespace Azure.Core
             }
         }
 
+        public override RequestContent? Content
+        {
+            get => (RequestContent?)_request.Content;
+            set => _request.Content = value;
+        }
+
         public override void Dispose() => _request.Dispose();
 
         protected internal override void AddHeader(string name, string value)
-            // TODO: I think we want to add `Add` to Headers.
-            => _request.Headers.Set(name, value);
+            => _request.Headers.Add(name, value);
 
         protected internal override bool ContainsHeader(string name)
             => _request.Headers.TryGetHeader(name, out _);
@@ -73,11 +78,7 @@ namespace Azure.Core
         };
 
         protected internal override bool RemoveHeader(string name)
-        // TODO: can this fail?  If so, come back and return something sensible.
-        {
-            _request.Headers.Remove(name);
-            return true;
-        }
+            => _request.Headers.Remove(name);
 
         protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
             => _request.Headers.TryGetHeader(name, out value);

@@ -8,10 +8,16 @@ namespace System.ServiceModel.Rest.Core;
 public abstract class MessageHeaders
 {
     public abstract int Count { get; }
-    public abstract bool TryGetHeader(string name, out string value);
+
+    public abstract bool TryGetHeader(string name, out string? value);
+
     public abstract bool TryGetHeaders(out IEnumerable<MessageHeader<string, object>> values);
+
+    public abstract void Add(string name, string value);
+
     public abstract void Set(string name, string value);
-    public abstract void Remove(string name);
+
+    public abstract bool Remove(string name);
 }
 
 public readonly struct MessageHeader<TName, TValue>

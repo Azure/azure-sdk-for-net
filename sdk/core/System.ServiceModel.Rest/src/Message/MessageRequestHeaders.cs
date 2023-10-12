@@ -13,13 +13,31 @@ internal class MessageRequestHeaders : MessageHeaders
 
     public override int Count => _headers.Count;
 
-    public override void Remove(string name)
+    public override bool Remove(string name)
         => _headers.TryRemove(new IgnoreCaseString(name));
 
     public override void Set(string name, string value)
         => _headers.Set(new IgnoreCaseString(name), value);
 
-    public override bool TryGetHeader(string name, out string value)
+    public override void Add(string name, string value)
+    {
+        if (_headers.TryAdd(new IgnoreCaseString(name), value, out var existingValue))
+        {
+            return;
+        }
+
+        switch (existingValue)
+        {
+            case string stringValue:
+                _headers.Set(new IgnoreCaseString(name), new List<string> { stringValue, value });
+                break;
+            case List<string> listValue:
+                listValue.Add(value);
+                break;
+        }
+    }
+
+    public override bool TryGetHeader(string name, out string? value)
     {
         if (_headers.TryGetValue(new IgnoreCaseString(name), out var headerValue))
         {
@@ -27,7 +45,7 @@ internal class MessageRequestHeaders : MessageHeaders
             return true;
         }
 
-        value = string.Empty;
+        value = null;
         return false;
     }
 
