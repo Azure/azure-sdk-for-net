@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 LocationData = new LocationData("Redmond"),
                 VmId = Guid.Parse("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
                 ClientPublicKey = "string",
-                PrivateLinkScopeResourceId = "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName",
-                ParentClusterResourceId = "{AzureStackHCIResourceId}",
+                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
+                ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),
             };
             ArmOperation<HybridComputeMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, machineName, data);
             HybridComputeMachineResource result = lro.Value;

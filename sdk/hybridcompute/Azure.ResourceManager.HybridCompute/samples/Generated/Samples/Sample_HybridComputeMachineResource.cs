@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                         PatchMode = PatchModeType.Manual,
                     },
                 },
-                ParentClusterResourceId = "{AzureStackHCIResourceId}",
-                PrivateLinkScopeResourceId = "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName",
+                ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),
+                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
             };
             HybridComputeMachineResource result = await hybridComputeMachine.UpdateAsync(patch);
 

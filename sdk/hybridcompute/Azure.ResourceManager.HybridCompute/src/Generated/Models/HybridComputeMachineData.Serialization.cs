@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.HybridCompute
             Optional<string> domainName = default;
             Optional<string> adFqdn = default;
             Optional<string> dnsFqdn = default;
-            Optional<string> privateLinkScopeResourceId = default;
-            Optional<string> parentClusterResourceId = default;
+            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
+            Optional<ResourceIdentifier> parentClusterResourceId = default;
             Optional<string> mssqlDiscovered = default;
             Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -408,12 +408,20 @@ namespace Azure.ResourceManager.HybridCompute
                         }
                         if (property0.NameEquals("privateLinkScopeResourceId"u8))
                         {
-                            privateLinkScopeResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateLinkScopeResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parentClusterResourceId"u8))
                         {
-                            parentClusterResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            parentClusterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("mssqlDiscovered"u8))

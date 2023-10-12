@@ -39,7 +39,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  # 'privateLinkScopeResourceId': 'resource-id'
 
 acronym-mapping:
   CPU: Cpu
@@ -72,13 +71,13 @@ directive:
     where: $.definitions.MachineInstallPatchesParameters.properties.maximumDuration
     transform: $['format'] = 'duration'
 
-  # - from: HybridCompute.json
-  #   where: $.definitions.MachineUpdateProperties.properties.privateLinkScopeResourceId
-  #   transform: $['format'] = 'resource-id'
+  - from: HybridCompute.json
+    where: $.definitions.MachineUpdateProperties.properties.privateLinkScopeResourceId
+    transform: $['format'] = 'arm-id'
 
-  # - from: HybridCompute.json
-  #   where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
-  #   transform: $['format'] = 'resource-id'
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
+    transform: $['format'] = 'arm-id'
   
   - from: HybridCompute.json
     where: $.definitions.AgentUpgrade.properties.correlationId
@@ -96,13 +95,13 @@ directive:
     where: $.definitions.MachineProperties.properties.vmId
     transform: $['format'] = 'uuid'
 
-  # - from: HybridCompute.json
-  #   where: $.definitions.MachineUpdateProperties.properties.parentClusterResourceId
-  #   transform: $['format'] = 'resource-id'
+  - from: HybridCompute.json
+    where: $.definitions.MachineUpdateProperties.properties.parentClusterResourceId
+    transform: $['format'] = 'arm-id'
 
-  # - from: HybridCompute.json
-  #   where: $.definitions.MachineProperties.properties.parentClusterResourceId
-  #   transform: $['format'] = 'resource-id'
+  - from: HybridCompute.json
+    where: $.definitions.MachineProperties.properties.parentClusterResourceId
+    transform: $['format'] = 'arm-id'
 
   - from: HybridCompute.json
     where: $.definitions.MachineAssessPatchesResult.properties.assessmentActivityId

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -34,8 +35,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
         public AgentUpgrade AgentUpgrade { get; set; }
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
-        public string ParentClusterResourceId { get; set; }
+        public ResourceIdentifier ParentClusterResourceId { get; set; }
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
-        public string PrivateLinkScopeResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
     }
 }
