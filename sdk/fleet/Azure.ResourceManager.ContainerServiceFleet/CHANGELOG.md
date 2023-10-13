@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-10-13)
 
 ### Features Added
 
-### Breaking Changes
+- Updated to Fleet API `2023-08-15`.
+- Add `FleetUpdateStrategy` support.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix `SubnetResourceId` null check.
+- Fix LRO async call issues.
 
 ## 1.0.0-beta.1 (2023-10-05)
 
