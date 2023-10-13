@@ -74,17 +74,10 @@ namespace System.ServiceModel.Rest.Core
         public abstract void Add(string name, string value);
         public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
-        public abstract bool TryGetHeader(string name, out string? value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.ServiceModel.Rest.Core.MessageHeader<string, object>> values);
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessageHeader<TName, TValue>
-    {
-        private readonly TName _Name_k__BackingField;
-        private readonly TValue _Value_k__BackingField;
-        public MessageHeader(TName name, TValue value) { throw null; }
-        public TName Name { get { throw null; } }
-        public TValue Value { get { throw null; } }
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public partial class PipelineMessage : System.IDisposable
     {
@@ -111,15 +104,13 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual bool IsError { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; internal set; }
+        public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
+        public bool IsError { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
-        public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
-        public abstract bool TryGetHeaderValue(string name, out string? value);
-        public abstract bool TryGetReasonPhrase(out string reasonPhrase);
     }
     public abstract partial class RequestBody : System.IDisposable
     {
@@ -182,14 +173,12 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
         public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } }
+        public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers) { throw null; }
-        public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
-        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
     }
     public partial interface IPipelineEnumerator
     {

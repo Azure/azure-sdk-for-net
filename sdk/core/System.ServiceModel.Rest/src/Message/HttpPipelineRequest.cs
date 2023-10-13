@@ -83,36 +83,38 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         httpRequest.Headers.ExpectContinue = false;
 #endif
 
-        Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-        foreach (KeyValuePair<string, string> header in headers)
+        // TODO: Come back and address this implementation per switching on string/list
+        // header values once we reimplement assignment of headers to ResponseHeader directly.
+        Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
+        foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
         {
-            switch (header.Value)
-            {
-                case string stringValue:
-                    // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                    if (header.Name == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
-                    {
-                        httpRequest.Headers.Authorization = authHeader;
-                    }
-                    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, stringValue))
-                    {
-                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, stringValue))
-                        {
-                            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
-                        }
-                    }
-                    break;
+            //switch (header.Value)
+            //{
+                //case string stringValue:
+                //    // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+                //    if (header.Name == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                //    {
+                //        httpRequest.Headers.Authorization = authHeader;
+                //    }
+                //    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, stringValue))
+                //    {
+                //        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, stringValue))
+                //        {
+                //            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
+                //        }
+                //    }
+                //    break;
 
-                case List<string> listValue:
-                    if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, listValue))
+                //case List<string> listValue:
+                    if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value))
                     {
-                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, listValue))
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, header.Value))
                         {
-                            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
+                            throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
                         }
                     }
                     break;
-            }
+            //}
         }
 
         return httpRequest;
