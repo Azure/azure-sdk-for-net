@@ -23,10 +23,9 @@ foreach ($line in $($publishOutput -split "`r`n"))
 }
 
 Write-Host "Actual warning count is:", $actualWarningCount
-$expectedWarningCount = 7
+$expectedWarningCount = 3
 # Known warnings:
 # - Azure.Core.Serialization.DynamicData: Using member 'Azure.Core.Serialization.DynamicData.DynamicDataJsonConverter.DynamicDataJsonConverter()'
-# - 4x Azure.RequestFailedException.TryExtractErrorContent(): Using member 'System.Text.Json.JsonSerializer.Deserialize<>()' (https://github.com/Azure/azure-sdk-for-net/pull/38996)
 # - Azure.Core.Json.MutableJsonDocument: Using member 'Azure.Core.Json.MutableJsonDocument.MutableJsonDocumentConverter.MutableJsonDocumentConverter()'
 # - Microsoft.Extensions.DependencyInjection.ServiceLookup.IEnumerableCallSite.ServiceType.get: Using member 'System.Type.MakeGenericType(Type[])
 
