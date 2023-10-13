@@ -25,7 +25,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobPlanOperation, header.OperationType);
             Assert.AreEqual(DefaultSourceProviderId, header.SourceProviderId);
             Assert.AreEqual(DefaultDestinationProviderId, header.DestinationProviderId);
-            Assert.AreEqual(false, header.EnumerationComplete);
+            Assert.IsFalse(header.IsContainer);
+            Assert.IsFalse(header.EnumerationComplete);
             Assert.AreEqual(DefaultJobStatus, header.JobStatus);
             Assert.AreEqual(DefaultSourcePath, header.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, header.ParentDestinationPath);
@@ -48,6 +49,11 @@ namespace Azure.Storage.DataMovement.Tests
 
                 CollectionAssert.AreEqual(expected, actual);
             }
+
+            //using (FileStream fileStream = File.OpenWrite("D:\\azure-sdk-for-net\\sdk\\storage\\Azure.Storage.DataMovement\\tests\\Resources\\SampleJobPlanFile.b1.ndm"))
+            //{
+            //    header.Serialize(fileStream);
+            //}
         }
 
         [Test]
@@ -81,7 +87,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobPlanOperation, deserialized.OperationType);
             Assert.AreEqual(DefaultSourceProviderId, deserialized.SourceProviderId);
             Assert.AreEqual(DefaultDestinationProviderId, deserialized.DestinationProviderId);
-            Assert.AreEqual(false, deserialized.EnumerationComplete);
+            Assert.IsFalse(deserialized.IsContainer);
+            Assert.IsFalse(deserialized.EnumerationComplete);
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
