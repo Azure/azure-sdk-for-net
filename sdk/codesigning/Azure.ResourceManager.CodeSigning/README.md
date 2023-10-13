@@ -1,6 +1,6 @@
 # Microsoft Azure CodeSigning management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Code Signing is a fully managed end-to-end service for code signing that with a seamless experience for developers, content confidential signing, and easy management with Azure resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
