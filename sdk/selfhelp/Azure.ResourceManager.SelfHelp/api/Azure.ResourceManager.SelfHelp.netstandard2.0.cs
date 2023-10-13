@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SelfHelp
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo> Diagnostics { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> GlobalParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInvocation> Insights { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class SelfHelpDiagnosticResource : Azure.ResourceManager.ArmResource
     {
@@ -143,11 +143,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.ResponseOption ResponseOption(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties(string regex = null, bool? isRequired = default(bool?), string validationErrorMessage = null, long? maxLength = default(long?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResponse RestartTroubleshooterResponse(string troubleshooterResourceName = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData SelfHelpDiagnosticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> globalParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInvocation> insights = null, System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo> diagnostics = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData SelfHelpDiagnosticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> globalParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInvocation> insights = null, System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo> diagnostics = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? status = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpError error = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel? insightImportanceLevel = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpError SelfHelpError(string code = null, string errorType = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpError> details = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredParameterSets) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionType? solutionType = default(Azure.ResourceManager.SelfHelp.Models.SolutionType?), string description = null, System.Collections.Generic.IEnumerable<string> requiredInputs = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SolutionResourceData SolutionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.Step Step(string id = null, string title = null, string description = null, string guidance = null, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? executionStatus = default(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus?), string executionStatusDescription = null, Azure.ResourceManager.SelfHelp.Models.Type? stepType = default(Azure.ResourceManager.SelfHelp.Models.Type?), bool? isLastStep = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.StepInput> inputs = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult automatedCheckResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResponseError error = null) { throw null; }
@@ -204,26 +209,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public ContinueRequestBody() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResponse> Responses { get { throw null; } }
         public string StepId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiagnosticProvisioningState : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiagnosticProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState PartialComplete { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState left, Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState left, Azure.ResourceManager.SelfHelp.Models.DiagnosticProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExecutionStatus : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.ExecutionStatus>
@@ -469,10 +454,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelfHelpProvisioningState : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelfHelpProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState PartialComplete { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SelfHelpSolutionMetadata : Azure.ResourceManager.Models.ResourceData
     {
         public SelfHelpSolutionMetadata() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Description { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RequiredParameterSets { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SolutionId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> Solutions { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SolutionType { get { throw null; } set { } }
     }
     public partial class SolutionMetadataProperties
     {
