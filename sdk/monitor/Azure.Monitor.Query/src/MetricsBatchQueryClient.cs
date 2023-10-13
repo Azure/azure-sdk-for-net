@@ -96,28 +96,47 @@ namespace Azure.Monitor.Query
 
             try
             {
-                var subscriptionId = GetSubscriptionId(resourceIds[0]);
+                return ExecuteBatchAsync(resourceIds, metricNames, metricNamespace, options, isAsync: false, cancellationToken).Result;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-                string filter = null;
-                TimeSpan? granularity = null;
-                string aggregations = null;
-                string startTime = null;
-                int? top = null;
-                string orderBy = null;
-                string endTime = null;
-                ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
+        private string GetSubscriptionId(string resourceId)
+        {
+            int startIndex = resourceId.IndexOf("subscriptions/") + 14;
+            return resourceId.Substring(startIndex, resourceId.IndexOf("/", startIndex) - startIndex);
+        }
 
-                if (options != null)
-                {
-                    startTime = options.TimeRange.Value.Start.ToString();
-                    endTime = options.TimeRange.Value.End.ToString();
+        private async Task<Response<MetricResultsResponse>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
+        {
+            var subscriptionId = GetSubscriptionId(resourceIds[0]);
 
-                    top = options.Size;
-                    orderBy = options.OrderBy;
-                    filter = options.Filter;
-                    granularity = options.Granularity;
-                }
+            string filter = null;
+            TimeSpan? granularity = null;
+            string aggregations = null;
+            string startTime = null;
+            int? top = null;
+            string orderBy = null;
+            string endTime = null;
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
 
+            if (options != null)
+            {
+                startTime = options.TimeRange.Value.Start.ToString();
+                endTime = options.TimeRange.Value.End.ToString();
+
+                top = options.Size;
+                orderBy = options.OrderBy;
+                filter = options.Filter;
+                granularity = options.Granularity;
+            }
+
+            if (!isAsync)
+            {
                 return _metricBatchClient.Batch(
                     subscriptionId,
                     metricNamespace,
@@ -132,17 +151,23 @@ namespace Azure.Monitor.Query
                     filter,
                     cancellationToken);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
-        private string GetSubscriptionId(string resourceId)
-        {
-            int startIndex = resourceId.IndexOf("subscriptions/") + 14;
-            return resourceId.Substring(startIndex, resourceId.IndexOf("/", startIndex) - startIndex);
+            else
+            {
+                return await _metricBatchClient.BatchAsync(
+                    subscriptionId,
+                    metricNamespace,
+                    metricNames,
+                    resourceIdList,
+                    startTime,
+                    endTime,
+                    granularity,
+                    aggregations,
+                    top,
+                    orderBy,
+                    filter,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -166,41 +191,7 @@ namespace Azure.Monitor.Query
 
             try
             {
-                var subscriptionId = GetSubscriptionId(resourceIds[0]);
-
-                string filter = null;
-                TimeSpan? granularity = null;
-                string aggregations = null;
-                string startTime = null;
-                int? top = null;
-                string orderBy = null;
-                string endTime = null;
-                ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
-
-                if (options != null)
-                {
-                    startTime = options.TimeRange.Value.Start.ToString();
-                    endTime = options.TimeRange.Value.End.ToString();
-
-                    top = options.Size;
-                    orderBy = options.OrderBy;
-                    filter = options.Filter;
-                    granularity = options.Granularity;
-                }
-
-                return await _metricBatchClient.BatchAsync(
-                    subscriptionId,
-                    metricNamespace,
-                    metricNames,
-                    resourceIdList,
-                    startTime,
-                    endTime,
-                    granularity,
-                    aggregations,
-                    top,
-                    orderBy,
-                    filter,
-                    cancellationToken).ConfigureAwait(false);
+                return await ExecuteBatchAsync(resourceIds, metricNames, metricNamespace, options, isAsync: true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
