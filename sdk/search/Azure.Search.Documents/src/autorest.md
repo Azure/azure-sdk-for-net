@@ -103,6 +103,23 @@ directive:
   transform: $["x-ms-client-name"] = "vectorSearchDimensions";
 ```
 
+### Add `Edm.Single` in `SearchFieldDataType`
+
+In the case of a vector field, the `Edm.Single` data type was missing. Therefore, it is now being added to the `SearchFieldDataType`.
+
+```yaml
+directive:
+- from: swagger-document
+  where: $.definitions.SearchFieldDataType
+  transform: >
+    $.enum.push("Edm.Single");
+    $["x-ms-enum"].values.push({
+      "value": "Edm.Single",
+      "name": "Single",
+      "description": "Indicates that a field contains a single-precision floating point number. This is only valid when used with Collection(Edm.Single)."
+    });  
+```
+
 ### Add `arm-id` format for `AuthResourceId`
 
  Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
@@ -114,9 +131,9 @@ directive:
   transform: $["x-ms-format"] = "arm-id";
 ```
 
-### Rename VectorQuery property `K`
+### Rename `VectorQuery` property `K`
 
- Rename VectorQuery property `K` to `KNearestNeighborsCount`
+ Rename `VectorQuery` property `K` to `KNearestNeighborsCount`
 
 ```yaml
 directive:

@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary>A single type.</summary>
         [CodeGenMember("EdmSingle")]
-        public static SearchFieldDataType Single { get; } = new SearchFieldDataType("Edm.Single");
+        public static SearchFieldDataType Single { get; } = new SearchFieldDataType(SingleValue);
 
         /// <summary>
         /// Gets a <see cref="SearchFieldDataType"/> representing a collection of <paramref name="type"/>.
