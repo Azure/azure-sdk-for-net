@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -18,127 +19,111 @@ namespace Azure.ResourceManager.Billing
     /// <summary> A class to add extension methods to Azure.ResourceManager.Billing. </summary>
     public static partial class BillingExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static BillingArmClientMockingExtension GetBillingArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new BillingArmClientMockingExtension(client0));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BillingTenantMockingExtension GetBillingTenantMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new BillingTenantMockingExtension(client, resource.Id));
         }
-        #region BillingSubscriptionResource
+
         /// <summary>
         /// Gets an object representing a <see cref="BillingSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingSubscriptionResource" /> object. </returns>
         public static BillingSubscriptionResource GetBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingSubscriptionResource.ValidateResourceId(id);
-                return new BillingSubscriptionResource(client, id);
-            }
-            );
+            return GetBillingArmClientMockingExtension(client).GetBillingSubscriptionResource(id);
         }
-        #endregion
 
-        #region BillingSubscriptionAliasResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingSubscriptionAliasResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingSubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingSubscriptionAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingSubscriptionAliasResource" /> object. </returns>
         public static BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingSubscriptionAliasResource.ValidateResourceId(id);
-                return new BillingSubscriptionAliasResource(client, id);
-            }
-            );
+            return GetBillingArmClientMockingExtension(client).GetBillingSubscriptionAliasResource(id);
         }
-        #endregion
 
-        #region BillingPaymentMethodResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingPaymentMethodResource" /> object. </returns>
         public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingPaymentMethodResource.ValidateResourceId(id);
-                return new BillingPaymentMethodResource(client, id);
-            }
-            );
+            return GetBillingArmClientMockingExtension(client).GetBillingPaymentMethodResource(id);
         }
-        #endregion
 
-        #region BillingAccountPaymentMethodResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingAccountPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingAccountPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource" /> object. </returns>
         public static BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingAccountPaymentMethodResource.ValidateResourceId(id);
-                return new BillingAccountPaymentMethodResource(client, id);
-            }
-            );
+            return GetBillingArmClientMockingExtension(client).GetBillingAccountPaymentMethodResource(id);
         }
-        #endregion
 
-        #region BillingPaymentMethodLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingPaymentMethodLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource" /> object. </returns>
         public static BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingPaymentMethodLinkResource.ValidateResourceId(id);
-                return new BillingPaymentMethodLinkResource(client, id);
-            }
-            );
+            return GetBillingArmClientMockingExtension(client).GetBillingPaymentMethodLinkResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of BillingSubscriptionResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of BillingSubscriptionResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptions(string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
         public static BillingSubscriptionCollection GetBillingSubscriptions(this TenantResource tenantResource, string billingAccountName)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingSubscriptions(billingAccountName);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptions(billingAccountName);
         }
 
         /// <summary>
@@ -153,17 +138,21 @@ namespace Azure.ResourceManager.Billing
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingSubscriptions(billingAccountName).GetAsync(billingSubscriptionName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,30 +167,38 @@ namespace Azure.ResourceManager.Billing
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscription(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionResource> GetBillingSubscription(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingSubscriptions(billingAccountName).Get(billingSubscriptionName, cancellationToken);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscription(billingAccountName, billingSubscriptionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingSubscriptionAliasResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of BillingSubscriptionAliasResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAliases(string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
         public static BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(this TenantResource tenantResource, string billingAccountName)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
         }
 
         /// <summary>
@@ -216,17 +213,21 @@ namespace Azure.ResourceManager.Billing
         /// <description>BillingSubscriptionsAliases_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAliasAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingSubscriptionAliases(billingAccountName).GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAliasAsync(billingAccountName, aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -241,25 +242,35 @@ namespace Azure.ResourceManager.Billing
         /// <description>BillingSubscriptionsAliases_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAlias(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingSubscriptionAliases(billingAccountName).Get(aliasName, cancellationToken);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAlias(billingAccountName, aliasName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingPaymentMethodResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of BillingPaymentMethodResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethods()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
         public static BillingPaymentMethodCollection GetBillingPaymentMethods(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingPaymentMethods();
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethods();
         }
 
         /// <summary>
@@ -274,16 +285,20 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingPaymentMethods().GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -298,29 +313,37 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethod(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodResource> GetBillingPaymentMethod(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingPaymentMethods().Get(paymentMethodName, cancellationToken);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethod(paymentMethodName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingAccountPaymentMethodResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of BillingAccountPaymentMethodResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethods(string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
         public static BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(this TenantResource tenantResource, string billingAccountName)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
         }
 
         /// <summary>
@@ -335,17 +358,21 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethodAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingAccountPaymentMethods(billingAccountName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethodAsync(billingAccountName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -360,32 +387,39 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethod(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingAccountPaymentMethods(billingAccountName).Get(paymentMethodName, cancellationToken);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethod(billingAccountName, paymentMethodName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of BillingPaymentMethodLinkResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLinks(string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
         public static BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
         }
 
         /// <summary>
@@ -400,18 +434,22 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLinkAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLinkAsync(billingAccountName, billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -426,18 +464,22 @@ namespace Azure.ResourceManager.Billing
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLink(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).Get(paymentMethodName, cancellationToken);
+            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLink(billingAccountName, billingProfileName, paymentMethodName, cancellationToken);
         }
     }
 }

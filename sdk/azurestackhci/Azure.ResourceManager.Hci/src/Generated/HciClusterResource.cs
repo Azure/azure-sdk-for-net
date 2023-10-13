@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of ArcSettingResources and their operations over a ArcSettingResource. </returns>
         public virtual ArcSettingCollection GetArcSettings()
         {
-            return GetCachedClient(Client => new ArcSettingCollection(Client, Id));
+            return GetCachedClient(client => new ArcSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArcSettingResource>> GetArcSettingAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
         public virtual PublisherCollection GetPublishers()
         {
-            return GetCachedClient(Client => new PublisherCollection(Client, Id));
+            return GetCachedClient(client => new PublisherCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of UpdateResources and their operations over a UpdateResource. </returns>
         public virtual UpdateCollection GetUpdates()
         {
-            return GetCachedClient(Client => new UpdateCollection(Client, Id));
+            return GetCachedClient(client => new UpdateCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateName"> The name of the Update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<UpdateResource>> GetUpdateAsync(string updateName, CancellationToken cancellationToken = default)
         {
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateName"> The name of the Update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<UpdateResource> GetUpdate(string updateName, CancellationToken cancellationToken = default)
         {

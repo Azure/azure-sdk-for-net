@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiOperationPolicyResources and their operations over a ApiOperationPolicyResource. </returns>
         public virtual ApiOperationPolicyCollection GetApiOperationPolicies()
         {
-            return GetCachedClient(Client => new ApiOperationPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ApiOperationPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiOperationTagResources and their operations over a ApiOperationTagResource. </returns>
         public virtual ApiOperationTagCollection GetApiOperationTags()
         {
-            return GetCachedClient(Client => new ApiOperationTagCollection(Client, Id));
+            return GetCachedClient(client => new ApiOperationTagCollection(client, Id));
         }
 
         /// <summary>
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiOperationTagResource>> GetApiOperationTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiOperationTagResource> GetApiOperationTag(string tagId, CancellationToken cancellationToken = default)
         {

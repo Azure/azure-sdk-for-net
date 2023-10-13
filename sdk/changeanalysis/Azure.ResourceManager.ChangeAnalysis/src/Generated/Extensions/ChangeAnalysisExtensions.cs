@@ -8,8 +8,8 @@
 using System;
 using System.Threading;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -18,52 +18,19 @@ namespace Azure.ResourceManager.ChangeAnalysis
     /// <summary> A class to add extension methods to Azure.ResourceManager.ChangeAnalysis. </summary>
     public static partial class ChangeAnalysisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ChangeAnalysisResourceGroupMockingExtension GetChangeAnalysisResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisResourceGroupMockingExtension(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ChangeAnalysisSubscriptionMockingExtension GetChangeAnalysisSubscriptionMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisSubscriptionMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ChangeAnalysisTenantMockingExtension GetChangeAnalysisTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
@@ -78,6 +45,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisResourceGroupMockingExtension.GetChangesByResourceGroup(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -87,7 +58,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisResourceGroupMockingExtension(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -102,6 +73,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisResourceGroupMockingExtension.GetChangesByResourceGroup(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -111,7 +86,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisResourceGroupMockingExtension(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -126,6 +101,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisSubscriptionMockingExtension.GetChangesBySubscription(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -135,7 +114,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisSubscriptionMockingExtension(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -150,6 +129,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisSubscriptionMockingExtension.GetChangesBySubscription(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -159,7 +142,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisSubscriptionMockingExtension(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -174,6 +157,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>ResourceChanges_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisTenantMockingExtension.GetResourceChanges(string,DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -186,9 +173,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisTenantMockingExtension(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -203,6 +188,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>ResourceChanges_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisTenantMockingExtension.GetResourceChanges(string,DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -215,9 +204,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisTenantMockingExtension(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
     }
 }
