@@ -9,7 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Sms.Models;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests;
 using Moq;
 using NUnit.Framework;
 
@@ -17,6 +19,41 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
+        [Test]
+        public void SmsClient_ThrowsWithNullKeyCredential()
+        {
+            AzureKeyCredential? nullCredential = null;
+            Uri uri = new Uri("http://localhost");
+
+            Assert.That(() => new SmsClient(uri, nullCredential), Throws.ArgumentNullException);
+            Assert.That(() => new SmsClient(uri, nullCredential), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void SmsClient_ThrowsWithNullUri()
+        {
+            AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
+
+            Assert.That(() => new SmsClient(null, mockCredential), Throws.ArgumentNullException);
+            Assert.That(() => new SmsClient(null, mockCredential), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void SmsClient_ValidParameters()
+        {
+            AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
+            Uri uri = new Uri("http://localhost");
+
+            Assert.DoesNotThrow(() => new SmsClient(uri, mockCredential));
+        }
+
+        [Test]
+        public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
+        {
+            Assert.That(() => new SmsClient(""), Throws.ArgumentException);
+            Assert.That(() => new SmsClient(null), Throws.ArgumentNullException);
+        }
+
         [TestCaseSource(nameof(TestDataForSingleSms))]
         public async Task SendSmsAsyncOverload_PassesToGeneratedOne(string expectedFrom, string expectedTo, string expectedMessage, SmsSendOptions expectedOptions)
         {
@@ -67,34 +104,6 @@ namespace Azure.Communication.Sms.Tests
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
-        }
-
-        [Test]
-        public void SmsClient_ThrowsWithNullKeyCredential()
-        {
-            AzureKeyCredential? nullCredential = null;
-            SmsClientOptions options = new SmsClientOptions();
-
-            Assert.That(() => new SmsClient(new Uri("http://localhost"), nullCredential, null), Throws.ArgumentNullException);
-            Assert.That(() => new SmsClient(new Uri("http://localhost"), nullCredential, options), Throws.ArgumentNullException);
-        }
-
-        [Test]
-        public void SmsClient_ThrowsWithNullUri()
-        {
-            SmsClientOptions options = new SmsClientOptions();
-
-            Assert.That(() => new SmsClient(null, new AzureKeyCredential("mockKey"), null), Throws.ArgumentNullException);
-            Assert.That(() => new SmsClient(null, new AzureKeyCredential("mockKey"), options), Throws.ArgumentNullException);
-        }
-
-        [Test]
-        public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
-        {
-            SmsClientOptions options = new SmsClientOptions();
-
-            Assert.That(() => new SmsClient(""), Throws.ArgumentException);
-            Assert.That(() => new SmsClient(null), Throws.ArgumentNullException);
         }
 
         private static IEnumerable<object?[]> TestDataForSingleSms()
