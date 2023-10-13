@@ -651,8 +651,8 @@
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
-# ServiceLabel: Monitor - Operational Insights %Service Attention
-#/<NotInRepo>/                                                     @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
+# ServiceLabel: %Monitor - Operational Insights %Service Attention
+#/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
 # ServiceLabel: %Policy %Service Attention
 #/<NotInRepo>/                                                     @aperezcloud @kenieva
