@@ -53,5 +53,7 @@ namespace Azure.Communication.CallAutomation
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
         /// <summary> Optional property to specify location where recording will be stored. </summary>
         public ExternalStorageInternal ExternalStorage { get; set; }
+        /// <summary> When set to true will start recording in Pause mode, which could be resumed. </summary>
+        public bool? PauseOnStart { get; set; }
     }
 }

@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         private const string SapHanaValue = "SAP-HANA";
+        private const string OracleValue = "ORACLE";
 
         /// <summary> SAP-HANA. </summary>
         public static NetAppApplicationType SapHana { get; } = new NetAppApplicationType(SapHanaValue);
+        /// <summary> ORACLE. </summary>
+        public static NetAppApplicationType Oracle { get; } = new NetAppApplicationType(OracleValue);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
         public static bool operator ==(NetAppApplicationType left, NetAppApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are not the same. </summary>
