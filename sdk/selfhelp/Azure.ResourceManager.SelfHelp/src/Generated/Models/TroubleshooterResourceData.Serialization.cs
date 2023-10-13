@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            string type = default;
             Optional<SystemData> systemData = default;
             Optional<string> solutionId = default;
             Optional<IDictionary<string, string>> parameters = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
                     continue;
                 }
             }
-            return new TroubleshooterResourceData(id, name, type, systemData.Value, solutionId.Value, Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), Optional.ToList(steps));
+            return new TroubleshooterResourceData(id, name, id.ResourceType, systemData.Value, solutionId.Value, Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), Optional.ToList(steps));
         }
     }
 }
