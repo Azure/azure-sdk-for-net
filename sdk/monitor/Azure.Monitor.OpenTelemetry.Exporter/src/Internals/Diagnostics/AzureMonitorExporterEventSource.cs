@@ -350,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmitterFailed(string origin, bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, isAadEnabled, instrumentationKey, exceptionMessage);
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
-        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
+        [Event(34, Message = "AzureMonitorExporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
         public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
 
         [NonEvent]
