@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryNetworkMappingResources and their operations over a SiteRecoveryNetworkMappingResource. </returns>
         public virtual SiteRecoveryNetworkMappingCollection GetSiteRecoveryNetworkMappings()
         {
-            return GetCachedClient(Client => new SiteRecoveryNetworkMappingCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryNetworkMappingCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryNetworkMappingResource>> GetSiteRecoveryNetworkMappingAsync(string networkMappingName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMapping(string networkMappingName, CancellationToken cancellationToken = default)
         {

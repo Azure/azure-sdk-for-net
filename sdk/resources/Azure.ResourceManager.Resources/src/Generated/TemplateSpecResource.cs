@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TemplateSpecVersionResources and their operations over a TemplateSpecVersionResource. </returns>
         public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
         {
-            return GetCachedClient(Client => new TemplateSpecVersionCollection(Client, Id));
+            return GetCachedClient(client => new TemplateSpecVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TemplateSpecVersionResource>> GetTemplateSpecVersionAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TemplateSpecVersionResource> GetTemplateSpecVersion(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
