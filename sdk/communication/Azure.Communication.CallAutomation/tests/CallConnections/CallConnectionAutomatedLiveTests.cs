@@ -168,10 +168,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 await callConnection.CancelAddParticipantAsync(addParticipantResponse.Value.InvitationId);
 
                 // wait for cancel event
-                var addParticipantCancelledEvent = await WaitForEvent<AddParticipantCancelled>(callConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(addParticipantCancelledEvent);
-                Assert.IsTrue(addParticipantCancelledEvent is AddParticipantCancelled);
-                Assert.AreEqual(((AddParticipantCancelled)addParticipantCancelledEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
+                var CancelAddParticipantSucceededEvent = await WaitForEvent<CancelAddParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(CancelAddParticipantSucceededEvent);
+                Assert.IsTrue(CancelAddParticipantSucceededEvent is CancelAddParticipantSucceeded);
+                Assert.AreEqual(((CancelAddParticipantSucceeded)CancelAddParticipantSucceededEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
             }
             catch (Exception ex)
             {

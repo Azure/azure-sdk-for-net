@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CancelAddParticipantResponse. </summary>
+    /// <summary> Response payload for cancel add participant request. </summary>
     internal partial class CancelAddParticipantResponseInternal
     {
         /// <summary> Initializes a new instance of CancelAddParticipantResponseInternal. </summary>

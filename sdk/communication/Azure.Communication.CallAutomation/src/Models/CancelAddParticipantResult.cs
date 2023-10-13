@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="CancelAddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CancelAddParticipantEventResult"/> which contains either <see cref="AddParticipantCancelled"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
+        /// <returns>Returns <see cref="CancelAddParticipantEventResult"/> which contains either <see cref="CancelAddParticipantSucceeded"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
         public CancelAddParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(AddParticipantCancelled)
+                && (filter.GetType() == typeof(CancelAddParticipantSucceeded)
                 || filter.GetType() == typeof(CancelAddParticipantFailed)),
                 cancellationToken);
 
@@ -67,7 +67,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="CancelAddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CancelAddParticipantEventResult"/> which contains either <see cref="AddParticipantCancelled"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
+        /// <returns>Returns <see cref="CancelAddParticipantEventResult"/> which contains either <see cref="CancelAddParticipantSucceeded"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
         public async Task<CancelAddParticipantEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(AddParticipantCancelled)
+                && (filter.GetType() == typeof(CancelAddParticipantSucceeded)
                 || filter.GetType() == typeof(CancelAddParticipantFailed)),
                 cancellationToken).ConfigureAwait(false);
 
@@ -89,9 +89,9 @@ namespace Azure.Communication.CallAutomation
         {
             switch (returnedEvent)
             {
-                case AddParticipantCancelled:
+                case CancelAddParticipantSucceeded:
                     {
-                        var successEvent = returnedEvent as AddParticipantCancelled;
+                        var successEvent = returnedEvent as CancelAddParticipantSucceeded;
 
                         return new CancelAddParticipantEventResult(
                             true,

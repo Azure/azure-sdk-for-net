@@ -242,11 +242,11 @@ namespace Azure.Communication.CallAutomation
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-            request.AnsweredByIdentifier = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
+            request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
 
             return request;
@@ -610,7 +610,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                SourceIdentity = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
             };
 
             request.CustomContext = new CustomContextInternal(
@@ -620,7 +620,7 @@ namespace Azure.Communication.CallAutomation
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -639,7 +639,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                SourceIdentity = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
             };
 
             request.CustomContext = new CustomContextInternal(
@@ -649,7 +649,7 @@ namespace Azure.Communication.CallAutomation
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUri != null)
             {
-                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);

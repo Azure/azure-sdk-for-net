@@ -16,23 +16,22 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
-        /// <param name="toneInfo"> Information about Tone. </param>
+        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
+        /// <param name="toneInfo"> Define the information for a tone. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal ContinuousDtmfRecognitionToneReceived(ResultInformation resultInformation, ToneInfo toneInfo, string operationContext, string callConnectionId, string serverCallId, string correlationId)
         {
+            ResultInformation = resultInformation;
             ToneInfo = toneInfo;
+            OperationContext = operationContext;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            ResultInformation = resultInformation;
-            OperationContext = operationContext;
         }
-
-        /// <summary> Information about Tone. </summary>
+        /// <summary> Define the information for a tone. </summary>
         public ToneInfo ToneInfo { get; }
     }
 }

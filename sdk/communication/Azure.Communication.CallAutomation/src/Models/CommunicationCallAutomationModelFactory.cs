@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
         /// <param name="callbackUri">The callback URI.</param>
-        /// <param name="sourceIdentity">Source identity.</param>
+        /// <param name="source">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="mediaSubscriptionId">The subscriptionId for Media Streaming.</param>
@@ -48,13 +48,13 @@ namespace Azure.Communication.CallAutomation
             IEnumerable<CommunicationIdentifier> targets = default,
             CallConnectionState callConnectionState = default,
             Uri callbackUri = default,
-            CommunicationIdentifier sourceIdentity = default,
+            CommunicationIdentifier source = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             string mediaSubscriptionId = default,
             string dataSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId, dataSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, source, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId, dataSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -114,12 +114,12 @@ namespace Azure.Communication.CallAutomation
         public static AddParticipantFailed AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantFailedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -131,12 +131,12 @@ namespace Azure.Communication.CallAutomation
         public static AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantSucceededInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -148,13 +148,13 @@ namespace Azure.Communication.CallAutomation
         public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList(),
+                sequenceNumber,
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -166,12 +166,12 @@ namespace Azure.Communication.CallAutomation
         public static RemoveParticipantFailed RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantFailedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -183,12 +183,12 @@ namespace Azure.Communication.CallAutomation
         public static RemoveParticipantSucceeded RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantSucceededInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -223,13 +223,13 @@ namespace Azure.Communication.CallAutomation
         public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CommunicationIdentifier transferee = null, CommunicationIdentifier transferTarget = null)
         {
             var internalEvent =  new CallTransferAcceptedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
                 transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee),
+                callConnectionId,
+                serverCallId,
+                correlationId
                 );
             return new CallTransferAccepted(internalEvent);
         }
@@ -237,23 +237,25 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant cancelled event.
         /// </summary>
-        public static AddParticipantCancelled AddParticipantCancelled(
+        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(
             string callConnectionId = default,
             string serverCallId = default,
             string correlationId = default,
             string invitationId = default,
             CommunicationIdentifier participant = default,
+            ResultInformation resultInformation = default,
             string operationContext = default)
         {
-            var internalObject = new AddParticipantCancelledInternal(
+            var internalObject = new CancelAddParticipantSucceededInternal(
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                invitationId,
+                operationContext,
+                resultInformation,
                 callConnectionId,
                 serverCallId,
-                correlationId,
-                operationContext,
-                participant: CommunicationIdentifierSerializer.Serialize(participant),
-                invitationId);
+                correlationId);
 
-            return new AddParticipantCancelled(internalObject);
+            return new CancelAddParticipantSucceeded(internalObject);
         }
 
         /// <summary>
@@ -268,12 +270,12 @@ namespace Azure.Communication.CallAutomation
             string operationContext = default)
         {
             var internalObject = new CancelAddParticipantFailedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
-                invitationId);
+                invitationId,
+                callConnectionId,
+                serverCallId,
+                correlationId);
 
             return new CancelAddParticipantFailed(internalObject);
         }

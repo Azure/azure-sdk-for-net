@@ -8,16 +8,16 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The add participant cancelled event.
     /// </summary>
-    public class AddParticipantCancelled : CallAutomationEventBase
+    public class CancelAddParticipantSucceeded : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of AddParticipantCancelledEvent. </summary>
-        internal AddParticipantCancelled()
+        /// <summary> Initializes a new instance of CancelAddParticipantSucceeded event. </summary>
+        internal CancelAddParticipantSucceeded()
         {
         }
 
-        /// <summary> Initializes a new instance of AddParticipantCancelledEvent. </summary>
-        /// <param name="internalEvent">Internal Representation of the AddParticipantCancelledEvent. </param>
-        internal AddParticipantCancelled(AddParticipantCancelledInternal internalEvent)
+        /// <summary> Initializes a new instance of CancelAddParticipantSucceeded event. </summary>
+        /// <param name="internalEvent">Internal Representation of the CancelAddParticipantSucceeded event. </param>
+        internal CancelAddParticipantSucceeded(CancelAddParticipantSucceededInternal internalEvent)
         {
             OperationContext = internalEvent.OperationContext;
             CallConnectionId = internalEvent.CallConnectionId;
@@ -36,17 +36,17 @@ namespace Azure.Communication.CallAutomation
         public string InvitationId { get; }
 
         /// <summary>
-        /// Deserialize <see cref="AddParticipantCancelled"/> event.
+        /// Deserialize <see cref="CancelAddParticipantSucceeded"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="AddParticipantCancelled"/> object.</returns>
-        public static AddParticipantCancelled Deserialize(string content)
+        /// <returns>The new <see cref="CancelAddParticipantSucceeded"/> object.</returns>
+        public static CancelAddParticipantSucceeded Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            var internalEvent = AddParticipantCancelledInternal.DeserializeAddParticipantCancelledInternal(element);
-            return new AddParticipantCancelled(internalEvent);
+            var internalEvent = CancelAddParticipantSucceededInternal.DeserializeCancelAddParticipantSucceededInternal(element);
+            return new CancelAddParticipantSucceeded(internalEvent);
         }
     }
 }

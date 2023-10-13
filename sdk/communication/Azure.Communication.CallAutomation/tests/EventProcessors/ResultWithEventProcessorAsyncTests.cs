@@ -483,7 +483,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(true, returnedResult.IsSuccess);
             Assert.NotNull(returnedResult.SuccessResult);
             Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(SendDtmfCompleted), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(typeof(SendDtmfTonesCompleted), returnedResult.SuccessResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.SuccessResult.OperationContext);
         }
@@ -595,7 +595,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         }
 
         [Test]
-        public async Task AddParticipantCancelledEventResultFailedTest()
+        public async Task CancelAddParticipantSucceededEventResultFailedTest()
         {
             var invitationId = "invitationId";
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
@@ -627,7 +627,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         }
 
         [Test]
-        public async Task AddParticipantCancelledEventResultSuccessTest()
+        public async Task CancelAddParticipantSucceededEventResultSuccessTest()
         {
             var invitationId = "invitationId";
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
@@ -638,7 +638,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(202, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.AddParticipantCancelled(
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.CancelAddParticipantSucceeded(
                 CallConnectionId,
                 ServerCallId,
                 CorelationId,
@@ -653,7 +653,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(true, returnedResult.IsSuccess);
             Assert.NotNull(returnedResult.SuccessResult);
             Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(AddParticipantCancelled), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(typeof(CancelAddParticipantSucceeded), returnedResult.SuccessResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(invitationId, returnedResult.SuccessResult.InvitationId);
         }

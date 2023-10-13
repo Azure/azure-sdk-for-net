@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="SendDtmfEventResult"/> is returned from WaitForEvent of <see cref="SendDtmfResult"/>.</summary>
+    /// <summary><see cref="SendDtmfEventResult"/> is returned from WaitForEvent of <see cref="SendDtmfTonesResult"/>.</summary>
     public class SendDtmfEventResult
     {
         /// <summary>
@@ -12,16 +12,16 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="SendDtmfCompleted"/> event will be returned once the dtmf tones have been sent successfully.
+        /// <see cref="SendDtmfTonesCompleted"/> event will be returned once the dtmf tones have been sent successfully.
         /// </summary>
-        public SendDtmfCompleted SuccessResult { get; }
+        public SendDtmfTonesCompleted SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="SendDtmfFailed"/> event will be returned if send dtmf tones completed unsuccessfully.
+        /// <see cref="SendDtmfTonesFailed"/> event will be returned if send dtmf tones completed unsuccessfully.
         /// </summary>
-        public SendDtmfFailed FailureResult { get; }
+        public SendDtmfTonesFailed FailureResult { get; }
 
-        internal SendDtmfEventResult(bool isSuccess, SendDtmfCompleted successResult, SendDtmfFailed failureResult)
+        internal SendDtmfEventResult(bool isSuccess, SendDtmfTonesCompleted successResult, SendDtmfTonesFailed failureResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;

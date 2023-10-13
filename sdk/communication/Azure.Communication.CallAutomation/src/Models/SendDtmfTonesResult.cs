@@ -8,13 +8,13 @@ using System.Threading;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from send dtmf request.</summary>
-    public class SendDtmfResult
+    public partial class SendDtmfTonesResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal SendDtmfResult()
+        internal SendDtmfTonesResult()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="SendDtmfEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfCompleted"/> event or <see cref="SendDtmfFailed"/> event.</returns>
+        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesFailed"/> event.</returns>
         public SendDtmfEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -40,8 +40,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(SendDtmfCompleted)
-                || filter.GetType() == typeof(SendDtmfFailed)),
+                && (filter.GetType() == typeof(SendDtmfTonesCompleted)
+                || filter.GetType() == typeof(SendDtmfTonesFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="SendDtmfEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfCompleted"/> event or <see cref="SendDtmfCompleted"/> event.</returns>
+        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesCompleted"/> event.</returns>
         public async Task<SendDtmfEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -62,8 +62,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(SendDtmfCompleted)
-                || filter.GetType() == typeof(SendDtmfFailed)),
+                && (filter.GetType() == typeof(SendDtmfTonesCompleted)
+                || filter.GetType() == typeof(SendDtmfTonesFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
@@ -74,11 +74,11 @@ namespace Azure.Communication.CallAutomation
             SendDtmfEventResult result = default;
             switch (returnedEvent)
             {
-                case SendDtmfCompleted:
-                    result = new SendDtmfEventResult(true, (SendDtmfCompleted)returnedEvent, null);
+                case SendDtmfTonesCompleted:
+                    result = new SendDtmfEventResult(true, (SendDtmfTonesCompleted)returnedEvent, null);
                     break;
-                case SendDtmfFailed:
-                    result = new SendDtmfEventResult(false, null, (SendDtmfFailed)returnedEvent);
+                case SendDtmfTonesFailed:
+                    result = new SendDtmfEventResult(false, null, (SendDtmfTonesFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

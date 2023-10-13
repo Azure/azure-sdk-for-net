@@ -11,19 +11,18 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class DialogOptionsInternal : IUtf8JsonSerializable
+    public partial class ComponentsF09IdvSchemasPowervirtualagentsdialogAllof1 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BotAppId))
-            {
-                writer.WritePropertyName("botAppId"u8);
-                writer.WriteStringValue(BotAppId);
-            }
-            writer.WritePropertyName("dialogContext"u8);
+            writer.WritePropertyName("botAppId"u8);
+            writer.WriteStringValue(BotAppId);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("context"u8);
             writer.WriteStartObject();
-            foreach (var item in DialogContext)
+            foreach (var item in Context)
             {
                 writer.WritePropertyName(item.Key);
                 if (item.Value == null)
@@ -37,14 +36,15 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndObject();
         }
 
-        internal static DialogOptionsInternal DeserializeDialogOptionsInternal(JsonElement element)
+        internal static ComponentsF09IdvSchemasPowervirtualagentsdialogAllof1 DeserializeComponentsF09IdvSchemasPowervirtualagentsdialogAllof1(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> botAppId = default;
-            IDictionary<string, object> dialogContext = default;
+            string botAppId = default;
+            DialogInputType kind = default;
+            IDictionary<string, object> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("botAppId"u8))
@@ -52,7 +52,12 @@ namespace Azure.Communication.CallAutomation
                     botAppId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dialogContext"u8))
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DialogInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
                 {
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -66,11 +71,11 @@ namespace Azure.Communication.CallAutomation
                             dictionary.Add(property0.Name, property0.Value.GetObject());
                         }
                     }
-                    dialogContext = dictionary;
+                    context = dictionary;
                     continue;
                 }
             }
-            return new DialogOptionsInternal(botAppId.Value, dialogContext);
+            return new ComponentsF09IdvSchemasPowervirtualagentsdialogAllof1(botAppId, kind, context);
         }
     }
 }

@@ -289,7 +289,7 @@ namespace Azure.Communication.CallAutomation
                 request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
             }
 
-            request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+            request.OverrideCallbackUri = options.CallbackUri?.AbsoluteUri;
             return request;
         }
 
@@ -392,7 +392,7 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
-            request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+            request.OverrideCallbackUri = options.CallbackUri?.AbsoluteUri;
 
             request.CustomContext = new CustomContextInternal(
                 options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
@@ -470,7 +470,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                IReadOnlyList<CallParticipant> result = response.Value.Values.Select(t => new CallParticipant(t)).ToList();
+                IReadOnlyList<CallParticipant> result = response.Value.Value.Select(t => new CallParticipant(t)).ToList();
 
                 return Response.FromValue(result, response.GetRawResponse());
             }
@@ -496,7 +496,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     );
 
-                IReadOnlyList<CallParticipant> result = response.Value.Values.Select(t => new CallParticipant(t)).ToList();
+                IReadOnlyList<CallParticipant> result = response.Value.Value.Select(t => new CallParticipant(t)).ToList();
 
                 return Response.FromValue(result, response.GetRawResponse());
             }
@@ -544,7 +544,7 @@ namespace Azure.Communication.CallAutomation
 
                 request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
-                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+                request.OverrideCallbackUri = options.CallbackUri?.AbsoluteUri;
                 var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new RemoveParticipantResult(response);
@@ -593,7 +593,7 @@ namespace Azure.Communication.CallAutomation
 
                 options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
-                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+                request.OverrideCallbackUri = options.CallbackUri?.AbsoluteUri;
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = new RemoveParticipantResult(response);
@@ -873,7 +873,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    CallbackUri = options.CallbackUri?.AbsoluteUri,
+                    OverrideCallbackUri = options.CallbackUri?.AbsoluteUri,
                 };
                 var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
                 var result = new CancelAddParticipantResult(response);
@@ -920,7 +920,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext,
-                    CallbackUri = options.CallbackUri?.AbsoluteUri,
+                    OverrideCallbackUri = options.CallbackUri?.AbsoluteUri,
                 };
                 var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
                 var result = new CancelAddParticipantResult(response);

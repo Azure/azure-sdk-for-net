@@ -835,7 +835,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void SendDtmfCompletedEventParsed_Test()
         {
-            SendDtmfCompleted @event = CommunicationCallAutomationModelFactory.SendDtmfCompleted(
+            SendDtmfTonesCompleted @event = CommunicationCallAutomationModelFactory.SendDtmfCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -844,7 +844,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfCompleted");
-            if (parsedEvent is SendDtmfCompleted SendDtmfCompleted)
+            if (parsedEvent is SendDtmfTonesCompleted SendDtmfCompleted)
             {
                 Assert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
                 Assert.AreEqual("operationContext", SendDtmfCompleted.OperationContext);
@@ -885,9 +885,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void AddParticipantCancelledEventParsed_Test()
+        public void CancelAddParticipantSucceededEventParsed_Test()
         {
-            AddParticipantCancelled @event = CommunicationCallAutomationModelFactory.AddParticipantCancelled(
+            CancelAddParticipantSucceeded @event = CommunicationCallAutomationModelFactory.CancelAddParticipantSucceeded(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -896,15 +896,15 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 operationContext: "operationContext");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantCancelled");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CancelAddParticipantSucceeded");
 
-            if (parsedEvent is AddParticipantCancelled addParticipantCancelled)
+            if (parsedEvent is CancelAddParticipantSucceeded CancelAddParticipantSucceeded)
             {
-                Assert.AreEqual("operationContext", addParticipantCancelled.OperationContext);
-                Assert.AreEqual("callConnectionId", addParticipantCancelled.CallConnectionId);
-                Assert.AreEqual("correlationId", addParticipantCancelled.CorrelationId);
-                Assert.AreEqual("serverCallId", addParticipantCancelled.ServerCallId);
-                Assert.AreEqual("invitationId", addParticipantCancelled.InvitationId);
+                Assert.AreEqual("operationContext", CancelAddParticipantSucceeded.OperationContext);
+                Assert.AreEqual("callConnectionId", CancelAddParticipantSucceeded.CallConnectionId);
+                Assert.AreEqual("correlationId", CancelAddParticipantSucceeded.CorrelationId);
+                Assert.AreEqual("serverCallId", CancelAddParticipantSucceeded.ServerCallId);
+                Assert.AreEqual("invitationId", CancelAddParticipantSucceeded.InvitationId);
             }
             else
             {

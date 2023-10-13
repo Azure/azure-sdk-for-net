@@ -34,15 +34,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionConfiguration"u8);
                 writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(CognitiveServicesEndpoint))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("cognitiveServicesEndpoint"u8);
+                writer.WriteStringValue(CognitiveServicesEndpoint);
             }
-            if (Optional.IsDefined(AnsweredByIdentifier))
+            if (Optional.IsDefined(AnsweredBy))
             {
-                writer.WritePropertyName("answeredByIdentifier"u8);
-                writer.WriteObjectValue(AnsweredByIdentifier);
+                writer.WritePropertyName("answeredBy"u8);
+                writer.WriteObjectValue(AnsweredBy);
             }
             writer.WriteEndObject();
         }

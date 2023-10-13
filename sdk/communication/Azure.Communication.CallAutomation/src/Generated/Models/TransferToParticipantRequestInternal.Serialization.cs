@@ -32,10 +32,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transferee"u8);
                 writer.WriteObjectValue(Transferee);
             }
-            if (Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(OverrideCallbackUri))
             {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
+                writer.WritePropertyName("overrideCallbackUri"u8);
+                writer.WriteStringValue(OverrideCallbackUri);
             }
             writer.WriteEndObject();
         }

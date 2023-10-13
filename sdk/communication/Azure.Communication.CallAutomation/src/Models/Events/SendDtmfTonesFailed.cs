@@ -10,20 +10,20 @@ namespace Azure.Communication.CallAutomation
     /// The SendDtmfFailed event.
     /// </summary>
 
-    [CodeGenModel("SendDtmfFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class SendDtmfFailed : CallAutomationEventBase
+    [CodeGenModel("SendDtmfTonesFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    public partial class SendDtmfTonesFailed : CallAutomationEventBase
     {
         /// <summary>
-        /// Deserialize <see cref="SendDtmfFailed"/> event.
+        /// Deserialize <see cref="SendDtmfTonesFailed"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="SendDtmfFailed"/> object.</returns>
-        public static SendDtmfFailed Deserialize(string content)
+        /// <returns>The new <see cref="SendDtmfTonesFailed"/> object.</returns>
+        public static SendDtmfTonesFailed Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeSendDtmfFailed(element);
+            return DeserializeSendDtmfTonesFailed(element);
         }
     }
 }

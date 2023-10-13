@@ -38,8 +38,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
-        public string AzureCognitiveServicesEndpointUrl { get; set; }
+        public string CognitiveServicesEndpoint { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
-        public CommunicationUserIdentifierModel AnsweredByIdentifier { get; set; }
+        public CommunicationUserIdentifierModel AnsweredBy { get; set; }
     }
 }

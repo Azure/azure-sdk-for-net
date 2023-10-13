@@ -33,6 +33,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transferee is the participant who is transferring the call. </summary>
         public CommunicationIdentifierModel Transferee { get; set; }
         /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
+        public string OverrideCallbackUri { get; set; }
     }
 }

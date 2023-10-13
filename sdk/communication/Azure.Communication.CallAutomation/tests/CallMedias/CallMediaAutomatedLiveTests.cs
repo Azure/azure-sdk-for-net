@@ -114,9 +114,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 Assert.IsTrue(continuousDtmfRecognitionToneReceived is ContinuousDtmfRecognitionToneReceived);
 
                 // wait for SendDtmfCompleted event
-                var sendDtmfCompletedEvent = await WaitForEvent<SendDtmfCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                var sendDtmfCompletedEvent = await WaitForEvent<SendDtmfTonesCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(sendDtmfCompletedEvent);
-                Assert.IsTrue(sendDtmfCompletedEvent is SendDtmfCompleted);
+                Assert.IsTrue(sendDtmfCompletedEvent is SendDtmfTonesCompleted);
 
                 // stop continuous dtmf recognition
                 var stopContinuousDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().StopContinuousDtmfRecognitionAsync(target);
