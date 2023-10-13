@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.ExtensionValueResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.ExtensionValueResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ExtensionValueResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.ExtensionValueResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.ExtensionValueResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.ExtensionValueResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.ExtensionValueResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewType? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetIfExists(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewType? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>> GetIfExistsAsync(string machineName, Azure.ResourceManager.HybridCompute.Models.InstanceViewType? expand = default(Azure.ResourceManager.HybridCompute.Models.InstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -89,11 +93,11 @@ namespace Azure.ResourceManager.HybridCompute
         public Azure.ResourceManager.HybridCompute.Models.LocationData LocationData { get { throw null; } set { } }
         public string MachineFqdn { get { throw null; } }
         public string MssqlDiscovered { get { throw null; } set { } }
-        public string OsName { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.OSProfile OsProfile { get { throw null; } set { } }
-        public string OsSku { get { throw null; } }
-        public string OsType { get { throw null; } set { } }
-        public string OsVersion { get { throw null; } }
+        public string OSName { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.OSProfile OSProfile { get { throw null; } set { } }
+        public string OSSku { get { throw null; } }
+        public string OSType { get { throw null; } set { } }
+        public string OSVersion { get { throw null; } }
         public Azure.Core.ResourceIdentifier ParentClusterResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkScopeResourceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -114,6 +118,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>> GetAsync(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> GetIfExists(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>> GetIfExistsAsync(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -196,6 +202,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -238,6 +246,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource>> GetAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource> GetIfExists(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource>> GetIfExistsAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -258,6 +268,8 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>> GetAsync(string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetIfExists(string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>> GetIfExistsAsync(string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -342,7 +354,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.AgentUpgrade AgentUpgrade(string desiredVersion = null, System.Guid? correlationId = default(System.Guid?), bool? enableAutomaticUpgrade = default(bool?), System.DateTimeOffset? lastAttemptTimestamp = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum? lastAttemptStatus = default(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum?), string lastAttemptMessage = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification(int? security = default(int?), int? critical = default(int?), int? definition = default(int?), int? updateRollup = default(int?), int? featurePack = default(int?), int? servicePack = default(int?), int? tools = default(int?), int? updates = default(int?), int? other = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.ConfigurationExtension ConfigurationExtension(string publisher = null, string configurationExtensionType = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.ConnectionDetail ConnectionDetail(string id = null, string privateIpAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ConnectionDetail ConnectionDetail(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.ExtensionValueData ExtensionValueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, string extensionType = null, string publisher = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridCompute.Models.LocationData locationData = null, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses = null, string cloudMetadataProvider = null, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade = null, Azure.ResourceManager.HybridCompute.Models.OSProfile osProfile = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType?), System.DateTimeOffset? lastStatusChange = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null, string agentVersion = null, System.Guid? vmId = default(System.Guid?), string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, System.Guid? vmUuid = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions = null, string osSku = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, Azure.Core.ResourceIdentifier privateLinkScopeResourceId = null, Azure.Core.ResourceIdentifier parentClusterResourceId = null, string mssqlDiscovered = null, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData HybridComputeMachineExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string forceUpdateTag = null, string publisher = null, string typePropertiesType = null, string typeHandlerVersion = null, bool? enableAutomaticUpgrade = default(bool?), bool? autoUpgradeMinorVersion = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView instanceView = null) { throw null; }
@@ -352,10 +364,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeData HybridComputePrivateLinkScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(Azure.ResourceManager.HybridCompute.Models.PublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.HybridCompute.Models.PublicNetworkAccessType?), string provisioningState = null, string privateLinkScopeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkServiceConnectionStateProperty HybridComputePrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.IpAddress IpAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult MachineAssessPatchesResult(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus?), System.Guid? assessmentActivityId = default(System.Guid?), bool? rebootPending = default(bool?), Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification availablePatchCountByClassification = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.OsType? osType = default(Azure.ResourceManager.HybridCompute.Models.OsType?), Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult MachineInstallPatchesResult(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus?), string installationActivityId = null, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus? rebootStatus = default(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus?), bool? maintenanceWindowExceeded = default(bool?), int? excludedPatchCount = default(int?), int? notSelectedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.OsType? osType = default(Azure.ResourceManager.HybridCompute.Models.OsType?), Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.NetworkInterface NetworkInterface(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.IpAddress> ipAddresses = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.IPAddress IPAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.MachineAssessPatchesResult MachineAssessPatchesResult(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus?), System.Guid? assessmentActivityId = default(System.Guid?), bool? rebootPending = default(bool?), Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification availablePatchCountByClassification = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.OSType? osType = default(Azure.ResourceManager.HybridCompute.Models.OSType?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult MachineInstallPatchesResult(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus?), string installationActivityId = null, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? rebootStatus = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus?), bool? maintenanceWindowExceeded = default(bool?), int? excludedPatchCount = default(int?), int? notSelectedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.OSType? osType = default(Azure.ResourceManager.HybridCompute.Models.OSType?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.NetworkInterface NetworkInterface(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.IPAddress> ipAddresses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkProfile NetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.NetworkInterface> networkInterfaces = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.OSProfile OSProfile(string computerName = null, Azure.ResourceManager.HybridCompute.Models.OSProfileWindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.HybridCompute.Models.OSProfileLinuxConfiguration linuxConfiguration = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridCompute.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
@@ -406,7 +418,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string Id { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public string MemberName { get { throw null; } }
-        public string PrivateIpAddress { get { throw null; } }
+        public string PrivateIPAddress { get { throw null; } }
     }
     public partial class ExtensionTargetProperties
     {
@@ -432,7 +444,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public string CloudMetadataProvider { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LocationData LocationData { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.OSProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.OSProfile OSProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ParentClusterResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkScopeResourceId { get { throw null; } set { } }
     }
@@ -535,11 +547,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.InstanceViewType left, Azure.ResourceManager.HybridCompute.Models.InstanceViewType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IpAddress
+    public partial class IPAddress
     {
-        internal IpAddress() { }
+        internal IPAddress() { }
         public string Address { get { throw null; } }
-        public string IpAddressVersion { get { throw null; } }
+        public string IPAddressVersion { get { throw null; } }
         public string SubnetAddressPrefix { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -563,7 +575,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class LinuxParameters
     {
         public LinuxParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
     }
@@ -582,7 +594,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification { get { throw null; } }
         public Azure.ResponseError ErrorDetails { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.OsType? OsType { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.OSType? OSType { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? PatchServiceUsed { get { throw null; } }
         public bool? RebootPending { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? StartedBy { get { throw null; } }
@@ -613,10 +625,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     }
     public partial class MachineInstallPatchesContent
     {
-        public MachineInstallPatchesContent(System.TimeSpan maximumDuration, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting rebootSetting) { }
+        public MachineInstallPatchesContent(System.TimeSpan maximumDuration, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting) { }
         public Azure.ResourceManager.HybridCompute.Models.LinuxParameters LinuxParameters { get { throw null; } set { } }
         public System.TimeSpan MaximumDuration { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting RebootSetting { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting RebootSetting { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.WindowsParameters WindowsParameters { get { throw null; } set { } }
     }
     public partial class MachineInstallPatchesResult
@@ -630,10 +642,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public bool? MaintenanceWindowExceeded { get { throw null; } }
         public int? NotSelectedPatchCount { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.OsType? OsType { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.OSType? OSType { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? PatchServiceUsed { get { throw null; } }
         public int? PendingPatchCount { get { throw null; } }
-        public Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus? RebootStatus { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? RebootStatus { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? StartedBy { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.PatchOperationStatus? Status { get { throw null; } }
@@ -641,7 +653,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class NetworkInterface
     {
         internal NetworkInterface() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.IpAddress> IpAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.IPAddress> IPAddresses { get { throw null; } }
     }
     public partial class NetworkProfile
     {
@@ -668,21 +680,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Azure.ResourceManager.HybridCompute.Models.PatchModeType? PatchMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OsType : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.OsType>
+    public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.OSType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OsType(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.OsType Linux { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.OsType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridCompute.Models.OsType other) { throw null; }
+        public OSType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.OSType Linux { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.OSType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.OSType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.OsType left, Azure.ResourceManager.HybridCompute.Models.OsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridCompute.Models.OsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.OsType left, Azure.ResourceManager.HybridCompute.Models.OsType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.OSType left, Azure.ResourceManager.HybridCompute.Models.OSType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.OSType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.OSType left, Azure.ResourceManager.HybridCompute.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -805,93 +817,93 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VMGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux>
+    public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VMGuestPatchClassificationLinux(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux Critical { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux Other { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux Security { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux other) { throw null; }
+        public VmGuestPatchClassificationLinux(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux Critical { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux Other { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux Security { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationLinux right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VMGuestPatchClassificationWindow : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow>
+    public readonly partial struct VmGuestPatchClassificationWindow : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VMGuestPatchClassificationWindow(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow Critical { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow Definition { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow FeaturePack { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow Security { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow ServicePack { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow Tools { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow Updates { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow other) { throw null; }
+        public VmGuestPatchClassificationWindow(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Critical { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Definition { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow FeaturePack { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Security { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow ServicePack { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Tools { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Updates { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VMGuestPatchRebootSetting : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting>
+    public readonly partial struct VmGuestPatchRebootSetting : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VMGuestPatchRebootSetting(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting Always { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting IfRequired { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting Never { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting other) { throw null; }
+        public VmGuestPatchRebootSetting(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting Always { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting IfRequired { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting Never { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootSetting right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VMGuestPatchRebootStatus : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus>
+    public readonly partial struct VmGuestPatchRebootStatus : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VMGuestPatchRebootStatus(string value) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus NotNeeded { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus Required { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus Started { get { throw null; } }
-        public static Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus other) { throw null; }
+        public VmGuestPatchRebootStatus(string value) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus NotNeeded { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Required { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Started { get { throw null; } }
+        public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VMGuestPatchRebootStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class WindowsParameters
     {
         public WindowsParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VMGuestPatchClassificationWindow> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow> ClassificationsToInclude { get { throw null; } }
         public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
