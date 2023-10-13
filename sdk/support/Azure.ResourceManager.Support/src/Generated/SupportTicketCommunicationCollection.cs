@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A class representing a collection of <see cref="SupportTicketCommunicationResource" /> and their operations.
-    /// Each <see cref="SupportTicketCommunicationResource" /> in the collection will belong to the same instance of <see cref="SupportTicketResource" />.
-    /// To get a <see cref="SupportTicketCommunicationCollection" /> instance call the GetSupportTicketCommunications method from an instance of <see cref="SupportTicketResource" />.
+    /// Each <see cref="SupportTicketCommunicationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionSupportTicketResource" />.
+    /// To get a <see cref="SupportTicketCommunicationCollection" /> instance call the GetSupportTicketCommunications method from an instance of <see cref="SubscriptionSupportTicketResource" />.
     /// </summary>
     public partial class SupportTicketCommunicationCollection : ArmCollection, IEnumerable<SupportTicketCommunicationResource>, IAsyncEnumerable<SupportTicketCommunicationResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Support
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SupportTicketResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SupportTicketResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.Support/supportTickets")
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Support/supportTickets"), nameof(id));
         }
 
         /// <summary>

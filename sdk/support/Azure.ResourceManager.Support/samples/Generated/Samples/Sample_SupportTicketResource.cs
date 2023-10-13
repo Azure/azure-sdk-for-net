@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -62,10 +63,10 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // invoke the operation
-            SupportTicketResource result = await supportTicket.GetAsync();
+            SubscriptionSupportTicketResource result = await supportTicket.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // invoke the operation
             SupportTicketPatch patch = new SupportTicketPatch()
@@ -113,7 +114,8 @@ namespace Azure.ResourceManager.Support.Samples
                     PreferredSupportLanguage = "en-US",
                 },
             };
-            SupportTicketResource result = await supportTicket.UpdateAsync(patch);
+            var updateSupportTicket = new UpdateSupportTicket() { Severity = patch.Severity, Status = patch.Status, ContactDetails = patch.ContactDetails };
+            SubscriptionSupportTicketResource result = await supportTicket.UpdateAsync(updateSupportTicket);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -140,14 +142,15 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // invoke the operation
             SupportTicketPatch patch = new SupportTicketPatch()
             {
                 Severity = SupportSeverityLevel.Critical,
             };
-            SupportTicketResource result = await supportTicket.UpdateAsync(patch);
+            var updateSupportTicket = new UpdateSupportTicket() { Severity = patch.Severity, Status = patch.Status, ContactDetails = patch.ContactDetails };
+            SubscriptionSupportTicketResource result = await supportTicket.UpdateAsync(updateSupportTicket);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -174,14 +177,15 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // invoke the operation
             SupportTicketPatch patch = new SupportTicketPatch()
             {
                 Status = SupportTicketStatus.Closed,
             };
-            SupportTicketResource result = await supportTicket.UpdateAsync(patch);
+            var updateSupportTicket = new UpdateSupportTicket() { Severity = patch.Severity, Status = patch.Status, ContactDetails = patch.ContactDetails };
+            SubscriptionSupportTicketResource result = await supportTicket.UpdateAsync(updateSupportTicket);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // invoke the operation
             SupportNameAvailabilityContent content = new SupportNameAvailabilityContent("sampleName", SupportResourceType.MicrosoftSupportCommunications);

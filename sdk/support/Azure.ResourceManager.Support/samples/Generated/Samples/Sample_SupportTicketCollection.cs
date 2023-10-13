@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Open'";
-            await foreach (SupportTicketResource item in collection.GetAllAsync(filter: filter))
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
-            await foreach (SupportTicketResource item in collection.GetAllAsync())
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Open'";
-            await foreach (SupportTicketResource item in collection.GetAllAsync(filter: filter))
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ProblemClassificationId eq 'compute_vm_problemClassification_guid'";
-            await foreach (SupportTicketResource item in collection.GetAllAsync(filter: filter))
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ServiceId eq 'vm_windows_service_guid'";
-            await foreach (SupportTicketResource item in collection.GetAllAsync(filter: filter))
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
-            SupportTicketResource result = await collection.GetAsync(supportTicketName);
+            SubscriptionSupportTicketResource result = await collection.GetAsync(supportTicketName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Support.Samples
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/billing_service_guid",
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.Support.Samples
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/subscription_management_service_guid",
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -380,8 +380,8 @@ namespace Azure.ResourceManager.Support.Samples
                 ServiceId = "/providers/Microsoft.Support/services/cddd3eb5-1830-b494-44fd-782f691479dc",
                 TechnicalTicketDetailsResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/test/providers/Microsoft.Compute/virtualMachines/testserver"),
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -436,8 +436,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -466,7 +466,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -496,8 +496,8 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -526,7 +526,7 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -552,8 +552,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -582,7 +582,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -607,8 +607,8 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -637,7 +637,7 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -663,8 +663,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -693,7 +693,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -719,8 +719,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -749,7 +749,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -775,8 +775,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -805,7 +805,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -831,8 +831,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -861,7 +861,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -887,8 +887,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -917,7 +917,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -943,8 +943,8 @@ Payload = "{\"NewLimit\":200}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -973,7 +973,7 @@ Payload = "{\"NewLimit\":200}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -999,8 +999,8 @@ Payload = "{\"NewLimit\":200}",
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -1029,7 +1029,7 @@ Payload = "{\"NewLimit\":200}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -1042,8 +1042,8 @@ Payload = "{\"NewLimit\":200}",
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -1072,7 +1072,7 @@ Payload = "{\"NewLimit\":200}",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -1098,8 +1098,8 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -1128,7 +1128,7 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -1154,8 +1154,8 @@ Payload = "{\"AccountName\":\"test\",\"VMFamily\":\"standardA0_A7Family\",\"NewL
 },
                 },
             };
-            ArmOperation<SupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
-            SupportTicketResource result = lro.Value;
+            ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
+            SubscriptionSupportTicketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

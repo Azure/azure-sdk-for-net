@@ -234,7 +234,8 @@ namespace Azure.ResourceManager.Support
             scope.Start();
             try
             {
-                var response = await _supportTicketRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var updateSupportTicket = new UpdateSupportTicket() { Severity = patch.Severity, Status = patch.Status, ContactDetails = patch.ContactDetails };
+                var response = await _supportTicketRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, updateSupportTicket, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +269,8 @@ namespace Azure.ResourceManager.Support
             scope.Start();
             try
             {
-                var response = _supportTicketRestClient.Update(Id.SubscriptionId, Id.Name, patch, cancellationToken);
+                var updateSupportTicket = new UpdateSupportTicket() { Severity = patch.Severity, Status = patch.Status, ContactDetails = patch.ContactDetails };
+                var response = _supportTicketRestClient.Update(Id.SubscriptionId, Id.Name, updateSupportTicket, cancellationToken);
                 return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

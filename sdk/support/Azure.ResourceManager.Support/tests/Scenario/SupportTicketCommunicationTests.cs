@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task SetUp()
         {
             string existSupportTicketName = "2303060030001646";
-            var supportTicket = await DefaultSubscription.GetSupportTickets().GetAsync(existSupportTicketName);
+            var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(existSupportTicketName);
             _supportTicketCommunicationCollection = supportTicket.Value.GetSupportTicketCommunications();
         }
 

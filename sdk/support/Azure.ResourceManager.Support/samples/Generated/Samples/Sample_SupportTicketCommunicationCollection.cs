@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Support.Samples
             // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier supportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Support.Samples
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
             ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            SubscriptionSupportTicketResource supportTicket = client.GetSubscriptionSupportTicketResource(supportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
             SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();

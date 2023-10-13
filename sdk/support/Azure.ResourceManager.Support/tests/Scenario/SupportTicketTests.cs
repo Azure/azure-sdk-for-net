@@ -13,7 +13,8 @@ namespace Azure.ResourceManager.Support.Tests
 {
     internal class SupportTicketTests : SupportManagementTestBase
     {
-        private SupportTicketCollection _supportAzureServiceCollection => DefaultSubscription.GetSupportTickets();
+        private SubscriptionSupportTicketCollection _supportAzureServiceCollection => DefaultSubscription.GetSubscriptionSupportTickets();
+
         private const string _existSupportTicketName = "2303060030001646";
 
         public SupportTicketTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
