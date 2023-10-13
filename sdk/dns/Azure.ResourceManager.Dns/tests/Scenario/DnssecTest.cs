@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
     {
         private DnsZoneResource _dnsZone;
 
-        public DnssecTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Playback)
+        public DnssecTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
