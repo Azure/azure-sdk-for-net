@@ -369,12 +369,12 @@ namespace Azure.Monitor.Query.Tests
         {
             MetricsBatchQueryClient client = CreateBatchClient();
 
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(async () =>
             {
-                client.Batch(
+                await client.BatchAsync(
                 resourceIds: new List<string>(),
                 metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts");
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
             });
         }
     }
