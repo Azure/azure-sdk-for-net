@@ -36,6 +36,7 @@ trigger:
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
+    - sdk/codesigning/Azure.ResourceManager.CodeSigning
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
@@ -218,6 +219,7 @@ pr:
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
+    - sdk/codesigning/Azure.ResourceManager.CodeSigning
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
