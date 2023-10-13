@@ -285,5 +285,14 @@ namespace Azure.Storage.DataMovement
             // Write the length
             writer.Write(bytes.Length);
         }
+
+        internal static string ToSanitizedString(this Uri uri)
+        {
+            UriBuilder builder = new(uri);
+
+            // Remove any query parameters (including SAS)
+            builder.Query = string.Empty;
+            return builder.Uri.AbsoluteUri;
+        }
     }
 }
