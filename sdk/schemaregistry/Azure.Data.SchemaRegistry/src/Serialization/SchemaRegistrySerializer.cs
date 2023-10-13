@@ -500,7 +500,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
             try
             {
                 // Attempt to deserialize
-                var dataStream = data.ToStream();
+                using var dataStream = data.ToStream();
                 if (async)
                 {
                     objectToReturn = await deserializer.DeserializeAsync(dataStream, dataType, cancellationToken: cancellationToken).ConfigureAwait(false);
