@@ -36,8 +36,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -62,8 +61,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -88,8 +86,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -118,8 +115,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -146,8 +142,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -176,8 +171,7 @@ namespace Azure.Storage.DataMovement
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                partPlanFileExists: true).ConfigureAwait(false);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -188,9 +182,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Translate the initial job part header to a job plan format file
         /// </summary>
-        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart,
-            DataTransferStatus jobStatus,
-            bool isFinalPart)
+        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart, DataTransferStatus jobStatus)
         {
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: JobPlanBlobType.Detect, // TODO: update when supported
@@ -235,7 +227,7 @@ namespace Azure.Storage.DataMovement
                 destinationResourceId: jobPart._destinationResource.ResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
-                isFinalPart: isFinalPart,
+                isFinalPart: false,
                 forceWrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists, // TODO: change to enum value
                 forceIfReadOnly: false, // TODO: revisit for Azure Files
                 autoDecompress: false, // TODO: revisit if we want to support this feature

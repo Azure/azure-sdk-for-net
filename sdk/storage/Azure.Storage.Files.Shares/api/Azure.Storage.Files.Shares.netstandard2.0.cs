@@ -519,13 +519,13 @@ namespace Azure.Storage.Files.Shares.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ShareAudience(string value) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareAudience CreateShareServiceAccountAudience(string storageAccountName) { throw null; }
         public bool Equals(Azure.Storage.Files.Shares.Models.ShareAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareAudience GetShareServiceAccountAudience(string storageAccountName) { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareAudience left, Azure.Storage.Files.Shares.Models.ShareAudience right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareAudience (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAudience left, Azure.Storage.Files.Shares.Models.ShareAudience right) { throw null; }

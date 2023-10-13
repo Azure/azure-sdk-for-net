@@ -10,6 +10,15 @@
 
 ### Other Changes
 
+## 7.16.2 (2023-10-11)
+
+### Bugs Fixed
+
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental 
+  flag was set.
+
+### Other Changes
+
 - The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3. This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
 
 ## 7.16.1 (2023-08-15)

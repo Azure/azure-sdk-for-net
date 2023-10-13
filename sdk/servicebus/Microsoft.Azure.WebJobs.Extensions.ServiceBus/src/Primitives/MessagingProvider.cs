@@ -19,9 +19,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         internal ServiceBusOptions Options { get; }
 
-        private readonly ConcurrentDictionary<string, ServiceBusSender> _messageSenderCache = new();
-        private readonly ConcurrentDictionary<string, ServiceBusReceiver> _messageReceiverCache = new();
-        private readonly ConcurrentDictionary<string, ServiceBusClient> _clientCache = new();
+        internal ConcurrentDictionary<string, ServiceBusSender> MessageSenderCache { get; } = new();
+        internal ConcurrentDictionary<string, ServiceBusReceiver> MessageReceiverCache { get; } = new();
+        internal ConcurrentDictionary<string, ServiceBusClient> ClientCache { get; } = new();
         internal ConcurrentDictionary<string, (ServiceBusReceivedMessage Message, ServiceBusMessageActions Actions)> ActionsCache { get; } = new();
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNull(options, nameof(options));
 
-            return _clientCache.GetOrAdd(
+            return ClientCache.GetOrAdd(
                 connectionString,
                 (_) => new ServiceBusClient(connectionString, options));
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            return _clientCache.GetOrAdd(
+            return ClientCache.GetOrAdd(
                 fullyQualifiedNamespace,
                 (_) => new ServiceBusClient(fullyQualifiedNamespace, credential, options));
         }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
-            return _messageSenderCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), client.CreateSender(entityPath));
+            return MessageSenderCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), client.CreateSender(entityPath));
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(options, nameof(options));
 
-            return _messageReceiverCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), (_) => client.CreateReceiver(entityPath, options));
+            return MessageReceiverCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), (_) => client.CreateReceiver(entityPath, options));
         }
 
         /// <summary>
