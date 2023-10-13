@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataTypeData. </summary>
+        /// <summary> Initializes a new instance of DataType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,24 +95,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="databaseCacheRetention"> Field for database cache retention in days. </param>
         /// <param name="databaseRetention"> Field for database data retention in days. </param>
         /// <param name="visualizationUri"> Url for data visualization. </param>
-        /// <returns> A new <see cref="NetworkAnalytics.DataTypeData"/> instance for mocking. </returns>
-        public static DataTypeData DataTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, DataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
+        /// <returns> A new <see cref="Models.DataType"/> instance for mocking. </returns>
+        public static DataType DataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, DataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
         {
-            return new DataTypeData(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
-        }
-
-        /// <summary> Initializes a new instance of ContainerSasToken. </summary>
-        /// <param name="storageContainerSasToken"> Field to specify storage container sas token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerSasToken"/> is null. </exception>
-        /// <returns> A new <see cref="Models.ContainerSasToken"/> instance for mocking. </returns>
-        public static ContainerSasToken ContainerSasToken(string storageContainerSasToken = null)
-        {
-            if (storageContainerSasToken == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerSasToken));
-            }
-
-            return new ContainerSasToken(storageContainerSasToken);
+            return new DataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
         }
 
         /// <summary> Initializes a new instance of AccountSasToken. </summary>

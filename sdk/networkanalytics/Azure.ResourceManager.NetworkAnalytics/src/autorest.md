@@ -52,4 +52,11 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: 'DataTypes_Get'
+  - remove-operation: 'DataTypes_Create'
+  - remove-operation: 'DataTypes_Update'
+  - remove-operation: 'DataTypes_Delete'
+  - remove-operation: 'DataTypes_DeleteData'
+  - remove-operation: 'DataTypes_GenerateStorageContainerSasToken'  
 ```

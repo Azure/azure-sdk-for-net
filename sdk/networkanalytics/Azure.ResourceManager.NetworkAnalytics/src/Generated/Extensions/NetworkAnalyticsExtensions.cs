@@ -87,25 +87,6 @@ namespace Azure.ResourceManager.NetworkAnalytics
         }
         #endregion
 
-        #region DataTypeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataTypeResource.CreateResourceIdentifier" /> to create a <see cref="DataTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataTypeResource" /> object. </returns>
-        public static DataTypeResource GetDataTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataTypeResource.ValidateResourceId(id);
-                return new DataTypeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         /// <summary> Gets a collection of DataProductResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataProductResources and their operations over a DataProductResource. </returns>

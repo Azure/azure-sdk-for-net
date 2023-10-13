@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
 
         private readonly ClientDiagnostics _dataProductClientDiagnostics;
         private readonly DataProductsRestOperations _dataProductRestClient;
+        private readonly ClientDiagnostics _dataTypesClientDiagnostics;
+        private readonly DataTypesRestOperations _dataTypesRestClient;
         private readonly DataProductData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataProductResource"/> class for mocking. </summary>
@@ -60,6 +63,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
             _dataProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkAnalytics", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataProductApiVersion);
             _dataProductRestClient = new DataProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataProductApiVersion);
+            _dataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkAnalytics", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _dataTypesRestClient = new DataTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,59 +92,6 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of DataTypeResources in the DataProduct. </summary>
-        /// <returns> An object representing collection of DataTypeResources and their operations over a DataTypeResource. </returns>
-        public virtual DataTypeCollection GetDataTypes()
-        {
-            return GetCachedClient(Client => new DataTypeCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve data type resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataTypeName"> The data type name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataTypeResource>> GetDataTypeAsync(string dataTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataTypes().GetAsync(dataTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve data type resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes/{dataTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataTypes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataTypeName"> The data type name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataTypeName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataTypeResource> GetDataType(string dataTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetDataTypes().Get(dataTypeName, cancellationToken);
         }
 
         /// <summary>
@@ -688,6 +640,50 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List data type by parent resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTypes_ListByDataProduct</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DataType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataType> GetDataTypesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataType.DeserializeDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List data type by parent resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProducts/{dataProductName}/dataTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTypes_ListByDataProduct</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataType> GetDataTypes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataType.DeserializeDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,11 +9,10 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkAnalytics.Models;
 
-namespace Azure.ResourceManager.NetworkAnalytics
+namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataTypeData : IUtf8JsonSerializable
+    public partial class DataType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             writer.WriteEndObject();
         }
 
-        internal static DataTypeData DeserializeDataTypeData(JsonElement element)
+        internal static DataType DeserializeDataType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                     continue;
                 }
             }
-            return new DataTypeData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value);
+            return new DataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value);
         }
     }
 }

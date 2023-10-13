@@ -8,22 +8,18 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkAnalytics.Models;
 
-namespace Azure.ResourceManager.NetworkAnalytics
+namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    /// <summary>
-    /// A class representing the DataType data model.
-    /// The data type resource.
-    /// </summary>
-    public partial class DataTypeData : ResourceData
+    /// <summary> The data type resource. </summary>
+    public partial class DataType : ResourceData
     {
-        /// <summary> Initializes a new instance of DataTypeData. </summary>
-        public DataTypeData()
+        /// <summary> Initializes a new instance of DataType. </summary>
+        public DataType()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTypeData. </summary>
+        /// <summary> Initializes a new instance of DataType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +31,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="databaseCacheRetention"> Field for database cache retention in days. </param>
         /// <param name="databaseRetention"> Field for database data retention in days. </param>
         /// <param name="visualizationUri"> Url for data visualization. </param>
-        internal DataTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, DataTypeState? state, string stateReason, int? storageOutputRetention, int? databaseCacheRetention, int? databaseRetention, Uri visualizationUri) : base(id, name, resourceType, systemData)
+        internal DataType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, DataTypeState? state, string stateReason, int? storageOutputRetention, int? databaseCacheRetention, int? databaseRetention, Uri visualizationUri) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             State = state;

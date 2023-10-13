@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -21,16 +20,16 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            IReadOnlyList<DataTypeData> value = default;
+            IReadOnlyList<DataType> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataTypeData> array = new List<DataTypeData>();
+                    List<DataType> array = new List<DataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTypeData.DeserializeDataTypeData(item));
+                        array.Add(DataType.DeserializeDataType(item));
                     }
                     value = array;
                     continue;
