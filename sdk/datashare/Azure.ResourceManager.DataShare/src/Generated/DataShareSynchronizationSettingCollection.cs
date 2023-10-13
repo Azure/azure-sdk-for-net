@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataShareSynchronizationSettingResource>> GetIfExistsAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
+
+            using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareSynchronizationSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SynchronizationSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        public virtual NullableResponse<DataShareSynchronizationSettingResource> GetIfExists(string synchronizationSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
+
+            using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareSynchronizationSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataShareSynchronizationSettingResource> IEnumerable<DataShareSynchronizationSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

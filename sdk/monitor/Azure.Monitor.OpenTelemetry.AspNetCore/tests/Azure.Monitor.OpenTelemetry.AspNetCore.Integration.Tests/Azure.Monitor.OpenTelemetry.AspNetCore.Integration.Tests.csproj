@@ -18,6 +18,14 @@
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>

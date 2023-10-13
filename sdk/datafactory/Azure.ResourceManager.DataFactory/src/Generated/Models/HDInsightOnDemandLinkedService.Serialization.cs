@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("version"u8);
             JsonSerializer.Serialize(writer, Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WritePropertyName("hostSubscriptionId"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
             {

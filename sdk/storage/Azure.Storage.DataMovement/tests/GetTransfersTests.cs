@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -128,7 +129,7 @@ namespace Azure.Storage.DataMovement.Tests
             IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where( d => d.TransferStatus == status).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
         }
 
         [Test]
@@ -281,20 +282,18 @@ namespace Azure.Storage.DataMovement.Tests
             LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
 
             string transferId1 = Guid.NewGuid().ToString();
-            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId1);
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId1, status: SuccessfulCompletedStatus);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId1,
-                3 /* jobPartCount */,
-                SuccessfulCompletedStatus);
+                3 /* jobPartCount */);
 
             string transferId2 = Guid.NewGuid().ToString();
-            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId2);
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId2, status: QueuedStatus);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId2,
-                3 /* jobPartCount */,
-                QueuedStatus);
+                3 /* jobPartCount */);
 
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
@@ -317,7 +316,11 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransferProperties properties)
         {
             // First add the job plan file for the transfer
-            factory.CreateStubJobPlanFile(checkpointerPath, properties.TransferId);
+            factory.CreateStubJobPlanFile(
+                checkpointerPath,
+                properties.TransferId,
+                parentSourcePath: properties.SourcePath,
+                parentDestinationPath: properties.DestinationPath);
 
             if (properties.IsContainer)
             {

@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AzureDevOpsConnectorResource>> GetIfExistsAsync(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+
+            using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _azureDevOpsConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureDevOpsConnectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        public virtual NullableResponse<AzureDevOpsConnectorResource> GetIfExists(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+
+            using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _azureDevOpsConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureDevOpsConnectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AzureDevOpsConnectorResource> IEnumerable<AzureDevOpsConnectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersionSet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiVersionSetResource>> GetIfExistsAsync(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+
+            using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiVersionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiVersionSetResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiVersionSetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersionSet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        public virtual NullableResponse<ApiVersionSetResource> GetIfExists(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+
+            using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiVersionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiVersionSetResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiVersionSetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiVersionSetResource> IEnumerable<ApiVersionSetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

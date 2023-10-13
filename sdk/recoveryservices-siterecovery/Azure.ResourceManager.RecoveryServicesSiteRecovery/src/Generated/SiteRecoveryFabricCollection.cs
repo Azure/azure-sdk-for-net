@@ -334,6 +334,82 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryFabricResource>> GetIfExistsAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryFabricResource> GetIfExists(string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteRecoveryFabricResource> IEnumerable<SiteRecoveryFabricResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

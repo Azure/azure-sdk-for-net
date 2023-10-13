@@ -133,7 +133,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     {
                         httpClient.DefaultRequestHeaders.Add("Metadata", "True");
                         var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
-                        var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+                        VmMetadataResponse? vmMetadata;
+#if NET6_0_OR_GREATER
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result, SourceGenerationContext.Default.VmMetadataResponse);
+#else
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+#endif
 
                         return vmMetadata;
                     }

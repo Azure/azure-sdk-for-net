@@ -57,7 +57,6 @@ namespace Azure.Storage.DataMovement.Tests
         internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
         internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
         internal static readonly DateTimeOffset DefaultCreateTime = new DateTimeOffset(2023, 08, 28, 17, 26, 0, default);
-        internal const JobPlanStatus DefaultJobPlanStatus = JobPlanStatus.Queued;
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
@@ -183,7 +182,7 @@ namespace Azure.Storage.DataMovement.Tests
             DateTimeOffset createTime = default,
             JobPlanOperation operationType = DefaultJobPlanOperation,
             bool enumerationComplete = false,
-            JobPlanStatus jobStatus = DefaultJobPlanStatus,
+            DataTransferStatus jobStatus = default,
             string parentSourcePath = DefaultSourcePath,
             string parentDestinationPath = DefaultDestinationPath)
         {
@@ -191,6 +190,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 createTime = DefaultCreateTime;
             }
+            jobStatus ??= DefaultJobStatus;
 
             return new JobPlanHeader(
                 version,

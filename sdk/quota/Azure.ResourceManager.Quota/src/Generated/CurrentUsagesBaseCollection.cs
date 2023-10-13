@@ -251,6 +251,90 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CurrentUsagesBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
+                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual NullableResponse<CurrentUsagesBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _currentUsagesBaseUsagesRestClient.Get(Id, resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CurrentUsagesBaseResource>(response.GetRawResponse());
+                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CurrentUsagesBaseResource> IEnumerable<CurrentUsagesBaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -329,6 +329,82 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interactionName"> The name of the interaction. </param>
+        /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<InteractionResourceFormatResource>> GetIfExistsAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+
+            using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _interactionResourceFormatInteractionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<InteractionResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interactionName"> The name of the interaction. </param>
+        /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        public virtual NullableResponse<InteractionResourceFormatResource> GetIfExists(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+
+            using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _interactionResourceFormatInteractionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<InteractionResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<InteractionResourceFormatResource> IEnumerable<InteractionResourceFormatResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

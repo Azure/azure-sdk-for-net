@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiIssueComment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiIssueCommentResource>> GetIfExistsAsync(string commentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
+
+            using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiIssueCommentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, commentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiIssueCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiIssueCommentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiIssueComment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
+        public virtual NullableResponse<ApiIssueCommentResource> GetIfExists(string commentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
+
+            using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiIssueCommentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, commentId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiIssueCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiIssueCommentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiIssueCommentResource> IEnumerable<ApiIssueCommentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -344,6 +344,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementSubscriptionResource>> GetIfExistsAsync(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementSubscriptionResource> GetIfExists(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementSubscriptionSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiManagementSubscriptionResource> IEnumerable<ApiManagementSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

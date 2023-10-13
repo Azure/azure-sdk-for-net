@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityAlertsSuppressionRuleResource>> GetIfExistsAsync(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
+
+            using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.GetAsync(Id.SubscriptionId, alertsSuppressionRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAlertsSuppressionRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertsSuppressionRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        public virtual NullableResponse<SecurityAlertsSuppressionRuleResource> GetIfExists(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
+
+            using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Get(Id.SubscriptionId, alertsSuppressionRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAlertsSuppressionRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SecurityAlertsSuppressionRuleResource> IEnumerable<SecurityAlertsSuppressionRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

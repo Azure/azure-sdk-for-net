@@ -24,8 +24,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        internal MachineLearningModelContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
+        /// <param name="provisioningState"> Provisioning state for the model container. </param>
+        internal MachineLearningModelContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
+            ProvisioningState = provisioningState;
         }
+
+        /// <summary> Provisioning state for the model container. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

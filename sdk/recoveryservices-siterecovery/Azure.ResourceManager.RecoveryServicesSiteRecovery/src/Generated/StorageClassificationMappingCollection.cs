@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}/replicationStorageClassificationMappings/{storageClassificationMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassificationMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageClassificationMappingResource>> GetIfExistsAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+
+            using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageClassificationMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}/replicationStorageClassificationMappings/{storageClassificationMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationStorageClassificationMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
+        public virtual NullableResponse<StorageClassificationMappingResource> GetIfExists(string storageClassificationMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+
+            using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageClassificationMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StorageClassificationMappingResource> IEnumerable<StorageClassificationMappingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

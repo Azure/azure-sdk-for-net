@@ -32,9 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
+        /// <param name="trainingMode">
+        /// TrainingMode mode - Setting to 'auto' is same as setting it to 'non-distributed' for now, however in the future may result in mixed mode or heuristics based mode selection. Default is 'auto'.
+        /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
+        /// If 'NonDistributed' then only non distributed algorithms are chosen.
+        /// </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for classification task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for classification task. </param>
-        internal ClassificationTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IList<ClassificationModel> allowedTrainingAlgorithms, IList<ClassificationModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings)
+        internal ClassificationTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode, IList<ClassificationModel> allowedTrainingAlgorithms, IList<ClassificationModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings, trainingMode)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;

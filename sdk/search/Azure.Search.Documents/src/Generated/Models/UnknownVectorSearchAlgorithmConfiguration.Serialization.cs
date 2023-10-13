@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -29,7 +30,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string name = default;
-            string kind = "Unknown";
+            VectorSearchAlgorithmKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,7 +40,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
             }
