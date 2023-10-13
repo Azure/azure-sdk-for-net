@@ -1,6 +1,6 @@
-# Azure.AI.Chat client library for .NET
+# Azure.AI.ChatProtocol client library for .NET
 
-Azure.AI.Chat is a managed service that helps developers get secret simply and securely.
+Azure.AI.ChatProtocol is a managed service that helps developers get secret simply and securely.
 
 Use the client library for to:
 
@@ -8,7 +8,7 @@ Use the client library for to:
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/machinelearning/Azure.AI.Chat/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/machinelearning/Azure.AI.ChatProtocol/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -21,7 +21,7 @@ First, provide instruction for obtaining and installing the package or library. 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Chat --prerelease
+dotnet add package Azure.AI.ChatProtocol --prerelease
 ```
 
 ### Prerequisites
@@ -59,7 +59,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/machinelearning/Azure.AI.Chat/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/machinelearning/Azure.AI.ChatProtocol/samples).
 
 ### Create a Completion
 
@@ -112,4 +112,4 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/machinelearning/Azure.AI.Chat/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/machinelearning/Azure.AI.ChatProtocol/README.png)
