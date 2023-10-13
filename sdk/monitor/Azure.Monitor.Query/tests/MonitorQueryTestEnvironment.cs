@@ -24,6 +24,6 @@ namespace Azure.Monitor.Query.Tests
         public string DataplaneEndpoint => GetRecordedOptionalVariable("DATAPLANE_ENDPOINT");
         public string ConnectionString => GetRecordedOptionalVariable("CONNECTION_STRING");
         public string StorageAccountId => GetRecordedOptionalVariable("STORAGE_ID");
-        public string StorageAccountConnectionString => GetRecordedOptionalVariable("STORAGE_CONNECTION_ID");
+        public string StorageAccountConnectionString => GetRecordedOptionalVariable("STORAGE_CONNECTION_STRING");
     }
 }

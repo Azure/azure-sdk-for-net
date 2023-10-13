@@ -87,16 +87,15 @@ namespace Azure.Monitor.Query
         /// <returns></returns>
         public virtual Response<MetricResultsResponse> Batch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
+            if (resourceIds.Count == 0)
+            {
+                throw new ArgumentException("Resource IDs can not be empty");
+            }
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(Batch)}");
             scope.Start();
 
             try
             {
-                if (resourceIds.Count == 0)
-                {
-                    throw new ArgumentException("Resource IDs can not be empty");
-                }
-
                 var subscriptionId = GetSubscriptionId(resourceIds[0]);
 
                 string filter = null;
@@ -158,16 +157,15 @@ namespace Azure.Monitor.Query
         /// <exception cref="ArgumentException"></exception>
         public virtual async Task<Response<MetricResultsResponse>> BatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
+            if (resourceIds.Count == 0)
+            {
+                throw new ArgumentException("Resource IDs can not be empty");
+            }
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(Batch)}");
             scope.Start();
 
             try
             {
-                if (resourceIds.Count == 0)
-                {
-                    throw new ArgumentException("Resource IDs can not be empty");
-                }
-
                 var subscriptionId = GetSubscriptionId(resourceIds[0]);
 
                 string filter = null;

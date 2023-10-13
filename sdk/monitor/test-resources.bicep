@@ -210,4 +210,4 @@ output WORKSPACE_SECONDARY_RESOURCE_ID string = secondaryWorkspace.id
 output DATAPLANE_ENDPOINT string = 'https://${location}.metrics.monitor.azure.com'
 output STORAGE_NAME string = storageAccount.name
 output STORAGE_ID string = storageAccount.id
-output STORAGE_CONNECTION_ID string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
+output STORAGE_CONNECTION_STRING string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
