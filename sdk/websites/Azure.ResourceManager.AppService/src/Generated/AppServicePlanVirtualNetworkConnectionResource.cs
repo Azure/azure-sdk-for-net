@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServicePlanVirtualNetworkConnectionGatewayResources and their operations over a AppServicePlanVirtualNetworkConnectionGatewayResource. </returns>
         public virtual AppServicePlanVirtualNetworkConnectionGatewayCollection GetAppServicePlanVirtualNetworkConnectionGateways()
         {
-            return GetCachedClient(Client => new AppServicePlanVirtualNetworkConnectionGatewayCollection(Client, Id));
+            return GetCachedClient(client => new AppServicePlanVirtualNetworkConnectionGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServicePlanVirtualNetworkConnectionGatewayResource>> GetAppServicePlanVirtualNetworkConnectionGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServicePlanVirtualNetworkConnectionGatewayResource> GetAppServicePlanVirtualNetworkConnectionGateway(string gatewayName, CancellationToken cancellationToken = default)
         {

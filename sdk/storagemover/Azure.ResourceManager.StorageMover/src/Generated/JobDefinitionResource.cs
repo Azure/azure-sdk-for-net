@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of JobRunResources and their operations over a JobRunResource. </returns>
         public virtual JobRunCollection GetJobRuns()
         {
-            return GetCachedClient(Client => new JobRunCollection(Client, Id));
+            return GetCachedClient(client => new JobRunCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="jobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<JobRunResource>> GetJobRunAsync(string jobRunName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="jobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<JobRunResource> GetJobRun(string jobRunName, CancellationToken cancellationToken = default)
         {
