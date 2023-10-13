@@ -1,17 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.Dns.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dns.Tests.Scenario
@@ -20,7 +14,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
     {
         private DnsZoneResource _dnsZone;
 
-        public RecordTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public RecordTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -31,8 +25,13 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             _dnsZone = await CreateDnsZone($"2022{Recording.GenerateAssetName("dnszone")}.com", resourceGroup);
         }
 
+        [TearDown]
+        public async Task TearDown()
+        {
+            await _dnsZone.DeleteAsync(WaitUntil.Completed);
+        }
+
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task AaaaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsAaaaRecords();
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task ARecordOperationTest()
         {
             var collection = _dnsZone.GetDnsARecords();
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task CaaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsCaaRecords();
@@ -207,7 +204,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task CnameRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsCnameRecords();
@@ -252,7 +248,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task DsRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsDSRecords();
@@ -281,7 +276,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                     },
                     new DnsDSRecordInfo
                     {
-                        Algorithm = 13,
+                        Algorithm = 14,
                         KeyTag = keyTagValue1,
                         Digest = new DSRecordDigest
                         {
@@ -297,9 +292,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(3600, dsRecord.Value.Data.TtlInSeconds);
 
             Assert.AreEqual(keyTagValue0, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
-            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[1].KeyTag);
             Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
-            Assert.AreEqual(14, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
+            Assert.AreEqual(14, dsRecord.Value.Data.DnsDSRecords[1].Algorithm);
             Assert.AreEqual(digestValue0, dsRecord.Value.Data.DnsDSRecords[0].Digest.Value);
             Assert.AreEqual(digestValue1, dsRecord.Value.Data.DnsDSRecords[1].Digest.Value);
             Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[0].Digest.AlgorithmType);
@@ -318,9 +313,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             ValidateRecordBaseInfo(getResponse.Value.Data, dsRecordName);
             Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
             Assert.AreEqual(keyTagValue0, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
-            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[1].KeyTag);
             Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
-            Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[1].Algorithm);
+            Assert.AreEqual(14, dsRecord.Value.Data.DnsDSRecords[1].Algorithm);
             Assert.AreEqual(digestValue0, dsRecord.Value.Data.DnsDSRecords[0].Digest.Value);
             Assert.AreEqual(digestValue1, dsRecord.Value.Data.DnsDSRecords[1].Digest.Value);
             Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[0].Digest.AlgorithmType);
@@ -338,7 +333,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task MXRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsMXRecords();
@@ -402,7 +396,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task NSRecordOperationTest()
         {
             string _recordSetName = "ns";
@@ -453,7 +446,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task PtrRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsPtrRecords();
@@ -511,7 +503,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task SoaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsSoaRecords();
@@ -571,7 +562,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task SrvRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsSrvRecords();
@@ -635,7 +625,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task TlsaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsTlsaRecords();
@@ -701,7 +690,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task TxtRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsTxtRecords();
