@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of NamespaceTopicEventSubscriptionResources and their operations over a NamespaceTopicEventSubscriptionResource. </returns>
         public virtual NamespaceTopicEventSubscriptionCollection GetNamespaceTopicEventSubscriptions()
         {
-            return GetCachedClient(Client => new NamespaceTopicEventSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new NamespaceTopicEventSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> GetNamespaceTopicEventSubscriptionAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> GetNamespaceTopicEventSubscription(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {

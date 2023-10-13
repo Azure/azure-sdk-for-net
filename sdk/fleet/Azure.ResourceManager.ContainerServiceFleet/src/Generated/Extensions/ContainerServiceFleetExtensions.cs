@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerServiceFleet.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
@@ -18,100 +19,81 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerServiceFleet. </summary>
     public static partial class ContainerServiceFleetExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ContainerServiceFleetArmClientMockingExtension GetContainerServiceFleetArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new ContainerServiceFleetArmClientMockingExtension(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ContainerServiceFleetResourceGroupMockingExtension GetContainerServiceFleetResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new ContainerServiceFleetResourceGroupMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerServiceFleetSubscriptionMockingExtension GetContainerServiceFleetSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ContainerServiceFleetSubscriptionMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ContainerServiceFleetResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceFleetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceFleetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetArmClientMockingExtension.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetResource" /> object. </returns>
         public static ContainerServiceFleetResource GetContainerServiceFleetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerServiceFleetResource.ValidateResourceId(id);
-                return new ContainerServiceFleetResource(client, id);
-            }
-            );
+            return GetContainerServiceFleetArmClientMockingExtension(client).GetContainerServiceFleetResource(id);
         }
-        #endregion
 
-        #region ContainerServiceFleetMemberResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetArmClientMockingExtension.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource" /> object. </returns>
         public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerServiceFleetMemberResource.ValidateResourceId(id);
-                return new ContainerServiceFleetMemberResource(client, id);
-            }
-            );
+            return GetContainerServiceFleetArmClientMockingExtension(client).GetContainerServiceFleetMemberResource(id);
         }
-        #endregion
 
-        #region ContainerServiceFleetUpdateRunResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceFleetUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetUpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetArmClientMockingExtension.GetContainerServiceFleetUpdateRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource" /> object. </returns>
         public static ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerServiceFleetUpdateRunResource.ValidateResourceId(id);
-                return new ContainerServiceFleetUpdateRunResource(client, id);
-            }
-            );
+            return GetContainerServiceFleetArmClientMockingExtension(client).GetContainerServiceFleetUpdateRunResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetResourceGroupMockingExtension.GetContainerServiceFleets()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerServiceFleets();
+            return GetContainerServiceFleetResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleets();
         }
 
         /// <summary>
@@ -126,16 +108,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <description>Fleets_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetResourceGroupMockingExtension.GetContainerServiceFleetAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceFleetResource>> GetContainerServiceFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerServiceFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceFleetResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,16 +136,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <description>Fleets_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetResourceGroupMockingExtension.GetContainerServiceFleet(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ContainerServiceFleetResource> GetContainerServiceFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerServiceFleets().Get(fleetName, cancellationToken);
+            return GetContainerServiceFleetResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleet(fleetName, cancellationToken);
         }
 
         /// <summary>
@@ -174,13 +164,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <description>Fleets_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetSubscriptionMockingExtension.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
+            return GetContainerServiceFleetSubscriptionMockingExtension(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -195,13 +189,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <description>Fleets_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ContainerServiceFleetSubscriptionMockingExtension.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerServiceFleets(cancellationToken);
+            return GetContainerServiceFleetSubscriptionMockingExtension(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }

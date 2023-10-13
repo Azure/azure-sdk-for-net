@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <returns> An object representing collection of HDInsightClusterResources and their operations over a HDInsightClusterResource. </returns>
         public virtual HDInsightClusterCollection GetHDInsightClusters()
         {
-            return GetCachedClient(Client => new HDInsightClusterCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="clusterName"> The name of the HDInsight cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightClusterResource>> GetHDInsightClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </summary>
         /// <param name="clusterName"> The name of the HDInsight cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightClusterResource> GetHDInsightCluster(string clusterName, CancellationToken cancellationToken = default)
         {
