@@ -101,12 +101,13 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GenericResource>> GetGenericResourceAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenericResource>> GetGenericResourceAsync(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
-            return await GetGenericResources().GetAsync(resourceId, cancellationToken).ConfigureAwait(false);
+            return await GetGenericResources().GetAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +124,13 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GenericResource> GetGenericResource(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        public virtual Response<GenericResource> GetGenericResource(ResourceIdentifier resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
-            return GetGenericResources().Get(resourceId, cancellationToken);
+            return GetGenericResources().Get(resourceId, apiVersion, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
