@@ -145,13 +145,13 @@ namespace Azure.Storage.DataMovement.Tests
             string filePath = Path.Combine(disposingLocalDirectory.DirectoryPath, fileName);
 
             BlockBlobStorageResource sourceResource = new(blob);
-            LocalFileStorageResource destResource = new(disposingLocalDirectory.DirectoryPath);
+            LocalFileStorageResource destResource = new(filePath);
 
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
                 destResource,
                 async cToken => await blob.OpenReadAsync(cancellationToken: cToken),
-                cToken => Task.FromResult(File.OpenRead(fileName) as Stream),
+                cToken => Task.FromResult(File.OpenRead(filePath) as Stream),
                 options,
                 cancellationToken);
         }
@@ -165,10 +165,9 @@ namespace Azure.Storage.DataMovement.Tests
             // No Option Download bag or manager options bag, plain download
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(10));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: Constants.KB,
-                blobCount: 1,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
@@ -178,10 +177,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingContainer testContainer = await GetTestContainerAsync();
-            string blobName = GetNewBlobName();
-            string localSourceFile = Path.GetTempFileName();
-            int size = Constants.KB;
-            BlockBlobClient sourceClient = await CreateBlockBlob(testContainer.Container, localSourceFile, blobName, size);
 
             // Create destination to overwrite
             string destFile = Path.GetTempFileName();
@@ -192,14 +187,12 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(10));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: Constants.KB,
-                blobCount: 1,
-                options: optionsList,
+                options: options,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
@@ -216,14 +209,12 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(10));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: Constants.KB,
-                blobCount: 1,
-                options: optionsList,
+                options: options,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
@@ -342,10 +333,10 @@ namespace Azure.Storage.DataMovement.Tests
             List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: size,
-                options: optionsList,
+                options: options,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
@@ -361,8 +352,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: size,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
@@ -380,8 +371,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 size: size,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
@@ -399,11 +390,16 @@ namespace Azure.Storage.DataMovement.Tests
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
-                blobCount: blobCount,
-                size: size,
-                cancellationToken: cts.Token).ConfigureAwait(false);
+            // TODO: concurrency recording issues
+            //List<Task> tasks = new();
+            foreach (var _ in Enumerable.Range(0, blobCount))
+            {
+                await DownloadBlockBlobAndVerify(
+                    testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
+                    size: size,
+                    cancellationToken: cts.Token);
+            }
+            //await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
@@ -419,11 +415,15 @@ namespace Azure.Storage.DataMovement.Tests
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
-                blobCount: blobCount,
-                size: size,
-                cancellationToken: cts.Token).ConfigureAwait(false);
+            List<Task> tasks = new();
+            foreach (var _ in Enumerable.Range(0, blobCount))
+            {
+                tasks.Add(DownloadBlockBlobAndVerify(
+                    testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
+                    size: size,
+                    cancellationToken: cts.Token));
+            }
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -447,14 +447,13 @@ namespace Azure.Storage.DataMovement.Tests
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(10));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 transferManagerOptions: managerOptions,
-                options: optionsList,
+                options: options,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
@@ -479,8 +478,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             CancellationTokenSource cts = new();
             cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
-            await DownloadBlockBlobsAndVerify(
-                testContainer.Container,
+            await DownloadBlockBlobAndVerify(
+                testContainer.Container.GetBlockBlobClient(Recording.Random.NextString(8)),
                 transferManagerOptions: managerOptions,
                 cancellationToken: cts.Token).ConfigureAwait(false);
         }

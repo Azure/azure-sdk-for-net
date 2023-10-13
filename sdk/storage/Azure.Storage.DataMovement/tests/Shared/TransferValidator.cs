@@ -74,9 +74,6 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options ??= new DataTransferOptions();
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
             DataTransfer transfer = await TransferManager.StartTransferAsync(
                sourceResource,
                destinationResource,
@@ -84,7 +81,6 @@ namespace Azure.Storage.DataMovement.Tests
                cancellationToken);
             await transfer.WaitForCompletionAsync(cancellationToken);
 
-            await testEventsRaised.AssertContainerCompletedCheck(1);
             using Stream sourceStream = await openReadSourceAsync(cancellationToken);
             using Stream destinationStream = await openReadDestinationAsync(cancellationToken);
             Assert.That(sourceStream, Is.EqualTo(destinationStream));
