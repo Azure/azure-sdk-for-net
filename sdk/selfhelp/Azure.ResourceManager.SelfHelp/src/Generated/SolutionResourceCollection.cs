@@ -265,5 +265,79 @@ namespace Azure.ResourceManager.SelfHelp
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SolutionResource>> GetIfExistsAsync(string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _solutionResourceSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SolutionResource>(response.GetRawResponse());
+                return Response.FromValue(new SolutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        public virtual NullableResponse<SolutionResource> GetIfExists(string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _solutionResourceSolutionRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SolutionResource>(response.GetRawResponse());
+                return Response.FromValue(new SolutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

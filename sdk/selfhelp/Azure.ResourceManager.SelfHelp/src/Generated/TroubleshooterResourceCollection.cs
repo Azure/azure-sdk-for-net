@@ -265,5 +265,79 @@ namespace Azure.ResourceManager.SelfHelp
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TroubleshooterResource>> GetIfExistsAsync(string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _troubleshooterResourceTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TroubleshooterResource>(response.GetRawResponse());
+                return Response.FromValue(new TroubleshooterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        public virtual NullableResponse<TroubleshooterResource> GetIfExists(string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _troubleshooterResourceTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TroubleshooterResource>(response.GetRawResponse());
+                return Response.FromValue(new TroubleshooterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
