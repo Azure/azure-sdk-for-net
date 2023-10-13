@@ -49,11 +49,6 @@ namespace Azure.Storage.DataMovement.Tests
 
                 CollectionAssert.AreEqual(expected, actual);
             }
-
-            //using (FileStream fileStream = File.OpenWrite("D:\\azure-sdk-for-net\\sdk\\storage\\Azure.Storage.DataMovement\\tests\\Resources\\SampleJobPlanFile.b1.ndm"))
-            //{
-            //    header.Serialize(fileStream);
-            //}
         }
 
         [Test]
