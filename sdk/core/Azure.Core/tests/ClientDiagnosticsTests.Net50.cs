@@ -333,7 +333,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ClientName.ActivityName.Stop", stopEvent.Key);
 
-            var diagnosticSourceActivity = (Activity)startEvent.Value;
+            var diagnosticSourceActivity = (Activity) startEvent.Value;
             Assert.AreEqual(ActivityIdFormat.W3C, diagnosticSourceActivity.IdFormat);
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
