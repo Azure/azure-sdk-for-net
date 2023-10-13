@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileDataNetworkResources and their operations over a MobileDataNetworkResource. </returns>
         public virtual MobileDataNetworkCollection GetMobileDataNetworks()
         {
-            return GetCachedClient(Client => new MobileDataNetworkCollection(Client, Id));
+            return GetCachedClient(client => new MobileDataNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="dataNetworkName"> The name of the data network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileDataNetworkResource>> GetMobileDataNetworkAsync(string dataNetworkName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="dataNetworkName"> The name of the data network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileDataNetworkResource> GetMobileDataNetwork(string dataNetworkName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkServiceResources and their operations over a MobileNetworkServiceResource. </returns>
         public virtual MobileNetworkServiceCollection GetMobileNetworkServices()
         {
-            return GetCachedClient(Client => new MobileNetworkServiceCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkServiceResource>> GetMobileNetworkServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkServiceResource> GetMobileNetworkService(string serviceName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkSimPolicyResources and their operations over a MobileNetworkSimPolicyResource. </returns>
         public virtual MobileNetworkSimPolicyCollection GetMobileNetworkSimPolicies()
         {
-            return GetCachedClient(Client => new MobileNetworkSimPolicyCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkSimPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="simPolicyName"> The name of the SIM policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkSimPolicyResource>> GetMobileNetworkSimPolicyAsync(string simPolicyName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="simPolicyName"> The name of the SIM policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkSimPolicyResource> GetMobileNetworkSimPolicy(string simPolicyName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkSiteResources and their operations over a MobileNetworkSiteResource. </returns>
         public virtual MobileNetworkSiteCollection GetMobileNetworkSites()
         {
-            return GetCachedClient(Client => new MobileNetworkSiteCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="siteName"> The name of the mobile network site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkSiteResource>> GetMobileNetworkSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="siteName"> The name of the mobile network site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkSiteResource> GetMobileNetworkSite(string siteName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkSliceResources and their operations over a MobileNetworkSliceResource. </returns>
         public virtual MobileNetworkSliceCollection GetMobileNetworkSlices()
         {
-            return GetCachedClient(Client => new MobileNetworkSliceCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkSliceCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="sliceName"> The name of the network slice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkSliceResource>> GetMobileNetworkSliceAsync(string sliceName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="sliceName"> The name of the network slice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkSliceResource> GetMobileNetworkSlice(string sliceName, CancellationToken cancellationToken = default)
         {

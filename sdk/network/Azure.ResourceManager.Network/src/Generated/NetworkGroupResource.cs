@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkGroupStaticMemberResources and their operations over a NetworkGroupStaticMemberResource. </returns>
         public virtual NetworkGroupStaticMemberCollection GetNetworkGroupStaticMembers()
         {
-            return GetCachedClient(Client => new NetworkGroupStaticMemberCollection(Client, Id));
+            return GetCachedClient(client => new NetworkGroupStaticMemberCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="staticMemberName"> The name of the static member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkGroupStaticMemberResource>> GetNetworkGroupStaticMemberAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="staticMemberName"> The name of the static member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkGroupStaticMemberResource> GetNetworkGroupStaticMember(string staticMemberName, CancellationToken cancellationToken = default)
         {
