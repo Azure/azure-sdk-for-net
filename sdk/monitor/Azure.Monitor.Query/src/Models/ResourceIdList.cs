@@ -16,9 +16,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of ResourceIdList. </summary>
         public ResourceIdList(List<string> resourceIds)
         {
+            Resourceids = new ChangeTrackingList<ResourceIdentifier>();
             for (int i = 0; i < resourceIds.Count; i++)
             {
-                Resourceids = new ChangeTrackingList<ResourceIdentifier>();
                 Resourceids.Add(new ResourceIdentifier(resourceIds[i]));
             }
         }
