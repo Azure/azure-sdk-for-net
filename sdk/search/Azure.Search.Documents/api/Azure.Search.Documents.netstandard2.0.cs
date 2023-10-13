@@ -164,7 +164,6 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> Select { get { throw null; } }
         public string SemanticConfigurationName { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SemanticErrorHandling? SemanticErrorHandling { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SemanticFields { get { throw null; } }
         public int? SemanticMaxWaitInMilliseconds { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }

@@ -83,19 +83,6 @@ namespace Azure.Search.Documents
             set => SearchFields = SearchExtensions.CommaSplit(value);
         }
 
-        /// <summary> The list of field names used for semantic search. </summary>
-        public IList<string> SemanticFields { get; internal set; } = new List<string>();
-
-        /// <summary>
-        /// Join SemanticFields so it can be sent as a comma-separated string.
-        /// </summary>
-        [CodeGenMember("SemanticFields")]
-        internal string SemanticFieldsRaw
-        {
-            get => SemanticFields.CommaJoin();
-            set => SemanticFields = SearchExtensions.CommaSplit(value);
-        }
-
         /// <summary>
         /// The list of fields to retrieve.  If unspecified, all fields marked
         /// as retrievable in the schema are included.
@@ -354,7 +341,6 @@ namespace Azure.Search.Documents
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
             destination.SemanticConfigurationName = source.SemanticConfigurationName;
-            destination.SemanticFields = source.SemanticFields;
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
