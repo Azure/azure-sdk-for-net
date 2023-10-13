@@ -249,6 +249,80 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        public virtual async Task<NullableResponse<SphereCertificateResource>> GetIfExistsAsync(string serialNumber, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
+
+            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sphereCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SphereCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        public virtual NullableResponse<SphereCertificateResource> GetIfExists(string serialNumber, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
+
+            using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sphereCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SphereCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new SphereCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SphereCertificateResource> IEnumerable<SphereCertificateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

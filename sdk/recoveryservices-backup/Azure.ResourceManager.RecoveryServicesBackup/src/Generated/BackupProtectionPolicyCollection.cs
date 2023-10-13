@@ -342,6 +342,80 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupProtectionPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
+            using var scope = _backupProtectionPolicyProtectionPoliciesClientDiagnostics.CreateScope("BackupProtectionPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupProtectionPolicyProtectionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectionPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        public virtual NullableResponse<BackupProtectionPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
+            using var scope = _backupProtectionPolicyProtectionPoliciesClientDiagnostics.CreateScope("BackupProtectionPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupProtectionPolicyProtectionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectionPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<BackupProtectionPolicyResource> IEnumerable<BackupProtectionPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

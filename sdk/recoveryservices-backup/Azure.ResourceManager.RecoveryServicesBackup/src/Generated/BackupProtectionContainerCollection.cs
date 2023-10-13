@@ -304,5 +304,87 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupProtectionContainerProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupProtectionContainerProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -114,6 +114,9 @@
     "unhold",
     "uninstrumented",
     "vcpus",
+    "Vectorizable",
+    "Vectorizer",
+    "Vectorizers",
     "vmss",
     "vnet",
     "westcentralus",
@@ -871,6 +874,14 @@
         "rehydrated",
         "mab",
         "dpm"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
+      "words": [
+        "dras",
+        "nics",
+        "reprotect"
       ]
     },
     {

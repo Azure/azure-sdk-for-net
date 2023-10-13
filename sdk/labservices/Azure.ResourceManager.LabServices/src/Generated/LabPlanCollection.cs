@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabPlanResource>> GetIfExistsAsync(string labPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+
+            using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new LabPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
+        public virtual NullableResponse<LabPlanResource> GetIfExists(string labPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+
+            using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new LabPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LabPlanResource> IEnumerable<LabPlanResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

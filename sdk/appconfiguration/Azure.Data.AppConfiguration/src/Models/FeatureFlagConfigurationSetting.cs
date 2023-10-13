@@ -205,7 +205,7 @@ namespace Azure.Data.AppConfiguration
             {
                 var (name, jsonValue) = _parsedProperties[index];
 
-                if (TryWriteKnownProperty(name, writer, includeOptionalWhenNull: true))
+                if (TryWriteKnownProperty(name, writer, jsonValue, includeOptionalWhenNull: true))
                 {
                     knownProperties.Remove(name);
                 }
@@ -218,7 +218,7 @@ namespace Azure.Data.AppConfiguration
 
             foreach (var name in knownProperties)
             {
-                TryWriteKnownProperty(name, writer);
+                TryWriteKnownProperty(name, writer, default);
             }
 
             writer.WriteEndObject();
@@ -244,30 +244,39 @@ namespace Azure.Data.AppConfiguration
                         case "id":
                             _featureId = item.Value.GetString();
                             _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
                             break;
 
                         case "description":
                             _description = item.Value.GetString();
                             _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
                             break;
 
                         case "display_name":
                             _displayName = item.Value.GetString();
                             _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
                             break;
 
                         case "enabled":
                             _isEnabled = item.Value.GetBoolean();
                             _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
                             break;
 
                         case "conditions":
-                            _parsedProperties.Add((item.Name, default));
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
 
                             if (item.Value.TryGetProperty("client_filters", out var clientFiltersProperty)
                                 && clientFiltersProperty.ValueKind == JsonValueKind.Array)
                             {
                                 _clientFilters = ParseFilters(clientFiltersProperty);
+                            }
+
+                            if (item.Value.ValueKind == JsonValueKind.Object)
+                            {
+                                requiredProperties.Remove(item.Name);
                             }
                             break;
 
@@ -275,8 +284,6 @@ namespace Azure.Data.AppConfiguration
                             _parsedProperties.Add((item.Name, item.Value.Clone()));
                             break;
                     }
-
-                    requiredProperties.Remove(item.Name);
                 }
 
                 return requiredProperties.Count == 0;
@@ -287,7 +294,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, bool includeOptionalWhenNull = false)
+        private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, JsonElement sourceElement, bool includeOptionalWhenNull = false)
         {
             switch (propertyName)
             {
@@ -322,6 +329,17 @@ namespace Azure.Data.AppConfiguration
                             writer.WriteEndObject();
                         }
                         writer.WriteEndArray();
+                    }
+
+                    if (sourceElement.ValueKind != JsonValueKind.Undefined)
+                    {
+                        foreach (var item in sourceElement.EnumerateObject())
+                        {
+                            if (item.Name != "client_filters")
+                            {
+                                item.WriteTo(writer);
+                            }
+                        }
                     }
 
                     writer.WriteEndObject();

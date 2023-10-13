@@ -5,6 +5,7 @@ extends:
   parameters:
     ServiceDirectory: devcenter
     SDKType: client
+    DeployTestResources: false
     CloudConfig:
         Public:
             SubscriptionConfiguration: $(sub-config-devcenter-test-resources)

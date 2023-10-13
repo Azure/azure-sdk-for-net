@@ -194,5 +194,79 @@ namespace Azure.ResourceManager.Subscription
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> Billing Account Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingAccountPolicyResource>> GetIfExistsAsync(string billingAccountId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var scope = _billingAccountPolicyBillingAccountClientDiagnostics.CreateScope("BillingAccountPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingAccountPolicyBillingAccountRestClient.GetPolicyAsync(billingAccountId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingAccountPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="billingAccountId"> Billing Account Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        public virtual NullableResponse<BillingAccountPolicyResource> GetIfExists(string billingAccountId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var scope = _billingAccountPolicyBillingAccountClientDiagnostics.CreateScope("BillingAccountPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingAccountPolicyBillingAccountRestClient.GetPolicy(billingAccountId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingAccountPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

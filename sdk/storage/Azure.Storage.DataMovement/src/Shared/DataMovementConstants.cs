@@ -16,6 +16,7 @@ namespace Azure.Storage.DataMovement
         internal const int MaxJobPartReaders = 64;
         internal const int MaxJobChunkTasks = 3000;
         internal const int StatusCheckInSec = 10;
+        internal const int DefaultArrayPoolArraySize = 4 * 1024;
 
         internal static class ConcurrencyTuner
         {

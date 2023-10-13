@@ -29,7 +29,7 @@ steps:
             if (!$dir) {
               $dir = "./$($repository.Name)"
             }
-            New-Item $dir -ItemType Directory -Force
+            New-Item $dir -ItemType Directory -Force | Out-Null
             Push-Location $dir
 
             if (Test-Path .git/info/sparse-checkout) {
@@ -70,9 +70,14 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
-              Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+              # Remove refs/heads/ prefix from branch names
+              $commitish = $repository.Commitish -replace '^refs/heads/', ''
+
+              # use -- to prevent git from interpreting the commitish as a path
+              Write-Host "git -c advice.detachedHead=false checkout $commitish --"
+
               # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $($repository.Commitish)
+              git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }

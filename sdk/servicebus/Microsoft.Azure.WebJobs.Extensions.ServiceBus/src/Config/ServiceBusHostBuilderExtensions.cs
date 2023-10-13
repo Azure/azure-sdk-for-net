@@ -5,6 +5,10 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.WebJobs;
+#if NET6_0_OR_GREATER
+using Microsoft.Azure.WebJobs.Extensions.Rpc;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc;
+#endif
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -27,7 +31,6 @@ namespace Microsoft.Extensions.Hosting
             }
 
             builder.AddServiceBus(p => { });
-
             return builder;
         }
 
@@ -99,11 +102,18 @@ namespace Microsoft.Extensions.Hosting
                     }
 
                     configure(options);
-                });
+                })
+#if NET6_0_OR_GREATER
+                .MapWorkerGrpcService<SettlementService>()
+#endif
+                ;
 
             builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
+            #if NET6_0_OR_GREATER
+            builder.Services.AddSingleton<SettlementService>();
+            #endif
             return builder;
         }
 

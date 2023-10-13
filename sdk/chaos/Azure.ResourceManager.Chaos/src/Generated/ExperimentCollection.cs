@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _experimentClientDiagnostics.CreateScope("ExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _experimentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual NullableResponse<ExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _experimentClientDiagnostics.CreateScope("ExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _experimentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ExperimentResource> IEnumerable<ExperimentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

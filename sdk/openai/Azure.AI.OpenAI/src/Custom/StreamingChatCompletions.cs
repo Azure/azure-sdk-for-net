@@ -36,6 +36,19 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string Id => GetLocked(() => _baseChatCompletions.Last().Id);
 
+        /// <summary>
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </summary>
+        public IReadOnlyList<PromptFilterResult> PromptFilterResults
+            => GetLocked(() =>
+            {
+                return _baseChatCompletions.Where(singleBaseChatCompletion => singleBaseChatCompletion.PromptFilterResults != null)
+                    .SelectMany(singleBaseChatCompletion => singleBaseChatCompletion.PromptFilterResults)
+                    .OrderBy(singleBaseCompletion => singleBaseCompletion.PromptIndex)
+                    .ToList();
+            });
+
         internal StreamingChatCompletions(Response response)
         {
             _baseResponse = response;

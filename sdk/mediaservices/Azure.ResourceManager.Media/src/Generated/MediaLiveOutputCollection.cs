@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Media
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveOutputName"> The name of the live output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaLiveOutputResource>> GetIfExistsAsync(string liveOutputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+
+            using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveOutputLiveOutputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveOutputName"> The name of the live output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        public virtual NullableResponse<MediaLiveOutputResource> GetIfExists(string liveOutputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+
+            using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveOutputLiveOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MediaLiveOutputResource> IEnumerable<MediaLiveOutputResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -14,10 +14,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             string fullName, assemblyName;
 
-            var methodInfo = stackFrame.GetMethod();
+            var methodInfo = stackFrame.GetMethodWithoutWarning();
             if (methodInfo == null)
             {
-                fullName = "unknown";
+                // In an AOT scenario GetMethod() will return null. Note this can happen even in non AOT scenarios.
+                // Instead, call ToString() which gives a string like this:
+                // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                fullName = stackFrame.ToString();
                 assemblyName = "unknown";
             }
             else

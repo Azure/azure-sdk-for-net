@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResourceListResult. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value"></param>
         internal MachineLearningPrivateLinkResourceListResult(IReadOnlyList<MachineLearningPrivateLinkResource> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<MachineLearningPrivateLinkResource> Value { get; }
     }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
+using static Azure.Storage.DataMovement.JobPlanExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -276,23 +277,6 @@ namespace Azure.Storage.DataMovement.Blobs
             length += _tagsBytes.Length;
             length += _cpkScopeBytes.Length;
             return length;
-        }
-
-        private void WriteVariableLengthFieldInfo(BinaryWriter writer, byte[] bytes, ref int currentVariableLengthIndex)
-        {
-            // Write the offset, -1 if size is 0
-            if (bytes.Length > 0)
-            {
-                writer.Write(currentVariableLengthIndex);
-                currentVariableLengthIndex += bytes.Length;
-            }
-            else
-            {
-                writer.Write(-1);
-            }
-
-            // Write the length
-            writer.Write(bytes.Length);
         }
 
         private static void CheckSchemaVersion(int version)

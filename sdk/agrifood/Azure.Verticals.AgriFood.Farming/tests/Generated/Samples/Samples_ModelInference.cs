@@ -16,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_ModelInference
+    public partial class Samples_ModelInference
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBiomassModelJob()
+        public void Example_GetBiomassModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -43,7 +43,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBiomassModelJob_Async()
+        public async Task Example_GetBiomassModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -140,7 +140,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSensorPlacementModelJob()
+        public void Example_GetSensorPlacementModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -161,7 +161,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorPlacementModelJob_Async()
+        public async Task Example_GetSensorPlacementModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -252,7 +252,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSoilMoistureModelJob()
+        public void Example_GetSoilMoistureModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -278,7 +278,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSoilMoistureModelJob_Async()
+        public async Task Example_GetSoilMoistureModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
@@ -384,12 +384,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateBiomassModelJob()
+        public void Example_CreateBiomassModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -422,12 +422,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateBiomassModelJob_Async()
+        public async Task Example_CreateBiomassModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -465,7 +465,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -523,7 +523,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -576,12 +576,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSensorPlacementModelJob()
+        public void Example_CreateSensorPlacementModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -610,12 +610,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSensorPlacementModelJob_Async()
+        public async Task Example_CreateSensorPlacementModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -649,7 +649,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -703,7 +703,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -752,12 +752,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSoilMoistureModelJob()
+        public void Example_CreateSoilMoistureModelJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -799,12 +799,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSoilMoistureModelJob_Async()
+        public async Task Example_CreateSoilMoistureModelJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -851,7 +851,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -918,7 +918,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",

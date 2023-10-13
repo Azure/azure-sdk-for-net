@@ -302,6 +302,72 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<OperationalInsightsLinkedStorageAccountsResource>> GetIfExistsAsync(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedStorageAccountsResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<OperationalInsightsLinkedStorageAccountsResource> GetIfExists(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedStorageAccountsResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<OperationalInsightsLinkedStorageAccountsResource> IEnumerable<OperationalInsightsLinkedStorageAccountsResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

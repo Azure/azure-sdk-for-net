@@ -974,9 +974,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
-            // Filter out Azure SDK and custom processor logs for easier validation.
+            // Filter out Azure SDK, hosting lifetime, and custom processor logs for easier validation.
             logMessages = logMessages.Where(
                 m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     !m.Category.StartsWith("Microsoft.Hosting.Lifetime") &&
                      m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages

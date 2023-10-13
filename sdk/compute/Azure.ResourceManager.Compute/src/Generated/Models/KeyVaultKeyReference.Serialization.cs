@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, SourceVault);
+            writer.WriteEndObject();
         }
 
         internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element)

@@ -245,6 +245,80 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowRunActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionName"> The workflow action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogicWorkflowRunActionResource>> GetIfExistsAsync(string actionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logicWorkflowRunActionWorkflowRunActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowRunActionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowRunActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionName"> The workflow action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
+        public virtual NullableResponse<LogicWorkflowRunActionResource> GetIfExists(string actionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logicWorkflowRunActionWorkflowRunActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowRunActionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LogicWorkflowRunActionResource> IEnumerable<LogicWorkflowRunActionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

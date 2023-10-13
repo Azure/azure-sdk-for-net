@@ -35,6 +35,19 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public CompletionsFinishReason? FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
+        /// <summary>
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </summary>
+        public ContentFilterResults ContentFilterResults
+            => GetLocked(() =>
+            {
+                return _baseChoices
+                    .LastOrDefault(baseChoice => baseChoice.ContentFilterResults != null && baseChoice.ContentFilterResults.Hate != null)
+                    ?.ContentFilterResults;
+            });
+
         private bool _isFinishedStreaming { get; set; } = false;
 
         private Exception _pumpException { get; set; }
