@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.Update(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
