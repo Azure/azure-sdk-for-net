@@ -135,7 +135,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<plantTissueAnalysisId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -149,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantTissueAnalysisId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -163,7 +163,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 fieldId = "<fieldId>",
                 cropId = "<cropId>",
@@ -236,7 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 fieldId = "<fieldId>",
                 cropId = "<cropId>",

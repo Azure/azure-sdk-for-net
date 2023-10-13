@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "Conversation",
                 projectName = "<projectName>",
@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "Conversation",
                 projectName = "<projectName>",
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "Conversation",
                 settings = new
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "Conversation",
                 settings = new
@@ -2254,7 +2254,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2283,7 +2283,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2312,7 +2312,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2446,7 +2446,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2580,7 +2580,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 modelLabel = "<modelLabel>",
                 trainingMode = "advanced",
@@ -2607,7 +2607,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 modelLabel = "<modelLabel>",
                 trainingMode = "advanced",
@@ -2634,7 +2634,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 modelLabel = "<modelLabel>",
                 trainingConfigVersion = "<trainingConfigVersion>",
@@ -2693,7 +2693,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 modelLabel = "<modelLabel>",
                 trainingConfigVersion = "<trainingConfigVersion>",
@@ -2752,7 +2752,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
@@ -2775,7 +2775,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
@@ -2798,7 +2798,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
@@ -2838,7 +2838,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
@@ -2878,7 +2878,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 trainedModelLabel = "<trainedModelLabel>",
             });
@@ -2902,7 +2902,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 trainedModelLabel = "<trainedModelLabel>",
             });
@@ -2926,7 +2926,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 trainedModelLabel = "<trainedModelLabel>",
             });
@@ -2950,7 +2950,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 trainedModelLabel = "<trainedModelLabel>",
             });
