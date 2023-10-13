@@ -10,7 +10,7 @@ trigger:
     include:
     - sdk/machinelearning
     - sdk/machinelearning/ci.yml
-    - sdk/machinelearning/Azure.AI.Chat
+    - sdk/machinelearning/Azure.AI.ChatProtocol
 
 pr:
   branches:
@@ -23,7 +23,7 @@ pr:
     include:
     - sdk/machinelearning
     - sdk/machinelearning/ci.yml
-    - sdk/machinelearning/Azure.AI.Chat
+    - sdk/machinelearning/Azure.AI.ChatProtocol
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,5 +31,5 @@ extends:
     ServiceDirectory: machinelearning
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.Chat
-      safeName: AzureAIChat
+    - name: Azure.AI.ChatProtocol
+      safeName: AzureAIChatProtocol
