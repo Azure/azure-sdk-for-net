@@ -5,30 +5,22 @@ using System.Collections.Generic;
 
 namespace System.ServiceModel.Rest.Core;
 
-public abstract class MessageHeaders
+public abstract class MessageHeaders //: IEnumerable<KeyValuePair<string, IEnumerable<string>>>
 {
+    // TODO: why do we need this?
     public abstract int Count { get; }
-
-    public abstract bool TryGetHeader(string name, out string? value);
-
-    public abstract bool TryGetHeaders(out IEnumerable<MessageHeader<string, object>> values);
 
     public abstract void Add(string name, string value);
 
     public abstract void Set(string name, string value);
 
     public abstract bool Remove(string name);
-}
 
-public readonly struct MessageHeader<TName, TValue>
-{
-    public MessageHeader(TName name, TValue value)
-    {
-        Name = name;
-        Value = value;
-    }
+    public abstract bool TryGetValue(string name, out string? value);
 
-    public TName Name { get; }
+    public abstract bool TryGetValues(string name, out IEnumerable<string>? values);
 
-    public TValue Value { get; }
+    public abstract bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
+
+    public abstract bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
 }

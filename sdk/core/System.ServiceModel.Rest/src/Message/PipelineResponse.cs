@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.IO;
 
 namespace System.ServiceModel.Rest.Core;
@@ -13,7 +12,22 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract int Status { get; }
 
-    public abstract bool TryGetReasonPhrase(out string reasonPhrase);
+    public abstract string ReasonPhrase {  get; }
+
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    public abstract Stream? ContentStream { get; internal set; }
+
+    public abstract MessageHeaders Headers { get; }
+
+    #region Meta-data properties set by the pipeline.
+
+    /// <summary>
+    /// Indicates whether the status code of the returned response is considered
+    /// an error code.
+    /// </summary>
+    public bool IsError { get; internal set; }
 
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
@@ -24,7 +38,7 @@ public abstract class PipelineResponse : IDisposable
     /// <remarks>
     /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
     /// </remarks>
-    public virtual BinaryData Content
+    public BinaryData Content
     {
         get
         {
@@ -50,22 +64,7 @@ public abstract class PipelineResponse : IDisposable
         }
     }
 
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    public abstract Stream? ContentStream { get; set; }
-
-    public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
-    public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? value);
-
-    // TODO: do we want this to be public?
-    public abstract bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-
-    /// <summary>
-    /// Indicates whether the status code of the returned response is considered
-    /// an error code.
-    /// </summary>
-    public virtual bool IsError { get; set; }
+    #endregion
 
     public abstract void Dispose();
 }

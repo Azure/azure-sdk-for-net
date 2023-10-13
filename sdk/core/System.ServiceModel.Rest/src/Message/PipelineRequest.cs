@@ -14,6 +14,7 @@ public abstract class PipelineRequest : IDisposable
     public abstract Uri Uri { get; set; }
 
     // TODO: Can we change this to BinaryData?
+    // Goal is to match Response.Content type.  So nice!
     public abstract RequestBody? Content { get; set; }
 
     public abstract MessageHeaders Headers { get; }

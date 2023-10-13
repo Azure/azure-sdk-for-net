@@ -130,7 +130,7 @@ namespace Azure.Core.Pipeline
                 => _request.Headers.Add(name, value);
 
             protected internal override bool ContainsHeader(string name)
-                => _request.Headers.TryGetHeader(name, out _);
+                => _request.Headers.TryGetValue(name, out _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
@@ -153,7 +153,7 @@ namespace Azure.Core.Pipeline
                 => _request.Headers.Remove(name);
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _request.Headers.TryGetHeader(name, out value);
+                => _request.Headers.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
             {

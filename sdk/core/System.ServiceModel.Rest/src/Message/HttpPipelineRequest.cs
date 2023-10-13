@@ -83,8 +83,8 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         httpRequest.Headers.ExpectContinue = false;
 #endif
 
-        Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
-        foreach (MessageHeader<string, object> header in headers)
+        Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+        foreach (KeyValuePair<string, string> header in headers)
         {
             switch (header.Value)
             {
