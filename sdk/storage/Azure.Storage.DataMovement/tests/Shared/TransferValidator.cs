@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -63,6 +64,30 @@ namespace Azure.Storage.DataMovement.Tests
                 using Stream destinationStream = await destinationFiles[i].OpenReadAsync(cancellationToken);
                 Assert.That(sourceStream, Is.EqualTo(destinationStream));
             }
+        }
+
+        public async Task TransferAndVerifyAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            Func<CancellationToken, Task<Stream>> openReadSourceAsync,
+            Func<CancellationToken, Task<Stream>> openReadDestinationAsync,
+            DataTransferOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options ??= new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            DataTransfer transfer = await TransferManager.StartTransferAsync(
+               sourceResource,
+               destinationResource,
+               options,
+               cancellationToken);
+            await transfer.WaitForCompletionAsync(cancellationToken);
+
+            await testEventsRaised.AssertContainerCompletedCheck(1);
+            using Stream sourceStream = await openReadSourceAsync(cancellationToken);
+            using Stream destinationStream = await openReadDestinationAsync(cancellationToken);
+            Assert.That(sourceStream, Is.EqualTo(destinationStream));
         }
     }
 }
