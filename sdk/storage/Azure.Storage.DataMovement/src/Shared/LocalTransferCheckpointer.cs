@@ -76,8 +76,8 @@ namespace Azure.Storage.DataMovement
                 destination.ProviderId,
                 false, /* enumerationComplete */
                 new DataTransferStatusInternal(),
-                source.Uri.AbsoluteUri,
-                destination.Uri.AbsoluteUri);
+                source.Uri.ToSanitizedString(),
+                destination.Uri.ToSanitizedString());
 
             using (Stream headerStream = new MemoryStream())
             {

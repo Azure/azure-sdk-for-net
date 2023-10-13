@@ -57,11 +57,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Intenral Constructor for uri
+        /// Internal Constructor for uri
         /// </summary>
         /// <param name="uri"></param>
         internal LocalFileStorageResource(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
             _uri = uri;
         }
