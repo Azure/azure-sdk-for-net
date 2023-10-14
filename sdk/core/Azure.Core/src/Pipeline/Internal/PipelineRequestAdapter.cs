@@ -38,8 +38,8 @@ namespace Azure.Core
 
         public override void Dispose()
         {
-            // TODO: implement
-            //throw new NotImplementedException();
+            var request = _request;
+            request?.Dispose();
         }
     }
 }

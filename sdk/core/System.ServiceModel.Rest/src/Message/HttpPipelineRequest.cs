@@ -66,17 +66,14 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         }; ;
     }
 
-    #region Construction for transport
-
-    internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message = default)
+    internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellationToken)
     {
         // TODO: this is confusing where we are passing in message and also
         // using private members on the request.
 
         HttpMethod method = ToHttpMethod(Method);
-        Uri uri = message!.Request.Uri;
+        Uri uri = Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
-        CancellationToken cancellationToken = message?.CancellationToken ?? default;
 
         PipelineContentAdapter? httpContent = _content != null ? new PipelineContentAdapter(_content, cancellationToken) : null;
         httpRequest.Content = httpContent;
@@ -148,8 +145,6 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 #endif
     }
 
-    #endregion
-
     public override void Dispose()
     {
         var content = _content;
@@ -162,5 +157,5 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public override string ToString() => BuildRequestMessage().ToString();
+    public override string ToString() => BuildRequestMessage(default).ToString();
 }

@@ -59,30 +59,8 @@ namespace Azure.Core
             set
             {
                 _response = value;
-                base.Response = value == null ? null! : ToPipelineResponse(value);
+                base.Response = ToPipelineResponse(value)!;
             }
-        }
-
-        private static PipelineRequest ToPipelineRequest(Request request)
-        {
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
-            {
-                return pipelineRequest!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
-            return new PipelineRequestAdapter(request);
-        }
-
-        private static PipelineResponse ToPipelineResponse(Response response)
-        {
-            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
-            {
-                return pipelineResponse!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
-            return new PipelineResponseAdapter(response);
         }
 
         /// <summary>
@@ -217,24 +195,6 @@ namespace Azure.Core
             }
         }
 
-        /// <summary>
-        /// Disposes the request and response.
-        /// </summary>
-        public override void Dispose()
-        {
-            Request.Dispose();
-            _propertyBag.Dispose();
-
-            Response? response = _response;
-            if (response != null)
-            {
-                response.Dispose();
-                _response = null;
-            }
-
-            base.Dispose();
-        }
-
         private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
@@ -290,5 +250,52 @@ namespace Azure.Core
         /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
+        private static PipelineRequest ToPipelineRequest(Request request)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            {
+                return pipelineRequest!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
+            return new PipelineRequestAdapter(request);
+        }
+
+        private static PipelineResponse? ToPipelineResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
+            {
+                return pipelineResponse!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
+            return new PipelineResponseAdapter(response);
+        }
+
+        /// <summary>
+        /// Disposes the request and response.
+        /// </summary>
+        public override void Dispose()
+        {
+            Request.Dispose();
+            _propertyBag.Dispose();
+
+            Response? response = _response;
+            if (response != null)
+            {
+                response.Dispose();
+                _response = null;
+            }
+
+            base.Dispose();
+        }
     }
 }
