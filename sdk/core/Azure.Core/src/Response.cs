@@ -41,9 +41,6 @@ namespace Azure
         /// </summary>
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
-
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
@@ -54,26 +51,9 @@ namespace Azure
         {
             get
             {
-                if (ContentStream == null)
-                {
-                    return s_EmptyBinaryData;
-                }
-
-                MemoryStream? memoryContent = ContentStream as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
+                // Delegate to implementation logic in PipelineResponse.Content.
+                HttpMessage.TryGetResponseContent(this, out BinaryData content);
+                return content;
             }
         }
 
