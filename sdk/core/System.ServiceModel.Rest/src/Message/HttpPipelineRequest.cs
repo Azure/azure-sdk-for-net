@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -88,24 +89,25 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
         foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
         {
-            //switch (header.Value)
-            //{
-                //case string stringValue:
-                //    // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                //    if (header.Name == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
-                //    {
-                //        httpRequest.Headers.Authorization = authHeader;
-                //    }
-                //    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, stringValue))
-                //    {
-                //        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, stringValue))
-                //        {
-                //            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
-                //        }
-                //    }
-                //    break;
+            object headerValue = header.Value.Count() == 1 ? header.Value.First() : header.Value;
+            switch (headerValue)
+            {
+                case string stringValue:
+                    // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+                    if (header.Key == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                    {
+                        httpRequest.Headers.Authorization = authHeader;
+                    }
+                    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, stringValue))
+                    {
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, stringValue))
+                        {
+                            throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
+                        }
+                    }
+                    break;
 
-                //case List<string> listValue:
+                case List<string> listValue:
                     if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value))
                     {
                         if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, header.Value))
@@ -114,7 +116,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
                         }
                     }
                     break;
-            //}
+            }
         }
 
         return httpRequest;
