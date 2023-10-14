@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace System.ServiceModel.Rest.Core;
 
-public abstract class MessageHeaders //: IEnumerable<KeyValuePair<string, IEnumerable<string>>>
+public abstract class MessageHeaders
 {
     // TODO: why do we need this?
     public abstract int Count { get; }

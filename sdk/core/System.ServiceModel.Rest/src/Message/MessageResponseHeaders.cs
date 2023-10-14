@@ -11,10 +11,17 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 internal class MessageResponseHeaders : MessageHeaders
 {
     private readonly HttpResponseMessage _httpResponse;
+    private readonly HttpContent _httpResponseContent;
 
-    public MessageResponseHeaders(HttpResponseMessage response)
+    public MessageResponseHeaders(HttpResponseMessage response, HttpContent responseContent)
     {
         _httpResponse = response;
+
+        // Note: we make a backup of the response content here
+        // presumably to be able to read header values out of.
+        // The strange thing is that we never dispose it.  Why?
+        // Wouldn't this cause issues somehow?
+        _httpResponseContent = responseContent;
     }
 
     public override int Count => throw new NotSupportedException();
@@ -29,20 +36,20 @@ internal class MessageResponseHeaders : MessageHeaders
         => throw new NotSupportedException();
 
     public override bool TryGetValue(string name, out string? value)
-        => TryGetHeader(_httpResponse.Headers, _httpResponse.Content, name, out value);
+        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
-        => TryGetHeader(_httpResponse.Headers, _httpResponse.Content, name, out values);
+        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
 
     public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
     {
-        headers = GetHeadersStringValues(_httpResponse.Headers, _httpResponse.Content);
+        headers = GetHeadersStringValues(_httpResponse.Headers, _httpResponseContent);
         return true;
     }
 
     public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
     {
-        headers = GetHeadersListValues(_httpResponse.Headers, _httpResponse.Content);
+        headers = GetHeadersListValues(_httpResponse.Headers, _httpResponseContent);
         return true;
     }
 

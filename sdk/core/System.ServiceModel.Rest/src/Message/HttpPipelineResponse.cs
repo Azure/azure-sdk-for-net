@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
+    private readonly HttpContent _httpResponseContent;
+
     private Stream? _contentStream;
 
     private bool _disposed;
@@ -22,6 +21,10 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _contentStream = contentStream;
+
+        // We need to back up the response content so we can read headers out of it later
+        // if we set the content to null when we buffer the content stream.
+        _httpResponseContent = _httpResponse.Content;
     }
 
     public override int Status => (int)_httpResponse.StatusCode;
@@ -29,15 +32,23 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override MessageHeaders Headers => new MessageResponseHeaders(_httpResponse);
+    public override MessageHeaders Headers
+        => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
     public override Stream? ContentStream
     {
+        // TODO: Why would we set the content in the constructor and then overwrite it later?
+        // Is this the contract we want in this type?  It feels error prone, but I'm not sure I understand it very well.
         get => _contentStream;
         protected internal set
         {
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;
+
+            // TODO: Why not?
+            // Shouldn't we dispose it if the stream is replaced?  We're holding a
+            // reference to it, so wouldn't we want to make sure it gets disposed
+            // at some point?
 
             _contentStream = value;
         }
