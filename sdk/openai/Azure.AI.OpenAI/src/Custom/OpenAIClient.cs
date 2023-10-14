@@ -103,6 +103,35 @@ namespace Azure.AI.OpenAI
         /// <summary>
         ///     Initializes a instance of OpenAIClient for use with the non-Azure OpenAI endpoint.
         /// </summary>
+        /// <param name="openAIEndpoint">
+        ///     The Endpoint to use when connecting to the non-Azure OpenAI endpoint.
+        /// </param>
+        /// <param name="openAIApiKey">
+        ///     The API key to use when connecting to the non-Azure OpenAI endpoint.
+        /// </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <remarks>
+        ///     <see cref="OpenAIClient"/> objects initialized with this constructor can only be used with the
+        ///     non-Azure OpenAI inference endpoint. To use <see cref="OpenAIClient"/> with an Azure OpenAI resource,
+        ///     use a constructor that accepts a resource URI and Azure authentication credential, instead.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"> <paramref name="openAIApiKey"/> is null. </exception>
+        public OpenAIClient(string openAIEndpoint, string openAIApiKey, OpenAIClientOptions options)
+            : this(new Uri(openAIEndpoint), CreateDelegatedToken(openAIApiKey), options)
+        {
+            _isConfiguredForAzureOpenAI = false;
+        }
+
+        /// <inheritdoc cref="OpenAIClient(string, string, OpenAIClientOptions)"/>
+        public OpenAIClient(string openAIEndpoint, string openAIApiKey)
+            : this(new Uri(openAIEndpoint), CreateDelegatedToken(openAIApiKey), new OpenAIClientOptions())
+        {
+            _isConfiguredForAzureOpenAI = false;
+        }
+
+        /// <summary>
+        ///     Initializes a instance of OpenAIClient for use with the non-Azure OpenAI endpoint.
+        /// </summary>
         /// <param name="openAIApiKey">
         ///     The API key to use when connecting to the non-Azure OpenAI endpoint.
         /// </param>
