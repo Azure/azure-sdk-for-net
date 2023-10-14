@@ -85,7 +85,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
         public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
-        public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
+        public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } protected internal set { } }
         public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
@@ -105,7 +105,7 @@ namespace System.ServiceModel.Rest.Core
     {
         protected PipelineResponse() { }
         public System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; internal set; }
+        public abstract System.IO.Stream? ContentStream { get; protected internal set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -172,8 +172,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
-        public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } }
+        public HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
+        public override System.IO.Stream? ContentStream { get { throw null; } protected internal set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

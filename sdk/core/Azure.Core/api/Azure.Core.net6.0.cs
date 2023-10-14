@@ -238,24 +238,23 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.ServiceModel.Rest.Core.PipelineResponse
+    public abstract partial class Response : System.IDisposable
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
+        public virtual System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
+        public abstract int Status { get; }
         protected internal abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         public override string ToString() { throw null; }
-        protected internal abstract bool TryGetHeader(string name, out string? value);
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers) { throw null; }
-        public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value) { throw null; }
-        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
-        protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
+        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
+        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public sealed partial class ResponseError
     {

@@ -128,7 +128,7 @@ namespace Azure.Core.Pipeline
             }
 
             string clientRequestId = httpMessage.Request.ClientRequestId;
-            message.Response = new HttpClientTransportResponse(clientRequestId, httpResponse, contentStream);
+            httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse, contentStream));
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)

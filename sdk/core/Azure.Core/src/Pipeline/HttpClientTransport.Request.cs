@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Rest.Core;
@@ -134,21 +133,12 @@ namespace Azure.Core.Pipeline
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                _request.Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
-                foreach (var header in headers)
+                _request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                foreach (KeyValuePair<string, string> header in headers)
                 {
-                    yield return new HttpHeader(header.Name, GetHeaderValueString(header.Name, header.Value));
+                    yield return new HttpHeader(header.Key, header.Value);
                 }
             }
-
-            // TODO: avoid copying this?
-            private static string GetHeaderValueString(string name, object value) => value switch
-            {
-                string s => s,
-                List<string> l => string.Join(",", l),
-                _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value?.GetType()}")
-            };
-
             protected internal override bool RemoveHeader(string name)
                 => _request.Headers.Remove(name);
 
@@ -156,25 +146,7 @@ namespace Azure.Core.Pipeline
                 => _request.Headers.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-            {
-                // TODO: we can optimize this, come back to it
-                _request.Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
-
-                var header = headers.Where(h => h.Name == name);
-                if (header == null || !header.Any())
-                {
-                    values = null;
-                    return false;
-                }
-
-                values = header.First().Value switch
-                {
-                    string s => new string[] { s },
-                    List<string> l => l,
-                    _ => throw new InvalidOperationException($"Unexpected type for header {name}: {header.First().Value?.GetType()}")
-                };
-                return true;
-            }
+                => _request.Headers.TryGetValues(name, out values);
         }
     }
 }

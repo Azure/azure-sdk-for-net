@@ -31,7 +31,19 @@ public class PipelineMessage : IDisposable
             return _response;
         }
 
-        set => _response = value;
+        // This is set internally by the transport.
+        protected internal set
+        {
+            // TODO: where else do we need to assert this to ensure the contract
+            // e.g. the difference between Result and NullableResult can be validated
+            // in the new library.
+            //ClientUtilities.AssertNotNull(value, "value");
+
+            // TODO: removing null validation per the need to "clear response" for retries
+            // but is there a better way to represent this?
+
+            _response = value;
+        }
     }
 
     public bool HasResponse => _response is not null;

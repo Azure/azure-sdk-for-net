@@ -7,17 +7,11 @@ namespace System.ServiceModel.Rest.Core;
 
 public abstract class PipelineResponse : IDisposable
 {
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
     public abstract int Status { get; }
 
     public abstract string ReasonPhrase {  get; }
 
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    public abstract Stream? ContentStream { get; internal set; }
+    public abstract Stream? ContentStream { get; protected internal set; }
 
     public abstract MessageHeaders Headers { get; }
 

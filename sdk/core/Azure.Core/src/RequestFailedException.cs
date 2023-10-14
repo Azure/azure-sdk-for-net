@@ -89,23 +89,17 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override BinaryData Content => throw new NotImplementedException();
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                protected set => throw new NotImplementedException();
+            }
 
-            public override Stream? ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public override string ReasonPhrase => throw new NotImplementedException();
+
+            public override MessageHeaders Headers => throw new NotImplementedException();
 
             public override void Dispose()
-                => throw new NotImplementedException();
-
-            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-                => throw new NotImplementedException();
-
-            public override bool TryGetHeaderValue(string name, out string? value)
-                => throw new NotImplementedException();
-
-            public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
-                => throw new NotImplementedException();
-
-            public override bool TryGetReasonPhrase(out string reasonPhrase)
                 => throw new NotImplementedException();
         }
 

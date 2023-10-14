@@ -34,17 +34,6 @@ namespace Azure.Core
             ResponseClassifier = responseClassifier;
         }
 
-        private static PipelineRequest ToPipelineRequest(Request request)
-        {
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
-            {
-                return pipelineRequest!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
-            return new PipelineRequestAdapter(request);
-        }
-
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
@@ -56,33 +45,44 @@ namespace Azure.Core
         /// </summary>
         public new Response Response
         {
-            get => ResponseInternal!;
-            set => ResponseInternal = value;
-        }
-
-        private Response? ResponseInternal
-        {
             get
             {
-                if (_response is not null)
+                if (_response == null)
                 {
-                    return _response;
-                }
-
-                if (base.Response is null)
-                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-
-                if (base.Response is not Response response)
-                {
-                    throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
-                }
-
-                return response;
+                return _response;
             }
 
-            set => base.Response = _response = value!;
+            set
+            {
+                _response = value;
+                base.Response = ToPipelineResponse(value);
+            }
+        }
+
+        private static PipelineRequest ToPipelineRequest(Request request)
+        {
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            {
+                return pipelineRequest!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
+            return new PipelineRequestAdapter(request);
+        }
+
+        private static PipelineResponse ToPipelineResponse(Response response)
+        {
+            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
+            {
+                return pipelineResponse!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
+            return new PipelineResponseAdapter(response);
         }
 
         /// <summary>
@@ -90,11 +90,12 @@ namespace Azure.Core
         /// </summary>
         public new bool HasResponse => _response != null || base.HasResponse;
 
-        internal void ClearResponse() => ResponseInternal = null;
+        internal void ClearResponse() => Response = null!;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
+        // TODO: revisit this per not shadowing anymore
         public new ResponseClassifier ResponseClassifier
         {
             get => (ResponseClassifier)base.ResponseClassifier;
@@ -204,12 +205,12 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (ResponseInternal?.ContentStream)
+            switch (_response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    ResponseInternal.ContentStream = new ResponseShouldNotBeUsedStream(ResponseInternal.ContentStream);
+                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
                     return null;

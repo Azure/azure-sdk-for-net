@@ -16,7 +16,9 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     private bool _disposed;
 
-    public HttpPipelineResponse(HttpResponseMessage? httpResponse, Stream? contentStream)
+    // TODO: why do we need content stream here?
+    // TODO: why is constructor public?
+    public HttpPipelineResponse(HttpResponseMessage httpResponse, Stream? contentStream)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _contentStream = contentStream;
@@ -27,12 +29,12 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override MessageHeaders Headers => throw new NotImplementedException();
+    public override MessageHeaders Headers => new MessageResponseHeaders(_httpResponse);
 
     public override Stream? ContentStream
     {
         get => _contentStream;
-        internal set
+        protected internal set
         {
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;
