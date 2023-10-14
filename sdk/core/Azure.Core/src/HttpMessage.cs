@@ -59,7 +59,7 @@ namespace Azure.Core
             set
             {
                 _response = value;
-                base.Response = ToPipelineResponse(value);
+                base.Response = value == null ? null! : ToPipelineResponse(value);
             }
         }
 
