@@ -162,7 +162,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     }
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
-        public HttpPipelineRequest() { }
+        protected internal HttpPipelineRequest() { }
         public override System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }

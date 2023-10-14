@@ -23,7 +23,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private readonly MessageRequestHeaders _headers;
 
-    public HttpPipelineRequest()
+    protected internal HttpPipelineRequest()
     {
         Method = HttpMethod.Get.Method;
         _headers = new MessageRequestHeaders();
