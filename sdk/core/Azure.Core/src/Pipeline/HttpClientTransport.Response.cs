@@ -91,7 +91,8 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                // TODO: implement
+                var response = _response;
+                response?.Dispose();
             }
         }
     }

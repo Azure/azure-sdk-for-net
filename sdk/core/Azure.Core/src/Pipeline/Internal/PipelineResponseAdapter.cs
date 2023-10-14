@@ -31,7 +31,8 @@ namespace Azure.Core
 
         public override void Dispose()
         {
-            // TODO: implement correctly
+            var response = _response;
+            response?.Dispose();
         }
     }
 }
