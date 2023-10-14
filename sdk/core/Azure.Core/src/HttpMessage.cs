@@ -280,10 +280,7 @@ namespace Azure.Core
             return new PipelineResponseAdapter(response);
         }
 
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
-
-        internal static bool TryGetResponseContent(Response response, out BinaryData content)
+        internal static bool TryGetResponseContent(Response response, out BinaryData? content)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -295,7 +292,7 @@ namespace Azure.Core
                 return true;
             }
 
-            content = s_EmptyBinaryData;
+            content = default;
             return false;
         }
 

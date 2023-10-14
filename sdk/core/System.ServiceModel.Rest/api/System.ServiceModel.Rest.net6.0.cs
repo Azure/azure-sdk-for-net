@@ -172,7 +172,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
-        public HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
+        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
         public override System.IO.Stream? ContentStream { get { throw null; } protected internal set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }

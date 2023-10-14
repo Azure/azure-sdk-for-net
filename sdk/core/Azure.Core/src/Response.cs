@@ -52,8 +52,12 @@ namespace Azure
             get
             {
                 // Delegate to implementation logic in PipelineResponse.Content.
-                HttpMessage.TryGetResponseContent(this, out BinaryData content);
-                return content;
+                if (!HttpMessage.TryGetResponseContent(this, out BinaryData? content))
+                {
+                    throw new InvalidOperationException("Failed to retreive Content from Response.");
+                }
+
+                return content!;
             }
         }
 

@@ -16,8 +16,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     private bool _disposed;
 
     // TODO: why do we need content stream here?
-    // TODO: why is constructor public?
-    public HttpPipelineResponse(HttpResponseMessage httpResponse, Stream? contentStream)
+    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse, Stream? contentStream)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _contentStream = contentStream;
