@@ -14,9 +14,9 @@ namespace System.ServiceModel.Rest;
 /// </summary>
 // TODO: Make options freezable
 // Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
-public class RequestOptions : PipelineOptions
+public class RequestOptions<TMessage> : PipelineOptions where TMessage : PipelineMessage
 {
-    public virtual void Apply(PipelineMessage message)
+    public virtual void Apply(TMessage message)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
