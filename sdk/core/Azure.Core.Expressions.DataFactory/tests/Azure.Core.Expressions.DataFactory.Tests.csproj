@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core\perf\Azure.Core.Perf.csproj" />
     <ProjectReference Include="..\src\Azure.Core.Expressions.DataFactory.csproj" />
   </ItemGroup>
 </Project>
