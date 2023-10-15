@@ -64,7 +64,15 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get => (Stream)_pipelineResponse.Content;
+                get
+                {
+                    if (_pipelineResponse.Content is null)
+                    {
+                        return null;
+                    }
+
+                    return (Stream)_pipelineResponse.Content;
+                }
 
                 set
                 {

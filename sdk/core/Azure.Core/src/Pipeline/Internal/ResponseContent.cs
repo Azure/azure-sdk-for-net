@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Buffers;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Internal;
 using System.Threading;
@@ -27,25 +25,14 @@ namespace Azure.Core.Pipeline
 
         private readonly Response _response;
 
-        //private readonly Stream _stream;
-        //private readonly long _origin;
-
         public ResponseContent(Response response)
         {
             _response = response;
-
-            // This is copied from RequestContent's StreamContent.
-            // TODO: do we need both?
-
-            //if (!stream.CanSeek)
-            //    throw new ArgumentException("Stream must be seekable", nameof(stream));
-            //_origin = stream.Position;
-            //_stream = stream;
         }
 
         public override void Dispose()
         {
-            // TODO:
+            // TODO: ?
             //_stream.Dispose();
         }
 
@@ -73,7 +60,6 @@ namespace Azure.Core.Pipeline
             if (_response.ContentStream is null)
             {
                 return;
-                //throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
             }
 
             // TODO: find a way to reuse the implementation
@@ -105,7 +91,6 @@ namespace Azure.Core.Pipeline
             if (_response.ContentStream is null)
             {
                 return;
-                //throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
             }
 
             await _response.ContentStream.CopyToAsync(stream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);

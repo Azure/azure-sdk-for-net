@@ -285,21 +285,21 @@ namespace Azure.Core
             return new PipelineResponseAdapter(response);
         }
 
-        internal static bool TryGetResponseContent(Response response, out BinaryData? content)
-        {
-            Argument.AssertNotNull(response, nameof(response));
+        //internal static bool TryGetResponseContent(Response response, out BinaryData? content)
+        //{
+        //    Argument.AssertNotNull(response, nameof(response));
 
-            PipelineResponse? pipelineResponse = ToPipelineResponse(response);
+        //    PipelineResponse? pipelineResponse = ToPipelineResponse(response);
 
-            if (pipelineResponse is not null)
-            {
-                content = pipelineResponse.Content;
-                return true;
-            }
+        //    if (pipelineResponse is not null)
+        //    {
+        //        content = pipelineResponse.Content;
+        //        return true;
+        //    }
 
-            content = default;
-            return false;
-        }
+        //    content = default;
+        //    return false;
+        //}
 
         /// <summary>
         /// Disposes the request and response.

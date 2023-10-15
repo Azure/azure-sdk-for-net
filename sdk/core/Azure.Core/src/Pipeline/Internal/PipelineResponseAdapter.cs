@@ -11,22 +11,35 @@ namespace Azure.Core
     internal class PipelineResponseAdapter : PipelineResponse
     {
         private readonly Response _response;
-        private readonly ResponseContent _content;
 
         public PipelineResponseAdapter(Response response)
         {
             _response = response;
-            _content = new ResponseContent(response);
         }
 
         public override int Status => _response.Status;
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override MessageContent Content
+        public override MessageContent? Content
         {
-            get => _content;
-            protected set => _response.ContentStream = (Stream)value;
+            get
+            {
+                if (_response.ContentStream is null)
+                {
+                    return null;
+                }
+
+                return new ResponseContent(_response);
+            }
+
+            protected set
+            {
+                if (value is not null)
+                {
+                    _response.ContentStream = (Stream)value;
+                }
+            }
         }
 
         // TODO: implement

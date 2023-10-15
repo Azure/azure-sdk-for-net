@@ -23,7 +23,11 @@ namespace Azure.Core.TestFramework
 
         public override string ReasonPhrase { get; }
 
-        public override Stream ContentStream { get; set; }
+        public override Stream ContentStream
+        {
+            get;
+            set;
+        }
 
         public override string ClientRequestId { get; set; }
 
@@ -183,6 +187,11 @@ namespace Azure.Core.TestFramework
             AddHeader(HttpHeader.Common.JsonContentType);
             SetContent(json);
             return this;
+        }
+
+        public override string ToString()
+        {
+            return $"MockResponse: {base.ToString()}";
         }
     }
 }

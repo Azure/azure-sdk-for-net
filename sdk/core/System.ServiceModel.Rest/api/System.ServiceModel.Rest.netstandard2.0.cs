@@ -121,7 +121,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.ServiceModel.Rest.Core.MessageContent Content { get; protected internal set; }
+        public abstract System.ServiceModel.Rest.Core.MessageContent? Content { get; protected internal set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -180,7 +180,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.ServiceModel.Rest.Core.MessageContent Content { get { throw null; } protected internal set { } }
+        public override System.ServiceModel.Rest.Core.MessageContent? Content { get { throw null; } protected internal set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
