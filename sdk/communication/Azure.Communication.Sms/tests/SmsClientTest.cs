@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Sms.Models;
@@ -25,8 +26,7 @@ namespace Azure.Communication.Sms.Tests
             AzureKeyCredential? nullCredential = null;
             Uri uri = new Uri("http://localhost");
 
-            Assert.That(() => new SmsClient(uri, nullCredential), Throws.ArgumentNullException);
-            Assert.That(() => new SmsClient(uri, nullCredential), Throws.ArgumentNullException);
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(uri, nullCredential));
         }
 
         [Test]
@@ -34,12 +34,11 @@ namespace Azure.Communication.Sms.Tests
         {
             AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
 
-            Assert.That(() => new SmsClient(null, mockCredential), Throws.ArgumentNullException);
-            Assert.That(() => new SmsClient(null, mockCredential), Throws.ArgumentNullException);
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(null, mockCredential));
         }
 
         [Test]
-        public void SmsClient_ValidParameters()
+        public void SmsClient_KeyCredential_ValidParameters()
         {
             AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
             Uri uri = new Uri("http://localhost");
@@ -48,10 +47,27 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
+        public void SmsClient_TokenCredential_NullOptions()
+        {
+            TokenCredential mockCredential = new MockCredential();
+            Uri endpoint = new Uri("http://localhost");
+
+            Assert.DoesNotThrow(() => new SmsClient(endpoint, mockCredential, null));
+        }
+
+        [Test]
         public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
         {
-            Assert.That(() => new SmsClient(""), Throws.ArgumentException);
-            Assert.That(() => new SmsClient(null), Throws.ArgumentNullException);
+            Assert.Throws<ArgumentException>(() => new SmsClient(string.Empty));
+            Assert.Throws<ArgumentException>(() => new SmsClient(null));
+        }
+
+        [Test]
+        public void SmsClientOptions_ThrowsWithInvalidVersion()
+        {
+            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)2;
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]
