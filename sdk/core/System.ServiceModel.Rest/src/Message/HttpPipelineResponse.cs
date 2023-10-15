@@ -11,6 +11,10 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpResponseContent;
 
+    private MessageContent? _content;
+
+    // TODO: keeping this for now to make sure complex Dipose logic is respected,
+    // but it would be nice to see if we can make this go away at some point.
     private Stream? _contentStream;
 
     private bool _disposed;
@@ -19,7 +23,15 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     protected internal HttpPipelineResponse(HttpResponseMessage httpResponse, Stream? contentStream)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
-        _contentStream = contentStream;
+
+        if (contentStream is not null)
+        {
+            _content = MessageContent.CreateContent(contentStream);
+        }
+        else
+        {
+            _content = MessageContent.CreateContent(MessageContent.EmptyBinaryData);
+        }
 
         // We need to back up the response content so we can read headers out of it later
         // if we set the content to null when we buffer the content stream.
@@ -34,11 +46,11 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override Stream? ContentStream
+    public override MessageContent? Content
     {
         // TODO: Why would we set the content in the constructor and then overwrite it later?
         // Is this the contract we want in this type?  It feels error prone, but I'm not sure I understand it very well.
-        get => _contentStream;
+        get => _content;
         protected internal set
         {
             // Make sure we don't dispose the content if the stream was replaced
@@ -49,7 +61,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             // reference to it, so wouldn't we want to make sure it gets disposed
             // at some point?
 
-            _contentStream = value;
+            _content = value;
         }
     }
 
@@ -72,6 +84,13 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
                 contentStream?.Dispose();
                 _contentStream = null;
             }
+
+            // TODO: work through dispose story for response content
+            // I think it means that the "when do I dipose stream" logic moves
+            // into MessageContent.StreamContent's Dipose method.
+            var content = _content;
+            content?.Dispose();
+            _content = null;
 
             _disposed = true;
         }

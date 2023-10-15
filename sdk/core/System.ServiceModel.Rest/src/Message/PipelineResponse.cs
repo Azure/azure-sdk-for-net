@@ -11,9 +11,11 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract string ReasonPhrase {  get; }
 
-    public abstract Stream? ContentStream { get; protected internal set; }
-
     public abstract MessageHeaders Headers { get; }
+
+    //public abstract Stream? ContentStream { get; protected internal set; }
+
+    public abstract MessageContent? Content { get; protected internal set; }
 
     #region Meta-data properties set by the pipeline.
 
@@ -23,37 +25,37 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public bool IsError { get; internal set; }
 
-    /// <summary>
-    /// Gets the contents of HTTP response, if it is available.
-    /// </summary>
-    /// <remarks>
-    /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
-    /// </remarks>
-    public BinaryData Content
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                return PipelineMessage.EmptyContent;
-            }
+    ///// <summary>
+    ///// Gets the contents of HTTP response, if it is available.
+    ///// </summary>
+    ///// <remarks>
+    ///// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+    ///// </remarks>
+    //public BinaryData Content
+    //{
+    //    get
+    //    {
+    //        if (ContentStream == null)
+    //        {
+    //            return PipelineMessage.EmptyContent;
+    //        }
 
-            // TODO: Keep this?
-            // Questions: what assumptions is this making and/or dependencies
-            // is it mandating?
-            MemoryStream? memoryContent = ContentStream as MemoryStream ??
-                throw new InvalidOperationException($"The response is not fully buffered.");
+    //        // TODO: Keep this?
+    //        // Questions: what assumptions is this making and/or dependencies
+    //        // is it mandating?
+    //        MemoryStream? memoryContent = ContentStream as MemoryStream ??
+    //            throw new InvalidOperationException($"The response is not fully buffered.");
 
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(memoryContent.ToArray());
-            }
-        }
-    }
+    //        if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+    //        {
+    //            return new BinaryData(segment.AsMemory());
+    //        }
+    //        else
+    //        {
+    //            return new BinaryData(memoryContent.ToArray());
+    //        }
+    //    }
+    //}
 
     #endregion
 

@@ -11,19 +11,28 @@ namespace System.ServiceModel.Rest.Core
 {
     public abstract class MessageContent : IDisposable
     {
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        internal static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+
         /// <summary>
         /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static MessageContent CreateContent(Stream stream) => new StreamContent(stream);
+        public static MessageContent CreateContent(Stream stream) => new StreamMessageContent(stream);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MessageContent CreateContent(BinaryData content) => new MemoryContent(content.ToMemory());
+        public static MessageContent CreateContent(BinaryData content) => new MemoryMessageContent(content.ToMemory());
+
+        /// <summary>
+        /// Attempts to compute the length of the underlying content, if available.
+        /// </summary>
+        /// <param name="length">The length of the underlying data.</param>
+        public abstract bool TryComputeLength(out long length);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -39,18 +48,71 @@ namespace System.ServiceModel.Rest.Core
         /// <param name="cancellation">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellation);
 
-        /// <summary>
-        /// Attempts to compute the length of the underlying content, if available.
-        /// </summary>
-        /// <param name="length">The length of the underlying data.</param>
-        public abstract bool TryComputeLength(out long length);
+        public static implicit operator BinaryData(MessageContent content)
+            => content.ToBinaryData();
+
+        public static implicit operator ReadOnlyMemory<byte>(MessageContent content)
+            => content.ToBinaryData();
+
+        // This is virtual so we don't break the contract by adding an abstract method
+        // but the default implmementation can be optimized, so inheriting types should
+        // override this if they can provide a better implementation.
+        protected virtual BinaryData ToBinaryData(CancellationToken cancellationToken = default)
+        {
+            MemoryStream stream;
+
+            if (TryComputeLength(out long length))
+            {
+                if (length >= int.MaxValue)
+                {
+                    throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
+                }
+
+                stream = new MemoryStream((int)length);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+
+            WriteTo(stream, cancellationToken);
+            stream.Position = 0;
+
+            return BinaryData.FromStream(stream);
+        }
+
+        protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
+        {
+            MemoryStream stream;
+
+            if (TryComputeLength(out long length))
+            {
+                if (length >= int.MaxValue)
+                {
+                    throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
+                }
+
+                stream = new MemoryStream((int)length);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+
+            await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            stream.Position = 0;
+
+            return BinaryData.FromStream(stream);
+        }
+
+        internal bool IsBuffered { get; set; }
 
         /// <inheritdoc/>
         public abstract void Dispose();
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
-        private sealed class StreamContent : MessageContent
+        private sealed class StreamMessageContent : MessageContent
         {
             private const int CopyToBufferSize = 81920;
 
@@ -58,10 +120,13 @@ namespace System.ServiceModel.Rest.Core
 
             private readonly long _origin;
 
-            public StreamContent(Stream stream)
+            public StreamMessageContent(Stream stream)
             {
                 if (!stream.CanSeek)
+                {
                     throw new ArgumentException("stream must be seekable", nameof(stream));
+                }
+
                 _origin = stream.Position;
                 _stream = stream;
             }
@@ -70,7 +135,7 @@ namespace System.ServiceModel.Rest.Core
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
 
-                // this is not using CopyTo so that we can honor cancellations.
+                // This is not using CopyTo so that we can honor cancellations.
                 byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
                 try
                 {
@@ -114,11 +179,13 @@ namespace System.ServiceModel.Rest.Core
             }
         }
 
-        private sealed class MemoryContent : MessageContent
+        // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
+        // with BinaryData in an optimized way.
+        private sealed class MemoryMessageContent : MessageContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 
-            public MemoryContent(ReadOnlyMemory<byte> bytes)
+            public MemoryMessageContent(ReadOnlyMemory<byte> bytes)
                 => _bytes = bytes;
 
             public override void Dispose() { }

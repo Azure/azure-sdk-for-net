@@ -8,9 +8,6 @@ namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage : IDisposable
 {
-    // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-    internal static BinaryData EmptyContent = new(Array.Empty<byte>());
-
     private PipelineResponse? _response;
     private bool _disposed;
 
