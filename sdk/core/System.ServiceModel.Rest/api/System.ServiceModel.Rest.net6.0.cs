@@ -67,6 +67,16 @@ namespace System.ServiceModel.Rest
 }
 namespace System.ServiceModel.Rest.Core
 {
+    public abstract partial class MessageContent : System.IDisposable
+    {
+        protected MessageContent() { }
+        public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.BinaryData content) { throw null; }
+        public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.IO.Stream stream) { throw null; }
+        public abstract void Dispose();
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+    }
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
@@ -95,21 +105,11 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.ServiceModel.Rest.Core.PipelineRequestContent? Content { get; set; }
+        public abstract System.ServiceModel.Rest.Core.MessageContent? Content { get; set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
         public abstract void Dispose();
-    }
-    public abstract partial class PipelineRequestContent : System.IDisposable
-    {
-        protected PipelineRequestContent() { }
-        public static System.ServiceModel.Rest.Core.PipelineRequestContent CreateContent(System.BinaryData content) { throw null; }
-        public static System.ServiceModel.Rest.Core.PipelineRequestContent CreateContent(System.IO.Stream stream) { throw null; }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -164,7 +164,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
         protected internal HttpPipelineRequest() { }
-        public override System.ServiceModel.Rest.Core.PipelineRequestContent? Content { get { throw null; } set { } }
+        public override System.ServiceModel.Rest.Core.MessageContent? Content { get { throw null; } set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }

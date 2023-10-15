@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core
 {
-    public abstract class PipelineRequestContent : IDisposable
+    public abstract class MessageContent : IDisposable
     {
         /// <summary>
-        /// Creates an instance of <see cref="PipelineRequestContent"/> that wraps a <see cref="Stream"/>.
+        /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineRequestContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static PipelineRequestContent CreateContent(Stream stream) => new StreamContent(stream);
+        /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.</returns>
+        public static MessageContent CreateContent(Stream stream) => new StreamContent(stream);
 
         /// <summary>
-        /// Creates an instance of <see cref="PipelineRequestContent"/> that wraps a <see cref="BinaryData"/>.
+        /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineRequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static PipelineRequestContent CreateContent(BinaryData content) => new MemoryContent(content.ToMemory());
+        /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static MessageContent CreateContent(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -50,7 +50,7 @@ namespace System.ServiceModel.Rest.Core
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
-        private sealed class StreamContent : PipelineRequestContent
+        private sealed class StreamContent : MessageContent
         {
             private const int CopyToBufferSize = 81920;
 
@@ -114,7 +114,7 @@ namespace System.ServiceModel.Rest.Core
             }
         }
 
-        private sealed class MemoryContent : PipelineRequestContent
+        private sealed class MemoryContent : MessageContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 

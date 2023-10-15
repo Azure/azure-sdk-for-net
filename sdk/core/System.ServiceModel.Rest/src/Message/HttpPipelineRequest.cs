@@ -20,7 +20,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private PipelineRequestContent? _content;
+    private MessageContent? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -45,7 +45,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override PipelineRequestContent? Content
+    public override MessageContent? Content
     {
         get => _content;
         set => _content = value;
@@ -131,10 +131,10 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private readonly PipelineRequestContent _content;
+        private readonly MessageContent _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(PipelineRequestContent content, CancellationToken cancellationToken)
+        public PipelineContentAdapter(MessageContent content, CancellationToken cancellationToken)
         {
             ClientUtilities.AssertNotNull(content, nameof(content));
 

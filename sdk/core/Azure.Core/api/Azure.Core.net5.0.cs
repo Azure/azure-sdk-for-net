@@ -533,7 +533,7 @@ namespace Azure.Core
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.ServiceModel.Rest.Core.PipelineRequestContent
+    public abstract partial class RequestContent : System.ServiceModel.Rest.Core.MessageContent
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
