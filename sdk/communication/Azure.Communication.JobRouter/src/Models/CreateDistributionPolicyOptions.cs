@@ -46,5 +46,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The human readable name of the policy. </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

@@ -44,17 +44,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicy_Async
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp_Async
-
-            Response updatedDistributionPolicyWithoutName = await routerAdministrationClient.UpdateDistributionPolicyAsync(distributionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<DistributionPolicy> queriedDistributionPolicyWithoutName = await routerAdministrationClient.GetDistributionPolicyAsync(distributionPolicyId);
-
-            Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(queriedDistributionPolicyWithoutName.Value.Name)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp_Async
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy_Async
 
             Response<DistributionPolicy> updatedDistributionPolicy = await routerAdministrationClient.UpdateDistributionPolicyAsync(

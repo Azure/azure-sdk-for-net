@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.JobRouter
 {
     // Data plane generated client.
-    /// <summary> The JobRouterAdministrationRest service client. </summary>
-    internal partial class JobRouterAdministrationRestClient
+    /// <summary> The JobRouterAdministration service client. </summary>
+    public partial class JobRouterAdministrationClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -29,23 +29,18 @@ namespace Azure.Communication.JobRouter
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of JobRouterAdministrationRestClient for mocking. </summary>
-        protected JobRouterAdministrationRestClient()
-        {
-        }
-
-        /// <summary> Initializes a new instance of JobRouterAdministrationRestClient. </summary>
+        /// <summary> Initializes a new instance of JobRouterAdministrationClient. </summary>
         /// <param name="endpoint"> The Uri to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterAdministrationRestClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
+        public JobRouterAdministrationClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of JobRouterAdministrationRestClient. </summary>
+        /// <summary> Initializes a new instance of JobRouterAdministrationClient. </summary>
         /// <param name="endpoint"> The Uri to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterAdministrationRestClient(Uri endpoint, JobRouterClientOptions options)
+        public JobRouterAdministrationClient(Uri endpoint, JobRouterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new JobRouterClientOptions();
@@ -74,8 +69,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpsertDistributionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual async Task<Response> UpsertDistributionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -83,7 +78,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
             try
             {
@@ -115,8 +110,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpsertDistributionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual Response UpsertDistributionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -124,7 +119,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
             try
             {
@@ -143,7 +138,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -158,7 +153,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,CancellationToken)']/*" />
         public virtual Response<DistributionPolicy> GetDistributionPolicy(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -189,12 +184,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDistributionPolicyAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetDistributionPolicy");
             scope.Start();
             try
             {
@@ -229,12 +224,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,RequestContext)']/*" />
         public virtual Response GetDistributionPolicy(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetDistributionPolicy");
             scope.Start();
             try
             {
@@ -265,12 +260,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteDistributionPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteDistributionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteDistributionPolicyAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteDistributionPolicy");
             scope.Start();
             try
             {
@@ -301,12 +296,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteDistributionPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteDistributionPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteDistributionPolicy(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteDistributionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteDistributionPolicy");
             scope.Start();
             try
             {
@@ -338,8 +333,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpsertClassificationPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual async Task<Response> UpsertClassificationPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -347,7 +342,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
             try
             {
@@ -379,8 +374,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpsertClassificationPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual Response UpsertClassificationPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -388,7 +383,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
             try
             {
@@ -407,7 +402,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -422,7 +417,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,CancellationToken)']/*" />
         public virtual Response<ClassificationPolicy> GetClassificationPolicy(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -453,12 +448,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationPolicyAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicy");
             scope.Start();
             try
             {
@@ -493,12 +488,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,RequestContext)']/*" />
         public virtual Response GetClassificationPolicy(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicy");
             scope.Start();
             try
             {
@@ -529,12 +524,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteClassificationPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteClassificationPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteClassificationPolicyAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteClassificationPolicy");
             scope.Start();
             try
             {
@@ -565,12 +560,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteClassificationPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteClassificationPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteClassificationPolicy(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteClassificationPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteClassificationPolicy");
             scope.Start();
             try
             {
@@ -602,8 +597,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpsertExceptionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual async Task<Response> UpsertExceptionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -611,7 +606,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
             try
             {
@@ -643,8 +638,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpsertExceptionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual Response UpsertExceptionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -652,7 +647,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
             try
             {
@@ -671,7 +666,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ExceptionPolicy>> GetExceptionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -686,7 +681,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,CancellationToken)']/*" />
         public virtual Response<ExceptionPolicy> GetExceptionPolicy(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -717,12 +712,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetExceptionPolicyAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetExceptionPolicy");
             scope.Start();
             try
             {
@@ -757,12 +752,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,RequestContext)']/*" />
         public virtual Response GetExceptionPolicy(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetExceptionPolicy");
             scope.Start();
             try
             {
@@ -793,12 +788,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteExceptionPolicyAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteExceptionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteExceptionPolicyAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteExceptionPolicy");
             scope.Start();
             try
             {
@@ -829,12 +824,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteExceptionPolicy(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteExceptionPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteExceptionPolicy(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteExceptionPolicy");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteExceptionPolicy");
             scope.Start();
             try
             {
@@ -866,8 +861,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> UpsertQueueAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual async Task<Response> UpsertQueueAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -875,7 +870,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
             try
             {
@@ -907,8 +902,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='UpsertQueue(string,RequestContent,RequestConditions,RequestContext)']/*" />
-        public virtual Response UpsertQueue(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertQueue(string,RequestContent,RequestConditions,RequestContext)']/*" />
+        internal virtual Response UpsertQueue(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -916,7 +911,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.UpsertQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
             try
             {
@@ -935,7 +930,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueueAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueueAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<RouterQueue>> GetQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -950,7 +945,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueue(string,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueue(string,CancellationToken)']/*" />
         public virtual Response<RouterQueue> GetQueue(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -981,12 +976,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueueAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueueAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetQueueAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetQueue");
             scope.Start();
             try
             {
@@ -1021,12 +1016,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueue(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueue(string,RequestContext)']/*" />
         public virtual Response GetQueue(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.GetQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetQueue");
             scope.Start();
             try
             {
@@ -1057,12 +1052,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteQueueAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteQueueAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteQueueAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteQueue");
             scope.Start();
             try
             {
@@ -1093,12 +1088,12 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='DeleteQueue(string,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteQueue(string,RequestContext)']/*" />
         public virtual Response DeleteQueue(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationRestClient.DeleteQueue");
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteQueue");
             scope.Start();
             try
             {
@@ -1115,25 +1110,25 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DistributionPolicyItem> GetDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DistributionPolicyItem.DeserializeDistributionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DistributionPolicyItem.DeserializeDistributionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,CancellationToken)']/*" />
         public virtual Pageable<DistributionPolicyItem> GetDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DistributionPolicyItem.DeserializeDistributionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DistributionPolicyItem.DeserializeDistributionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1155,12 +1150,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1182,36 +1177,36 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,CancellationToken)']/*" />
         public virtual AsyncPageable<ClassificationPolicyItem> GetClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClassificationPolicyItem.DeserializeClassificationPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClassificationPolicyItem.DeserializeClassificationPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,CancellationToken)']/*" />
         public virtual Pageable<ClassificationPolicyItem> GetClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClassificationPolicyItem.DeserializeClassificationPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClassificationPolicyItem.DeserializeClassificationPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1233,12 +1228,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1260,36 +1255,36 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,CancellationToken)']/*" />
         public virtual AsyncPageable<ExceptionPolicyItem> GetExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExceptionPolicyItem.DeserializeExceptionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExceptionPolicyItem.DeserializeExceptionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,CancellationToken)']/*" />
         public virtual Pageable<ExceptionPolicyItem> GetExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExceptionPolicyItem.DeserializeExceptionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExceptionPolicyItem.DeserializeExceptionPolicyItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1311,12 +1306,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1338,36 +1333,36 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,CancellationToken)']/*" />
         public virtual AsyncPageable<RouterQueueItem> GetQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterQueueItem.DeserializeRouterQueueItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterQueueItem.DeserializeRouterQueueItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int?,CancellationToken)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueues(int?,CancellationToken)']/*" />
         public virtual Pageable<RouterQueueItem> GetQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterQueueItem.DeserializeRouterQueueItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterQueueItem.DeserializeRouterQueueItem, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1389,12 +1384,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1416,12 +1411,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int?,RequestContext)']/*" />
+        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueues(int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationRestClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateUpsertDistributionPolicyRequest(string id, RequestContent content, RequestConditions requestConditions, RequestContext context)
@@ -1695,58 +1690,6 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/queues/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetQueuesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
@@ -68,7 +69,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
         }
 
-        /*[Test]
+        [Test]
         public async Task GetJobsTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -119,11 +120,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(RouterJobStatus.Queued, job2Result.Value.Status);
 
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
-            {
-                ChannelId = channelId,
-                QueueId = createQueue.Id,
-            });
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
@@ -163,12 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
-            {
-                ChannelId = channelId,
-                QueueId = createQueue.Id,
-                ScheduledAfter = timeToEnqueueJob,
-            });
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, scheduledAfter: timeToEnqueueJob);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
@@ -180,7 +172,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
-        }*/
+        }
 
         [Test]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
@@ -378,34 +370,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public async Task CreateJobAndRemoveProperty()
-        {
-            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
-            var channelId = GenerateUniqueId($"{nameof(CreateJobAndRemoveProperty)}-Channel");
-
-            // Setup queue
-            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobAndRemoveProperty));
-            var createQueue = createQueueResponse.Value;
-
-            // Create 1 job
-            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobAndRemoveProperty)}1");
-            var createJob1Response = await routerClient.CreateJobAsync(
-                new CreateJobOptions(jobId1, channelId, createQueue.Id)
-                {
-                    Priority = 1,
-                    ChannelReference = "IncorrectValue",
-                });
-            var createJob1 = createJob1Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
-
-            var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }));
-
-            var retrievedJob = await routerClient.GetJobAsync(jobId1);
-
-            Assert.True(string.IsNullOrWhiteSpace(retrievedJob.Value.ChannelReference));
-        }
-
-        [Test]
         public async Task CreateJobWithQueueAndMatchMode()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -579,7 +543,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
 
-            await routerClient.ReclassifyJobAsync(jobId1);
+            await routerClient.ReclassifyJobAsync(jobId1, CancellationToken.None);
 
             Assert.AreEqual(createJob1.QueueId, createQueue.Id);
         }

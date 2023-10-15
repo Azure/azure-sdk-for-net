@@ -121,10 +121,7 @@ await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10
 }
 
 // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-workers = routerClient.GetWorkersAsync(new GetWorkersOptions()
-{
-    ChannelId = "Voip", State = RouterWorkerStateSelector.All
-});
+workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All);
 
 await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 {

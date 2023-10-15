@@ -41,7 +41,7 @@ Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.I
 ## Get queue statistics
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
-Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(queueId: jobQueueId);
+Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(jobQueueId);
 
 Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 ```
@@ -54,17 +54,6 @@ Response<RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(
     {
         Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
     });
-```
-
-## Remove from queue
-
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
-Response updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
-    RequestContent.Create(new { Name = (string?)null }));
-
-Response<RouterQueue> queriedJobQueueWithoutName = routerAdministrationClient.GetQueue(jobQueueId);
-
-Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
 ```
 
 ## List job queues

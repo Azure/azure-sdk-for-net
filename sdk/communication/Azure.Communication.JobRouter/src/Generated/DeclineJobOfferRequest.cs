@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for declining offers. </summary>
-    internal partial class DeclineJobOfferRequest
+    public partial class DeclineJobOfferRequest
     {
         /// <summary> Initializes a new instance of DeclineJobOfferRequest. </summary>
         public DeclineJobOfferRequest()

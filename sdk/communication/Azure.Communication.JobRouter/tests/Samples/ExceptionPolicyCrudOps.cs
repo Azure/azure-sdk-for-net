@@ -91,18 +91,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicy
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp
-
-            // we are going to remove Name
-            Response updateExceptionPolicyWithoutName = routerClient.UpdateExceptionPolicy(exceptionPolicyId,
-                    RequestContent.Create(new { Name = (string?)null }));
-
-            Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = routerClient.GetExceptionPolicy(exceptionPolicyId);
-
-            Console.WriteLine($"Exception policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedExceptionPolicyWithoutName.Value.Name)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicy
 
             // we are going to

@@ -68,17 +68,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicy
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
-
-            Response updatedClassificationPolicyWithoutName = routerAdministrationClient.UpdateClassificationPolicy(classificationPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
-
-            Console.WriteLine($"Classification policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedClassificationPolicyWithoutName.Value.Name)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy
 
             Response<ClassificationPolicy> updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(

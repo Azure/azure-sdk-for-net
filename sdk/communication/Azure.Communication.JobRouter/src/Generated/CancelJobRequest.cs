@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for deleting a job. </summary>
-    internal partial class CancelJobRequest
+    public partial class CancelJobRequest
     {
         /// <summary> Initializes a new instance of CancelJobRequest. </summary>
         public CancelJobRequest()

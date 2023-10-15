@@ -222,32 +222,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(1, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
         }
 
-        [Test]
-        public async Task CreateClassificationPolicyAndRemoveAProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-
-            var classificationPolicyId = GenerateUniqueId($"{nameof(CreateClassificationPolicyAndRemoveAProperty)}-ClassicationPolicy_w_WSelector");
-            var classificationPolicyName = $"Priority-ClassificationPolicy";
-            var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
-                new CreateClassificationPolicyOptions(classificationPolicyId)
-                {
-                    Name = classificationPolicyName,
-                    WorkerSelectors = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("department", LabelOperator.Equal, new LabelValue("sales"))) }
-                });
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
-
-            Assert.False(string.IsNullOrWhiteSpace(createClassificationPolicyResponse.Value.Name));
-
-            var updatedPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(classificationPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            var retrievedPolicy = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
-
-            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
-        }
-
         #endregion Classification Policy Tests
     }
 }

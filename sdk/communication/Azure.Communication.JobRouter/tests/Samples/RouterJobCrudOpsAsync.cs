@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
@@ -87,17 +88,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition_Async
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
-
-            Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
-                RequestContent.Create(new { ChannelReference = (string?)null }));
-
-            Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
-
-            Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob_Async
 
             Response<RouterJob> updatedJob = await routerClient.UpdateJobAsync(
@@ -113,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
 
-            Response reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId);
+            Response reclassifyJob = await routerClient.ReclassifyJobAsync(jobWithCpId, CancellationToken.None);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
 

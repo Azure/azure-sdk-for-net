@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for closing jobs. </summary>
-    internal partial class CloseJobRequest
+    public partial class CloseJobRequest
     {
         /// <summary> Initializes a new instance of CloseJobRequest. </summary>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>

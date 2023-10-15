@@ -50,5 +50,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The worker label selectors to attach to a given job. </summary>
         public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

@@ -38,5 +38,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Abstract base class for defining a distribution mode. </summary>
         public DistributionMode Mode { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

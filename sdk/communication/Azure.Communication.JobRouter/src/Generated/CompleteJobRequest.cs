@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for completing jobs. </summary>
-    internal partial class CompleteJobRequest
+    public partial class CompleteJobRequest
     {
         /// <summary> Initializes a new instance of CompleteJobRequest. </summary>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>

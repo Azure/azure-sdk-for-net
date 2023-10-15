@@ -1,131 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertDistributionPolicyAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpsertDistributionPolicyAsync("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertDistributionPolicyAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    offerExpiresAfterSeconds = 123.45,
-    mode = new
-    {
-        scoringRule = new
-        {
-            kind = "direct-map-rule",
-        },
-        scoringRuleOptions = new
-        {
-            batchSize = 1234,
-            scoringParameters = new List<object>()
-            {
-                "jobLabels"
-            },
-            allowScoringBatchOfWorkers = true,
-            descendingOrder = true,
-        },
-        kind = "best-worker",
-        minConcurrentOffers = 1234,
-        maxConcurrentOffers = 1234,
-        bypassSelectors = true,
-    },
-});
-Response response = await client.UpsertDistributionPolicyAsync("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-]]></code></example>
-    </member>
-    <member name="UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertDistributionPolicy and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = client.UpsertDistributionPolicy("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertDistributionPolicy with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    offerExpiresAfterSeconds = 123.45,
-    mode = new
-    {
-        scoringRule = new
-        {
-            kind = "direct-map-rule",
-        },
-        scoringRuleOptions = new
-        {
-            batchSize = 1234,
-            scoringParameters = new List<object>()
-            {
-                "jobLabels"
-            },
-            allowScoringBatchOfWorkers = true,
-            descendingOrder = true,
-        },
-        kind = "best-worker",
-        minConcurrentOffers = 1234,
-        maxConcurrentOffers = 1234,
-        bypassSelectors = true,
-    },
-});
-Response response = client.UpsertDistributionPolicy("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-]]></code></example>
-    </member>
+    <member name="UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)" />
+    <member name="UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)" />
     <member name="GetDistributionPolicyAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetDistributionPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
 ]]></code>
 This sample shows how to call GetDistributionPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
 ]]></code></example>
@@ -135,14 +25,14 @@ Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync(
 This sample shows how to call GetDistributionPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
 ]]></code>
 This sample shows how to call GetDistributionPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
 ]]></code></example>
@@ -152,7 +42,7 @@ Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
 This sample shows how to call GetDistributionPolicyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetDistributionPolicyAsync("<id>", null);
 
@@ -162,7 +52,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetDistributionPolicyAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetDistributionPolicyAsync("<id>", null);
 
@@ -181,7 +71,7 @@ Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToSt
 This sample shows how to call GetDistributionPolicy and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetDistributionPolicy("<id>", null);
 
@@ -191,7 +81,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetDistributionPolicy with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetDistributionPolicy("<id>", null);
 
@@ -210,7 +100,7 @@ Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToSt
 This sample shows how to call DeleteDistributionPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteDistributionPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -218,7 +108,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteDistributionPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteDistributionPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -229,7 +119,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteDistributionPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteDistributionPolicy("<id>");
 Console.WriteLine(response.Status);
@@ -237,169 +127,27 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteDistributionPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteDistributionPolicy("<id>");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertClassificationPolicyAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpsertClassificationPolicyAsync("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertClassificationPolicyAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    fallbackQueueId = "<fallbackQueueId>",
-    queueSelectors = new List<object>()
-    {
-        new
-        {
-            condition = new
-            {
-                kind = "direct-map-rule",
-            },
-            queueSelectors = new List<object>()
-            {
-                new
-                {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new object(),
-                }
-            },
-            kind = "conditional",
-        }
-    },
-    workerSelectors = new List<object>()
-    {
-        new
-        {
-            workerSelectors = new List<object>()
-            {
-                new
-                {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new object(),
-                    expiresAfterSeconds = 123.45,
-                    expedite = true,
-                }
-            },
-            kind = "conditional",
-        }
-    },
-});
-Response response = await client.UpsertClassificationPolicyAsync("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
-Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-]]></code></example>
-    </member>
-    <member name="UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertClassificationPolicy and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = client.UpsertClassificationPolicy("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertClassificationPolicy with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    fallbackQueueId = "<fallbackQueueId>",
-    queueSelectors = new List<object>()
-    {
-        new
-        {
-            condition = new
-            {
-                kind = "direct-map-rule",
-            },
-            queueSelectors = new List<object>()
-            {
-                new
-                {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new object(),
-                }
-            },
-            kind = "conditional",
-        }
-    },
-    workerSelectors = new List<object>()
-    {
-        new
-        {
-            workerSelectors = new List<object>()
-            {
-                new
-                {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new object(),
-                    expiresAfterSeconds = 123.45,
-                    expedite = true,
-                }
-            },
-            kind = "conditional",
-        }
-    },
-});
-Response response = client.UpsertClassificationPolicy("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
-Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-]]></code></example>
-    </member>
+    <member name="UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)" />
+    <member name="UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)" />
     <member name="GetClassificationPolicyAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetClassificationPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
 ]]></code>
 This sample shows how to call GetClassificationPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
 ]]></code></example>
@@ -409,14 +157,14 @@ Response<ClassificationPolicy> response = await client.GetClassificationPolicyAs
 This sample shows how to call GetClassificationPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
 ]]></code>
 This sample shows how to call GetClassificationPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
 ]]></code></example>
@@ -426,7 +174,7 @@ Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>")
 This sample shows how to call GetClassificationPolicyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetClassificationPolicyAsync("<id>", null);
 
@@ -436,7 +184,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetClassificationPolicyAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetClassificationPolicyAsync("<id>", null);
 
@@ -454,7 +202,7 @@ Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").T
 This sample shows how to call GetClassificationPolicy and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetClassificationPolicy("<id>", null);
 
@@ -464,7 +212,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetClassificationPolicy with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetClassificationPolicy("<id>", null);
 
@@ -482,7 +230,7 @@ Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").T
 This sample shows how to call DeleteClassificationPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteClassificationPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -490,7 +238,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteClassificationPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteClassificationPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -501,7 +249,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteClassificationPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteClassificationPolicy("<id>");
 Console.WriteLine(response.Status);
@@ -509,127 +257,27 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteClassificationPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteClassificationPolicy("<id>");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertExceptionPolicyAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpsertExceptionPolicyAsync("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertExceptionPolicyAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    exceptionRules = new
-    {
-        key = new
-        {
-            trigger = new
-            {
-                threshold = 1234,
-                kind = "queue-length",
-            },
-            actions = new
-            {
-                key = new
-                {
-                    note = "<note>",
-                    dispositionCode = "<dispositionCode>",
-                    kind = "cancel",
-                },
-            },
-        },
-    },
-});
-Response response = await client.UpsertExceptionPolicyAsync("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-]]></code></example>
-    </member>
-    <member name="UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertExceptionPolicy and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = client.UpsertExceptionPolicy("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertExceptionPolicy with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    exceptionRules = new
-    {
-        key = new
-        {
-            trigger = new
-            {
-                threshold = 1234,
-                kind = "queue-length",
-            },
-            actions = new
-            {
-                key = new
-                {
-                    note = "<note>",
-                    dispositionCode = "<dispositionCode>",
-                    kind = "cancel",
-                },
-            },
-        },
-    },
-});
-Response response = client.UpsertExceptionPolicy("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-]]></code></example>
-    </member>
+    <member name="UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)" />
+    <member name="UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)" />
     <member name="GetExceptionPolicyAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetExceptionPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
 ]]></code>
 This sample shows how to call GetExceptionPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
 ]]></code></example>
@@ -639,14 +287,14 @@ Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>"
 This sample shows how to call GetExceptionPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
 ]]></code>
 This sample shows how to call GetExceptionPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
 ]]></code></example>
@@ -656,7 +304,7 @@ Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
 This sample shows how to call GetExceptionPolicyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetExceptionPolicyAsync("<id>", null);
 
@@ -666,7 +314,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetExceptionPolicyAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetExceptionPolicyAsync("<id>", null);
 
@@ -682,7 +330,7 @@ Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetP
 This sample shows how to call GetExceptionPolicy and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetExceptionPolicy("<id>", null);
 
@@ -692,7 +340,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetExceptionPolicy with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetExceptionPolicy("<id>", null);
 
@@ -708,7 +356,7 @@ Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetP
 This sample shows how to call DeleteExceptionPolicyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteExceptionPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -716,7 +364,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteExceptionPolicyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteExceptionPolicyAsync("<id>");
 Console.WriteLine(response.Status);
@@ -727,7 +375,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteExceptionPolicy.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteExceptionPolicy("<id>");
 Console.WriteLine(response.Status);
@@ -735,101 +383,27 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteExceptionPolicy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteExceptionPolicy("<id>");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertQueueAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.UpsertQueueAsync("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertQueueAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    distributionPolicyId = "<distributionPolicyId>",
-    labels = new
-    {
-        key = new object(),
-    },
-    exceptionPolicyId = "<exceptionPolicyId>",
-});
-Response response = await client.UpsertQueueAsync("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-]]></code></example>
-    </member>
-    <member name="UpsertQueue(string,RequestContent,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call UpsertQueue and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new object());
-Response response = client.UpsertQueue("<id>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-]]></code>
-This sample shows how to call UpsertQueue with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    name = "<name>",
-    distributionPolicyId = "<distributionPolicyId>",
-    labels = new
-    {
-        key = new object(),
-    },
-    exceptionPolicyId = "<exceptionPolicyId>",
-});
-Response response = client.UpsertQueue("<id>", content, requestConditions: null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-]]></code></example>
-    </member>
+    <member name="UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)" />
+    <member name="UpsertQueue(string,RequestContent,RequestConditions,RequestContext)" />
     <member name="GetQueueAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetQueueAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<RouterQueue> response = await client.GetQueueAsync("<id>");
 ]]></code>
 This sample shows how to call GetQueueAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<RouterQueue> response = await client.GetQueueAsync("<id>");
 ]]></code></example>
@@ -839,14 +413,14 @@ Response<RouterQueue> response = await client.GetQueueAsync("<id>");
 This sample shows how to call GetQueue.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<RouterQueue> response = client.GetQueue("<id>");
 ]]></code>
 This sample shows how to call GetQueue with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response<RouterQueue> response = client.GetQueue("<id>");
 ]]></code></example>
@@ -856,7 +430,7 @@ Response<RouterQueue> response = client.GetQueue("<id>");
 This sample shows how to call GetQueueAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetQueueAsync("<id>", null);
 
@@ -866,7 +440,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetQueueAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.GetQueueAsync("<id>", null);
 
@@ -883,7 +457,7 @@ Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
 This sample shows how to call GetQueue and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetQueue("<id>", null);
 
@@ -893,7 +467,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetQueue with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.GetQueue("<id>", null);
 
@@ -910,7 +484,7 @@ Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
 This sample shows how to call DeleteQueueAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteQueueAsync("<id>");
 Console.WriteLine(response.Status);
@@ -918,7 +492,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteQueueAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = await client.DeleteQueueAsync("<id>");
 Console.WriteLine(response.Status);
@@ -929,7 +503,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteQueue.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteQueue("<id>");
 Console.WriteLine(response.Status);
@@ -937,7 +511,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteQueue with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 Response response = client.DeleteQueue("<id>");
 Console.WriteLine(response.Status);
@@ -948,7 +522,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetDistributionPoliciesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync())
 {
@@ -957,7 +531,7 @@ await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsyn
 This sample shows how to call GetDistributionPoliciesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync(maxpagesize: 1234))
 {
@@ -969,7 +543,7 @@ await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsyn
 This sample shows how to call GetDistributionPolicies.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (DistributionPolicyItem item in client.GetDistributionPolicies())
 {
@@ -978,7 +552,7 @@ foreach (DistributionPolicyItem item in client.GetDistributionPolicies())
 This sample shows how to call GetDistributionPolicies with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (DistributionPolicyItem item in client.GetDistributionPolicies(maxpagesize: 1234))
 {
@@ -990,7 +564,7 @@ foreach (DistributionPolicyItem item in client.GetDistributionPolicies(maxpagesi
 This sample shows how to call GetDistributionPoliciesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null))
 {
@@ -1002,7 +576,7 @@ await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null
 This sample shows how to call GetDistributionPoliciesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null))
 {
@@ -1023,7 +597,7 @@ await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null
 This sample shows how to call GetDistributionPolicies and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetDistributionPolicies(null, null))
 {
@@ -1035,7 +609,7 @@ foreach (BinaryData item in client.GetDistributionPolicies(null, null))
 This sample shows how to call GetDistributionPolicies with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
 {
@@ -1056,7 +630,7 @@ foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
 This sample shows how to call GetClassificationPoliciesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync())
 {
@@ -1065,7 +639,7 @@ await foreach (ClassificationPolicyItem item in client.GetClassificationPolicies
 This sample shows how to call GetClassificationPoliciesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync(maxpagesize: 1234))
 {
@@ -1077,7 +651,7 @@ await foreach (ClassificationPolicyItem item in client.GetClassificationPolicies
 This sample shows how to call GetClassificationPolicies.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (ClassificationPolicyItem item in client.GetClassificationPolicies())
 {
@@ -1086,7 +660,7 @@ foreach (ClassificationPolicyItem item in client.GetClassificationPolicies())
 This sample shows how to call GetClassificationPolicies with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (ClassificationPolicyItem item in client.GetClassificationPolicies(maxpagesize: 1234))
 {
@@ -1098,7 +672,7 @@ foreach (ClassificationPolicyItem item in client.GetClassificationPolicies(maxpa
 This sample shows how to call GetClassificationPoliciesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, null))
 {
@@ -1110,7 +684,7 @@ await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, nu
 This sample shows how to call GetClassificationPoliciesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, null))
 {
@@ -1130,7 +704,7 @@ await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, nu
 This sample shows how to call GetClassificationPolicies and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetClassificationPolicies(null, null))
 {
@@ -1142,7 +716,7 @@ foreach (BinaryData item in client.GetClassificationPolicies(null, null))
 This sample shows how to call GetClassificationPolicies with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
 {
@@ -1162,7 +736,7 @@ foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
 This sample shows how to call GetExceptionPoliciesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync())
 {
@@ -1171,7 +745,7 @@ await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync())
 This sample shows how to call GetExceptionPoliciesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync(maxpagesize: 1234))
 {
@@ -1183,7 +757,7 @@ await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync(maxp
 This sample shows how to call GetExceptionPolicies.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (ExceptionPolicyItem item in client.GetExceptionPolicies())
 {
@@ -1192,7 +766,7 @@ foreach (ExceptionPolicyItem item in client.GetExceptionPolicies())
 This sample shows how to call GetExceptionPolicies with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (ExceptionPolicyItem item in client.GetExceptionPolicies(maxpagesize: 1234))
 {
@@ -1204,7 +778,7 @@ foreach (ExceptionPolicyItem item in client.GetExceptionPolicies(maxpagesize: 12
 This sample shows how to call GetExceptionPoliciesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
 {
@@ -1216,7 +790,7 @@ await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
 This sample shows how to call GetExceptionPoliciesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
 {
@@ -1234,7 +808,7 @@ await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
 This sample shows how to call GetExceptionPolicies and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetExceptionPolicies(null, null))
 {
@@ -1246,7 +820,7 @@ foreach (BinaryData item in client.GetExceptionPolicies(null, null))
 This sample shows how to call GetExceptionPolicies with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
 {
@@ -1264,7 +838,7 @@ foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
 This sample shows how to call GetQueuesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (RouterQueueItem item in client.GetQueuesAsync())
 {
@@ -1273,7 +847,7 @@ await foreach (RouterQueueItem item in client.GetQueuesAsync())
 This sample shows how to call GetQueuesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (RouterQueueItem item in client.GetQueuesAsync(maxpagesize: 1234))
 {
@@ -1285,7 +859,7 @@ await foreach (RouterQueueItem item in client.GetQueuesAsync(maxpagesize: 1234))
 This sample shows how to call GetQueues.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (RouterQueueItem item in client.GetQueues())
 {
@@ -1294,7 +868,7 @@ foreach (RouterQueueItem item in client.GetQueues())
 This sample shows how to call GetQueues with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (RouterQueueItem item in client.GetQueues(maxpagesize: 1234))
 {
@@ -1306,7 +880,7 @@ foreach (RouterQueueItem item in client.GetQueues(maxpagesize: 1234))
 This sample shows how to call GetQueuesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetQueuesAsync(null, null))
 {
@@ -1318,7 +892,7 @@ await foreach (BinaryData item in client.GetQueuesAsync(null, null))
 This sample shows how to call GetQueuesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
 {
@@ -1337,7 +911,7 @@ await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
 This sample shows how to call GetQueues and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetQueues(null, null))
 {
@@ -1349,7 +923,7 @@ foreach (BinaryData item in client.GetQueues(null, null))
 This sample shows how to call GetQueues with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
 foreach (BinaryData item in client.GetQueues(1234, null))
 {

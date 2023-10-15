@@ -48,21 +48,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
 
-            Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(queueId: jobQueueId);
+            Response<RouterQueueStatistics> queueStatistics = routerClient.GetQueueStatistics(jobQueueId);
 
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
-
-            Response updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<RouterQueue> queriedJobQueueWithoutName = routerAdministrationClient.GetQueue(jobQueueId);
-
-            Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
 

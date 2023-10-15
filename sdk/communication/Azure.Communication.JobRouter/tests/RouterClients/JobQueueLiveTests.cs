@@ -85,31 +85,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             });
         }
 
-        [Test]
-        public async Task CreateQueueAndRemoveProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-            var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueAndRemoveProperty));
-            var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueAndRemoveProperty));
-            var queueName = "DefaultQueueWithLabels" + queueId;
-            var createQueueResponse = await routerClient.CreateQueueAsync(
-                new CreateQueueOptions(queueId,
-                    createDistributionPolicyResponse.Value.Id)
-                {
-                    Name = queueName,
-                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
-                });
-            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
-
-            Assert.False(string.IsNullOrWhiteSpace(createQueueResponse.Value.Name));
-
-            var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }));
-
-            var queriedQueue = await routerClient.GetQueueAsync(queueId);
-            Assert.True(string.IsNullOrWhiteSpace(queriedQueue.Value.Name));
-        }
-
         #endregion Queue Tests
     }
 }

@@ -119,10 +119,7 @@ foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 }
 
 // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-workers = routerClient.GetWorkers(new GetWorkersOptions()
-{
-    ChannelId = "Voip", State = RouterWorkerStateSelector.All
-});
+workers = routerClient.GetWorkers(channelId: "Voip", state: RouterWorkerStateSelector.All);
 
 foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 {

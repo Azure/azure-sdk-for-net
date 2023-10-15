@@ -6,143 +6,23 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Communication.JobRouter;
-using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Samples
 {
-    public class Samples_JobRouterAdministrationRestClient
+    public class Samples_JobRouterAdministrationClient
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertDistributionPolicy_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpsertDistributionPolicy("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertDistributionPolicy_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpsertDistributionPolicyAsync("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertDistributionPolicy_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                offerExpiresAfterSeconds = 123.45,
-                mode = new
-                {
-                    scoringRule = new
-                    {
-                        kind = "direct-map-rule",
-                    },
-                    scoringRuleOptions = new
-                    {
-                        batchSize = 1234,
-                        scoringParameters = new List<object>()
-{
-"jobLabels"
-},
-                        allowScoringBatchOfWorkers = true,
-                        descendingOrder = true,
-                    },
-                    kind = "best-worker",
-                    minConcurrentOffers = 1234,
-                    maxConcurrentOffers = 1234,
-                    bypassSelectors = true,
-                },
-            });
-            Response response = client.UpsertDistributionPolicy("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertDistributionPolicy_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                offerExpiresAfterSeconds = 123.45,
-                mode = new
-                {
-                    scoringRule = new
-                    {
-                        kind = "direct-map-rule",
-                    },
-                    scoringRuleOptions = new
-                    {
-                        batchSize = 1234,
-                        scoringParameters = new List<object>()
-{
-"jobLabels"
-},
-                        allowScoringBatchOfWorkers = true,
-                        descendingOrder = true,
-                    },
-                    kind = "best-worker",
-                    minConcurrentOffers = 1234,
-                    maxConcurrentOffers = 1234,
-                    bypassSelectors = true,
-                },
-            });
-            Response response = await client.UpsertDistributionPolicyAsync("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-            Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetDistributionPolicy("<id>", null);
 
@@ -155,7 +35,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_GetDistributionPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetDistributionPolicyAsync("<id>", null);
 
@@ -168,7 +48,7 @@ namespace Azure.Communication.JobRouter.Samples
         public void Example_GetDistributionPolicy_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
         }
@@ -178,7 +58,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_GetDistributionPolicy_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
         }
@@ -188,7 +68,7 @@ namespace Azure.Communication.JobRouter.Samples
         public void Example_GetDistributionPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetDistributionPolicy("<id>", null);
 
@@ -207,7 +87,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_GetDistributionPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetDistributionPolicyAsync("<id>", null);
 
@@ -226,7 +106,7 @@ namespace Azure.Communication.JobRouter.Samples
         public void Example_GetDistributionPolicy_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
         }
@@ -236,7 +116,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_GetDistributionPolicy_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
         }
@@ -246,7 +126,7 @@ namespace Azure.Communication.JobRouter.Samples
         public void Example_DeleteDistributionPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -257,7 +137,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_DeleteDistributionPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteDistributionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -268,7 +148,7 @@ namespace Azure.Communication.JobRouter.Samples
         public void Example_DeleteDistributionPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -279,7 +159,7 @@ namespace Azure.Communication.JobRouter.Samples
         public async Task Example_DeleteDistributionPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteDistributionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -287,160 +167,10 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertClassificationPolicy_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpsertClassificationPolicy("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertClassificationPolicy_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpsertClassificationPolicyAsync("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertClassificationPolicy_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                fallbackQueueId = "<fallbackQueueId>",
-                queueSelectors = new List<object>()
-{
-new
-{
-condition = new
-{
-kind = "direct-map-rule",
-},
-queueSelectors = new List<object>()
-{
-new
-{
-key = "<key>",
-labelOperator = "equal",
-value = new object(),
-}
-},
-kind = "conditional",
-}
-},
-                workerSelectors = new List<object>()
-{
-new
-{
-workerSelectors = new List<object>()
-{
-new
-{
-key = "<key>",
-labelOperator = "equal",
-value = new object(),
-expiresAfterSeconds = 123.45,
-expedite = true,
-}
-},
-kind = "conditional",
-}
-},
-            });
-            Response response = client.UpsertClassificationPolicy("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
-            Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertClassificationPolicy_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                fallbackQueueId = "<fallbackQueueId>",
-                queueSelectors = new List<object>()
-{
-new
-{
-condition = new
-{
-kind = "direct-map-rule",
-},
-queueSelectors = new List<object>()
-{
-new
-{
-key = "<key>",
-labelOperator = "equal",
-value = new object(),
-}
-},
-kind = "conditional",
-}
-},
-                workerSelectors = new List<object>()
-{
-new
-{
-workerSelectors = new List<object>()
-{
-new
-{
-key = "<key>",
-labelOperator = "equal",
-value = new object(),
-expiresAfterSeconds = 123.45,
-expedite = true,
-}
-},
-kind = "conditional",
-}
-},
-            });
-            Response response = await client.UpsertClassificationPolicyAsync("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
-            Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetClassificationPolicy("<id>", null);
 
@@ -453,7 +183,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetClassificationPolicyAsync("<id>", null);
 
@@ -466,7 +196,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicy_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
         }
@@ -476,7 +206,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicy_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
         }
@@ -486,7 +216,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetClassificationPolicy("<id>", null);
 
@@ -504,7 +234,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetClassificationPolicyAsync("<id>", null);
 
@@ -522,7 +252,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicy_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
         }
@@ -532,7 +262,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicy_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
         }
@@ -542,7 +272,7 @@ kind = "conditional",
         public void Example_DeleteClassificationPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -553,7 +283,7 @@ kind = "conditional",
         public async Task Example_DeleteClassificationPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteClassificationPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -564,7 +294,7 @@ kind = "conditional",
         public void Example_DeleteClassificationPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -575,7 +305,7 @@ kind = "conditional",
         public async Task Example_DeleteClassificationPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteClassificationPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -583,118 +313,10 @@ kind = "conditional",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertExceptionPolicy_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpsertExceptionPolicy("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertExceptionPolicy_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpsertExceptionPolicyAsync("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertExceptionPolicy_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                exceptionRules = new
-                {
-                    key = new
-                    {
-                        trigger = new
-                        {
-                            threshold = 1234,
-                            kind = "queue-length",
-                        },
-                        actions = new
-                        {
-                            key = new
-                            {
-                                note = "<note>",
-                                dispositionCode = "<dispositionCode>",
-                                kind = "cancel",
-                            },
-                        },
-                    },
-                },
-            });
-            Response response = client.UpsertExceptionPolicy("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertExceptionPolicy_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                exceptionRules = new
-                {
-                    key = new
-                    {
-                        trigger = new
-                        {
-                            threshold = 1234,
-                            kind = "queue-length",
-                        },
-                        actions = new
-                        {
-                            key = new
-                            {
-                                note = "<note>",
-                                dispositionCode = "<dispositionCode>",
-                                kind = "cancel",
-                            },
-                        },
-                    },
-                },
-            });
-            Response response = await client.UpsertExceptionPolicyAsync("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetExceptionPolicy("<id>", null);
 
@@ -707,7 +329,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetExceptionPolicyAsync("<id>", null);
 
@@ -720,7 +342,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicy_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
         }
@@ -730,7 +352,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicy_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
         }
@@ -740,7 +362,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetExceptionPolicy("<id>", null);
 
@@ -756,7 +378,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetExceptionPolicyAsync("<id>", null);
 
@@ -772,7 +394,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicy_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
         }
@@ -782,7 +404,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicy_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
         }
@@ -792,7 +414,7 @@ kind = "conditional",
         public void Example_DeleteExceptionPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -803,7 +425,7 @@ kind = "conditional",
         public async Task Example_DeleteExceptionPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteExceptionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -814,7 +436,7 @@ kind = "conditional",
         public void Example_DeleteExceptionPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -825,7 +447,7 @@ kind = "conditional",
         public async Task Example_DeleteExceptionPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteExceptionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -833,92 +455,10 @@ kind = "conditional",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertQueue_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpsertQueue("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertQueue_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpsertQueueAsync("<id>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertQueue_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                distributionPolicyId = "<distributionPolicyId>",
-                labels = new
-                {
-                    key = new object(),
-                },
-                exceptionPolicyId = "<exceptionPolicyId>",
-            });
-            Response response = client.UpsertQueue("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertQueue_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                distributionPolicyId = "<distributionPolicyId>",
-                labels = new
-                {
-                    key = new object(),
-                },
-                exceptionPolicyId = "<exceptionPolicyId>",
-            });
-            Response response = await client.UpsertQueueAsync("<id>", content, requestConditions: null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetQueue("<id>", null);
 
@@ -931,7 +471,7 @@ kind = "conditional",
         public async Task Example_GetQueue_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetQueueAsync("<id>", null);
 
@@ -944,7 +484,7 @@ kind = "conditional",
         public void Example_GetQueue_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<RouterQueue> response = client.GetQueue("<id>");
         }
@@ -954,7 +494,7 @@ kind = "conditional",
         public async Task Example_GetQueue_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<RouterQueue> response = await client.GetQueueAsync("<id>");
         }
@@ -964,7 +504,7 @@ kind = "conditional",
         public void Example_GetQueue_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.GetQueue("<id>", null);
 
@@ -981,7 +521,7 @@ kind = "conditional",
         public async Task Example_GetQueue_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.GetQueueAsync("<id>", null);
 
@@ -998,7 +538,7 @@ kind = "conditional",
         public void Example_GetQueue_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<RouterQueue> response = client.GetQueue("<id>");
         }
@@ -1008,7 +548,7 @@ kind = "conditional",
         public async Task Example_GetQueue_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response<RouterQueue> response = await client.GetQueueAsync("<id>");
         }
@@ -1018,7 +558,7 @@ kind = "conditional",
         public void Example_DeleteQueue_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
             Console.WriteLine(response.Status);
@@ -1029,7 +569,7 @@ kind = "conditional",
         public async Task Example_DeleteQueue_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteQueueAsync("<id>");
             Console.WriteLine(response.Status);
@@ -1040,7 +580,7 @@ kind = "conditional",
         public void Example_DeleteQueue_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
             Console.WriteLine(response.Status);
@@ -1051,7 +591,7 @@ kind = "conditional",
         public async Task Example_DeleteQueue_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteQueueAsync("<id>");
             Console.WriteLine(response.Status);
@@ -1062,7 +602,7 @@ kind = "conditional",
         public void Example_GetDistributionPolicies_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetDistributionPolicies(null, null))
             {
@@ -1077,7 +617,7 @@ kind = "conditional",
         public async Task Example_GetDistributionPolicies_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null))
             {
@@ -1092,7 +632,7 @@ kind = "conditional",
         public void Example_GetDistributionPolicies_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (DistributionPolicyItem item in client.GetDistributionPolicies())
             {
@@ -1104,7 +644,7 @@ kind = "conditional",
         public async Task Example_GetDistributionPolicies_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync())
             {
@@ -1116,7 +656,7 @@ kind = "conditional",
         public void Example_GetDistributionPolicies_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
             {
@@ -1137,7 +677,7 @@ kind = "conditional",
         public async Task Example_GetDistributionPolicies_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null))
             {
@@ -1158,7 +698,7 @@ kind = "conditional",
         public void Example_GetDistributionPolicies_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (DistributionPolicyItem item in client.GetDistributionPolicies(maxpagesize: 1234))
             {
@@ -1170,7 +710,7 @@ kind = "conditional",
         public async Task Example_GetDistributionPolicies_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync(maxpagesize: 1234))
             {
@@ -1182,7 +722,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicies_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetClassificationPolicies(null, null))
             {
@@ -1197,7 +737,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicies_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, null))
             {
@@ -1212,7 +752,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicies_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (ClassificationPolicyItem item in client.GetClassificationPolicies())
             {
@@ -1224,7 +764,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicies_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync())
             {
@@ -1236,7 +776,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicies_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
             {
@@ -1256,7 +796,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicies_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, null))
             {
@@ -1276,7 +816,7 @@ kind = "conditional",
         public void Example_GetClassificationPolicies_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (ClassificationPolicyItem item in client.GetClassificationPolicies(maxpagesize: 1234))
             {
@@ -1288,7 +828,7 @@ kind = "conditional",
         public async Task Example_GetClassificationPolicies_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync(maxpagesize: 1234))
             {
@@ -1300,7 +840,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicies_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetExceptionPolicies(null, null))
             {
@@ -1315,7 +855,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicies_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
             {
@@ -1330,7 +870,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicies_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (ExceptionPolicyItem item in client.GetExceptionPolicies())
             {
@@ -1342,7 +882,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicies_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync())
             {
@@ -1354,7 +894,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicies_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
             {
@@ -1372,7 +912,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicies_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
             {
@@ -1390,7 +930,7 @@ kind = "conditional",
         public void Example_GetExceptionPolicies_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (ExceptionPolicyItem item in client.GetExceptionPolicies(maxpagesize: 1234))
             {
@@ -1402,7 +942,7 @@ kind = "conditional",
         public async Task Example_GetExceptionPolicies_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync(maxpagesize: 1234))
             {
@@ -1414,7 +954,7 @@ kind = "conditional",
         public void Example_GetQueues_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetQueues(null, null))
             {
@@ -1429,7 +969,7 @@ kind = "conditional",
         public async Task Example_GetQueues_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetQueuesAsync(null, null))
             {
@@ -1444,7 +984,7 @@ kind = "conditional",
         public void Example_GetQueues_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (RouterQueueItem item in client.GetQueues())
             {
@@ -1456,7 +996,7 @@ kind = "conditional",
         public async Task Example_GetQueues_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (RouterQueueItem item in client.GetQueuesAsync())
             {
@@ -1468,7 +1008,7 @@ kind = "conditional",
         public void Example_GetQueues_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (BinaryData item in client.GetQueues(1234, null))
             {
@@ -1487,7 +1027,7 @@ kind = "conditional",
         public async Task Example_GetQueues_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
             {
@@ -1506,7 +1046,7 @@ kind = "conditional",
         public void Example_GetQueues_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             foreach (RouterQueueItem item in client.GetQueues(maxpagesize: 1234))
             {
@@ -1518,7 +1058,7 @@ kind = "conditional",
         public async Task Example_GetQueues_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             await foreach (RouterQueueItem item in client.GetQueuesAsync(maxpagesize: 1234))
             {
