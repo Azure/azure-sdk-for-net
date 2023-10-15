@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +18,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseContent : MessageContent
     {
-        //private const int CopyToBufferSize = 81920;
+        private const int CopyToBufferSize = 81920;
 
         // The contract with Response is that if it has content set, it will always
         // have a ContentStream.  Its Content property derives from the stream.
@@ -65,16 +68,45 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (_response.ContentStream is null)
+            {
+                throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
+            }
+
+            // TODO: find a way to reuse the implementation
+            Stream contentStream = _response.ContentStream;
+
+            // This is not using CopyTo so that we can honor cancellations.
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
+            try
+            {
+                while (true)
+                {
+                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+                    var read = contentStream.Read(buffer, 0, buffer.Length);
+                    if (read == 0)
+                    { break; }
+                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+                    stream.Write(buffer, 0, read);
+                }
+            }
+            finally
+            {
+                stream.Flush();
+                ArrayPool<byte>.Shared.Return(buffer, true);
+            }
         }
 
-        public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-            //_stream.Seek(_origin, SeekOrigin.Begin);
-            //await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
+            if (_response.ContentStream is null)
+            {
+                throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
+            }
+
+            await _response.ContentStream.CopyToAsync(stream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
         }
     }
 }

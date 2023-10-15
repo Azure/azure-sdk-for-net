@@ -39,15 +39,15 @@ namespace System.ServiceModel.Rest.Core
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
-        /// <param name="cancellation">To cancellation token to use.</param>
-        public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
+        /// <param name="cancellationToken">To cancellation token to use.</param>
+        public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
-        /// <param name="cancellation">To cancellation token to use.</param>
-        public abstract void WriteTo(Stream stream, CancellationToken cancellation);
+        /// <param name="cancellationToken">To cancellation token to use.</param>
+        public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
         public static implicit operator BinaryData(MessageContent content)
             => content.ToBinaryData();
