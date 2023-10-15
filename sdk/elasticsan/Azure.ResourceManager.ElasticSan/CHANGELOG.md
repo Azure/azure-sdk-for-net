@@ -7,10 +7,6 @@
 - Upgraded to API version 2023-01-01
 - Supported snapshot and CMK for ElasticSan
 
-### Breaking Changes
-
-### Other Changes
-
 ## 1.0.0-beta.4 (2023-07-31)
 
 ### Features Added
