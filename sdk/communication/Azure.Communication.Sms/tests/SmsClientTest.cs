@@ -5,14 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Sms.Models;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Core.Tests;
 using Moq;
 using NUnit.Framework;
 
