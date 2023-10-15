@@ -72,7 +72,8 @@ namespace Azure.Core.Pipeline
         {
             if (_response.ContentStream is null)
             {
-                throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
+                return;
+                //throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
             }
 
             // TODO: find a way to reuse the implementation
@@ -103,7 +104,8 @@ namespace Azure.Core.Pipeline
         {
             if (_response.ContentStream is null)
             {
-                throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
+                return;
+                //throw new InvalidOperationException("Cannot write content from Response that doesn't have ContentStream set.");
             }
 
             await _response.ContentStream.CopyToAsync(stream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
