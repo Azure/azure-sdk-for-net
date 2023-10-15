@@ -57,7 +57,7 @@ namespace System.ServiceModel.Rest.Core
         public static implicit operator ReadOnlyMemory<byte>(MessageContent content)
             => content.ToBinaryData();
 
-        public static implicit operator Stream(MessageContent content)
+        public static explicit operator Stream(MessageContent content)
             => content.ToStream();
 
         internal bool IsBuffered
@@ -190,22 +190,27 @@ namespace System.ServiceModel.Rest.Core
 
             private readonly Stream _stream;
 
-            private readonly long _origin;
+            // TODO: why did we need origin?
+            // It may be that we need to split out ResponseStreamContent from
+            // RequestStreamContent as part of the unification - that's ok :)
+
+            //private readonly long _origin;
 
             public StreamMessageContent(Stream stream)
             {
-                if (!stream.CanSeek)
-                {
-                    throw new ArgumentException("stream must be seekable", nameof(stream));
-                }
+                //if (!stream.CanSeek)
+                //{
+                //    throw new ArgumentException("stream must be seekable", nameof(stream));
+                //}
 
-                _origin = stream.Position;
+                //_origin = stream.Position;
                 _stream = stream;
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellationToken)
             {
-                _stream.Seek(_origin, SeekOrigin.Begin);
+                // TODO: Why?
+                //_stream.Seek(_origin, SeekOrigin.Begin);
 
                 // This is not using CopyTo so that we can honor cancellations.
                 byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
@@ -232,7 +237,7 @@ namespace System.ServiceModel.Rest.Core
             {
                 if (_stream.CanSeek)
                 {
-                    length = _stream.Length - _origin;
+                    length = _stream.Length;// - _origin;
                     return true;
                 }
                 length = 0;
@@ -241,7 +246,7 @@ namespace System.ServiceModel.Rest.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                _stream.Seek(_origin, SeekOrigin.Begin);
+                //_stream.Seek(_origin, SeekOrigin.Begin);
                 await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
             }
 
@@ -253,7 +258,16 @@ namespace System.ServiceModel.Rest.Core
 
             public override void Dispose()
             {
-                _stream.Dispose();
+                // TODO: come back and pin down the e2e story here so it is nice.
+
+                // If we've buffered the response, there is the expectation that we
+                // will return it to the client and it will be able to
+                // We need to be cognizant of whether there is a chance we might be
+                // draining an array pool and want to prevent that.
+                if (!IsBuffered)
+                {
+                    _stream.Dispose();
+                }
             }
         }
 

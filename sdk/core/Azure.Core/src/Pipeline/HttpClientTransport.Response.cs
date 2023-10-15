@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get => _pipelineResponse.Content;
+                get => (Stream)_pipelineResponse.Content;
 
                 set
                 {

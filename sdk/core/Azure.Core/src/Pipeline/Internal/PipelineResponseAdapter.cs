@@ -26,7 +26,7 @@ namespace Azure.Core
         public override MessageContent Content
         {
             get => _content;
-            protected set => _response.ContentStream = value;
+            protected set => _response.ContentStream = (Stream)value;
         }
 
         // TODO: implement

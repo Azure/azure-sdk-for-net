@@ -73,8 +73,8 @@ namespace System.ServiceModel.Rest.Core
         public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.BinaryData content) { throw null; }
         public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.IO.Stream stream) { throw null; }
         public abstract void Dispose();
+        public static explicit operator System.IO.Stream (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
         public static implicit operator System.BinaryData (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
-        public static implicit operator System.IO.Stream (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -15,7 +15,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     // TODO: keeping this for now to make sure complex Dipose logic is respected,
     // but it would be nice to see if we can make this go away at some point.
-    private Stream? _contentStream;
+    //private Stream? _contentStream;
 
     private bool _disposed;
 
@@ -82,23 +82,30 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             var httpResponse = _httpResponse;
             httpResponse?.Dispose();
 
-            // We want to keep the ContentStream readable
-            // even after the response is disposed but only if it's a
-            // buffered memory stream otherwise we can leave a network
-            // connection hanging open
-            if (_contentStream is not MemoryStream)
+            //// We want to keep the ContentStream readable
+            //// even after the response is disposed but only if it's a
+            //// buffered memory stream otherwise we can leave a network
+            //// connection hanging open
+            //if (_contentStream is not MemoryStream)
+            //{
+            //    var contentStream = _contentStream;
+            //    contentStream?.Dispose();
+            //    _contentStream = null;
+            //}
+
+            MessageContent? content = _content;
+            if (content is not null && !content.IsBuffered)
             {
-                var contentStream = _contentStream;
-                contentStream?.Dispose();
-                _contentStream = null;
+                content?.Dispose();
+                _content = null;
             }
 
-            // TODO: work through dispose story for response content
-            // I think it means that the "when do I dipose stream" logic moves
-            // into MessageContent.StreamContent's Dipose method.
-            var content = _content;
-            content?.Dispose();
-            _content = null;
+            //// TODO: work through dispose story for response content
+            //// I think it means that the "when do I dipose stream" logic moves
+            //// into MessageContent.StreamContent's Dipose method.
+            //var content = _content;
+            //content?.Dispose();
+            //_content = null;
 
             _disposed = true;
         }
