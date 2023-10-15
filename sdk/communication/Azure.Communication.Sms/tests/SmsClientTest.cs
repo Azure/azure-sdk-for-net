@@ -55,7 +55,7 @@ namespace Azure.Communication.Sms.Tests
         public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
         {
             Assert.Throws<ArgumentException>(() => new SmsClient(string.Empty));
-            Assert.Throws<ArgumentException>(() => new SmsClient(null));
+            Assert.Throws<ArgumentNullException>(() => new SmsClient(null));
         }
 
         [Test]
