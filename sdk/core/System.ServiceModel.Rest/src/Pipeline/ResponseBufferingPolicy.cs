@@ -105,12 +105,10 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             if (async)
             {
                 await responseContent.WriteToAsync(bufferedStream, cts.Token).ConfigureAwait(false);
-                //await CopyToAsync(responseContentStream, bufferedStream, invocationNetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
                 responseContent.WriteTo(bufferedStream, cts.Token);
-                //CopyTo(responseContentStream, bufferedStream, invocationNetworkTimeout, cts);
             }
 
             responseContent.Dispose();

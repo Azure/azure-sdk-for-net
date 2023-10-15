@@ -58,7 +58,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
         {
             // Make sure we don't dispose the content later since we're replacing
             // the content stream now.
-            _httpResponse.Content = null;
+            //_httpResponse.Content = null;
 
             // TODO: Why not?
             // Shouldn't we dispose it if the stream is replaced?  We're holding a

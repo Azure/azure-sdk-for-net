@@ -32,8 +32,10 @@ namespace Azure.Core.Pipeline
 
         public override void Dispose()
         {
-            // TODO: ?
-            //_stream.Dispose();
+            // TODO: use Dispose(bool) pattern here instead.
+
+            Stream? contentStream = _response.ContentStream;
+            contentStream?.Dispose();
         }
 
         public override bool TryComputeLength(out long length)
