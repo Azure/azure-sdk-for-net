@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -160,9 +159,12 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     public override void Dispose()
     {
-        // TODO: Content is no longer disposable, but keeping this
-        // IDisposable implementation for when I test the hypothesis
-        // that we can hold an HttpRequestMessage in here.
+        var content = _content;
+        if (content != null)
+        {
+            _content = null;
+            content.Dispose();
+        }
 
         GC.SuppressFinalize(this);
     }
