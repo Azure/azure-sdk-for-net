@@ -120,7 +120,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
+        protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -128,7 +128,7 @@ namespace Azure.Core.Pipeline
             }
 
             string clientRequestId = httpMessage.Request.ClientRequestId;
-            httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse, contentStream));
+            httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse));
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)

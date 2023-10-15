@@ -74,9 +74,12 @@ namespace System.ServiceModel.Rest.Core
         public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.IO.Stream stream) { throw null; }
         public abstract void Dispose();
         public static implicit operator System.BinaryData (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
+        public static implicit operator System.IO.Stream (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
@@ -118,7 +121,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.ServiceModel.Rest.Core.MessageContent? Content { get; protected internal set; }
+        public abstract System.ServiceModel.Rest.Core.MessageContent Content { get; protected internal set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -159,7 +162,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
+        protected virtual void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
         protected virtual void OnSendingRequest(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
@@ -176,8 +179,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
-        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
-        public override System.ServiceModel.Rest.Core.MessageContent? Content { get { throw null; } protected internal set { } }
+        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
+        public override System.ServiceModel.Rest.Core.MessageContent Content { get { throw null; } protected internal set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

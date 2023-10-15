@@ -12,7 +12,8 @@ namespace System.ServiceModel.Rest.Core
     public abstract class MessageContent : IDisposable
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        internal static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+        private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+        internal static MessageContent Empty = CreateContent(EmptyBinaryData);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.
@@ -51,11 +52,25 @@ namespace System.ServiceModel.Rest.Core
         public static implicit operator BinaryData(MessageContent content)
             => content.ToBinaryData();
 
+        // This one is needed to allow JsonDocument.Parse(MessageContent) to succeed
+        // without a cast through BinaryData.
         public static implicit operator ReadOnlyMemory<byte>(MessageContent content)
             => content.ToBinaryData();
 
+        public static implicit operator Stream(MessageContent content)
+            => content.ToStream();
+
+        internal bool IsBuffered
+        {
+            get;
+
+            // If we ever make this property public, it's important
+            // that the setter remain internal.
+            set;
+        }
+
         // This is virtual so we don't break the contract by adding an abstract method
-        // but the default implmementation can be optimized, so inheriting types should
+        // but the default implementation can be optimized, so inheriting types should
         // override this if they can provide a better implementation.
         protected virtual BinaryData ToBinaryData(CancellationToken cancellationToken = default)
         {
@@ -66,6 +81,11 @@ namespace System.ServiceModel.Rest.Core
                 if (length >= int.MaxValue)
                 {
                     throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
+                }
+
+                if (length == 0)
+                {
+                    return EmptyBinaryData;
                 }
 
                 stream = new MemoryStream((int)length);
@@ -81,6 +101,7 @@ namespace System.ServiceModel.Rest.Core
             return BinaryData.FromStream(stream);
         }
 
+        // TODO: cleanup - don't duplicate logic across sync and async and/or Stream/BinaryData
         protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
         {
             MemoryStream stream;
@@ -90,6 +111,11 @@ namespace System.ServiceModel.Rest.Core
                 if (length >= int.MaxValue)
                 {
                     throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
+                }
+
+                if (length == 0)
+                {
+                    return EmptyBinaryData;
                 }
 
                 stream = new MemoryStream((int)length);
@@ -105,7 +131,53 @@ namespace System.ServiceModel.Rest.Core
             return BinaryData.FromStream(stream);
         }
 
-        internal bool IsBuffered { get; set; }
+        protected virtual Stream ToStream(CancellationToken cancellationToken = default)
+        {
+            MemoryStream stream;
+
+            if (TryComputeLength(out long length))
+            {
+                if (length >= int.MaxValue)
+                {
+                    throw new InvalidOperationException("Cannot create MemoryStream from content with length > int.MaxLength.");
+                }
+
+                stream = new MemoryStream((int)length);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+
+            WriteTo(stream, cancellationToken);
+            stream.Position = 0;
+
+            return stream;
+        }
+
+        protected virtual async Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
+        {
+            MemoryStream stream;
+
+            if (TryComputeLength(out long length))
+            {
+                if (length >= int.MaxValue)
+                {
+                    throw new InvalidOperationException("Cannot create MemoryStream from content with length > int.MaxLength.");
+                }
+
+                stream = new MemoryStream((int)length);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+
+            await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            stream.Position = 0;
+
+            return stream;
+        }
 
         /// <inheritdoc/>
         public abstract void Dispose();
@@ -173,6 +245,12 @@ namespace System.ServiceModel.Rest.Core
                 await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
             }
 
+            protected override Stream ToStream(CancellationToken cancellationToken = default)
+                => _stream;
+
+            protected override Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
+                => Task.FromResult(_stream);
+
             public override void Dispose()
             {
                 _stream.Dispose();
@@ -206,6 +284,12 @@ namespace System.ServiceModel.Rest.Core
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
             }
+
+            protected override BinaryData ToBinaryData(CancellationToken cancellationToken = default)
+                => BinaryData.FromBytes(_bytes);
+
+            protected override Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
+                => Task.FromResult(BinaryData.FromBytes(_bytes));
         }
     }
 }

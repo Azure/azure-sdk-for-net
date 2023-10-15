@@ -15,7 +15,7 @@ public abstract class PipelineResponse : IDisposable
 
     //public abstract Stream? ContentStream { get; protected internal set; }
 
-    public abstract MessageContent? Content { get; protected internal set; }
+    public abstract MessageContent Content { get; protected internal set; }
 
     #region Meta-data properties set by the pipeline.
 

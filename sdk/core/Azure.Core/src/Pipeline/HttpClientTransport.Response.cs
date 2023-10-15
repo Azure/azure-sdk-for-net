@@ -8,6 +8,7 @@ using System.IO;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
+using System.ServiceModel.Rest.Internal;
 
 namespace Azure.Core.Pipeline
 {
@@ -30,53 +31,62 @@ namespace Azure.Core.Pipeline
 
         private sealed class HttpClientTransportResponse : HttpPipelineResponse
         {
-            public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse, Stream? contentStream)
-                : base(httpResponse, contentStream)
+            public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
+                : base(httpResponse)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
             }
 
             public string ClientRequestId { get; internal set; }
 
-            internal void SetContentStream(Stream? stream)
+            internal void SetContentStream(Stream stream)
             {
-                ContentStream = stream;
+                ClientUtilities.AssertNotNull(stream, nameof(stream));
+
+                Content = MessageContent.CreateContent(stream);
             }
         }
 
         private sealed class ResponseAdapter : Response
         {
-            private readonly HttpClientTransportResponse _response;
+            private readonly HttpClientTransportResponse _pipelineResponse;
 
-            public ResponseAdapter(HttpClientTransportResponse response)
+            public ResponseAdapter(HttpClientTransportResponse pipelineResponse)
             {
-                _response = response;
+                _pipelineResponse = pipelineResponse;
             }
 
-            internal PipelineResponse PipelineResponse => _response;
+            internal PipelineResponse PipelineResponse => _pipelineResponse;
 
-            public override int Status => _response.Status;
+            public override int Status => _pipelineResponse.Status;
 
-            public override string ReasonPhrase => _response.ReasonPhrase;
+            public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
 
             public override Stream? ContentStream
             {
-                get => _response.ContentStream;
-                set => _response.SetContentStream(value);
+                get => _pipelineResponse.Content;
+
+                set
+                {
+                    if (value is not null)
+                    {
+                        _pipelineResponse.SetContentStream(value);
+                    }
+                }
             }
 
             public override string ClientRequestId
             {
-                get => _response.ClientRequestId;
-                set => _response.ClientRequestId = value;
+                get => _pipelineResponse.ClientRequestId;
+                set => _pipelineResponse.ClientRequestId = value;
             }
 
             protected internal override bool ContainsHeader(string name)
-                => _response.Headers.TryGetValue(name, out _);
+                => _pipelineResponse.Headers.TryGetValue(name, out _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                _response.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                _pipelineResponse.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
 
                 foreach (KeyValuePair<string, string> header in headers)
                 {
@@ -84,14 +94,14 @@ namespace Azure.Core.Pipeline
                 }
             }
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _response.Headers.TryGetValue(name, out value);
+                => _pipelineResponse.Headers.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _response.Headers.TryGetValues(name, out values);
+                => _pipelineResponse.Headers.TryGetValues(name, out values);
 
             public override void Dispose()
             {
-                var response = _response;
+                var response = _pipelineResponse;
                 response?.Dispose();
             }
         }

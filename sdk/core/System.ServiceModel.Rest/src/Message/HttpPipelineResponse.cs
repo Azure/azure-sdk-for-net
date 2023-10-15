@@ -20,18 +20,18 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     private bool _disposed;
 
     // TODO: why do we need content stream here?
-    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse, Stream? contentStream)
+    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse /*, Stream? contentStream*/)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
 
-        if (contentStream is not null)
-        {
-            _content = MessageContent.CreateContent(contentStream);
-        }
-        else
-        {
-            _content = MessageContent.CreateContent(MessageContent.EmptyBinaryData);
-        }
+        //if (contentStream is not null)
+        //{
+        //    _content = MessageContent.CreateContent(contentStream);
+        //}
+        //else
+        //{
+        //    _content = MessageContent.CreateContent(MessageContent.EmptyBinaryData);
+        //}
 
         // We need to back up the response content so we can read headers out of it later
         // if we set the content to null when we buffer the content stream.
@@ -46,20 +46,28 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override MessageContent? Content
+    public override MessageContent Content
     {
-        // TODO: Why would we set the content in the constructor and then overwrite it later?
-        // Is this the contract we want in this type?  It feels error prone, but I'm not sure I understand it very well.
-        get => _content;
+        get
+        {
+            _content ??= MessageContent.Empty;
+            return _content;
+        }
+
         protected internal set
         {
-            // Make sure we don't dispose the content if the stream was replaced
+            // Make sure we don't dispose the content later since we're replacing
+            // the content stream now.
             _httpResponse.Content = null;
 
             // TODO: Why not?
             // Shouldn't we dispose it if the stream is replaced?  We're holding a
             // reference to it, so wouldn't we want to make sure it gets disposed
             // at some point?
+
+            // TODO: we can test this by removing the part where we null out
+            // httpResponse.Content and just alowing it to be disposed.  Where/when
+            // is it used?
 
             _content = value;
         }

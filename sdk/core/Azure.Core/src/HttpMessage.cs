@@ -178,9 +178,14 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller.
+        ///
+        /// After calling this method, any attempt to use the
+        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
+        /// properties on <see cref="Response"/> will result in an exception being thrown.
         /// </summary>
-        /// <returns>The content stream or null if response didn't have any.</returns>
+        /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
+        /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
             switch (_response?.ContentStream)
