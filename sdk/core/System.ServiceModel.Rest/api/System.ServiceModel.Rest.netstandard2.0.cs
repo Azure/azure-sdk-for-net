@@ -67,23 +67,6 @@ namespace System.ServiceModel.Rest
 }
 namespace System.ServiceModel.Rest.Core
 {
-    public abstract partial class MessageContent : System.IDisposable
-    {
-        protected MessageContent() { }
-        public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.BinaryData content) { throw null; }
-        public static System.ServiceModel.Rest.Core.MessageContent CreateContent(System.IO.Stream stream) { throw null; }
-        public abstract void Dispose();
-        public static explicit operator System.IO.Stream (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
-        public static implicit operator System.BinaryData (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.ServiceModel.Rest.Core.MessageContent content) { throw null; }
-        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-    }
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
@@ -109,10 +92,27 @@ namespace System.ServiceModel.Rest.Core
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
+    public abstract partial class PipelineMessageContent : System.IDisposable
+    {
+        protected PipelineMessageContent() { }
+        public static System.ServiceModel.Rest.Core.PipelineMessageContent CreateContent(System.BinaryData content) { throw null; }
+        public static System.ServiceModel.Rest.Core.PipelineMessageContent CreateContent(System.IO.Stream stream) { throw null; }
+        public abstract void Dispose();
+        public static explicit operator System.IO.Stream (System.ServiceModel.Rest.Core.PipelineMessageContent content) { throw null; }
+        public static implicit operator System.BinaryData (System.ServiceModel.Rest.Core.PipelineMessageContent content) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (System.ServiceModel.Rest.Core.PipelineMessageContent content) { throw null; }
+        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.ServiceModel.Rest.Core.MessageContent? Content { get; set; }
+        public abstract System.ServiceModel.Rest.Core.PipelineMessageContent? Content { get; set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -121,7 +121,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.ServiceModel.Rest.Core.MessageContent? Content { get; protected internal set; }
+        public abstract System.ServiceModel.Rest.Core.PipelineMessageContent? Content { get; protected internal set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -170,7 +170,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
         protected internal HttpPipelineRequest() { }
-        public override System.ServiceModel.Rest.Core.MessageContent? Content { get { throw null; } set { } }
+        public override System.ServiceModel.Rest.Core.PipelineMessageContent? Content { get { throw null; } set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -180,7 +180,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.ServiceModel.Rest.Core.MessageContent? Content { get { throw null; } protected internal set { } }
+        public override System.ServiceModel.Rest.Core.PipelineMessageContent? Content { get { throw null; } protected internal set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

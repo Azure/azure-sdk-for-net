@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
             {
                 ClientUtilities.AssertNotNull(stream, nameof(stream));
 
-                Content = MessageContent.CreateContent(stream);
+                Content = PipelineMessageContent.CreateContent(stream);
             }
         }
 

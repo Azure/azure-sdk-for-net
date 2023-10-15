@@ -9,7 +9,7 @@ public abstract class PipelineRequest : IDisposable
 
     public abstract Uri Uri { get; set; }
 
-    public abstract MessageContent? Content { get; set; }
+    public abstract PipelineMessageContent? Content { get; set; }
 
     public abstract MessageHeaders Headers { get; }
 

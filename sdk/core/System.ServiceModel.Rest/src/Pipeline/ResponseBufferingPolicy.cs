@@ -85,7 +85,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             return;
         }
 
-        MessageContent? responseContent = message.Response.Content;
+        PipelineMessageContent? responseContent = message.Response.Content;
         if (responseContent is null || responseContent.IsBuffered)
         {
             return;
@@ -113,7 +113,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
 
             responseContent.Dispose();
             bufferedStream.Position = 0;
-            MessageContent bufferedContent = MessageContent.CreateContent(bufferedStream);
+            PipelineMessageContent bufferedContent = PipelineMessageContent.CreateContent(bufferedStream);
             bufferedContent.IsBuffered = true;
             message.Response.Content = bufferedContent;
         }

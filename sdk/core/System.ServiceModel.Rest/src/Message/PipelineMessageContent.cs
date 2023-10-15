@@ -9,25 +9,27 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core
 {
-    public abstract class MessageContent : IDisposable
+    // I wish we could have the name MessageContent, but there is already
+    // Azure.Messaging.MessageContent.
+    public abstract class PipelineMessageContent : IDisposable
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static MessageContent Empty = CreateContent(EmptyBinaryData);
+        internal static PipelineMessageContent Empty = CreateContent(EmptyBinaryData);
 
         /// <summary>
-        /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.
+        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static MessageContent CreateContent(Stream stream) => new StreamMessageContent(stream);
+        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="Stream"/>.</returns>
+        public static PipelineMessageContent CreateContent(Stream stream) => new StreamMessageContent(stream);
 
         /// <summary>
-        /// Creates an instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.
+        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MessageContent CreateContent(BinaryData content) => new MemoryMessageContent(content.ToMemory());
+        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static PipelineMessageContent CreateContent(BinaryData content) => new MemoryMessageContent(content.ToMemory());
 
         /// <summary>
         /// Attempts to compute the length of the underlying content, if available.
@@ -49,15 +51,15 @@ namespace System.ServiceModel.Rest.Core
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
-        public static implicit operator BinaryData(MessageContent content)
+        public static implicit operator BinaryData(PipelineMessageContent content)
             => content.ToBinaryData();
 
         // This one is needed to allow JsonDocument.Parse(MessageContent) to succeed
         // without a cast through BinaryData.
-        public static implicit operator ReadOnlyMemory<byte>(MessageContent content)
+        public static implicit operator ReadOnlyMemory<byte>(PipelineMessageContent content)
             => content.ToBinaryData();
 
-        public static explicit operator Stream(MessageContent content)
+        public static explicit operator Stream(PipelineMessageContent content)
             => content.ToStream();
 
         internal bool IsBuffered
@@ -184,7 +186,7 @@ namespace System.ServiceModel.Rest.Core
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
-        private sealed class StreamMessageContent : MessageContent
+        private sealed class StreamMessageContent : PipelineMessageContent
         {
             private const int CopyToBufferSize = 81920;
 
@@ -194,24 +196,13 @@ namespace System.ServiceModel.Rest.Core
             // It may be that we need to split out ResponseStreamContent from
             // RequestStreamContent as part of the unification - that's ok :)
 
-            //private readonly long _origin;
-
             public StreamMessageContent(Stream stream)
             {
-                //if (!stream.CanSeek)
-                //{
-                //    throw new ArgumentException("stream must be seekable", nameof(stream));
-                //}
-
-                //_origin = stream.Position;
                 _stream = stream;
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellationToken)
             {
-                // TODO: Why?
-                //_stream.Seek(_origin, SeekOrigin.Begin);
-
                 // This is not using CopyTo so that we can honor cancellations.
                 byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
                 try
@@ -237,7 +228,7 @@ namespace System.ServiceModel.Rest.Core
             {
                 if (_stream.CanSeek)
                 {
-                    length = _stream.Length;// - _origin;
+                    length = _stream.Length;
                     return true;
                 }
                 length = 0;
@@ -246,7 +237,6 @@ namespace System.ServiceModel.Rest.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                //_stream.Seek(_origin, SeekOrigin.Begin);
                 await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
             }
 
@@ -264,16 +254,17 @@ namespace System.ServiceModel.Rest.Core
                 // will return it to the client and it will be able to
                 // We need to be cognizant of whether there is a chance we might be
                 // draining an array pool and want to prevent that.
-                if (!IsBuffered)
-                {
-                    _stream.Dispose();
-                }
+                //if (!IsBuffered)
+                //{
+                var stream = _stream;
+                stream?.Dispose();
+                //}
             }
         }
 
         // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
         // with BinaryData in an optimized way.
-        private sealed class MemoryMessageContent : MessageContent
+        private sealed class MemoryMessageContent : PipelineMessageContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 

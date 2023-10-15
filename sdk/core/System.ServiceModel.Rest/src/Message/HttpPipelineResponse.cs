@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.Net.Http;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
@@ -9,29 +8,21 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
+
+    // TODO: Add a comment saying why we need to hold out HttpContent
+    // separate from the _httpResponse.Content property.  Do we really?
     private readonly HttpContent _httpResponseContent;
 
-    private MessageContent? _content;
-
-    // TODO: keeping this for now to make sure complex Dipose logic is respected,
-    // but it would be nice to see if we can make this go away at some point.
-    //private Stream? _contentStream;
+    private PipelineMessageContent? _content;
 
     private bool _disposed;
 
-    // TODO: why do we need content stream here?
-    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse /*, Stream? contentStream*/)
+    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
-        _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
+        // TODO: why did we need to set content stream here before,
+        // and do we still need to for some reason?
 
-        //if (contentStream is not null)
-        //{
-        //    _content = MessageContent.CreateContent(contentStream);
-        //}
-        //else
-        //{
-        //    _content = MessageContent.CreateContent(MessageContent.EmptyBinaryData);
-        //}
+        _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
 
         // We need to back up the response content so we can read headers out of it later
         // if we set the content to null when we buffer the content stream.
@@ -46,11 +37,11 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override MessageContent? Content
+    public override PipelineMessageContent? Content
     {
         get
         {
-            _content ??= MessageContent.Empty;
+            _content ??= PipelineMessageContent.Empty;
             return _content;
         }
 
@@ -93,7 +84,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             //    _contentStream = null;
             //}
 
-            MessageContent? content = _content;
+            PipelineMessageContent? content = _content;
             if (content is not null && !content.IsBuffered)
             {
                 content?.Dispose();
