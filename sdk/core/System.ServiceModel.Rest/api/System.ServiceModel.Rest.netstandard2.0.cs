@@ -112,15 +112,6 @@ namespace System.ServiceModel.Rest.Core
         public abstract int Status { get; }
         public abstract void Dispose();
     }
-    public abstract partial class RequestBody : System.IDisposable
-    {
-        protected RequestBody() { }
-        public static System.ServiceModel.Rest.Core.RequestBody CreateFromStream(System.IO.Stream stream) { throw null; }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-    }
     public partial class ResponseErrorClassifier
     {
         public ResponseErrorClassifier() { }
@@ -246,28 +237,9 @@ namespace System.ServiceModel.Rest.Internal
         public static bool ShouldWrapInOperationCanceledException(System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
     }
-    public partial interface IUtf8JsonWriteable
+    public partial interface IUtf8JsonContentWriteable
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
-    }
-    public static partial class ModelSerializationExtensions
-    {
-        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
-        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
-        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
-        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        [System.Diagnostics.ConditionalAttribute("DEBUG")]
-        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
-        public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
-        public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
-        public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
-        public static void WriteObjectValue(this System.Text.Json.Utf8JsonWriter writer, object value) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, char value) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTime value, string format) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.TimeSpan value, string format) { }
     }
     public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
     {
@@ -349,14 +321,12 @@ namespace System.ServiceModel.Rest.Internal
         public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
+    public partial class Utf8JsonContentWriter : System.IDisposable
     {
-        public Utf8JsonRequestBody() { }
-        public System.Text.Json.Utf8JsonWriter JsonWriter { get { throw null; } }
-        public override void Dispose() { }
+        public Utf8JsonContentWriter() { }
+        public System.BinaryData WrittenContent { get { throw null; } }
+        public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
+        public void Write(System.ServiceModel.Rest.Internal.IUtf8JsonContentWriteable content) { }
     }
 }

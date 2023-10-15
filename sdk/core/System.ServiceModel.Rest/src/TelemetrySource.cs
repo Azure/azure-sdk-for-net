@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Reflection;
+using System.ServiceModel.Rest.Internal;
 
 namespace System.ServiceModel.Rest.Core
 {
