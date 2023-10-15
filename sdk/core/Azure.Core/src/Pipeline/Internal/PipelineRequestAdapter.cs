@@ -6,7 +6,6 @@ using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core
 {
-    // Backwards adapter
     internal class PipelineRequestAdapter : PipelineRequest
     {
         private readonly Request _request;
@@ -27,10 +26,18 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override RequestBody? Content
+        public override BinaryData? Content
         {
-            get => _request.Content;
-            set => _request.Content = (RequestContent?)value;
+            get => _request.Content?.ToBinaryData();
+            set
+            {
+                if (value is not null)
+                {
+                    _request.Content = value;
+                }
+
+                _request.Content = null;
+            }
         }
 
         // TODO: implement this, will need a new adapter for headers

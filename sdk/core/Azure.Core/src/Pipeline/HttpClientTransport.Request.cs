@@ -119,8 +119,17 @@ namespace Azure.Core.Pipeline
 
             public override RequestContent? Content
             {
-                get => (RequestContent?)_request.Content;
-                set => _request.Content = value;
+                get
+                {
+                    if (_request.Content is not null)
+                    {
+                        return _request.Content;
+                    }
+
+                    return null;
+                }
+
+                set => _request.Content = value?.ToBinaryData();
             }
 
             public override void Dispose() => _request.Dispose();

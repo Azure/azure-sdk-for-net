@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +21,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private RequestBody? _content;
+    private BinaryData? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -31,13 +33,27 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     public override Uri Uri
     {
-        get => _uri!;
+        get
+        {
+            if (_uri is null)
+            {
+                throw new InvalidOperationException("Uri has not be set on HttpPipelineRequest instance.");
+            }
+
+            return _uri;
+        }
+
         set => _uri = value;
     }
 
-    public override RequestBody? Content
+    public override BinaryData? Content
     {
-        get => _content;
+        get
+        {
+            _content ??= PipelineMessage.EmptyContent;
+            return _content;
+        }
+
         set => _content = value;
     }
 
@@ -52,7 +68,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
 
-    private HttpMethod ToHttpMethod(string method)
+    private static HttpMethod ToHttpMethod(string method)
     {
         return method switch
         {
@@ -121,38 +137,73 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private readonly RequestBody _pipelineContent;
+        private const int CopyToBufferSize = 81920;
+
+        private readonly BinaryData _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(RequestBody pipelineContent, CancellationToken cancellationToken)
+        public PipelineContentAdapter(BinaryData content, CancellationToken cancellationToken)
         {
-            _pipelineContent = pipelineContent;
+            _content = content;
             _cancellationToken = cancellationToken;
         }
 
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-            => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
+        {
+            Stream contentStream = _content.ToStream();
+            await contentStream.CopyToAsync(stream, CopyToBufferSize, _cancellationToken).ConfigureAwait(false);
+        }
 
         protected override bool TryComputeLength(out long length)
-            => _pipelineContent.TryComputeLength(out length);
+        {
+            length = _content.ToMemory().Length;
+            return true;
+        }
 
 #if NET5_0_OR_GREATER
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+        {
+            Stream contentStream = _content.ToStream();
+            await contentStream.CopyToAsync(stream, _cancellationToken).ConfigureAwait(false);
+        }
 
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => _pipelineContent.WriteTo(stream, cancellationToken);
+        {
+            Stream contentStream = _content.ToStream();
+
+            // This doesn't use Stream.CopyTo() so that we can honor cancellation tokens.
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
+            try
+            {
+                while (true)
+                {
+                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+
+                    int read = contentStream.Read(buffer, 0, buffer.Length);
+                    if (read == 0)
+                    {
+                        break;
+                    }
+
+                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+
+                    stream.Write(buffer, 0, read);
+                }
+            }
+            finally
+            {
+                stream.Flush();
+                ArrayPool<byte>.Shared.Return(buffer, true);
+            }
+        }
 #endif
     }
 
     public override void Dispose()
     {
-        var content = _content;
-        if (content != null)
-        {
-            _content = null;
-            content.Dispose();
-        }
+        // TODO: Content is no longer disposable, but keeping this
+        // IDisposable implementation for when I test the hypothesis
+        // that we can hold an HttpRequestMessage in here.
 
         GC.SuppressFinalize(this);
     }

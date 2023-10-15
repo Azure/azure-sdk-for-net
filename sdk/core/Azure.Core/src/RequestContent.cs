@@ -140,6 +140,35 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
+        internal BinaryData ToBinaryData()
+        {
+            // Note: this doesn't use async APIs or cancellation tokens because
+            // we're currently only calling it from a property setter.
+            // If we need those for performance reasons, we'll probably also
+            // want to change the calling APIs.
+
+            MemoryStream stream;
+
+            if (TryComputeLength(out long length))
+            {
+                if (length >= int.MaxValue)
+                {
+                    throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
+                }
+
+                stream = new MemoryStream((int)length);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+
+            WriteTo(stream, CancellationToken.None);
+            stream.Position = 0;
+
+            return BinaryData.FromStream(stream);
+        }
+
         private sealed class StreamContent : RequestContent
         {
             private const int CopyToBufferSize = 81920;
