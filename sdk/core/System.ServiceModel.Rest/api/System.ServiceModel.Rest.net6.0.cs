@@ -95,11 +95,21 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.BinaryData? Content { get; set; }
+        public abstract System.ServiceModel.Rest.Core.PipelineRequestContent? Content { get; set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
         public abstract void Dispose();
+    }
+    public abstract partial class PipelineRequestContent : System.IDisposable
+    {
+        protected PipelineRequestContent() { }
+        public static System.ServiceModel.Rest.Core.PipelineRequestContent CreateContent(System.BinaryData content) { throw null; }
+        public static System.ServiceModel.Rest.Core.PipelineRequestContent CreateContent(System.IO.Stream stream) { throw null; }
+        public abstract void Dispose();
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -154,7 +164,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
         protected internal HttpPipelineRequest() { }
-        public override System.BinaryData? Content { get { throw null; } set { } }
+        public override System.ServiceModel.Rest.Core.PipelineRequestContent? Content { get { throw null; } set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -240,6 +250,25 @@ namespace System.ServiceModel.Rest.Internal
     public partial interface IUtf8JsonContentWriteable
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
+    }
+    public static partial class ModelSerializationExtensions
+    {
+        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
+        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        [System.Diagnostics.ConditionalAttribute("DEBUG")]
+        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
+        public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
+        public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
+        public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
+        public static void WriteObjectValue(this System.Text.Json.Utf8JsonWriter writer, object value) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, char value) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTime value, string format) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.TimeSpan value, string format) { }
     }
     public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
     {

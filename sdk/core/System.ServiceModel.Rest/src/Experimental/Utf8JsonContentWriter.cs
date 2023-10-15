@@ -38,15 +38,21 @@ public class Utf8JsonContentWriter : IDisposable
     {
         get
         {
-            if (_bufferWriter.WrittenCount == 0)
+            if (!_frozen)
             {
-                throw new InvalidOperationException("Cannot read WrittenContent before content has been written.");
+                _jsonWriter.Flush();
+
+                if (_bufferWriter.WrittenCount == 0)
+                {
+                    throw new InvalidOperationException("Cannot read WrittenContent before content has been written.");
+                }
+
+                _content = BinaryData.FromBytes(_bufferWriter.WrittenMemory);
+
+                _frozen = true;
             }
 
-            _frozen = true;
-            _content ??= BinaryData.FromBytes(_bufferWriter.WrittenMemory);
-
-            return _content;
+            return _content!;
         }
     }
 

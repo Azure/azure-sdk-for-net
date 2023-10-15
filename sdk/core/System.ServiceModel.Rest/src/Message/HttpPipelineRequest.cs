@@ -21,7 +21,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private BinaryData? _content;
+    private PipelineRequestContent? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -46,14 +46,9 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override BinaryData? Content
+    public override PipelineRequestContent? Content
     {
-        get
-        {
-            _content ??= PipelineMessage.EmptyContent;
-            return _content;
-        }
-
+        get => _content;
         set => _content = value;
     }
 
@@ -137,65 +132,29 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private const int CopyToBufferSize = 81920;
-
-        private readonly BinaryData _content;
+        private readonly PipelineRequestContent _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(BinaryData content, CancellationToken cancellationToken)
+        public PipelineContentAdapter(PipelineRequestContent content, CancellationToken cancellationToken)
         {
+            ClientUtilities.AssertNotNull(content, nameof(content));
+
             _content = content;
             _cancellationToken = cancellationToken;
         }
 
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-        {
-            Stream contentStream = _content.ToStream();
-            await contentStream.CopyToAsync(stream, CopyToBufferSize, _cancellationToken).ConfigureAwait(false);
-        }
+            => await _content.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
         protected override bool TryComputeLength(out long length)
-        {
-            length = _content.ToMemory().Length;
-            return true;
-        }
+            => _content.TryComputeLength(out length);
 
 #if NET5_0_OR_GREATER
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-        {
-            Stream contentStream = _content.ToStream();
-            await contentStream.CopyToAsync(stream, _cancellationToken).ConfigureAwait(false);
-        }
+            => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-        {
-            Stream contentStream = _content.ToStream();
-
-            // This doesn't use Stream.CopyTo() so that we can honor cancellation tokens.
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
-            try
-            {
-                while (true)
-                {
-                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
-
-                    int read = contentStream.Read(buffer, 0, buffer.Length);
-                    if (read == 0)
-                    {
-                        break;
-                    }
-
-                    ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
-
-                    stream.Write(buffer, 0, read);
-                }
-            }
-            finally
-            {
-                stream.Flush();
-                ArrayPool<byte>.Shared.Return(buffer, true);
-            }
-        }
+            => _content.WriteTo(stream, cancellationToken);
 #endif
     }
 

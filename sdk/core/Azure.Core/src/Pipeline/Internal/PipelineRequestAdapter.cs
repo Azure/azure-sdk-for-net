@@ -26,17 +26,18 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override BinaryData? Content
+        public override PipelineRequestContent? Content
         {
-            get => _request.Content?.ToBinaryData();
+            get => _request.Content;
             set
             {
-                if (value is not null)
+                if (_request.Content is not RequestContent &&
+                    _request.Content is not null)
                 {
-                    _request.Content = value;
+                    throw new NotSupportedException($"Invalid type for request Content: '{_request.Content.GetType()}'.");
                 }
 
-                _request.Content = null;
+                _request.Content = (RequestContent?)value;
             }
         }
 
