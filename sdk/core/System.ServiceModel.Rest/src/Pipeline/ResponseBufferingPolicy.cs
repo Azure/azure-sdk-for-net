@@ -91,17 +91,21 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             return;
         }
 
-        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-        // register callback to dispose the stream on cancellation.
+        // If cancellation is possible (whether due to network timeout or a user cancellation
+        // token being passed), then register callback to dispose the content stream on cancellation.
         if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
-            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContent);
+            Action<object?> callback = content => ((PipelineMessageContent?)content)?.Dispose();
+            cts.Token.Register(callback, responseContent);
         }
 
-        // TODO: implement network timeout logic that I commented out below.
         try
         {
             Stream bufferedStream = new MemoryStream();
+
+            // Set network timeout before starting to buffer
+            cts.CancelAfter(invocationNetworkTimeout);
+
             if (async)
             {
                 await responseContent.WriteToAsync(bufferedStream, cts.Token).ConfigureAwait(false);
@@ -110,6 +114,9 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             {
                 responseContent.WriteTo(bufferedStream, cts.Token);
             }
+
+            // Reset timeout after buffering is complete.
+            cts.CancelAfter(Timeout.InfiniteTimeSpan);
 
             responseContent.Dispose();
             bufferedStream.Position = 0;
