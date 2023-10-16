@@ -11,7 +11,7 @@
 
 ### Other Changes
 - Updated Microsoft.Identity.Client.Broker and Microsoft.Identity.Client.Extensions.Msal dependencies to version 4.56.0
-- Renamed assembly from `Azure.Identity.Broker` to `Azure.Identity.Broker`.
+- Renamed assembly from `Azure.Identity.BrokeredAuthentication` to `Azure.Identity.Broker`.
 
 ## 1.0.0-beta.4 (2023-07-17)
 
