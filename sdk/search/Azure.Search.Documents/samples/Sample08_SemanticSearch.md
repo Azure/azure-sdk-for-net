@@ -1,12 +1,10 @@
 # Semantic Search
 
-Semantic search is a set of enhancements that make text-based searches more effective. When you enable semantic search on your service, it performs two primary functions:
-* **Improves Search Results**: It enhances the initial search results by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
-* **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, making it easier for users to understand and find what they're looking for.
+Semantic search is a collection of query-related capabilities that improve the quality of search result for text-based queries. When you enable semantic search on your service, it performs two primary functions:
+* **Improves Search Results**: It adds secondary ranking over an initial search result set by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
+* **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, which can be used on a search page to improve the user's search experience.
 
-You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview).
-
-It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable?tabs=enable-portal).
+You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable?tabs=enable-portal).
 
 This sample demonstrates how to create an index, upload data, and perform a query for semantic search.
 
