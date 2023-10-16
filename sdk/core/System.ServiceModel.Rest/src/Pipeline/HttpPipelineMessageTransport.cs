@@ -54,7 +54,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 
         return new HttpClient(handler)
         {
-            // TODO: Timeouts are handled by the pipeline
+            // Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
         };
     }
@@ -168,10 +168,6 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
-            // We set this as a stream for the default implementation, but when we
-            // later buffer it, we will replace it with a BinaryData-based implementation.
-            // TODO: be crisp on why we want a Stream as a first-pass -- I think it is
-            // part of the RetriableStream/Streaming API story, but let's pin that down.
             message.Response.Content = PipelineContent.CreateContent(contentStream);
         }
 

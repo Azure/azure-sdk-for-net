@@ -16,11 +16,6 @@ internal class MessageResponseHeaders : MessageHeaders
     public MessageResponseHeaders(HttpResponseMessage response, HttpContent responseContent)
     {
         _httpResponse = response;
-
-        // Note: we make a backup of the response content here
-        // presumably to be able to read header values out of.
-        // The strange thing is that we never dispose it.  Why?
-        // Wouldn't this cause issues somehow?
         _httpResponseContent = responseContent;
     }
 

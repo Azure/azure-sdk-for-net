@@ -43,7 +43,7 @@ namespace Azure.Core
         }
 
         // TODO: implement
-        public override MessageHeaders Headers => throw new NotImplementedException();
+        public override MessageHeaders Headers => throw new NotSupportedException();
 
         public override void Dispose()
         {

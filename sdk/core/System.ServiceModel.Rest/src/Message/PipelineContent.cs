@@ -29,7 +29,7 @@ namespace System.ServiceModel.Rest.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="PipelineContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static PipelineContent CreateContent(BinaryData content) => new MemoryPipelineContent(content.ToMemory());
+        public static PipelineContent CreateContent(BinaryData content) => new BinaryDataPipelineContent(content.ToMemory());
 
         /// <summary>
         /// Attempts to compute the length of the underlying content, if available.
@@ -68,36 +68,14 @@ namespace System.ServiceModel.Rest.Core
         // but the default implementation can be optimized, so inheriting types should
         // override this if they can provide a better implementation.
         protected virtual BinaryData ToBinaryData(CancellationToken cancellationToken = default)
-        {
-            MemoryStream stream;
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            => ToBinaryDataSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-            if (TryComputeLength(out long length))
-            {
-                if (length >= int.MaxValue)
-                {
-                    throw new InvalidOperationException("Cannot create BinaryData from content with length > int.MaxLength.");
-                }
-
-                if (length == 0)
-                {
-                    return EmptyBinaryData;
-                }
-
-                stream = new MemoryStream((int)length);
-            }
-            else
-            {
-                stream = new MemoryStream();
-            }
-
-            WriteTo(stream, cancellationToken);
-            stream.Position = 0;
-
-            return BinaryData.FromStream(stream);
-        }
-
-        // TODO: cleanup - don't duplicate logic across sync and async and/or Stream/BinaryData
         protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
+            => await ToBinaryDataSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+
+        private async Task<BinaryData> ToBinaryDataSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
             MemoryStream stream;
 
@@ -120,37 +98,29 @@ namespace System.ServiceModel.Rest.Core
                 stream = new MemoryStream();
             }
 
-            await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                WriteTo(stream, cancellationToken);
+            }
+
             stream.Position = 0;
 
             return BinaryData.FromStream(stream);
         }
 
         protected virtual Stream ToStream(CancellationToken cancellationToken = default)
-        {
-            MemoryStream stream;
-
-            if (TryComputeLength(out long length))
-            {
-                if (length >= int.MaxValue)
-                {
-                    throw new InvalidOperationException("Cannot create MemoryStream from content with length > int.MaxLength.");
-                }
-
-                stream = new MemoryStream((int)length);
-            }
-            else
-            {
-                stream = new MemoryStream();
-            }
-
-            WriteTo(stream, cancellationToken);
-            stream.Position = 0;
-
-            return stream;
-        }
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            => ToStreamSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
         protected virtual async Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
+            => await ToStreamSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+
+        private async Task<Stream> ToStreamSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
             MemoryStream stream;
 
@@ -168,7 +138,15 @@ namespace System.ServiceModel.Rest.Core
                 stream = new MemoryStream();
             }
 
-            await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                WriteTo(stream, cancellationToken);
+            }
+
             stream.Position = 0;
 
             return stream;
@@ -182,12 +160,7 @@ namespace System.ServiceModel.Rest.Core
         private sealed class StreamPipelineContent : PipelineContent
         {
             private const int CopyToBufferSize = 81920;
-
             private readonly Stream _stream;
-
-            // TODO: why did we need origin?
-            // It may be that we need to split out ResponseStreamContent from
-            // RequestStreamContent as part of the unification - that's ok :)
 
             public StreamPipelineContent(Stream stream)
             {
@@ -217,10 +190,15 @@ namespace System.ServiceModel.Rest.Core
                     while (true)
                     {
                         ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+
                         var read = _stream.Read(buffer, 0, buffer.Length);
                         if (read == 0)
-                        { break; }
+                        {
+                            break;
+                        }
+
                         ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
+
                         stream.Write(buffer, 0, read);
                     }
                 }
@@ -232,9 +210,7 @@ namespace System.ServiceModel.Rest.Core
             }
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            {
-                await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
-            }
+                => await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
 
             protected override Stream ToStream(CancellationToken cancellationToken = default)
                 => _stream;
@@ -251,11 +227,11 @@ namespace System.ServiceModel.Rest.Core
 
         // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
         // with BinaryData in an optimized way.
-        private sealed class MemoryPipelineContent : PipelineContent
+        private sealed class BinaryDataPipelineContent : PipelineContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 
-            public MemoryPipelineContent(ReadOnlyMemory<byte> bytes)
+            public BinaryDataPipelineContent(ReadOnlyMemory<byte> bytes)
             {
                 _bytes = bytes;
             }
@@ -267,6 +243,7 @@ namespace System.ServiceModel.Rest.Core
                 length = _bytes.Length;
                 return true;
             }
+
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 byte[] buffer = _bytes.ToArray();

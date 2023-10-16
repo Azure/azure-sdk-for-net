@@ -9,8 +9,11 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
 
-    // TODO: Add a comment saying why we need to hold out HttpContent
-    // separate from the _httpResponse.Content property.  Do we really?
+    // We keep a reference to the http response content so it will be available
+    // for reading headers, even if we set _httpResponse.Content to null when we
+    // buffer the content.  Since we handle disposing the content separately, we
+    // don't believe there is a concern about rooting objects that are holding
+    // references to network resources.
     private readonly HttpContent _httpResponseContent;
 
     private PipelineContent? _content;
@@ -19,13 +22,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
-        // TODO: why did we need to set content stream here before,
-        // and do we still need to for some reason?
-
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
-
-        // We need to back up the response content so we can read headers out of it later
-        // if we set the content to null when we buffer the content stream.
         _httpResponseContent = _httpResponse.Content;
     }
 
@@ -56,7 +53,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             // without its content being buffered, calling dispose on _content will
             // dispose the network stream.
 
-            // TODO: We can potentially leak a network resource if this setter
+            // TODO: We could feasibly leak a network resource if this setter
             // is called without the caller taking ownership of and disposing the
             // network stream, since at that point, no one is holding a reference
             // to it anymore.  Today, ResponseBufferingPolicy takes care of this.
@@ -73,6 +70,28 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
         {
             var httpResponse = _httpResponse;
             httpResponse?.Dispose();
+
+            // Some notes on this:
+            //
+            // 1. If the content is buffered, we want it to remain available to the
+            // client for model deserialization and in case the end user of the
+            // client calls Result.GetRawResponse. So, we don't dispose it.
+            //
+            // If the content is buffered, we assume that the entity that did the
+            // buffering took responsibility for disposing the network stream.
+            //
+            // 2. If the content is not buffered, we dispose it so that we don't leave
+            // a network connection open.
+            //
+            // One tricky piece here is that in some cases, we may not have buffered
+            // the content because we  wanted to pass the live network stream out of
+            // the client method and back to the end-user caller of the client e.g.
+            // for a streaming API.  If the latter is the case, the client should have
+            // called the HttpMessage.ExtractResponseContent method to obtain a reference
+            // to the network stream, and the response content was replaced by a stream
+            // that we are ok to dispose here.  In this case, the network stream is
+            // not disposed, because the entity that replaced the response content
+            // intentionally left the network stream undisposed.
 
             var content = _content;
             if (content is not null && !content.IsBuffered)

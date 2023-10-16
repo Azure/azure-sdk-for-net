@@ -91,16 +91,15 @@ namespace Azure
 
             public override PipelineContent? Content
             {
-                get => throw new NotImplementedException();
-                protected set => throw new NotImplementedException();
+                get => throw new NotSupportedException();
+                protected set => throw new NotSupportedException();
             }
 
-            public override string ReasonPhrase => throw new NotImplementedException();
+            public override string ReasonPhrase => throw new NotSupportedException();
 
-            public override MessageHeaders Headers => throw new NotImplementedException();
+            public override MessageHeaders Headers => throw new NotSupportedException();
 
-            public override void Dispose()
-                => throw new NotImplementedException();
+            public override void Dispose() => throw new NotSupportedException();
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
