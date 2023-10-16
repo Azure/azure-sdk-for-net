@@ -21,7 +21,7 @@ the telemetry offline for retrying at a later time.
 * Fixed an issue where `OriginalFormat` persisted in TraceTelemetry properties
   with IncludeFormattedMessage enabled in OpenTelemetry LoggerProvider. This fix
   prevents data duplication in message fields and properties.
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
 
 ### Other Changes
 
