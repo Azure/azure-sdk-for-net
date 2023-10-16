@@ -34,7 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <ProjectReference Include="..\..\..\core\System.ServiceModel.Rest\src\System.ServiceModel.Rest.csproj" />
+    <ProjectReference Include="..\..\..\core\System.Net.ClientModel\src\System.Net.ClientModel.csproj" />
   </ItemGroup>
 
 </Project>

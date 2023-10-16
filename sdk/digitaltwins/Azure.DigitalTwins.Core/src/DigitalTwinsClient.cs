@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using System.ServiceModel.Rest;
+using System.Net.ClientModel;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.DigitalTwins.Core.Models;
