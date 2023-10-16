@@ -54,7 +54,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 
         return new HttpClient(handler)
         {
-            // TODO: Timeouts are handled by the pipeline
+            // Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
         };
     }
@@ -154,9 +154,23 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             throw new MessageFailedException(e.Message, e);
         }
 
-        OnReceivedResponse(message, responseMessage, contentStream);
+        // This extensibility point lets derived types do the following:
+        //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
+        //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
+        OnReceivedResponse(message, responseMessage);
 
-        // Set IsError meta-data on the response.
+        // We set derived values on the PipelineResponse here, including Content and IsError
+        // to ensure these things happen in the transport.  If derived implementations need
+        // to override these default transport values, they can do so in pipeline policies.
+
+        // TODO: a possible alternative is to make instantiating the Response a specific
+        // extensibilty point and let OnReceivedResponse enable transport-specific logic.
+        // Consider which is preferred as part of holistic extensibility-point review.
+        if (contentStream is not null)
+        {
+            message.Response.Content = PipelineContent.CreateContent(contentStream);
+        }
+
         message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
@@ -172,9 +186,8 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
-    /// <param name="contentStream"></param>
-    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
-        => message.Response = new HttpPipelineResponse(httpResponse, contentStream);
+    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+        => message.Response = new HttpPipelineResponse(httpResponse);
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
@@ -183,7 +196,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        return pipelineRequest.BuildRequestMessage(message);
+        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
     }
 
     #region IDisposable

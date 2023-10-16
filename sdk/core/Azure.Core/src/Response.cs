@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ServiceModel.Rest.Core;
 using Azure.Core;
 
 namespace Azure
@@ -14,25 +13,23 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : PipelineResponse
+    public abstract class Response : IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        /// <summary>
+        /// Gets the HTTP status code.
+        /// </summary>
+        public abstract int Status { get; }
+
         /// <summary>
         /// Gets the HTTP reason phrase.
         /// </summary>
         public abstract string ReasonPhrase { get; }
 
         /// <summary>
-        /// TBD.
+        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
         /// </summary>
-        /// <param name="reasonPhrase"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool TryGetReasonPhrase(out string reasonPhrase)
-        {
-            reasonPhrase = ReasonPhrase;
-            return true;
-        }
+        public abstract Stream? ContentStream { get; set; }
 
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -44,15 +41,78 @@ namespace Azure
         /// </summary>
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+
+        /// <summary>
+        /// Gets the contents of HTTP response, if it is available.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// </remarks>
+        public virtual BinaryData Content
+        {
+            get
+            {
+                if (ContentStream == null)
+                {
+                    return s_EmptyBinaryData;
+                }
+
+                MemoryStream? memoryContent = ContentStream as MemoryStream;
+
+                if (memoryContent == null)
+                {
+                    throw new InvalidOperationException($"The response is not fully buffered.");
+                }
+
+                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    return new BinaryData(segment.AsMemory());
+                }
+                else
+                {
+                    return new BinaryData(memoryContent.ToArray());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Frees resources held by this <see cref="Response"/> instance.
+        /// </summary>
+        public abstract void Dispose();
+
+        /// <summary>
+        /// Indicates whether the status code of the returned response is considered
+        /// an error code.
+        /// </summary>
+        public virtual bool IsError { get; internal set; }
+
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         /// <summary>
-        /// TBD.
+        /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The reference to populate with value.</param>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
+
+        /// <summary>
+        /// Returns header values if the header is stored in the collection.
+        /// </summary>
+        /// <param name="name">The header name.</param>
+        /// <param name="values">The reference to populate with values.</param>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
+
+        /// <summary>
+        /// Returns <c>true</c> if the header is stored in the collection.
+        /// </summary>
+        /// <param name="name">The header name.</param>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         protected internal abstract bool ContainsHeader(string name);
 
         /// <summary>
@@ -60,48 +120,6 @@ namespace Azure
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-            => throw new NotImplementedException();
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public override bool TryGetHeaderValue(string name, out string? value)
-            => TryGetHeader(name, out value);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        protected internal abstract bool TryGetHeader(string name, out string? value);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
-            => TryGetHeaderValues(name, out value);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="values"></param>
-        /// <returns></returns>
-        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string>? values);
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.

@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
+using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
+using System.ServiceModel.Rest.Internal;
 
 namespace Azure.Core.Pipeline
 {
@@ -14,65 +17,101 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport
     {
-        private sealed class HttpClientTransportResponse : Response
+        internal static bool TryGetPipelineResponse(Response response, out PipelineResponse? pipelineResponse)
         {
-            private readonly HttpPipelineResponse _response;
-
-            public HttpClientTransportResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
+            if (response is ResponseAdapter responseAdapter)
             {
-                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
-                _response = new HttpPipelineResponse(responseMessage, contentStream);
+                pipelineResponse = responseAdapter.PipelineResponse;
+                return true;
             }
 
-            public override int Status => _response.Status;
+            pipelineResponse = null;
+            return false;
+        }
 
-            public override string ReasonPhrase =>
-                _response.TryGetReasonPhrase(out string reasonPhrase)
-                    ? reasonPhrase : string.Empty;
+        private sealed class HttpClientTransportResponse : HttpPipelineResponse
+        {
+            public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
+                : base(httpResponse)
+            {
+                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+            }
 
-            public override string ClientRequestId { get; set; }
+            public string ClientRequestId { get; internal set; }
 
-            public override BinaryData Content => _response.Content;
+            internal void SetContentStream(Stream stream)
+            {
+                ClientUtilities.AssertNotNull(stream, nameof(stream));
+
+                Content = PipelineContent.CreateContent(stream);
+            }
+        }
+
+        private sealed class ResponseAdapter : Response
+        {
+            private readonly HttpClientTransportResponse _pipelineResponse;
+
+            public ResponseAdapter(HttpClientTransportResponse pipelineResponse)
+            {
+                _pipelineResponse = pipelineResponse;
+            }
+
+            internal PipelineResponse PipelineResponse => _pipelineResponse;
+
+            public override int Status => _pipelineResponse.Status;
+
+            public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
 
             public override Stream? ContentStream
             {
-                get => _response.ContentStream;
-                set => _response.ContentStream = value;
+                get
+                {
+                    if (_pipelineResponse.Content is null)
+                    {
+                        return null;
+                    }
+
+                    return (Stream)_pipelineResponse.Content;
+                }
+
+                set
+                {
+                    if (value is not null)
+                    {
+                        _pipelineResponse.SetContentStream(value);
+                    }
+                }
             }
 
-            #region Header implementation
-            public override bool TryGetHeaderValue(string name, out string? value)
-                => _response.TryGetHeaderValue(name, out value);
-
-            public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
-                => _response.TryGetHeaderValue(name, out value);
-
-            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-                => _response.TryGetHeaders(out headers);
+            public override string ClientRequestId
+            {
+                get => _pipelineResponse.ClientRequestId;
+                set => _pipelineResponse.ClientRequestId = value;
+            }
 
             protected internal override bool ContainsHeader(string name)
-                => _response.TryGetHeaderValue(name, out string? _);
+                => _pipelineResponse.Headers.TryGetValue(name, out _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                _pipelineResponse.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+
                 foreach (KeyValuePair<string, string> header in headers)
                 {
                     yield return new HttpHeader(header.Key, header.Value);
                 }
             }
 
-            protected internal override bool TryGetHeader(string name, out string? value)
-                => _response.TryGetHeaderValue(name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => _pipelineResponse.Headers.TryGetValue(name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string>? values)
-                => _response.TryGetHeaderValue(name, out values);
-            #endregion
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => _pipelineResponse.Headers.TryGetValues(name, out values);
 
             public override void Dispose()
             {
-                HttpPipelineResponse response = _response;
-                response.Dispose();
+                var response = _pipelineResponse;
+                response?.Dispose();
             }
         }
     }

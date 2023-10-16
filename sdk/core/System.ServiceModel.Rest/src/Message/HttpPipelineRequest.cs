@@ -3,9 +3,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,11 +20,11 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private RequestBody? _content;
+    private PipelineContent? _content;
 
     private readonly MessageRequestHeaders _headers;
 
-    public HttpPipelineRequest()
+    protected internal HttpPipelineRequest()
     {
         Method = HttpMethod.Get.Method;
         _headers = new MessageRequestHeaders();
@@ -30,11 +32,20 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     public override Uri Uri
     {
-        get => _uri!;
+        get
+        {
+            if (_uri is null)
+            {
+                throw new InvalidOperationException("Uri has not be set on HttpPipelineRequest instance.");
+            }
+
+            return _uri;
+        }
+
         set => _uri = value;
     }
 
-    public override RequestBody? Content
+    public override PipelineContent? Content
     {
         get => _content;
         set => _content = value;
@@ -51,7 +62,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
 
-    private HttpMethod ToHttpMethod(string method)
+    private static HttpMethod ToHttpMethod(string method)
     {
         return method switch
         {
@@ -65,17 +76,14 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         }; ;
     }
 
-    #region Construction for transport
-
-    internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message = default)
+    internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellationToken)
     {
         // TODO: this is confusing where we are passing in message and also
         // using private members on the request.
 
         HttpMethod method = ToHttpMethod(Method);
-        Uri uri = message!.Request.Uri;
+        Uri uri = Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
-        CancellationToken cancellationToken = message?.CancellationToken ?? default;
 
         PipelineContentAdapter? httpContent = _content != null ? new PipelineContentAdapter(_content, cancellationToken) : null;
         httpRequest.Content = httpContent;
@@ -83,32 +91,35 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         httpRequest.Headers.ExpectContinue = false;
 #endif
 
-        Headers.TryGetHeaders(out IEnumerable<MessageHeader<string, object>> headers);
-        foreach (MessageHeader<string, object> header in headers)
+        // TODO: Come back and address this implementation per switching on string/list
+        // header values once we reimplement assignment of headers to ResponseHeader directly.
+        Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
+        foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
         {
-            switch (header.Value)
+            object headerValue = header.Value.Count() == 1 ? header.Value.First() : header.Value;
+            switch (headerValue)
             {
                 case string stringValue:
                     // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                    if (header.Name == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                    if (header.Key == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
                     {
                         httpRequest.Headers.Authorization = authHeader;
                     }
-                    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, stringValue))
+                    else if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, stringValue))
                     {
-                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, stringValue))
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, stringValue))
                         {
-                            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
+                            throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
                         }
                     }
                     break;
 
                 case List<string> listValue:
-                    if (!httpRequest.Headers.TryAddWithoutValidation(header.Name, listValue))
+                    if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value))
                     {
-                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Name, listValue))
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, header.Value))
                         {
-                            throw new InvalidOperationException($"Unable to add header {header.Name} to header collection.");
+                            throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
                         }
                     }
                     break;
@@ -120,31 +131,31 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private readonly RequestBody _pipelineContent;
+        private readonly PipelineContent _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(RequestBody pipelineContent, CancellationToken cancellationToken)
+        public PipelineContentAdapter(PipelineContent content, CancellationToken cancellationToken)
         {
-            _pipelineContent = pipelineContent;
+            ClientUtilities.AssertNotNull(content, nameof(content));
+
+            _content = content;
             _cancellationToken = cancellationToken;
         }
 
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-            => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
+            => await _content.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
         protected override bool TryComputeLength(out long length)
-            => _pipelineContent.TryComputeLength(out length);
+            => _content.TryComputeLength(out length);
 
 #if NET5_0_OR_GREATER
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-            => _pipelineContent.WriteTo(stream, cancellationToken);
+            => _content.WriteTo(stream, cancellationToken);
 #endif
     }
-
-    #endregion
 
     public override void Dispose()
     {
@@ -158,5 +169,5 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public override string ToString() => BuildRequestMessage().ToString();
+    public override string ToString() => BuildRequestMessage(default).ToString();
 }

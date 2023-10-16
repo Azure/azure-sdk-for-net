@@ -31,7 +31,8 @@ public class PipelineMessage : IDisposable
             return _response;
         }
 
-        set => _response = value;
+        // This is set internally by the transport.
+        protected internal set => _response = value;
     }
 
     public bool HasResponse => _response is not null;
@@ -63,9 +64,21 @@ public class PipelineMessage : IDisposable
     {
         if (disposing && !_disposed)
         {
+            var request = Request;
+            request?.Dispose();
+
+            _propertyBag.Dispose();
+
+            // TODO: this means we return a disposed response to the end-user.
+            // Would be nice to possibly introduce an OnMessageDiposed pattern
+            // to notify the response that it needs to dispose network resources
+            // without being officially disposed itself?
             var response = _response;
-            response?.Dispose();
-            _response = null;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
 
             _disposed = true;
         }

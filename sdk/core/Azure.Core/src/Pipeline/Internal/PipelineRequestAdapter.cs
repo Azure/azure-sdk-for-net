@@ -6,7 +6,6 @@ using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core
 {
-    // Backwards adapter
     internal class PipelineRequestAdapter : PipelineRequest
     {
         private readonly Request _request;
@@ -27,19 +26,28 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override RequestBody? Content
+        public override PipelineContent? Content
         {
             get => _request.Content;
-            set => _request.Content = (RequestContent?)value;
+            set
+            {
+                if (_request.Content is not RequestContent &&
+                    _request.Content is not null)
+                {
+                    throw new NotSupportedException($"Invalid type for request Content: '{_request.Content.GetType()}'.");
+                }
+
+                _request.Content = (RequestContent?)value;
+            }
         }
 
         // TODO: implement this, will need a new adapter for headers
-        public override MessageHeaders Headers => throw new NotImplementedException();
+        public override MessageHeaders Headers => throw new NotSupportedException();
 
         public override void Dispose()
         {
-            // TODO: implement
-            //throw new NotImplementedException();
+            var request = _request;
+            request?.Dispose();
         }
     }
 }

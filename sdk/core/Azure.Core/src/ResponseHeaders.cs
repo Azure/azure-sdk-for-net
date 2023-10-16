@@ -134,7 +134,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
-            return _response.TryGetHeaderValue(name, out value);
+            return _response.TryGetHeader(name, out value);
         }
 
         /// <summary>

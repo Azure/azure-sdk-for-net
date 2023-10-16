@@ -181,8 +181,8 @@ namespace System.ServiceModel.Rest.Internal
                 case null:
                     writer.WriteNullValue();
                     break;
-                case IUtf8JsonWriteable serializable:
-                    serializable.Write(writer);
+                case IUtf8JsonContentWriteable writeable:
+                    writeable.Write(writer);
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);
