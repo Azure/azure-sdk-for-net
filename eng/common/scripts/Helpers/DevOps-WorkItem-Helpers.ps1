@@ -182,56 +182,6 @@ function FindParentWorkItem($serviceName, $packageDisplayName, $outputCommand = 
   return $null
 }
 
-$releasePlanWorkItems = @{}
-function FindReleasePlanWorkItem($serviceName, $packageDisplayName, $outputCommand = $false, $ignoreReleasePlannerTests = $true)
-{
-  $key = BuildHashKey $serviceName $packageDisplayName
-  if ($key -and $releasePlanWorkItems.ContainsKey($key)) {
-    return $releasePlanWorkItems[$key]
-  }
-
-  if ($serviceName) {
-    $condition = "[ServiceName] = '${serviceName}'"
-    if ($packageDisplayName) {
-      $condition += " AND [PackageDisplayName] = '${packageDisplayName}'"
-    }
-    else {
-      $condition += " AND [PackageDisplayName] = ''"
-    }
-  }
-  else {
-    $condition = "[ServiceName] <> ''"
-  }
-  $condition += " AND [System.State] <> 'Finished'"
-  if($ignoreReleasePlannerTests){
-    $condition += " AND [Tags] NOT CONTAINS 'Release Planner App Test'"
-  }
-
-  $query = "SELECT [ID], [ServiceName], [PackageDisplayName], [Parent] FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND ${condition}"
-
-  $fields = @("System.Id", "Custom.ServiceName", "Custom.PackageDisplayName", "System.Parent", "System.Tags")
-
-  $workItems = Invoke-Query $fields $query $outputCommand
-
-  foreach ($wi in $workItems)
-  {
-    $localKey = BuildHashKey $wi.fields["Custom.ServiceName"] $wi.fields["Custom.PackageDisplayName"]
-    if (!$localKey) { continue }
-    if ($releasePlanWorkItems.ContainsKey($localKey) -and $releasePlanWorkItems[$localKey].id -ne $wi.id) {
-      Write-Warning "Already found parent [$($releasePlanWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
-    }
-    else {
-      Write-Verbose "[$($wi.id)]$localKey - Cached"
-      $releasePlanWorkItems[$localKey] = $wi
-    }
-  }
-
-  if ($key -and $releasePlanWorkItems.ContainsKey($key)) {
-    return $releasePlanWorkItems[$key]
-  }
-  return $null
-}
-
 $packageWorkItems = @{}
 $packageWorkItemWithoutKeyFields = @{}
 
@@ -545,37 +495,14 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
       }
     }
 
-    $newparentItem = FindOrCreateReleasePlanParent $serviceName $pkgDisplayName -outputCommand $false
+    $newparentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
     UpdateWorkItemParent $existingItem $newParentItem -outputCommand $outputCommand
     return $existingItem
   }
 
-  $parentItem = FindOrCreateReleasePlanParent $serviceName $pkgDisplayName -outputCommand $false
+  $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
   $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
-  return $workItem
-}
-
-function FindOrCreateReleasePlanParent($serviceName, $packageDisplayName, $outputCommand = $true, $ignoreReleasePlannerTests = $true)
-{
-  $existingItem = FindReleasePlanWorkItem $serviceName $packageDisplayName -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests
-  if ($existingItem) {
-    Write-Host "Found existing release plan work item [$($existingItem.id)]"
-    $newparentItem = FindOrCreatePackageGroupParent $serviceName $packageDisplayName -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests
-    UpdateWorkItemParent $existingItem $newParentItem
-    return $existingItem
-  }
-
-  $fields = @()
-  $fields += "`"PackageDisplayName=${packageDisplayName}`""
-  $fields += "`"ServiceName=${serviceName}`""
-  $productParentItem = FindOrCreatePackageGroupParent $serviceName $packageDisplayName -outputCommand $outputCommand -ignoreReleasePlannerTests $ignoreReleasePlannerTests
-  $title = "Release Plan - $($packageDisplayName)"
-  $workItem = CreateWorkItem $title "Release Plan" "Release" "Release" $fields $null $productParentItem.id
-
-  $localKey = BuildHashKey $serviceName $packageDisplayName
-  Write-Host "[$($workItem.id)]$localKey - Created release plan work item"
-  $releasePlanWorkItems[$localKey] = $workItem
   return $workItem
 }
 
