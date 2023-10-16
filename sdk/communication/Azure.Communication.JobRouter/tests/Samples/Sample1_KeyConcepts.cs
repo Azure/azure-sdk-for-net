@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -40,7 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-            Response<Models.RouterQueue> queue = routerAdministrationClient.CreateQueue(
+            Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(
                 new CreateQueueOptions(
                     queueId: "queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -78,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
             Response<RouterWorker> result = routerClient.GetWorker(worker.Value.Id);
-            foreach (Models.RouterJobOffer? offer in result.Value.Offers)
+            foreach (RouterJobOffer? offer in result.Value.Offers)
             {
                 Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
             }
@@ -87,7 +83,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer
 
             // fetching the offer id
-            Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
+            RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
             string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
