@@ -77,20 +77,6 @@ namespace Azure
             }
         }
 
-        //public virtual BinaryData Content
-        //{
-        //    get
-        //    {
-        //        // Delegate to implementation logic in PipelineResponse.Content.
-        //        if (!HttpMessage.TryGetResponseContent(this, out BinaryData? content))
-        //        {
-        //            throw new InvalidOperationException("Failed to retreive Content from Response.");
-        //        }
-
-        //        return content!;
-        //    }
-        //}
-
         /// <summary>
         /// Frees resources held by this <see cref="Response"/> instance.
         /// </summary>
@@ -105,6 +91,8 @@ namespace Azure
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
+        internal virtual void OnMessageDisposed(bool disposeContentStream) { }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

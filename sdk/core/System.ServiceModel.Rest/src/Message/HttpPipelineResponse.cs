@@ -71,17 +71,20 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     // returning it to them.  We do, however, want to dispose of any objects
     // that we only needed to use within the context of the client so that
     // those don't outlive their intended lifetime.
-    protected internal override void OnMessageDisposed()
+    protected internal override void OnMessageDisposed(bool disposeContentStream)
     {
         var httpResponse = _httpResponse;
         httpResponse?.Dispose();
 
-        var content = _content;
-        if (content is not null && !content.IsBuffered)
-        {
-            content?.Dispose();
-            _content = null;
-        }
+        // Note: we never dispose the content here because we hand the
+        // response or the content stream to the service method caller.
+
+        //var content = _content;
+        //if (content is not null && disposeContentStream)
+        //{
+        //    content?.Dispose();
+        //    _content = null;
+        //}
 
         // TODO: should we dispose _httpResponseContent here?
     }

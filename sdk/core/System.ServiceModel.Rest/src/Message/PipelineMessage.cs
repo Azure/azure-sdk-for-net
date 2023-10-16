@@ -75,8 +75,14 @@ public class PipelineMessage : IDisposable
     {
         if (disposing && !_disposed)
         {
+            var request = Request;
+            request?.Dispose();
+
             var response = _response;
-            response?.Dispose();
+            if (response is not null)
+            {
+                response.OnMessageDisposed(disposeContentStream: );
+            }
             _response = null;
 
             _disposed = true;

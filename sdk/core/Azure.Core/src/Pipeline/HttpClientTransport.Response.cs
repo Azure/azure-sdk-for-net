@@ -45,6 +45,9 @@ namespace Azure.Core.Pipeline
 
                 Content = PipelineContent.CreateContent(stream);
             }
+
+            internal void NotifyMessageDisposed(bool disposeContentStream)
+                => OnMessageDisposed(disposeContentStream);
         }
 
         private sealed class ResponseAdapter : Response
@@ -101,11 +104,15 @@ namespace Azure.Core.Pipeline
                     yield return new HttpHeader(header.Key, header.Value);
                 }
             }
+
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
                 => _pipelineResponse.Headers.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
                 => _pipelineResponse.Headers.TryGetValues(name, out values);
+
+            internal override void OnMessageDisposed(bool disposeContentStream)
+                => _pipelineResponse.NotifyMessageDisposed(disposeContentStream);
 
             public override void Dispose()
             {
