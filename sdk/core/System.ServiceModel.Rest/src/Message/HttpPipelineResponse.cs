@@ -13,7 +13,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     // separate from the _httpResponse.Content property.  Do we really?
     private readonly HttpContent _httpResponseContent;
 
-    private PipelineMessageContent? _content;
+    private PipelineContent? _content;
 
     private bool _disposed;
 
@@ -37,11 +37,11 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override PipelineMessageContent? Content
+    public override PipelineContent? Content
     {
         get
         {
-            _content ??= PipelineMessageContent.Empty;
+            _content ??= PipelineContent.Empty;
             return _content;
         }
 
@@ -64,6 +64,28 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
         }
     }
 
+    // Called when the message is diposed.  The response typically has a
+    // longer lifetime than the message because we return Result<T> to the
+    // end-user consumer of the client.  This means we want the end-user caller
+    // to take ownership of the response, without disposing it prior to
+    // returning it to them.  We do, however, want to dispose of any objects
+    // that we only needed to use within the context of the client so that
+    // those don't outlive their intended lifetime.
+    protected internal override void OnMessageDisposed()
+    {
+        var httpResponse = _httpResponse;
+        httpResponse?.Dispose();
+
+        var content = _content;
+        if (content is not null && !content.IsBuffered)
+        {
+            content?.Dispose();
+            _content = null;
+        }
+
+        // TODO: should we dispose _httpResponseContent here?
+    }
+
     #region IDisposable
 
     protected virtual void Dispose(bool disposing)
@@ -73,35 +95,21 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             var httpResponse = _httpResponse;
             httpResponse?.Dispose();
 
-            //// We want to keep the ContentStream readable
-            //// even after the response is disposed but only if it's a
-            //// buffered memory stream otherwise we can leave a network
-            //// connection hanging open
-            //if (_contentStream is not MemoryStream)
-            //{
-            //    var contentStream = _contentStream;
-            //    contentStream?.Dispose();
-            //    _contentStream = null;
-            //}
-
-            PipelineMessageContent? content = _content;
+            var content = _content;
             if (content is not null && !content.IsBuffered)
             {
                 content?.Dispose();
                 _content = null;
             }
 
-            //// TODO: work through dispose story for response content
-            //// I think it means that the "when do I dipose stream" logic moves
-            //// into MessageContent.StreamContent's Dipose method.
-            //var content = _content;
-            //content?.Dispose();
-            //_content = null;
+            var httpContent = _httpResponseContent;
+            httpContent?.Dispose();
 
             _disposed = true;
         }
     }
 
+    // Called by end-user of client, not the pipeline
     public override void Dispose()
     {
         Dispose(true);

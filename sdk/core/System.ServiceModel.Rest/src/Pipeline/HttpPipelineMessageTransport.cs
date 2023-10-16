@@ -172,7 +172,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             // later buffer it, we will replace it with a BinaryData-based implementation.
             // TODO: be crisp on why we want a Stream as a first-pass -- I think it is
             // part of the RetriableStream/Streaming API story, but let's pin that down.
-            message.Response.Content = PipelineMessageContent.CreateContent(contentStream);
+            message.Response.Content = PipelineContent.CreateContent(contentStream);
         }
 
         message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);

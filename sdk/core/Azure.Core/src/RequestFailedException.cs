@@ -89,7 +89,7 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override PipelineMessageContent? Content
+            public override PipelineContent? Content
             {
                 get => throw new NotImplementedException();
                 protected set => throw new NotImplementedException();

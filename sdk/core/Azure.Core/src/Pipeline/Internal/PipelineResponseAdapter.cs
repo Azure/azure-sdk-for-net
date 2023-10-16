@@ -21,7 +21,7 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override PipelineMessageContent? Content
+        public override PipelineContent? Content
         {
             get
             {

@@ -26,7 +26,7 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override PipelineMessageContent? Content
+        public override PipelineContent? Content
         {
             get => _request.Content;
             set

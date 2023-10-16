@@ -18,7 +18,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : PipelineMessageContent
+    public abstract class RequestContent : PipelineContent
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);

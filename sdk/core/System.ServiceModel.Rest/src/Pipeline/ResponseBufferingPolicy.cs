@@ -85,7 +85,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             return;
         }
 
-        PipelineMessageContent? responseContent = message.Response.Content;
+        PipelineContent? responseContent = message.Response.Content;
         if (responseContent is null || responseContent.IsBuffered)
         {
             return;
@@ -95,7 +95,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
         // token being passed), then register callback to dispose the content stream on cancellation.
         if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
-            Action<object?> callback = content => ((PipelineMessageContent?)content)?.Dispose();
+            Action<object?> callback = content => ((PipelineContent?)content)?.Dispose();
             cts.Token.Register(callback, responseContent);
         }
 
@@ -120,7 +120,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
 
             responseContent.Dispose();
             bufferedStream.Position = 0;
-            PipelineMessageContent bufferedContent = PipelineMessageContent.CreateContent(bufferedStream);
+            PipelineContent bufferedContent = PipelineContent.CreateContent(bufferedStream);
             bufferedContent.IsBuffered = true;
             message.Response.Content = bufferedContent;
         }
