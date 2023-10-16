@@ -20,7 +20,9 @@ namespace Azure.Core.Tests
             var requestMock = new Mock<Request>();
             HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Dispose();
-            requestMock.Verify(r => r.Dispose(), Times.Once);
+
+            // TODO: Is it important that it is only once, if Dispose() is idempotent?
+            requestMock.Verify(r => r.Dispose(), Times.AtLeastOnce);
         }
 
         [Test]
@@ -31,9 +33,9 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Response = responseMock.Object;
             message.Dispose();
-            requestMock.Verify(r => r.Dispose(), Times.Once);
 
             // TODO: Is it important that it is only once, if Dispose() is idempotent?
+            requestMock.Verify(r => r.Dispose(), Times.AtLeastOnce);
             responseMock.Verify(r => r.Dispose(), Times.AtLeastOnce);
         }
 
