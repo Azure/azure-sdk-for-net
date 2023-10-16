@@ -5,15 +5,13 @@ using System;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
-namespace Azure.Identity.BrokeredAuthentication
+namespace Azure.Identity.Broker
 {
     /// <summary>
-    /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of the system browser if available.
+    /// Options to configure the <see cref="SharedTokenCacheCredential"/> to use the system authentication broker for silent authentication if available.
     /// </summary>
-    public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
+    public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
-        private readonly IntPtr _parentWindowHandle;
-
         /// <summary>
         /// Gets or sets whether Microsoft Account (MSA) passthrough is enabled.
         /// </summary>
@@ -21,19 +19,25 @@ namespace Azure.Identity.BrokeredAuthentication
         public bool? IsMsaPassthroughEnabled { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
+        /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
-        /// <param name="parentWindowHandle">Handle of the parent window the system authentication broker should be docked to.</param>
-        public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle) : base()
+        public SharedTokenCacheCredentialBrokerOptions()
+            : this(null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
+        /// </summary>
+        /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
+        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions)
+            : base(tokenCacheOptions)
         {
-            _parentWindowHandle = parentWindowHandle;
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithParentActivityOrWindow(() => _parentWindowHandle);
             var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
             if (IsMsaPassthroughEnabled.HasValue)
             {
