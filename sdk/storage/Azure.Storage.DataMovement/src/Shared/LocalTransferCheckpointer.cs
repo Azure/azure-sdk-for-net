@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
@@ -10,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement
 {
@@ -70,14 +72,17 @@ namespace Azure.Storage.DataMovement
                 transferId,
                 DateTimeOffset.UtcNow,
                 GetOperationType(source, destination),
+                source.ProviderId,
+                destination.ProviderId,
                 false, /* enumerationComplete */
-                JobPlanStatus.Queued,
-                source.Uri.AbsoluteUri,
-                destination.Uri.AbsoluteUri);
+                new DataTransferStatusInternal(),
+                source.Uri.ToSanitizedString(),
+                destination.Uri.ToSanitizedString());
 
             using (Stream headerStream = new MemoryStream())
             {
                 header.Serialize(headerStream);
+                headerStream.Position = 0;
                 JobPlanFile jobPlanFile = await JobPlanFile.CreateJobPlanFileAsync(
                     _pathToCheckpointer,
                     transferId,
@@ -125,41 +130,65 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            if (_transferStates.TryGetValue(transferId, out var result))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile result))
             {
-                return Task.FromResult<int>(result.JobParts.Count);
+                return Task.FromResult(result.JobParts.Count);
             }
             throw Errors.MissingTransferIdCheckpointer(transferId);
         }
 
         /// <inheritdoc/>
-        public override async Task<Stream> ReadableStreamAsync(
+        public override async Task<Stream> ReadJobPlanFileAsync(
+            string transferId,
+            int offset,
+            int length,
+            CancellationToken cancellationToken = default)
+        {
+            int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
+            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            {
+                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
+                using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
+                {
+                    await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
+                    copiedStream.Position = 0;
+                    return copiedStream;
+                }
+            }
+            else
+            {
+                throw Errors.MissingTransferIdCheckpointer(transferId);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override async Task<Stream> ReadJobPartPlanFileAsync(
             string transferId,
             int partNumber,
-            long offset,
-            long readSize,
+            int offset,
+            int length,
             CancellationToken cancellationToken = default)
         {
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
-                    Stream copiedStream = new MemoryStream(DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes);
+                    int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
+                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
+
                     // MMF lock
                     await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                     // Open up MemoryMappedFile
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
-                        path: jobPartPlanFile.FilePath,
-                        mode: FileMode.Open,
-                        mapName: null,
-                        capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPartPlanFile.FilePath))
+                    using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                     {
-                        using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, readSize, MemoryMappedFileAccess.Read))
-                        {
-                            await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
-                        }
+                        await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
                     }
+
                     // MMF release
                     jobPartPlanFile.WriteLock.Release();
                     copiedStream.Position = 0;
@@ -177,48 +206,29 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task WriteToCheckpointAsync(
+        public override async Task WriteToJobPlanFileAsync(
             string transferId,
-            int partNumber,
-            long chunkIndex,
+            int fileOffset,
             byte[] buffer,
+            int bufferOffset,
+            int length,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            Argument.AssertNotDefault(ref partNumber, nameof(partNumber));
-            if (buffer?.Length == 0)
-            {
-                throw new ArgumentException("Buffer cannot be empty");
-            }
-
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
-                if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
-                {
-                    // Lock MMF
-                    await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+                // Lock MMF
+                await jobPlanFile.WriteLock.WaitAsync().ConfigureAwait(false);
 
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
-                        path: jobPartPlanFile.FilePath,
-                        mode: FileMode.Open,
-                        mapName: null,
-                        capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
-                    {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(chunkIndex, buffer.Length, MemoryMappedFileAccess.Write))
-                        {
-                            accessor.WriteArray(0, buffer, 0, buffer.Length);
-                            // to flush to the underlying file that supports the mmf
-                            accessor.Flush();
-                        }
-                    }
-
-                    // Release MMF
-                    jobPartPlanFile.WriteLock.Release();
-                }
-                else
+                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
+                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(fileOffset, length, MemoryMappedFileAccess.Write))
                 {
-                    throw Errors.MissingPartNumberCheckpointer(transferId, partNumber);
+                    accessor.WriteArray(0, buffer, bufferOffset, length);
+                    accessor.Flush();
                 }
+
+                // Release MMF
+                jobPlanFile.WriteLock.Release();
             }
             else
             {
@@ -285,42 +295,25 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.OneByte * 3;
-            int offset = DataMovementConstants.JobPartPlanFile.AtomicJobStatusStateIndex;
+            long length = DataMovementConstants.IntSizeInBytes;
+            int offset = DataMovementConstants.JobPlanFile.JobStatusIndex;
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
-                foreach (KeyValuePair<int, JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
+                // Lock MMF
+                await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
+                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                 {
-                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                    // Lock MMF
-                    await jobPartPair.Value.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
-                            path: jobPartPair.Value.FilePath,
-                            mode: FileMode.Open,
-                            mapName: null,
-                            capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
-                    {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
-                        {
-                            accessor.Write(
-                                position: 0,
-                                value: (byte)status.State);
-                            accessor.Write(
-                                position: 1,
-                                value: status.HasFailedItems);
-                            accessor.Write(
-                                position: 2,
-                                value: status.HasSkippedItems);
-                            // to flush to the underlying file that supports the mmf
-                            accessor.Flush();
-                        }
-                    }
-                    // Release MMF
-                    jobPartPair.Value.WriteLock.Release();
+                    accessor.Write(0, (int)status.ToJobPlanStatus());
+                    accessor.Flush();
                 }
+
+                // Release MMF
+                jobPlanFile.WriteLock.Release();
             }
             else
             {

@@ -354,7 +354,7 @@ This sample shows how to call CreateBiomassModelJobAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -389,7 +389,7 @@ This sample shows how to call CreateBiomassModelJobAsync with all parameters and
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -447,7 +447,7 @@ This sample shows how to call CreateBiomassModelJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -482,7 +482,7 @@ This sample shows how to call CreateBiomassModelJob with all parameters and requ
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -540,7 +540,7 @@ This sample shows how to call CreateSensorPlacementModelJobAsync and parse the r
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -571,7 +571,7 @@ This sample shows how to call CreateSensorPlacementModelJobAsync with all parame
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -625,7 +625,7 @@ This sample shows how to call CreateSensorPlacementModelJob and parse the result
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -656,7 +656,7 @@ This sample shows how to call CreateSensorPlacementModelJob with all parameters 
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -710,7 +710,7 @@ This sample shows how to call CreateSoilMoistureModelJobAsync and parse the resu
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -754,7 +754,7 @@ This sample shows how to call CreateSoilMoistureModelJobAsync with all parameter
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -821,7 +821,7 @@ This sample shows how to call CreateSoilMoistureModelJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
@@ -865,7 +865,7 @@ This sample shows how to call CreateSoilMoistureModelJob with all parameters and
 TokenCredential credential = new DefaultAzureCredential();
 ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",

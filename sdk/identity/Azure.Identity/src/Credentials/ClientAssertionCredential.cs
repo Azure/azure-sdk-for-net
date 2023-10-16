@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,7 +13,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication of an AAD service principal using a signed client assertion.
+    /// Enables authentication of a Microsoft Entra service principal using a signed client assertion.
     /// </summary>
     public class ClientAssertionCredential : TokenCredential
     {
@@ -32,7 +32,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with an asynchronous callback that provides a signed client assertion to authenticate against Azure Active Directory.
+        /// Creates an instance of the ClientCertificateCredential with an asynchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -51,7 +51,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with a synchronous callback that provides a signed client assertion to authenticate against Azure Active Directory.
+        /// Creates an instance of the ClientCertificateCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -70,7 +70,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        ///  Obtains a token from the Azure Active Directory service, by calling the assertionCallback specified when constructing the credential to obtain a client assertion for authentication.
+        ///  Obtains a token from Microsoft Entra ID, by calling the assertionCallback specified when constructing the credential to obtain a client assertion for authentication.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -94,7 +94,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        ///  Obtains a token from the Azure Active Directory service, by calling the assertionCallback specified when constructing the credential to obtain a client assertion for authentication.
+        ///  Obtains a token from Microsoft Entra ID, by calling the assertionCallback specified when constructing the credential to obtain a client assertion for authentication.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

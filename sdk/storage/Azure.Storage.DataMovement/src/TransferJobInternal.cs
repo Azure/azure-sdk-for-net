@@ -405,6 +405,9 @@ namespace Azure.Storage.DataMovement
 
         internal async Task OnEnumerationComplete()
         {
+            _enumerationComplete = true;
+            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
+
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
             if (_jobParts.Count == 0 &&
                 _dataTransfer.TransferStatus.State != DataTransferState.Paused &&

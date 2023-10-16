@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Samples
 {
-    public class Samples_DevBoxesClient
+    public partial class Samples_DevBoxesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -421,6 +421,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -433,6 +434,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -445,6 +447,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -457,6 +460,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -539,9 +543,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetPools("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("healthStatus").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("healthStatus").ToString());
             }
         }
 
@@ -556,9 +560,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetPoolsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("healthStatus").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("healthStatus").ToString());
             }
         }
 
@@ -573,23 +577,23 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
-                Console.WriteLine(result[0].GetProperty("stopOnDisconnect").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("stopOnDisconnect").GetProperty("gracePeriodMinutes").ToString());
-                Console.WriteLine(result[0].GetProperty("healthStatus").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("gracePeriodMinutes").ToString());
+                Console.WriteLine(result.GetProperty("healthStatus").ToString());
             }
         }
 
@@ -604,23 +608,23 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
-                Console.WriteLine(result[0].GetProperty("stopOnDisconnect").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("stopOnDisconnect").GetProperty("gracePeriodMinutes").ToString());
-                Console.WriteLine(result[0].GetProperty("healthStatus").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("gracePeriodMinutes").ToString());
+                Console.WriteLine(result.GetProperty("healthStatus").ToString());
             }
         }
 
@@ -635,11 +639,11 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetSchedules("<projectName>", "<poolName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("frequency").ToString());
-                Console.WriteLine(result[0].GetProperty("time").ToString());
-                Console.WriteLine(result[0].GetProperty("timeZone").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("frequency").ToString());
+                Console.WriteLine(result.GetProperty("time").ToString());
+                Console.WriteLine(result.GetProperty("timeZone").ToString());
             }
         }
 
@@ -654,11 +658,11 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("frequency").ToString());
-                Console.WriteLine(result[0].GetProperty("time").ToString());
-                Console.WriteLine(result[0].GetProperty("timeZone").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("frequency").ToString());
+                Console.WriteLine(result.GetProperty("time").ToString());
+                Console.WriteLine(result.GetProperty("timeZone").ToString());
             }
         }
 
@@ -673,11 +677,11 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetSchedules("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("frequency").ToString());
-                Console.WriteLine(result[0].GetProperty("time").ToString());
-                Console.WriteLine(result[0].GetProperty("timeZone").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("frequency").ToString());
+                Console.WriteLine(result.GetProperty("time").ToString());
+                Console.WriteLine(result.GetProperty("timeZone").ToString());
             }
         }
 
@@ -692,11 +696,11 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetSchedulesAsync("<projectName>", "<poolName>", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("frequency").ToString());
-                Console.WriteLine(result[0].GetProperty("time").ToString());
-                Console.WriteLine(result[0].GetProperty("timeZone").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("frequency").ToString());
+                Console.WriteLine(result.GetProperty("time").ToString());
+                Console.WriteLine(result.GetProperty("timeZone").ToString());
             }
         }
 
@@ -711,7 +715,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllDevBoxes())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -726,7 +730,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllDevBoxesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -741,31 +745,31 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllDevBoxes(filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -780,31 +784,31 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllDevBoxesAsync(filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -819,7 +823,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllDevBoxesByUser("me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -834,7 +838,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -849,31 +853,31 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllDevBoxesByUser("me", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -888,31 +892,31 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("me", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -927,7 +931,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetDevBoxes("<projectName>", "me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -942,7 +946,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetDevBoxesAsync("<projectName>", "me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
             }
         }
 
@@ -957,31 +961,31 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetDevBoxes("<projectName>", "me", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -996,31 +1000,31 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetDevBoxesAsync("<projectName>", "me", filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
-                Console.WriteLine(result[0].GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("actionState").ToString());
-                Console.WriteLine(result[0].GetProperty("powerState").ToString());
-                Console.WriteLine(result[0].GetProperty("uniqueId").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("location").ToString());
-                Console.WriteLine(result[0].GetProperty("osType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result[0].GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result[0].GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("actionState").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
+                Console.WriteLine(result.GetProperty("uniqueId").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("osType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
+                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
+                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
+                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
+                Console.WriteLine(result.GetProperty("createdTime").ToString());
+                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
             }
         }
 
@@ -1035,9 +1039,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetActions("<projectName>", "me", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("sourceId").ToString());
             }
         }
 
@@ -1052,9 +1056,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetActionsAsync("<projectName>", "me", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("sourceId").ToString());
             }
         }
 
@@ -1069,11 +1073,11 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetActions("<projectName>", "me", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("suspendedUntil").ToString());
-                Console.WriteLine(result[0].GetProperty("next").GetProperty("scheduledTime").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
+                Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
             }
         }
 
@@ -1088,11 +1092,11 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetActionsAsync("<projectName>", "me", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("suspendedUntil").ToString());
-                Console.WriteLine(result[0].GetProperty("next").GetProperty("scheduledTime").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
+                Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
             }
         }
 
@@ -1107,8 +1111,8 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.DelayAllActions("<projectName>", "me", "<devBoxName>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z")))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
             }
         }
 
@@ -1123,8 +1127,8 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.DelayAllActionsAsync("<projectName>", "me", "<devBoxName>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z")))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
             }
         }
 
@@ -1139,16 +1143,16 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.DelayAllActions("<projectName>", "me", "<devBoxName>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z")))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("result").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("sourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("suspendedUntil").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("next").GetProperty("scheduledTime").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("suspendedUntil").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("next").GetProperty("scheduledTime").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             }
         }
 
@@ -1163,16 +1167,16 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.DelayAllActionsAsync("<projectName>", "me", "<devBoxName>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z")))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("result").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("actionType").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("sourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("suspendedUntil").ToString());
-                Console.WriteLine(result[0].GetProperty("action").GetProperty("next").GetProperty("scheduledTime").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("actionType").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("sourceId").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("suspendedUntil").ToString());
+                Console.WriteLine(result.GetProperty("action").GetProperty("next").GetProperty("scheduledTime").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             }
         }
 
@@ -1184,7 +1188,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolName = "<poolName>",
             });
@@ -1203,7 +1207,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolName = "<poolName>",
             });
@@ -1222,7 +1226,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolName = "<poolName>",
                 localAdministrator = "Enabled",
@@ -1266,7 +1270,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolName = "<poolName>",
                 localAdministrator = "Enabled",
@@ -1310,11 +1314,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("status").ToString());
+            Operation operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
         }
 
         [Test]
@@ -1325,11 +1325,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("status").ToString());
+            Operation operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
         }
 
         [Test]
@@ -1340,20 +1336,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("properties").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Operation operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
         }
 
         [Test]
@@ -1364,20 +1347,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("properties").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Operation operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "me", "<devBoxName>");
         }
 
         [Test]

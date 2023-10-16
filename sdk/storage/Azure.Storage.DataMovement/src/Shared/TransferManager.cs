@@ -371,7 +371,7 @@ namespace Azure.Storage.DataMovement
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
-                    if (provider.TypeId == (getSource ? properties.SourceTypeId : properties.DestinationTypeId))
+                    if (provider.ProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
                     {
                         resourceProvider = provider;
                         return true;
@@ -392,11 +392,11 @@ namespace Azure.Storage.DataMovement
 
             if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: true, out StorageResourceProvider sourceProvider))
             {
-                throw new Exception();
+                throw Errors.NoResourceProviderFound(true, dataTransferProperties.SourceProviderId);
             }
             if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: false, out StorageResourceProvider destinationProvider))
             {
-                throw new Exception();
+                throw Errors.NoResourceProviderFound(false, dataTransferProperties.DestinationProviderId);
             }
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
@@ -550,11 +550,11 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             streamToUriJob.AppendJobPart(
@@ -590,11 +590,11 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             serviceToServiceJob.AppendJobPart(
@@ -623,11 +623,11 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             uriToStreamJob.AppendJobPart(
@@ -675,11 +675,11 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 streamToUriJob.AppendJobPart(
@@ -722,11 +722,11 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 serviceToServiceJob.AppendJobPart(
@@ -762,11 +762,11 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 uriToStreamJob.AppendJobPart(
@@ -802,36 +802,15 @@ namespace Azure.Storage.DataMovement
         private async Task SetDataTransfers()
         {
             _dataTransfers.Clear();
+
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                int jobPartCount = await _checkpointer.CurrentJobPartCountAsync(
-                            transferId: transferId,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false);
-
-                JobPartPlanHeader header;
-                using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                            transferId: transferId,
-                            partNumber: 0,
-                            offset: 0,
-                            readSize: 0,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false))
-                {
-                    // Convert stream to job plan header
-                    header = JobPartPlanHeader.Deserialize(stream);
-                }
-
-                // Verify the contents of the header
-                // Check transfer id
-                if (!header.TransferId.Equals(transferId))
-                {
-                    throw Errors.MismatchTransferId(transferId, header.TransferId);
-                }
-
+                DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId).ConfigureAwait(false);
                 _dataTransfers.Add(transferId, new DataTransfer(
                     id: transferId,
                     transferManager: this,
-                    status: header.AtomicJobStatus));
+                    status: jobStatus));
             }
         }
 

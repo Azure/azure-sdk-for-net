@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Boundaries
+    public partial class Samples_Boundaries
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -104,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -118,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -132,23 +131,23 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 geometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
                 type = "<type>",
@@ -201,23 +200,23 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 geometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
                 type = "<type>",
@@ -363,6 +362,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -374,6 +374,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -385,6 +386,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -396,6 +398,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -465,7 +468,7 @@ new List<object>()
             foreach (BinaryData item in client.GetBoundaries(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -479,7 +482,7 @@ new List<object>()
             await foreach (BinaryData item in client.GetBoundariesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -490,41 +493,26 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<boundaryIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -535,41 +523,26 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<boundaryIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -580,11 +553,11 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.Search(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -595,11 +568,11 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchAsync(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -610,24 +583,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -636,50 +609,50 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
             foreach (BinaryData item in client.Search(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -690,24 +663,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -716,50 +689,50 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
             await foreach (BinaryData item in client.SearchAsync(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -773,7 +746,7 @@ new List<object>()
             foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -787,7 +760,7 @@ new List<object>()
             await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -798,41 +771,26 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -843,41 +801,26 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -888,11 +831,11 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -903,11 +846,11 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -918,24 +861,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -944,50 +887,50 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
             foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -998,24 +941,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -1024,50 +967,50 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
             await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("unit").ToString());
-                Console.WriteLine(result[0].GetProperty("area").GetProperty("value").ToString());
-                Console.WriteLine(result[0].GetProperty("parentType").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+                Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("parentType").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 

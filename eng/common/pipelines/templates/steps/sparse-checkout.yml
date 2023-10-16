@@ -17,7 +17,10 @@ steps:
       - checkout: none
 
   - task: PowerShell@2
-    displayName: 'Sparse checkout repositories'
+    ${{ if eq(length(parameters.Repositories), 1) }}:
+      displayName: 'Sparse checkout ${{ parameters.Repositories[0].Name }}'
+    ${{ else }}:
+      displayName: 'Sparse checkout repositories'
     inputs:
       targetType: inline
       # Define this inline, because of the chicken/egg problem with loading a script when nothing

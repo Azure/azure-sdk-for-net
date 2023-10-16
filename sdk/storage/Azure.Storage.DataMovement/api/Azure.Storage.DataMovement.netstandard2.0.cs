@@ -63,11 +63,13 @@ namespace Azure.Storage.DataMovement
     {
         protected internal DataTransferProperties() { }
         public virtual Azure.Storage.DataMovement.TransferCheckpointStoreOptions Checkpointer { get { throw null; } }
-        public virtual string DestinationPath { get { throw null; } }
+        public virtual string DestinationProviderId { get { throw null; } }
         public virtual string DestinationTypeId { get { throw null; } }
+        public virtual System.Uri DestinationUri { get { throw null; } }
         public virtual bool IsContainer { get { throw null; } }
-        public virtual string SourcePath { get { throw null; } }
+        public virtual string SourceProviderId { get { throw null; } }
         public virtual string SourceTypeId { get { throw null; } }
+        public virtual System.Uri SourceUri { get { throw null; } }
         public virtual string TransferId { get { throw null; } }
     }
     public enum DataTransferState
@@ -89,13 +91,18 @@ namespace Azure.Storage.DataMovement
         public bool HasSkippedItems { get { throw null; } }
         public Azure.Storage.DataMovement.DataTransferState State { get { throw null; } }
         public bool Equals(Azure.Storage.DataMovement.DataTransferStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.DataMovement.DataTransferStatus left, Azure.Storage.DataMovement.DataTransferStatus right) { throw null; }
+        public static bool operator !=(Azure.Storage.DataMovement.DataTransferStatus left, Azure.Storage.DataMovement.DataTransferStatus right) { throw null; }
     }
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
         public LocalFilesStorageResourceProvider() { }
-        protected internal override string TypeId { get { throw null; } }
+        protected internal override string ProviderId { get { throw null; } }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromPath(string path) { throw null; }
+        public Azure.Storage.DataMovement.StorageResourceContainer FromDirectory(string directoryPath) { throw null; }
+        public Azure.Storage.DataMovement.StorageResourceItem FromFile(string filePath) { throw null; }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class ProgressHandlerOptions
@@ -108,6 +115,7 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResource() { }
         protected internal abstract bool IsContainer { get; }
+        public abstract string ProviderId { get; }
         public abstract System.Uri Uri { get; }
     }
     public abstract partial class StorageResourceCheckpointData
@@ -163,7 +171,7 @@ namespace Azure.Storage.DataMovement
     public abstract partial class StorageResourceProvider
     {
         protected StorageResourceProvider() { }
-        protected internal abstract string TypeId { get; }
+        protected internal abstract string ProviderId { get; }
         protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken);
         protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken);
     }

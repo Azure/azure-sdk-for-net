@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_ImageProcessing
+    public partial class Samples_ImageProcessing
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -114,14 +113,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
             });
             Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
@@ -139,14 +138,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
             });
             Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
@@ -164,14 +163,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new
@@ -209,14 +208,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new

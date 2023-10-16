@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added install patches for hybrid machine
+- Added assess patches for hybrid machine
 
 ## 1.0.0-beta.4 (2023-05-30)
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_FarmOperationsDataIngestion
+    public partial class Samples_FarmOperationsDataIngestion
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -118,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
@@ -140,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
@@ -162,14 +161,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 "<operations>"
-},
+            },
                 startYear = 1234,
                 isIncremental = true,
                 name = "<name>",
@@ -211,14 +210,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 "<operations>"
-},
+            },
                 startYear = 1234,
                 isIncremental = true,
                 name = "<name>",

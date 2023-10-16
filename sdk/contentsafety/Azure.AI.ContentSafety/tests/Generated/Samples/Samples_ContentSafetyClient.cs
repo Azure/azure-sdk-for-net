@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Samples
 {
-    public class Samples_ContentSafetyClient
+    public partial class Samples_ContentSafetyClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,7 +26,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
             });
@@ -45,7 +44,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
             });
@@ -87,17 +86,17 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 "Hate"
-},
-                blocklistNames = new List<object>()
-{
+            },
+                blocklistNames = new object[]
+            {
 "<blocklistNames>"
-},
+            },
                 breakByBlocklists = true,
             });
             Response response = client.AnalyzeText(content);
@@ -126,17 +125,17 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 "Hate"
-},
-                blocklistNames = new List<object>()
-{
+            },
+                blocklistNames = new object[]
+            {
 "<blocklistNames>"
-},
+            },
                 breakByBlocklists = true,
             });
             Response response = await client.AnalyzeTextAsync(content);
@@ -167,14 +166,8 @@ namespace Azure.AI.ContentSafety.Samples
 
             AnalyzeTextOptions body = new AnalyzeTextOptions("<text>")
             {
-                Categories =
-{
-TextCategory.Hate
-},
-                BlocklistNames =
-{
-"<blocklistNames>"
-},
+                Categories = { TextCategory.Hate },
+                BlocklistNames = { "<blocklistNames>" },
                 BreakByBlocklists = true,
             };
             Response<AnalyzeTextResult> response = client.AnalyzeText(body);
@@ -190,14 +183,8 @@ TextCategory.Hate
 
             AnalyzeTextOptions body = new AnalyzeTextOptions("<text>")
             {
-                Categories =
-{
-TextCategory.Hate
-},
-                BlocklistNames =
-{
-"<blocklistNames>"
-},
+                Categories = { TextCategory.Hate },
+                BlocklistNames = { "<blocklistNames>" },
                 BreakByBlocklists = true,
             };
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
@@ -211,7 +198,7 @@ TextCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new object(),
             });
@@ -229,7 +216,7 @@ TextCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new object(),
             });
@@ -271,17 +258,17 @@ TextCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new
                 {
                     content = new object(),
                     blobUrl = "http://localhost:3000",
                 },
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 "Hate"
-},
+            },
             });
             Response response = client.AnalyzeImage(content);
 
@@ -304,17 +291,17 @@ TextCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new
                 {
                     content = new object(),
                     blobUrl = "http://localhost:3000",
                 },
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 "Hate"
-},
+            },
             });
             Response response = await client.AnalyzeImageAsync(content);
 
@@ -337,16 +324,13 @@ TextCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData()
+            AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData
             {
                 Content = BinaryData.FromObjectAsJson(new object()),
                 BlobUrl = new Uri("http://localhost:3000"),
             })
             {
-                Categories =
-{
-ImageCategory.Hate
-},
+                Categories = { ImageCategory.Hate },
             };
             Response<AnalyzeImageResult> response = client.AnalyzeImage(body);
         }
@@ -359,16 +343,13 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData()
+            AnalyzeImageOptions body = new AnalyzeImageOptions(new ContentSafetyImageData
             {
                 Content = BinaryData.FromObjectAsJson(new object()),
                 BlobUrl = new Uri("http://localhost:3000"),
             })
             {
-                Categories =
-{
-ImageCategory.Hate
-},
+                Categories = { ImageCategory.Hate },
             };
             Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(body);
         }
@@ -483,7 +464,7 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
             });
@@ -501,7 +482,7 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
             });
@@ -519,7 +500,7 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
                 description = "<description>",
@@ -539,7 +520,7 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
                 description = "<description>",
@@ -560,6 +541,7 @@ ImageCategory.Hate
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
             Response response = client.DeleteTextBlocklist("<blocklistName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -572,6 +554,7 @@ ImageCategory.Hate
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
             Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -584,6 +567,7 @@ ImageCategory.Hate
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
             Response response = client.DeleteTextBlocklist("<blocklistName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -596,6 +580,7 @@ ImageCategory.Hate
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
             Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -607,15 +592,15 @@ ImageCategory.Hate
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItems = new List<object>()
-{
+                blockItems = new object[]
+            {
 new
 {
 text = "<text>",
 }
-},
+            },
             });
             Response response = client.AddBlockItems("<blocklistName>", content);
 
@@ -631,15 +616,15 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItems = new List<object>()
-{
+                blockItems = new object[]
+            {
 new
 {
 text = "<text>",
 }
-},
+            },
             });
             Response response = await client.AddBlockItemsAsync("<blocklistName>", content);
 
@@ -655,10 +640,10 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
-{
+            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+            {
 new TextBlockItemInfo("<text>")
-});
+            });
             Response<AddBlockItemsResult> response = client.AddBlockItems("<blocklistName>", addBlockItemsOptions);
         }
 
@@ -670,10 +655,10 @@ new TextBlockItemInfo("<text>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
-{
+            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+            {
 new TextBlockItemInfo("<text>")
-});
+            });
             Response<AddBlockItemsResult> response = await client.AddBlockItemsAsync("<blocklistName>", addBlockItemsOptions);
         }
 
@@ -685,16 +670,16 @@ new TextBlockItemInfo("<text>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItems = new List<object>()
-{
+                blockItems = new object[]
+            {
 new
 {
 description = "<description>",
 text = "<text>",
 }
-},
+            },
             });
             Response response = client.AddBlockItems("<blocklistName>", content);
 
@@ -712,16 +697,16 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItems = new List<object>()
-{
+                blockItems = new object[]
+            {
 new
 {
 description = "<description>",
 text = "<text>",
 }
-},
+            },
             });
             Response response = await client.AddBlockItemsAsync("<blocklistName>", content);
 
@@ -739,13 +724,13 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
-{
+            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+            {
 new TextBlockItemInfo("<text>")
 {
 Description = "<description>",
 }
-});
+            });
             Response<AddBlockItemsResult> response = client.AddBlockItems("<blocklistName>", addBlockItemsOptions);
         }
 
@@ -757,13 +742,13 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new List<TextBlockItemInfo>()
-{
+            AddBlockItemsOptions addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[]
+            {
 new TextBlockItemInfo("<text>")
 {
 Description = "<description>",
 }
-});
+            });
             Response<AddBlockItemsResult> response = await client.AddBlockItemsAsync("<blocklistName>", addBlockItemsOptions);
         }
 
@@ -775,14 +760,15 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItemIds = new List<object>()
-{
+                blockItemIds = new object[]
+            {
 "<blockItemIds>"
-},
+            },
             });
             Response response = client.RemoveBlockItems("<blocklistName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -794,14 +780,15 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItemIds = new List<object>()
-{
+                blockItemIds = new object[]
+            {
 "<blockItemIds>"
-},
+            },
             });
             Response response = await client.RemoveBlockItemsAsync("<blocklistName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -813,12 +800,8 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
-{
-"<blockItemIds>"
-});
+            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
             Response response = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -829,12 +812,8 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
-{
-"<blockItemIds>"
-});
+            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
             Response response = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -845,14 +824,15 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItemIds = new List<object>()
-{
+                blockItemIds = new object[]
+            {
 "<blockItemIds>"
-},
+            },
             });
             Response response = client.RemoveBlockItems("<blocklistName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -864,14 +844,15 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
-                blockItemIds = new List<object>()
-{
+                blockItemIds = new object[]
+            {
 "<blockItemIds>"
-},
+            },
             });
             Response response = await client.RemoveBlockItemsAsync("<blocklistName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -883,12 +864,8 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
-{
-"<blockItemIds>"
-});
+            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
             Response response = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -899,12 +876,8 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new List<string>()
-{
-"<blockItemIds>"
-});
+            RemoveBlockItemsOptions removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] { "<blockItemIds>" });
             Response response = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -1024,7 +997,7 @@ Description = "<description>",
             foreach (BinaryData item in client.GetTextBlocklists(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
+                Console.WriteLine(result.GetProperty("blocklistName").ToString());
             }
         }
 
@@ -1039,7 +1012,7 @@ Description = "<description>",
             await foreach (BinaryData item in client.GetTextBlocklistsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
+                Console.WriteLine(result.GetProperty("blocklistName").ToString());
             }
         }
 
@@ -1080,8 +1053,8 @@ Description = "<description>",
             foreach (BinaryData item in client.GetTextBlocklists(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("blocklistName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -1096,8 +1069,8 @@ Description = "<description>",
             await foreach (BinaryData item in client.GetTextBlocklistsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blocklistName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("blocklistName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
             }
         }
 
@@ -1138,8 +1111,8 @@ Description = "<description>",
             foreach (BinaryData item in client.GetTextBlocklistItems("<blocklistName>", null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
-                Console.WriteLine(result[0].GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("blockItemId").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
             }
         }
 
@@ -1154,8 +1127,8 @@ Description = "<description>",
             await foreach (BinaryData item in client.GetTextBlocklistItemsAsync("<blocklistName>", null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
-                Console.WriteLine(result[0].GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("blockItemId").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
             }
         }
 
@@ -1196,9 +1169,9 @@ Description = "<description>",
             foreach (BinaryData item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("blockItemId").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
             }
         }
 
@@ -1213,9 +1186,9 @@ Description = "<description>",
             await foreach (BinaryData item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("blockItemId").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("blockItemId").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
             }
         }
 

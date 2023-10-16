@@ -15,7 +15,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnvironmentAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -53,7 +52,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnvironment with all parameters and parse the result.
 <code><![CDATA[
@@ -218,10 +216,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllEnvironmentsAsync with all parameters and parse the result.
@@ -233,17 +230,17 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("user").ToString());
-    Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-    Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
     </member>
@@ -258,10 +255,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetAllEnvironments("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllEnvironments with all parameters and parse the result.
@@ -273,17 +269,17 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetAllEnvironments("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("user").ToString());
-    Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-    Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
     </member>
@@ -298,10 +294,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "me"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentsAsync with all parameters and parse the result.
@@ -313,17 +308,17 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "me", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("user").ToString());
-    Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-    Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
     </member>
@@ -338,10 +333,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironments("<projectName>", "me"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironments with all parameters and parse the result.
@@ -353,17 +347,17 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironments("<projectName>", "me", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-    Console.WriteLine(result[0].GetProperty("user").ToString());
-    Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-    Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentType").ToString());
+    Console.WriteLine(result.GetProperty("user").ToString());
+    Console.WriteLine(result.GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
     </member>
@@ -378,7 +372,7 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 This sample shows how to call GetCatalogsAsync with all parameters and parse the result.
@@ -390,7 +384,7 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -405,7 +399,7 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetCatalogs("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 This sample shows how to call GetCatalogs with all parameters and parse the result.
@@ -417,7 +411,7 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetCatalogs("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code></example>
     </member>
@@ -432,9 +426,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentDefinitionsAsync with all parameters and parse the result.
@@ -446,20 +440,20 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-    Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
     </member>
@@ -474,9 +468,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentDefinitions with all parameters and parse the result.
@@ -488,20 +482,20 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-    Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
     </member>
@@ -516,9 +510,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync with all parameters and parse the result.
@@ -530,20 +524,20 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-    Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
     </member>
@@ -558,9 +552,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentDefinitionsByCatalog with all parameters and parse the result.
@@ -572,20 +566,20 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-    Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-    Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("catalogName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
     </member>
@@ -600,9 +594,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentTypesAsync with all parameters and parse the result.
@@ -614,9 +608,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
@@ -631,9 +625,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentTypes with all parameters and parse the result.
@@ -645,9 +639,9 @@ DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint,
 foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>", maxCount: 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
@@ -659,7 +653,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -672,7 +666,6 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -680,7 +673,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -712,7 +705,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -725,7 +718,6 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironment with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -733,7 +725,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     environmentType = "<environmentType>",
     catalogName = "<catalogName>",
@@ -759,74 +751,40 @@ Console.WriteLine(result.GetProperty("parameters").ToString());
     </member>
     <member name="DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteEnvironmentAsync and parse the result.
+This sample shows how to call DeleteEnvironmentAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
 ]]></code>
-This sample shows how to call DeleteEnvironmentAsync with all parameters and parse the result.
+This sample shows how to call DeleteEnvironmentAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
 ]]></code></example>
     </member>
     <member name="DeleteEnvironment(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteEnvironment and parse the result.
+This sample shows how to call DeleteEnvironment.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
 ]]></code>
-This sample shows how to call DeleteEnvironment with all parameters and parse the result.
+This sample shows how to call DeleteEnvironment with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "me", "<environmentName>");
 ]]></code></example>
     </member>
   </members>
