@@ -329,7 +329,7 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.CorrelationId != null)
                 {
-                    message.Properties.CorrelationId = new AmqpMessageId(source.Properties.CorrelationId.ToString());
+                    message.Properties.CorrelationId = new AmqpMessageId(source.Properties.CorrelationId.ToString()!);
                 }
 
                 if (source.Properties.CreationTime.HasValue)
@@ -349,12 +349,12 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.MessageId != null)
                 {
-                    message.Properties.MessageId = new AmqpMessageId(source.Properties.MessageId.ToString());
+                    message.Properties.MessageId = new AmqpMessageId(source.Properties.MessageId.ToString()!);
                 }
 
                 if (source.Properties.ReplyTo != null)
                 {
-                    message.Properties.ReplyTo = new AmqpAddress(source.Properties.ReplyTo.ToString());
+                    message.Properties.ReplyTo = new AmqpAddress(source.Properties.ReplyTo.ToString()!);
                 }
 
                 if (!string.IsNullOrEmpty(source.Properties.ReplyToGroupId))
@@ -369,10 +369,10 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.To != null)
                 {
-                    message.Properties.To = new AmqpAddress(source.Properties.To.ToString());
+                    message.Properties.To = new AmqpAddress(source.Properties.To.ToString()!);
                 }
 
-                if (source.Properties.UserId != null)
+                if (source.Properties.UserId != default)
                 {
                     message.Properties.UserId = source.Properties.UserId;
                 }
@@ -579,7 +579,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns><c>true</c> if an AMQP property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryCreateAmqpPropertyValueFromNetProperty(
+        public static bool TryCreateAmqpPropertyValueFromNetProperty(
             object? propertyValue,
             out object? amqpPropertyValue,
             bool allowBodyTypes = false)
@@ -659,7 +659,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns><c>true</c> if a message property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryCreateNetPropertyFromAmqpProperty(
+        public static bool TryCreateNetPropertyFromAmqpProperty(
             object? amqpPropertyValue,
             out object? convertedPropertyValue,
             bool allowBodyTypes = false)
@@ -715,13 +715,13 @@ namespace Azure.Core.Amqp.Shared
                     convertedPropertyValue = listOrArray;
                     break;
 
-                case ArraySegment<byte> segment when segment.Count == segment.Array.Length:
+                case ArraySegment<byte> segment when segment.Count == segment.Array!.Length:
                     convertedPropertyValue = segment.Array;
                     break;
 
                 case ArraySegment<byte> segment:
                     var buffer = new byte[segment.Count];
-                    Buffer.BlockCopy(segment.Array, segment.Offset, buffer, 0, segment.Count);
+                    Buffer.BlockCopy(segment.Array!, segment.Offset, buffer, 0, segment.Count);
                     convertedPropertyValue = buffer;
                     break;
 
