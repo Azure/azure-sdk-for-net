@@ -85,7 +85,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
         }
     }
 
-    // Called by end-user of client, not the pipeline
     public override void Dispose()
     {
         Dispose(true);

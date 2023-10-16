@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Buffers;
 using System.IO;
 using System.ServiceModel.Rest.Internal;
 using System.Threading;
@@ -135,48 +134,6 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             throw;
         }
     }
-
-//    private async Task CopyToAsync(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
-//    {
-//        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-//        try
-//        {
-//            while (true)
-//            {
-//                cancellationTokenSource.CancelAfter(networkTimeout);
-//#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
-//                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
-//#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-//                if (bytesRead == 0) break;
-//                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
-//            }
-//        }
-//        finally
-//        {
-//            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-//            ArrayPool<byte>.Shared.Return(buffer);
-//        }
-//    }
-
-//    private void CopyTo(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
-//    {
-//        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-//        try
-//        {
-//            int read;
-//            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
-//            {
-//                cancellationTokenSource.Token.ThrowIfCancellationRequested();
-//                cancellationTokenSource.CancelAfter(networkTimeout);
-//                destination.Write(buffer, 0, read);
-//            }
-//        }
-//        finally
-//        {
-//            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-//            ArrayPool<byte>.Shared.Return(buffer);
-//        }
-//    }
 
     /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="originalToken"/> or <paramref name="timeoutToken"/>.</summary>
     /// <param name="originalToken">The customer provided token.</param>

@@ -92,8 +92,6 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        internal virtual void OnMessageDisposed(bool disposeContentStream) { }
-
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>

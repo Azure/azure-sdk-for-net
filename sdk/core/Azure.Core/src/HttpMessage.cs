@@ -18,10 +18,6 @@ namespace Azure.Core
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
 
-        // Indicates that ExtractContentReponse was called and response
-        // content should not be disposed.
-        private bool _responseContentExtracted;
-
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
         /// </summary>
@@ -192,8 +188,6 @@ namespace Azure.Core
         /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            _responseContentExtracted = true;
-
             switch (_response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
@@ -297,22 +291,13 @@ namespace Azure.Core
         public override void Dispose()
         {
             Request.Dispose();
-
-            // TODO: Is property bag disposable?  How is this working?
             _propertyBag.Dispose();
 
-            Response? response = _response;
+            var response = _response;
             if (response != null)
             {
-                // TODO: double-check this logic.
-
-                // Don't dispose the network stream if response content has been extracted.
-                // If it was extracted, that means that ownership was transferred to
-                // the caller of the ResponseContentExtracted method and we should not
-                // dispose it.
-                bool disposeContentStream = !_responseContentExtracted;
-                response.OnMessageDisposed(disposeContentStream);
                 _response = null;
+                response.Dispose();
             }
 
             base.Dispose();
