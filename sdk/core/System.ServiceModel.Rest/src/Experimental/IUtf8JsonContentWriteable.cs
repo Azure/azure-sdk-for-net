@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace System.ServiceModel.Rest.Internal;
 
-public interface IUtf8JsonWriteable
+public interface IUtf8JsonContentWriteable
 {
     void Write(Utf8JsonWriter writer);
 }

@@ -74,17 +74,27 @@ namespace System.ServiceModel.Rest.Core
         public abstract void Add(string name, string value);
         public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
-        public abstract bool TryGetHeader(string name, out string? value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.ServiceModel.Rest.Core.MessageHeader<string, object>> values);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessageHeader<TName, TValue>
+    public abstract partial class PipelineContent : System.IDisposable
     {
-        private readonly TName _Name_k__BackingField;
-        private readonly TValue _Value_k__BackingField;
-        public MessageHeader(TName name, TValue value) { throw null; }
-        public TName Name { get { throw null; } }
-        public TValue Value { get { throw null; } }
+        protected PipelineContent() { }
+        public static System.ServiceModel.Rest.Core.PipelineContent CreateContent(System.BinaryData content) { throw null; }
+        public static System.ServiceModel.Rest.Core.PipelineContent CreateContent(System.IO.Stream stream) { throw null; }
+        public abstract void Dispose();
+        public static explicit operator System.IO.Stream (System.ServiceModel.Rest.Core.PipelineContent content) { throw null; }
+        public static implicit operator System.BinaryData (System.ServiceModel.Rest.Core.PipelineContent content) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (System.ServiceModel.Rest.Core.PipelineContent content) { throw null; }
+        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
     public partial class PipelineMessage : System.IDisposable
     {
@@ -92,7 +102,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
         public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
-        public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
+        public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } protected internal set { } }
         public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
@@ -102,7 +112,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.ServiceModel.Rest.Core.RequestBody? Content { get; set; }
+        public abstract System.ServiceModel.Rest.Core.PipelineContent? Content { get; set; }
         public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -111,24 +121,12 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual bool IsError { get { throw null; } set { } }
+        public abstract System.ServiceModel.Rest.Core.PipelineContent? Content { get; protected internal set; }
+        public abstract System.ServiceModel.Rest.Core.MessageHeaders Headers { get; }
+        public bool IsError { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
-        public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
-        public abstract bool TryGetHeaderValue(string name, out string? value);
-        public abstract bool TryGetReasonPhrase(out string reasonPhrase);
-    }
-    public abstract partial class RequestBody : System.IDisposable
-    {
-        protected RequestBody() { }
-        public static System.ServiceModel.Rest.Core.RequestBody CreateFromStream(System.IO.Stream stream) { throw null; }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public partial class ResponseErrorClassifier
     {
@@ -164,15 +162,15 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
+        protected virtual void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
         protected virtual void OnSendingRequest(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
-        public HttpPipelineRequest() { }
-        public override System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
+        protected internal HttpPipelineRequest() { }
+        public override System.ServiceModel.Rest.Core.PipelineContent? Content { get { throw null; } set { } }
         public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -181,15 +179,13 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
-        public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
+        public override System.ServiceModel.Rest.Core.PipelineContent? Content { get { throw null; } protected internal set { } }
+        public override System.ServiceModel.Rest.Core.MessageHeaders Headers { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers) { throw null; }
-        public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
-        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
     }
     public partial interface IPipelineEnumerator
     {
@@ -257,7 +253,7 @@ namespace System.ServiceModel.Rest.Internal
         public static bool ShouldWrapInOperationCanceledException(System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
     }
-    public partial interface IUtf8JsonWriteable
+    public partial interface IUtf8JsonContentWriteable
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
     }
@@ -360,14 +356,12 @@ namespace System.ServiceModel.Rest.Internal
         public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
+    public partial class Utf8JsonContentWriter : System.IDisposable
     {
-        public Utf8JsonRequestBody() { }
-        public System.Text.Json.Utf8JsonWriter JsonWriter { get { throw null; } }
-        public override void Dispose() { }
+        public Utf8JsonContentWriter() { }
+        public System.BinaryData WrittenContent { get { throw null; } }
+        public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
+        public void Write(System.ServiceModel.Rest.Internal.IUtf8JsonContentWriteable content) { }
     }
 }

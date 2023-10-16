@@ -95,7 +95,8 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.False(message.Response.ContentStream.CanSeek);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+                    Assert.Throws<InvalidOperationException>(()
+                        => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
                 }

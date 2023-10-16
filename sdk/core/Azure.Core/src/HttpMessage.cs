@@ -34,17 +34,6 @@ namespace Azure.Core
             ResponseClassifier = responseClassifier;
         }
 
-        private static PipelineRequest ToPipelineRequest(Request request)
-        {
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
-            {
-                return pipelineRequest!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
-            return new PipelineRequestAdapter(request);
-        }
-
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
@@ -56,33 +45,22 @@ namespace Azure.Core
         /// </summary>
         public new Response Response
         {
-            get => ResponseInternal!;
-            set => ResponseInternal = value;
-        }
-
-        private Response? ResponseInternal
-        {
             get
             {
-                if (_response is not null)
+                if (_response == null)
                 {
-                    return _response;
-                }
-
-                if (base.Response is null)
-                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-
-                if (base.Response is not Response response)
-                {
-                    throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
-                }
-
-                return response;
+                return _response;
             }
 
-            set => base.Response = _response = value!;
+            set
+            {
+                _response = value;
+                base.Response = ToPipelineResponse(value)!;
+            }
         }
 
         /// <summary>
@@ -90,11 +68,12 @@ namespace Azure.Core
         /// </summary>
         public new bool HasResponse => _response != null || base.HasResponse;
 
-        internal void ClearResponse() => ResponseInternal = null;
+        internal void ClearResponse() => Response = null!;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
+        // TODO: revisit this per not shadowing anymore
         public new ResponseClassifier ResponseClassifier
         {
             get => (ResponseClassifier)base.ResponseClassifier;
@@ -199,39 +178,26 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller.
+        ///
+        /// After calling this method, any attempt to use the
+        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
+        /// properties on <see cref="Response"/> will result in an exception being thrown.
         /// </summary>
-        /// <returns>The content stream or null if response didn't have any.</returns>
+        /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
+        /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (ResponseInternal?.ContentStream)
+            switch (_response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    ResponseInternal.ContentStream = new ResponseShouldNotBeUsedStream(ResponseInternal.ContentStream);
+                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
                     return null;
             }
-        }
-
-        /// <summary>
-        /// Disposes the request and response.
-        /// </summary>
-        public override void Dispose()
-        {
-            Request.Dispose();
-            _propertyBag.Dispose();
-
-            Response? response = _response;
-            if (response != null)
-            {
-                response.Dispose();
-                _response = null;
-            }
-
-            base.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream
@@ -289,5 +255,52 @@ namespace Azure.Core
         /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
+        private static PipelineRequest ToPipelineRequest(Request request)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            {
+                return pipelineRequest!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
+            return new PipelineRequestAdapter(request);
+        }
+
+        private static PipelineResponse? ToPipelineResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
+            {
+                return pipelineResponse!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
+            return new PipelineResponseAdapter(response);
+        }
+
+        /// <summary>
+        /// Disposes the request and response.
+        /// </summary>
+        public override void Dispose()
+        {
+            Request.Dispose();
+            _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
+
+            base.Dispose();
+        }
     }
 }

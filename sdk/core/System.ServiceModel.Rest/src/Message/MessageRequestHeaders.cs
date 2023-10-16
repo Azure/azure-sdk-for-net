@@ -21,12 +21,12 @@ internal class MessageRequestHeaders : MessageHeaders
 
     public override void Add(string name, string value)
     {
-        if (_headers.TryAdd(new IgnoreCaseString(name), value, out var existingValue))
+        if (_headers.TryAdd(new IgnoreCaseString(name), value, out object? currentValue))
         {
             return;
         }
 
-        switch (existingValue)
+        switch (currentValue)
         {
             case string stringValue:
                 _headers.Set(new IgnoreCaseString(name), new List<string> { stringValue, value });
@@ -37,39 +37,78 @@ internal class MessageRequestHeaders : MessageHeaders
         }
     }
 
-    public override bool TryGetHeader(string name, out string? value)
+    public override bool TryGetValue(string name, out string? value)
     {
-        if (_headers.TryGetValue(new IgnoreCaseString(name), out var headerValue))
+        if (_headers.TryGetValue(new IgnoreCaseString(name), out object headerValue))
         {
             value = GetHeaderValueString(name, headerValue);
             return true;
         }
 
-        value = null;
+        value = default;
         return false;
     }
 
-    public override bool TryGetHeaders(out IEnumerable<MessageHeader<string, object>> values)
+    public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
-        values = EnumerateHeaders();
+        if (_headers.TryGetValue(new IgnoreCaseString(name), out object value))
+        {
+            values = GetHeaderValueEnumerable(name, value);
+            return true;
+        }
+
+        values = default;
+        return false;
+    }
+
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        headers = GetHeadersStringValues();
         return true;
     }
 
-    private IEnumerable<MessageHeader<string, object>> EnumerateHeaders()
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+    {
+        headers = GetHeadersListValues();
+        return true;
+    }
+
+    #region Implementation
+    private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
     {
         for (int i = 0; i < _headers.Count; i++)
         {
             _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            yield return new MessageHeader<string, object>(name, value);
+            string values = GetHeaderValueString(name, value);
+            yield return new KeyValuePair<string, string>(name, values);
         }
     }
 
-    private static string GetHeaderValueString(string name, object value) => value switch
+    private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues()
     {
-        string s => s,
-        List<string> l => string.Join(",", l),
-        _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value?.GetType()}")
-    };
+        for (int i = 0; i < _headers.Count; i++)
+        {
+            _headers.GetAt(i, out IgnoreCaseString name, out object value);
+            IEnumerable<string> values = GetHeaderValueEnumerable(name, value);
+            yield return new KeyValuePair<string, IEnumerable<string>>(name, values);
+        }
+    }
+
+    private static string GetHeaderValueString(string name, object value)
+        => value switch
+        {
+            string stringValue => stringValue,
+            List<string> listValue => string.Join(",", listValue),
+            _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value?.GetType()}")
+        };
+
+    private static IEnumerable<string> GetHeaderValueEnumerable(string name, object value)
+        => value switch
+        {
+            string stringValue => new[] { stringValue },
+            List<string> listValue => listValue,
+            _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value.GetType()}")
+        };
 
     private readonly struct IgnoreCaseString : IEquatable<IgnoreCaseString>
     {
@@ -92,4 +131,5 @@ internal class MessageRequestHeaders : MessageHeaders
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator string(IgnoreCaseString ics) => ics._value;
     }
+    #endregion
 }
