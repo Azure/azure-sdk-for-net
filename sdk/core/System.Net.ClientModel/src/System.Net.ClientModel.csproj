@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Description>Contains base building blocks for TypeSpec generated libraries.</Description>
+		<Description>Contains building blocks for clients that call cloud services.</Description>
 		<Version>1.0.0-beta.1</Version>
 		<Nullable>enable</Nullable>
 
