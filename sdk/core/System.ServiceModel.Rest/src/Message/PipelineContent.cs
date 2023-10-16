@@ -22,14 +22,14 @@ namespace System.ServiceModel.Rest.Core
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="PipelineContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static PipelineContent CreateContent(Stream stream) => new StreamMessageContent(stream);
+        public static PipelineContent CreateContent(Stream stream) => new StreamPipelineContent(stream);
 
         /// <summary>
         /// Creates an instance of <see cref="PipelineContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="PipelineContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static PipelineContent CreateContent(BinaryData content) => new MemoryMessageContent(content.ToMemory());
+        public static PipelineContent CreateContent(BinaryData content) => new MemoryPipelineContent(content.ToMemory());
 
         /// <summary>
         /// Attempts to compute the length of the underlying content, if available.
@@ -54,7 +54,7 @@ namespace System.ServiceModel.Rest.Core
         public static implicit operator BinaryData(PipelineContent content)
             => content.ToBinaryData();
 
-        // This one is needed to allow JsonDocument.Parse(MessageContent) to succeed
+        // This one is needed to allow JsonDocument.Parse(PipelineContent) to succeed
         // without a cast through BinaryData.
         public static implicit operator ReadOnlyMemory<byte>(PipelineContent content)
             => content.ToBinaryData();
@@ -186,7 +186,7 @@ namespace System.ServiceModel.Rest.Core
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
-        private sealed class StreamMessageContent : PipelineContent
+        private sealed class StreamPipelineContent : PipelineContent
         {
             private const int CopyToBufferSize = 81920;
 
@@ -196,7 +196,7 @@ namespace System.ServiceModel.Rest.Core
             // It may be that we need to split out ResponseStreamContent from
             // RequestStreamContent as part of the unification - that's ok :)
 
-            public StreamMessageContent(Stream stream)
+            public StreamPipelineContent(Stream stream)
             {
                 _stream = stream;
             }
@@ -256,11 +256,11 @@ namespace System.ServiceModel.Rest.Core
 
         // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
         // with BinaryData in an optimized way.
-        private sealed class MemoryMessageContent : PipelineContent
+        private sealed class MemoryPipelineContent : PipelineContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 
-            public MemoryMessageContent(ReadOnlyMemory<byte> bytes)
+            public MemoryPipelineContent(ReadOnlyMemory<byte> bytes)
                 => _bytes = bytes;
 
             public override bool TryComputeLength(out long length)
