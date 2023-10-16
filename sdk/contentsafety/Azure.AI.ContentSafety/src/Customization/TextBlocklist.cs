@@ -14,6 +14,15 @@ namespace Azure.AI.ContentSafety
         private string _description;
         private bool _isDiscriptionChanged = false;
 
+        /// <summary> Initializes a new instance of TextBlocklist. </summary>
+        /// <param name="blocklistName"> Text blocklist name. </param>
+        /// <param name="description"> Text blocklist description. </param>
+        internal TextBlocklist(string blocklistName, string description)
+        {
+            BlocklistName = blocklistName;
+            _description = description;
+        }
+
         /// <summary> Text blocklist description. </summary>
         public string Description
         {

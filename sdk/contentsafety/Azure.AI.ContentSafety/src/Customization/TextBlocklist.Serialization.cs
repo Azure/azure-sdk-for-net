@@ -15,11 +15,11 @@ namespace Azure.AI.ContentSafety
         {
             writer.WriteStartObject();
             writer.WritePropertyName("blocklistName"u8);
-            writer.WriteStringValue(BlocklistName); // Should we write this property?
+            writer.WriteStringValue(BlocklistName);
             if (_isDiscriptionChanged)
             {
                 writer.WritePropertyName("description"u8);
-                if (_description != null) // This means we cannot use this model to put operation, we could add an option to tell if it is a patch model
+                if (_description != null)
                 {
                     writer.WriteStringValue(Description);
                 }

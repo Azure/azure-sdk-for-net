@@ -23,15 +23,6 @@ namespace Azure.AI.ContentSafety
             BlocklistName = blocklistName;
         }
 
-        /// <summary> Initializes a new instance of TextBlocklist. </summary>
-        /// <param name="blocklistName"> Text blocklist name. </param>
-        /// <param name="description"> Text blocklist description. </param>
-        internal TextBlocklist(string blocklistName, string description)
-        {
-            BlocklistName = blocklistName;
-            Description = description;
-        }
-
         /// <summary> Text blocklist name. </summary>
         public string BlocklistName { get; }
     }
