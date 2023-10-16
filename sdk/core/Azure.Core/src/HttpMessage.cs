@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.ServiceModel.Rest.Core;
+using System.Net.ClientModel.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

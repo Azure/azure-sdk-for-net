@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ServiceModel.Rest.Internal;
+using System.Net.ClientModel.Internal;
 
 namespace Azure.Core
 {

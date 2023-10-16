@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.Net.ClientModel.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

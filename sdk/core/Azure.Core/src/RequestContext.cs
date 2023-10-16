@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ServiceModel.Rest;
+using System.Net.ClientModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

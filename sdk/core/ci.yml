@@ -54,8 +54,8 @@ extends:
       safeName: SystemMemoryData
     - name: Azure.Core.Amqp
       safeName: AzureCoreAmqp
-    - name: System.ServiceModel.Rest
-      safeName: SystemServiceModelRest
+    - name: System.Net.ClientModel
+      safeName: SystemNetClientModel
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
