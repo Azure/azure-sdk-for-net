@@ -206,10 +206,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             message = item.Value.ToString();
                         }
-                        else
-                        {
-                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
-                        }
                     }
                     else
                     {

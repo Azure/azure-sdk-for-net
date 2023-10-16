@@ -55,13 +55,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("Test Exception", message);
 
-            Assert.True(properties.TryGetValue("OriginalFormat", out string value));
-            Assert.Equal(log, value);
             Assert.True(properties.TryGetValue("name", out string name));
             Assert.Equal("tomato", name);
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
-            Assert.Equal(3, properties.Count);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]
@@ -87,13 +85,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var message = LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
 
             Assert.Equal("Hello from tomato 2.99.", message);
-            Assert.True(properties.TryGetValue("OriginalFormat", out string value));
-            Assert.Equal(log, value);
             Assert.True(properties.TryGetValue("name", out string name));
             Assert.Equal("tomato", name);
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
-            Assert.Equal(3, properties.Count);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]

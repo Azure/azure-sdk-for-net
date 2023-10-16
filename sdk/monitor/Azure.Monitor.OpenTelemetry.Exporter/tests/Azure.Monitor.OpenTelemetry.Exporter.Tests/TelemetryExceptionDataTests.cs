@@ -365,7 +365,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(2, exceptionData.Version);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);
-            Assert.Equal("Log Message", exceptionData.Properties["OriginalFormat"]);
             Assert.Empty(exceptionData.Measurements);
             Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", exceptionData.ProblemId);
             Assert.Equal(1, exceptionData.Exceptions.Count);
