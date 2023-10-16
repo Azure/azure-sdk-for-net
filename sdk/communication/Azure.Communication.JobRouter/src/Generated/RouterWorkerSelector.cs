@@ -49,7 +49,5 @@ namespace Azure.Communication.JobRouter
         public bool? Expedite { get; }
         /// <summary> The status of the worker selector. </summary>
         public RouterWorkerSelectorStatus? Status { get; }
-        /// <summary> The time at which this worker selector expires in UTC. </summary>
-        public DateTimeOffset? ExpiresAt { get; }
     }
 }

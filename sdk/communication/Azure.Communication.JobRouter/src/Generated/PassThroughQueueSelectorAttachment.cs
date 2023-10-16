@@ -17,19 +17,6 @@ namespace Azure.Communication.JobRouter
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
-        /// <param name="key"> The label key to query against. </param>
-        /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        internal PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            Kind = "pass-through";
-            Key = key;
-            LabelOperator = labelOperator;
-        }
-
-        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>

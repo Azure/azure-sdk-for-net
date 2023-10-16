@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
         /// are added to the payload of the scoring rule by default.
         /// Note: Worker labels are always sent with scoring payload.
         /// </summary>
-        public IList<ScoringRuleParameterSelector> ScoringParameters { get; }
+        public IList<ScoringRuleParameterSelector> ScoringParameters { get; } = new List<ScoringRuleParameterSelector>();
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

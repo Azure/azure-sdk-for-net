@@ -33,6 +33,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="batchSize"> (Optional) Set batch size when 'allowScoringBatchOfWorkers' is set to true to control batch size of workers. Defaults to 20 if not set. </param>
         /// <param name="descendingOrder"> (Optional) If false, will sort scores by ascending order. By default, set to true. </param>
         /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for the job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+#pragma warning disable CS0051 // parameter type 'IList<ScoringRuleParameterSelector>' is less accessible than method
         public BestWorkerMode(RouterRule scoringRule = default,
             IList<ScoringRuleParameterSelector> scoringParameterSelectors = default,
             bool allowScoringBatchOfWorkers = false,
@@ -40,6 +41,7 @@ namespace Azure.Communication.JobRouter
             bool descendingOrder = true,
             bool bypassSelectors = false)
             : this(null)
+#pragma warning restore CS0051 // parameter type 'IList<ScoringRuleParameterSelector>' is less accessible than method
         {
             if (batchSize is <= 0)
             {

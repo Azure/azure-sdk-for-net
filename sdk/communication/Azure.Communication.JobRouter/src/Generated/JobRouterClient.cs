@@ -32,9 +32,16 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of JobRouterClient. </summary>
         /// <param name="endpoint"> The Uri to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public JobRouterClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterClient(Uri endpoint, JobRouterClientOptions options = default)
+        public JobRouterClient(Uri endpoint, JobRouterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new JobRouterClientOptions();

@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this(null, key, labelOperator, expiresAfter?.TotalSeconds)
+            : this("pass-through", key, labelOperator, expiresAfter?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
         }
