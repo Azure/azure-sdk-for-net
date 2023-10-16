@@ -22,7 +22,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("TODO: Why is it ok to leave HttpContent undisposed in some cases?")]
         public async Task DoesntDisposeContentIfStreamGotReplaced()
         {
             DisposeTrackingHttpContent disposeTrackingContent = new DisposeTrackingHttpContent();

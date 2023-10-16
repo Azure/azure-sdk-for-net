@@ -47,46 +47,22 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
         protected internal set
         {
-            // Make sure we don't dispose the content later since we're replacing
-            // the content stream now.
-            //_httpResponse.Content = null;
-
-            // TODO: Why not?
-            // Shouldn't we dispose it if the stream is replaced?  We're holding a
-            // reference to it, so wouldn't we want to make sure it gets disposed
-            // at some point?
-
-            // TODO: we can test this by removing the part where we null out
-            // httpResponse.Content and just alowing it to be disposed.  Where/when
-            // is it used?
-
             _content = value;
+
+            // Setting _httpResponse.Content to null makes it so when this type
+            // disposes _httpResponse later, the content is not also disposed.
+            // This works because the transport sets _content to the value of
+            // _httpResponse.Content initially, so if this object is disposed
+            // without its content being buffered, calling dispose on _content will
+            // dispose the network stream.
+
+            // TODO: We can potentially leak a network resource if this setter
+            // is called without the caller taking ownership of and disposing the
+            // network stream, since at that point, no one is holding a reference
+            // to it anymore.  Today, ResponseBufferingPolicy takes care of this.
+
+            _httpResponse.Content = null;
         }
-    }
-
-    // Called when the message is diposed.  The response typically has a
-    // longer lifetime than the message because we return Result<T> to the
-    // end-user consumer of the client.  This means we want the end-user caller
-    // to take ownership of the response, without disposing it prior to
-    // returning it to them.  We do, however, want to dispose of any objects
-    // that we only needed to use within the context of the client so that
-    // those don't outlive their intended lifetime.
-    protected internal override void OnMessageDisposed(bool disposeContentStream)
-    {
-        var httpResponse = _httpResponse;
-        httpResponse?.Dispose();
-
-        // Note: we never dispose the content here because we hand the
-        // response or the content stream to the service method caller.
-
-        //var content = _content;
-        //if (content is not null && disposeContentStream)
-        //{
-        //    content?.Dispose();
-        //    _content = null;
-        //}
-
-        // TODO: should we dispose _httpResponseContent here?
     }
 
     #region IDisposable
@@ -104,9 +80,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
                 content?.Dispose();
                 _content = null;
             }
-
-            var httpContent = _httpResponseContent;
-            httpContent?.Dispose();
 
             _disposed = true;
         }

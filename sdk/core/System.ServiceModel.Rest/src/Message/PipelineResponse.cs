@@ -13,7 +13,7 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract PipelineContent? Content { get; protected internal set; }
 
-    protected internal virtual void OnMessageDisposed(bool disposeContentStream) { }
+    //protected internal virtual void OnMessageDisposed(bool disposeContentStream) { }
 
     #region Meta-data properties set by the pipeline.
 

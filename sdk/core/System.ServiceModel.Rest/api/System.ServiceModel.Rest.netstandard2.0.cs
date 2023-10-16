@@ -127,7 +127,6 @@ namespace System.ServiceModel.Rest.Core
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        protected internal virtual void OnMessageDisposed() { }
     }
     public partial class ResponseErrorClassifier
     {
@@ -187,7 +186,6 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected internal override void OnMessageDisposed() { }
     }
     public partial interface IPipelineEnumerator
     {

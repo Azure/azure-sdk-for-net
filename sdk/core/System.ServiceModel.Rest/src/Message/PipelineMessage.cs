@@ -78,12 +78,18 @@ public class PipelineMessage : IDisposable
             var request = Request;
             request?.Dispose();
 
+            _propertyBag.Dispose();
+
+            // TODO: this means we return a disposed response to the end-user.
+            // Would be nice to possibly introduce an OnMessageDiposed pattern
+            // to notify the response that it needs to dispose network resources
+            // without being officially disposed itself?
             var response = _response;
-            if (response is not null)
+            if (response != null)
             {
-                response.OnMessageDisposed(disposeContentStream: );
+                _response = null;
+                response.Dispose();
             }
-            _response = null;
 
             _disposed = true;
         }
