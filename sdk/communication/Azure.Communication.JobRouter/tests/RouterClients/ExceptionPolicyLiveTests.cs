@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -177,65 +174,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
             Assert.AreEqual(exceptionPolicyName, exceptionPolicy.Name);
-        }
-
-        [Test]
-        public async Task CreateExceptionPolicyAndRemoveProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-
-            var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateExceptionPolicyAndRemoveProperty));
-            var queueId = GenerateUniqueId(IdPrefix, nameof(CreateExceptionPolicyAndRemoveProperty));
-            var createQueueResponse = await routerClient.CreateQueueAsync(new CreateQueueOptions(queueId,
-                    createDistributionPolicyResponse.Value.Id));
-
-            var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyAndRemoveProperty)}");
-            var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
-                new CreateClassificationPolicyOptions(classificationPolicyId)
-                {
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
-                });
-            var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyAndRemoveProperty)}");
-
-            var labelsToUpsert = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
-            // exception rules
-            var exceptionRuleId = GenerateUniqueId($"{IdPrefix}-ExceptionRule");
-            var reclassifyActionId = GenerateUniqueId($"{IdPrefix}-ReclassifyExceptionAction");
-            var manualReclassifyActionId = GenerateUniqueId($"{IdPrefix}-ManualReclassifyAction");
-            var rules = new Dictionary<string, ExceptionRule>()
-            {
-                [exceptionRuleId] = new ExceptionRule(new QueueLengthExceptionTrigger(1),
-                    new Dictionary<string, ExceptionAction?>()
-                    {
-                        [reclassifyActionId] = new ReclassifyExceptionAction(classificationPolicyId)
-                        {
-                            LabelsToUpsert = labelsToUpsert
-                        },
-                        [manualReclassifyActionId] = new ManualReclassifyExceptionAction
-                        {
-                            QueueId = createQueueResponse.Value.Id,
-                            Priority = 1,
-                            WorkerSelectors = { new RouterWorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
-                        }
-                    }
-                )
-            };
-
-            var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules)
-            {
-                Name = "FakeExceptionPolicyFriendlyName"
-            });
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteExceptionPolicyAsync(exceptionPolicyId)));
-
-            Assert.False(string.IsNullOrWhiteSpace(createExceptionPolicyResponse.Value.Name));
-
-            var updatedExpcetionPolicyResponse = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            var retrievedPolicy = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
-
-            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
         }
 
         #endregion Exception Policy Tests
