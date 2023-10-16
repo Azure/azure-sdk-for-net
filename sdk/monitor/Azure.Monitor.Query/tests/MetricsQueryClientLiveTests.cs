@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -232,6 +232,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(_testData.Name1, timeSeries.Metadata["name"]);
         }
+
         [RecordedTest]
         public async Task CanQueryMetricsFilterTop()
         {
@@ -335,8 +336,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
 
-        //[RecordedTest]
-        [Test]
+        [RecordedTest]
         public async Task MetricsBatchQueryAsync()
         {
             MetricsBatchQueryClient client = CreateBatchClient();
