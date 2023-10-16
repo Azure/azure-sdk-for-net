@@ -1,0 +1,158 @@
+# Semantic Search
+
+Semantic search is a set of enhancements that make text-based searches more effective. When you enable semantic search on your service, it performs two primary functions:
+* **Improves Search Results**: It enhances the initial search results by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
+* **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, making it easier for users to understand and find what they're looking f
+
+In simpler terms, semantic search enhances search results to provide users with more accurate and easily understandable information. This enhancement can greatly enhance the user experience on a search page. You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview).
+
+It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable?tabs=enable-portal).
+
+This sample demonstrates how to create an index, upload data, and perform a query for semantic search.
+
+## Create a Index
+
+Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define Hotel fields. In addition to that, we will configure semantic settings that define a specific configuration to be used in the context of semantic capabilities.
+
+To accomplish this, we will create an instace of `SearchIndex` and define `Hotel` fields.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Index
+string indexName = "Hotel";
+SearchIndex searchIndex = new(indexName)
+{
+    Fields =
+    {
+        new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+        new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("Description") { IsFilterable = true },
+        new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+    },
+    SemanticSettings = new()
+    {
+        Configurations =
+    {
+           new SemanticConfiguration("my-semantic-config", new()
+           {
+               TitleField = new(){ FieldName = "HotelName" },
+               ContentFields =
+               {
+                   new() { FieldName = "Description" }
+               },
+               KeywordFields =
+               {
+                   new() { FieldName = "Category" }
+               }
+           })
+        }
+    }
+};
+```
+
+After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Create_Index
+Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+AzureKeyCredential credential = new(key);
+
+SearchIndexClient indexClient = new(endpoint, credential);
+await indexClient.CreateIndexAsync(searchIndex);
+```
+
+## Add documents to your index
+
+Let's create a simple model type for `Hotel`:
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Model
+    public class Hotel
+{
+    public string HotelId { get; set; }
+    public string HotelName { get; set; }
+    public string Description { get; set; }
+    public string Category { get; set; }
+}
+```
+
+Next, we will create sample hotel documents:
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Hotel_Document
+public static Hotel[] GetHotelDocuments()
+{
+    return new[]
+    {
+        new Hotel()
+        {
+            HotelId = "1",
+            HotelName = "Fancy Stay",
+            Description =
+                "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                "the tourist attractions. We highly recommend this hotel.",
+            Category = "Luxury",
+        },
+        new Hotel()
+        {
+            HotelId = "2",
+            HotelName = "Roach Motel",
+            Description = "Cheapest hotel in town. Infact, a motel.",
+            Category = "Budget",
+        },
+         // Add more hotel documents here...
+    };
+}
+```
+
+Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Upload_Documents
+SearchClient searchClient = new(endpoint, indexName, credential);
+Hotel[] hotelDocuments = GetHotelDocuments();
+await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
+```
+
+## Querying Data
+
+To perform a semantic search query, we'll specify `SemanticConfigurationName` as `SearchQueryType.Semantic`. We'll use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we've enabled `QueryCaption` and `QueryAnswer` in the `SearchOptions` to retrieve the caption and answer in the response. With these settings in place, we're ready to execute a semantic search query.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Query
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
+    "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
+    new SearchOptions
+    {
+        QueryType = SearchQueryType.Semantic,
+        SemanticConfigurationName = "my-semantic-config",
+        QueryCaption = QueryCaptionType.Extractive,
+        QueryAnswer = QueryAnswerType.Extractive,
+    });
+
+int count = 0;
+Console.WriteLine($"Semantic Search Results:");
+
+Console.WriteLine($"\nQuery Answer:");
+foreach (AnswerResult result in response.Answers)
+{
+    Console.WriteLine($"Answer Highlights: {result.Highlights}");
+    Console.WriteLine($"Answer Text: {result.Text}");
+}
+
+await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+{
+    count++;
+    Hotel doc = result.Document;
+    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+
+    if (result.Captions != null)
+    {
+        var caption = result.Captions.FirstOrDefault();
+        if (caption.Highlights != null && caption.Highlights != "")
+        {
+            Console.WriteLine($"Caption Highlights: {caption.Highlights}");
+        }
+        else
+        {
+            Console.WriteLine($"Caption Text: {caption.Text}");
+        }
+    }
+}
+Console.WriteLine($"Total number of search results:{count}");
+```
