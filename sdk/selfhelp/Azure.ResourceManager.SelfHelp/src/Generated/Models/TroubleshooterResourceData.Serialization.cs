@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = type = new ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
