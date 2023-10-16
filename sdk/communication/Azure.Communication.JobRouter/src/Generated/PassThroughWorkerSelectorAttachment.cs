@@ -43,7 +43,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The label key to query against. </summary>
         public string Key { get; }
-        /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
-        public LabelOperator LabelOperator { get; }
     }
 }

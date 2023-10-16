@@ -10,6 +10,9 @@ namespace Azure.Communication.JobRouter
     [CodeGenModel("PassThroughQueueSelectorAttachment")]
     public partial class PassThroughQueueSelectorAttachment : IUtf8JsonSerializable
     {
+        /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
+        public LabelOperator LabelOperator { get; internal set; }
+
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>

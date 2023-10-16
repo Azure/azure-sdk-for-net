@@ -696,7 +696,7 @@ namespace Azure.Communication.JobRouter
         public RouterQueueSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public string Key { get { throw null; } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } }
-        public Azure.Communication.JobRouter.LabelValue Value { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.LabelValue Value { get { throw null; } }
     }
     public partial class RouterQueueStatistics
     {

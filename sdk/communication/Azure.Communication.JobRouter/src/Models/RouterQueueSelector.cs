@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The value to compare against the actual label value with the given operator. </summary>
-        public LabelValue Value { get; set; }
+        public LabelValue Value { get; internal set; }
 
         /// <summary> Initializes a new instance of QueueSelector. </summary>
         /// <param name="key"> The label key to query against. </param>

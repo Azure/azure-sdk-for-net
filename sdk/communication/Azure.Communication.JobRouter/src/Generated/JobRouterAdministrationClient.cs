@@ -69,7 +69,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertDistributionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -110,7 +109,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertDistributionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -333,7 +331,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertClassificationPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -374,7 +371,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertClassificationPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -597,7 +593,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertExceptionPolicyAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -638,7 +633,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertExceptionPolicy(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -861,7 +855,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertQueueAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -902,7 +895,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='UpsertQueue(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertQueue(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

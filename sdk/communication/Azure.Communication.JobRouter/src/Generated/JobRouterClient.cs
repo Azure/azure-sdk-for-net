@@ -70,7 +70,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UpsertJobAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertJobAsync(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -111,7 +110,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UpsertJob(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertJob(string id, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -322,13 +320,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='ReclassifyJobAsync(string,IDictionary{string,string},CancellationToken)']/*" />
         internal virtual async Task<Response> ReclassifyJobAsync(string id, IDictionary<string, string> reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReclassifyJobAsync(id, RequestContentHelper.FromDictionary(reclassifyJobRequest), context).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromDictionary(reclassifyJobRequest);
+            Response response = await ReclassifyJobAsync(id, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -338,13 +336,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='ReclassifyJob(string,IDictionary{string,string},CancellationToken)']/*" />
         internal virtual Response ReclassifyJob(string id, IDictionary<string, string> reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReclassifyJob(id, RequestContentHelper.FromDictionary(reclassifyJobRequest), context);
+            using RequestContent content = RequestContentHelper.FromDictionary(reclassifyJobRequest);
+            Response response = ReclassifyJob(id, content, context);
             return response;
         }
 
@@ -370,7 +368,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='ReclassifyJobAsync(string,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Response> ReclassifyJobAsync(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -411,7 +408,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='ReclassifyJob(string,RequestContent,RequestContext)']/*" />
         internal virtual Response ReclassifyJob(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -445,7 +441,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CancelJobAsync(id, cancelJobRequest?.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = cancelJobRequest?.ToRequestContent();
+            Response response = await CancelJobAsync(id, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -464,7 +461,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CancelJob(id, cancelJobRequest?.ToRequestContent(), context);
+            using RequestContent content = cancelJobRequest?.ToRequestContent();
+            Response response = CancelJob(id, content, context);
             return response;
         }
 
@@ -565,7 +563,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(completeJobRequest, nameof(completeJobRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CompleteJobAsync(id, completeJobRequest.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = completeJobRequest.ToRequestContent();
+            Response response = await CompleteJobAsync(id, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -582,7 +581,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(completeJobRequest, nameof(completeJobRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CompleteJob(id, completeJobRequest.ToRequestContent(), context);
+            using RequestContent content = completeJobRequest.ToRequestContent();
+            Response response = CompleteJob(id, content, context);
             return response;
         }
 
@@ -683,7 +683,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(closeJobRequest, nameof(closeJobRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CloseJobAsync(id, closeJobRequest.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = closeJobRequest.ToRequestContent();
+            Response response = await CloseJobAsync(id, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -700,7 +701,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(closeJobRequest, nameof(closeJobRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CloseJob(id, closeJobRequest.ToRequestContent(), context);
+            using RequestContent content = closeJobRequest.ToRequestContent();
+            Response response = CloseJob(id, content, context);
             return response;
         }
 
@@ -1124,7 +1126,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeclineJobOfferAsync(workerId, offerId, declineJobOfferRequest?.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = declineJobOfferRequest?.ToRequestContent();
+            Response response = await DeclineJobOfferAsync(workerId, offerId, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -1142,7 +1145,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeclineJobOffer(workerId, offerId, declineJobOfferRequest?.ToRequestContent(), context);
+            using RequestContent content = declineJobOfferRequest?.ToRequestContent();
+            Response response = DeclineJobOffer(workerId, offerId, content, context);
             return response;
         }
 
@@ -1360,7 +1364,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UpsertWorkerAsync(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual async Task<Response> UpsertWorkerAsync(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
@@ -1401,7 +1404,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UpsertWorker(string,RequestContent,RequestConditions,RequestContext)']/*" />
         internal virtual Response UpsertWorker(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));

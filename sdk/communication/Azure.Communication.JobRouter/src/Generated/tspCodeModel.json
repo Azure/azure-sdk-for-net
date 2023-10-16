@@ -19,6 +19,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "The available expression languages that can be configured",
    "IsExtensible": true,
    "IsNullable": false,
@@ -43,6 +44,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "Supported parameters for scoring workers",
    "IsExtensible": true,
    "IsNullable": false,
@@ -91,6 +93,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "Describes supported operations on label values.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -115,6 +118,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "The status of the worker selector.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -199,6 +203,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "The status of the Job.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -325,6 +330,7 @@
     }
    ],
    "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
    "Description": "Enums for worker status",
    "IsExtensible": true,
    "IsNullable": false,
@@ -4301,7 +4307,7 @@
       {
        "$id": "517",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "56"
@@ -4338,7 +4344,7 @@
       {
        "$id": "522",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "56"
@@ -4824,7 +4830,7 @@
       {
        "$id": "568",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "129"
@@ -4861,7 +4867,7 @@
       {
        "$id": "573",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "129"
@@ -5347,7 +5353,7 @@
       {
        "$id": "619",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "217"
@@ -5384,7 +5390,7 @@
       {
        "$id": "624",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "217"
@@ -5870,7 +5876,7 @@
       {
        "$id": "670",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "270"
@@ -5907,7 +5913,7 @@
       {
        "$id": "675",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "270"
@@ -6404,7 +6410,7 @@
       {
        "$id": "723",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "292"
@@ -6441,7 +6447,7 @@
       {
        "$id": "728",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "292"
@@ -8166,7 +8172,7 @@
       {
        "$id": "882",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "419"
@@ -8203,7 +8209,7 @@
       {
        "$id": "887",
        "StatusCodes": [
-        201
+        200
        ],
        "BodyType": {
         "$ref": "419"

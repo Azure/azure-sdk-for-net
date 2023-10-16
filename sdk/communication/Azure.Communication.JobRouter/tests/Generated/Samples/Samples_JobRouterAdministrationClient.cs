@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Samples
 {
-    public class Samples_JobRouterAdministrationClient
+    public partial class Samples_JobRouterAdministrationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -129,6 +129,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -140,6 +141,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteDistributionPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -151,6 +153,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -162,6 +165,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteDistributionPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -275,6 +279,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -286,6 +291,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteClassificationPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -297,6 +303,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -308,6 +315,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteClassificationPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -417,6 +425,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -428,6 +437,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteExceptionPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -439,6 +449,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -450,6 +461,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteExceptionPolicyAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -561,6 +573,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -572,6 +585,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteQueueAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -583,6 +597,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -594,6 +609,7 @@ namespace Azure.Communication.JobRouter.Samples
             JobRouterAdministrationClient client = new JobRouterAdministrationClient(endpoint);
 
             Response response = await client.DeleteQueueAsync("<id>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -607,8 +623,8 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetDistributionPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -622,8 +638,8 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -661,14 +677,14 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -682,14 +698,14 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -727,8 +743,8 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetClassificationPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -742,8 +758,8 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -781,13 +797,13 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -801,13 +817,13 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -845,8 +861,8 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetExceptionPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -860,8 +876,8 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -899,11 +915,11 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -917,11 +933,11 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -959,8 +975,8 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetQueues(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -974,8 +990,8 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetQueuesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -1013,12 +1029,12 @@ namespace Azure.Communication.JobRouter.Samples
             foreach (BinaryData item in client.GetQueues(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("distributionPolicyId").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -1032,12 +1048,12 @@ namespace Azure.Communication.JobRouter.Samples
             await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("distributionPolicyId").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
