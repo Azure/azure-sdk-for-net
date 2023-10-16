@@ -1,6 +1,6 @@
 # Microsoft Azure NetworkAnalytics management client library for .NET
 
-**[Describe the service briefly first.]**
+**Azure Operator insights is first party analytic solution, more specific to telecom vertical. Telemetry data is ingested from onPrem/Cloud and service operational Insights to customer.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
