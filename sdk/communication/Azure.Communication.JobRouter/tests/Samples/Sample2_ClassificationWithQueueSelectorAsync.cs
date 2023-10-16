@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -42,13 +39,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
                 );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_XBox",
@@ -152,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
             );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -164,7 +161,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     }
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-2",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -288,7 +285,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
                 );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -302,7 +299,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-2",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -316,7 +313,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            Response<Models.RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-3",
                     distributionPolicyId: distributionPolicy.Value.Id)

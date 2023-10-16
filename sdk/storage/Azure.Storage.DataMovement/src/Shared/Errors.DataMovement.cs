@@ -124,5 +124,9 @@ namespace Azure.Storage
 
         public static ArgumentException ResourceUriInvalid(string parameterResource)
             => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
+
+        public static ArgumentException NoResourceProviderFound(bool isSource, string providerId)
+            => new ArgumentException($"Unable to find resource provider for transfer {(isSource ? "source" : "destination")} with provider id: {providerId}. " +
+                $"Please ensure you have registered the required resource provider with TransferManagerOptions.ResumeProviders.");
     }
 }
