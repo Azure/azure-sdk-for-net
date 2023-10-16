@@ -147,7 +147,7 @@ namespace Azure.Communication.Identity.Tests
 
         [Test]
         [TestCase("chat", TestName = "CreateUserAndTokenWithChatScope")]
-        [TestCase("voip", TestName = "CreateUserAndTokenWithVoipScope")]
+        [TestCase("voip", TestName = "CreateUserAndTokenWithVoIPScope")]
         [TestCase("chat.join", TestName = "CreateUserAndTokenWithChatJoinScope")]
         [TestCase("chat.join.limited", TestName = "CreateUserAndTokenWithChatJoinLimitedScope")]
         [TestCase("voip.join", TestName = "CreateUserAndTokenWithVoipJoinScope")]
