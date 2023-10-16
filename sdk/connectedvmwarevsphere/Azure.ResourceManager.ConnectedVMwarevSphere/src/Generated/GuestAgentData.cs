@@ -31,16 +31,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="systemData"> The systemData. </param>
         /// <param name="uuid"> Gets or sets a unique identifier for this resource. </param>
         /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
         /// <param name="provisioningAction"> Gets or sets the guest agent provisioning action. </param>
         /// <param name="status"> Gets or sets the guest agent status. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, ResourceIdentifier privateLinkScopeResourceId, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Uuid = uuid;
             Credentials = credentials;
+            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             HttpProxyConfig = httpProxyConfig;
             ProvisioningAction = provisioningAction;
             Status = status;
@@ -53,6 +55,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string Uuid { get; }
         /// <summary> Username / Password Credentials to provision guest agent. </summary>
         public GuestCredential Credentials { get; set; }
+        /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
         /// <summary> HTTP Proxy configuration for the VM. </summary>
         internal HttpProxyConfiguration HttpProxyConfig { get; set; }
         /// <summary> Gets or sets httpsProxy url. </summary>
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string CustomResourceName { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<ResourceStatus> Statuses { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

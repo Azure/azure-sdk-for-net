@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
         /// <param name="firmwareType"> Firmware type. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public FirmwareType? FirmwareType { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<ResourceStatus> Statuses { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

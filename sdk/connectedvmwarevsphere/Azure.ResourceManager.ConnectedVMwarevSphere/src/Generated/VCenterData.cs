@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="credentials"> Username / Password Credentials to connect to vcenter. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal VCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public VICredential Credentials { get; set; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<ResourceStatus> Statuses { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

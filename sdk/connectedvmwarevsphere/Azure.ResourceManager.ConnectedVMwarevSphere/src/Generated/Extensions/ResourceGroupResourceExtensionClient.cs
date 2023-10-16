@@ -66,13 +66,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetCachedClient(Client => new VCenterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
-        {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
         public virtual VirtualMachineTemplateCollection GetVirtualMachineTemplates()

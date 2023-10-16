@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         // CreateGuestAgent
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateGuestAgent()
+        public async Task CreateOrUpdate_CreateGuestAgent()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/CreateGuestAgent.json
-            // this example is just showing the usage of "GuestAgents_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/CreateVMInstanceGuestAgent.json
+            // this example is just showing the usage of "VMInstanceGuestAgents_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,11 +33,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this GuestAgentResource created on azure
             // for more information of creating GuestAgentResource, please refer to the document of GuestAgentResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string virtualMachineName = "ContosoVm";
-            string name = "default";
-            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName, name);
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.HybridCompute/machines/DemoVM";
+            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(resourceUri);
             GuestAgentResource guestAgent = client.GetGuestAgentResource(guestAgentResourceId);
 
             // invoke the operation
@@ -48,10 +45,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
                     Username = "tempuser",
                     Password = "<password>",
                 },
+                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
                 HttpsProxy = "http://192.1.2.3:8080",
                 ProvisioningAction = ProvisioningAction.Install,
             };
-            ArmOperation<GuestAgentResource> lro = await guestAgent.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<GuestAgentResource> lro = await guestAgent.CreateOrUpdateAsync(WaitUntil.Completed, data);
             GuestAgentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -66,8 +64,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetGuestAgent()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/GetGuestAgent.json
-            // this example is just showing the usage of "GuestAgents_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVMInstanceGuestAgent.json
+            // this example is just showing the usage of "VMInstanceGuestAgents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,11 +74,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this GuestAgentResource created on azure
             // for more information of creating GuestAgentResource, please refer to the document of GuestAgentResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string virtualMachineName = "ContosoVm";
-            string name = "default";
-            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName, name);
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.HybridCompute/machines/DemoVM";
+            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(resourceUri);
             GuestAgentResource guestAgent = client.GetGuestAgentResource(guestAgentResourceId);
 
             // invoke the operation
@@ -98,8 +93,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteGuestAgent()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/DeleteGuestAgent.json
-            // this example is just showing the usage of "GuestAgents_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/DeleteVMInstanceGuestAgent.json
+            // this example is just showing the usage of "VMInstanceGuestAgents_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,11 +103,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this GuestAgentResource created on azure
             // for more information of creating GuestAgentResource, please refer to the document of GuestAgentResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string virtualMachineName = "ContosoVm";
-            string name = "default";
-            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName, name);
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.HybridCompute/machines/DemoVM";
+            ResourceIdentifier guestAgentResourceId = GuestAgentResource.CreateResourceIdentifier(resourceUri);
             GuestAgentResource guestAgent = client.GetGuestAgentResource(guestAgentResourceId);
 
             // invoke the operation

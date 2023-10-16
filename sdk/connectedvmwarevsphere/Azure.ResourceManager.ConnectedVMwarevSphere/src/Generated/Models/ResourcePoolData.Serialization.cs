@@ -88,9 +88,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> memSharesLevel = default;
             Optional<long> memReservationMB = default;
             Optional<long> memLimitMB = default;
+            Optional<long> memOverallUsageGB = default;
+            Optional<long> memCapacityGB = default;
+            Optional<long> cpuOverallUsageMHz = default;
+            Optional<long> cpuCapacityMHz = default;
             Optional<string> customResourceName = default;
+            Optional<IReadOnlyList<string>> datastoreIds = default;
+            Optional<IReadOnlyList<string>> networkIds = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -230,9 +236,73 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             memLimitMB = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("memOverallUsageGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            memOverallUsageGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("memCapacityGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            memCapacityGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("cpuOverallUsageMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cpuOverallUsageMHz = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("cpuCapacityMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cpuCapacityMHz = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("customResourceName"u8))
                         {
                             customResourceName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("datastoreIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            datastoreIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("networkIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            networkIds = array;
                             continue;
                         }
                         if (property0.NameEquals("statuses"u8))
@@ -251,14 +321,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new ResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), Optional.ToNullable(memOverallUsageGB), Optional.ToNullable(memCapacityGB), Optional.ToNullable(cpuOverallUsageMHz), Optional.ToNullable(cpuCapacityMHz), customResourceName.Value, Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToList(statuses), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -84,9 +84,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> moName = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
             Optional<string> customResourceName = default;
+            Optional<long> usedMemoryGB = default;
+            Optional<long> totalMemoryGB = default;
+            Optional<long> usedCpuMHz = default;
+            Optional<long> totalCpuMHz = default;
             Optional<IReadOnlyList<string>> datastoreIds = default;
             Optional<IReadOnlyList<string>> networkIds = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -199,6 +203,42 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             customResourceName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("usedMemoryGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usedMemoryGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalMemoryGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalMemoryGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("usedCpuMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usedCpuMHz = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalCpuMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalCpuMHz = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("datastoreIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -229,14 +269,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VMwareClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToList(datastoreIds), Optional.ToList(networkIds), provisioningState.Value);
+            return new VMwareClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(usedMemoryGB), Optional.ToNullable(totalMemoryGB), Optional.ToNullable(usedCpuMHz), Optional.ToNullable(totalCpuMHz), Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToNullable(provisioningState));
         }
     }
 }

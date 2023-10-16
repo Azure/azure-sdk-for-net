@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> Defines the resource properties. </summary>
+    /// <summary> Specifies the hardware settings for the virtual machine. </summary>
     public partial class HardwareProfile
     {
         /// <summary> Initializes a new instance of HardwareProfile. </summary>

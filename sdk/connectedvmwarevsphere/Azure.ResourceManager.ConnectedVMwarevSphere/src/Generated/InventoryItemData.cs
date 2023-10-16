@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="managedResourceId"> Gets or sets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="moRefId"> Gets or sets the MoRef (Managed Object Reference) ID for the inventory item. </param>
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the inventory item. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string moRefId, string moName, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string moRefId, string moName, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             InventoryType = inventoryType;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string MoRefId { get; set; }
         /// <summary> Gets or sets the vCenter Managed Object name for the inventory item. </summary>
         public string MoName { get; set; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// A Class representing a GuestAgent along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestAgentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGuestAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetGuestAgent method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineInstanceResource" /> using the GetGuestAgent method.
     /// </summary>
     public partial class GuestAgentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GuestAgentResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}";
+            var resourceId = $"{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _guestAgentClientDiagnostics;
-        private readonly GuestAgentsRestOperations _guestAgentRestClient;
+        private readonly ClientDiagnostics _guestAgentVmInstanceGuestAgentsClientDiagnostics;
+        private readonly VMInstanceGuestAgentsRestOperations _guestAgentVmInstanceGuestAgentsRestClient;
         private readonly GuestAgentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GuestAgentResource"/> class for mocking. </summary>
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GuestAgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _guestAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string guestAgentApiVersion);
-            _guestAgentRestClient = new GuestAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestAgentApiVersion);
+            _guestAgentVmInstanceGuestAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string guestAgentVmInstanceGuestAgentsApiVersion);
+            _guestAgentVmInstanceGuestAgentsRestClient = new VMInstanceGuestAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestAgentVmInstanceGuestAgentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachines/guestAgents";
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Get</description>
+        /// <description>VMInstanceGuestAgents_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GuestAgentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Get");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.Get");
             scope.Start();
             try
             {
-                var response = await _guestAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestAgentVmInstanceGuestAgentsRestClient.GetAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestAgentResource(Client, response.Value), response.GetRawResponse());
@@ -123,22 +123,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Get</description>
+        /// <description>VMInstanceGuestAgents_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GuestAgentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Get");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.Get");
             scope.Start();
             try
             {
-                var response = _guestAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestAgentVmInstanceGuestAgentsRestClient.Get(Id.Parent.Parent, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestAgentResource(Client, response.Value), response.GetRawResponse());
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Delete</description>
+        /// <description>VMInstanceGuestAgents_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Delete");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _guestAgentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation(_guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _guestAgentVmInstanceGuestAgentsRestClient.DeleteAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation(_guestAgentVmInstanceGuestAgentsClientDiagnostics, Pipeline, _guestAgentVmInstanceGuestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Delete</description>
+        /// <description>VMInstanceGuestAgents_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Delete");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = _guestAgentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation(_guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _guestAgentVmInstanceGuestAgentsRestClient.Delete(Id.Parent.Parent, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation(_guestAgentVmInstanceGuestAgentsClientDiagnostics, Pipeline, _guestAgentVmInstanceGuestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Create</description>
+        /// <description>VMInstanceGuestAgents_Create</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +235,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GuestAgentResource>> UpdateAsync(WaitUntil waitUntil, GuestAgentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GuestAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, GuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Update");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _guestAgentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<GuestAgentResource>(new GuestAgentOperationSource(Client), _guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _guestAgentVmInstanceGuestAgentsRestClient.CreateAsync(Id.Parent.Parent, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation<GuestAgentResource>(new GuestAgentOperationSource(Client), _guestAgentVmInstanceGuestAgentsClientDiagnostics, Pipeline, _guestAgentVmInstanceGuestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GuestAgents_Create</description>
+        /// <description>VMInstanceGuestAgents_Create</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,16 +273,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GuestAgentResource> Update(WaitUntil waitUntil, GuestAgentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GuestAgentResource> CreateOrUpdate(WaitUntil waitUntil, GuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Update");
+            using var scope = _guestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("GuestAgentResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _guestAgentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<GuestAgentResource>(new GuestAgentOperationSource(Client), _guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _guestAgentVmInstanceGuestAgentsRestClient.Create(Id.Parent.Parent, data, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation<GuestAgentResource>(new GuestAgentOperationSource(Client), _guestAgentVmInstanceGuestAgentsClientDiagnostics, Pipeline, _guestAgentVmInstanceGuestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

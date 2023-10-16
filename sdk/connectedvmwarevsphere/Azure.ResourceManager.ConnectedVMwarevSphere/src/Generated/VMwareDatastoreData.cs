@@ -42,8 +42,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the datastore. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
+        /// <param name="capacityGB"> Gets or sets Maximum capacity of this datastore in GBs. </param>
+        /// <param name="freeSpaceGB"> Gets or sets Available space of this datastore in GBs. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal VMwareDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal VMwareDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, long? capacityGB, long? freeSpaceGB, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MoName = moName;
             Statuses = statuses;
             CustomResourceName = customResourceName;
+            CapacityGB = capacityGB;
+            FreeSpaceGB = freeSpaceGB;
             ProvisioningState = provisioningState;
         }
 
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public IReadOnlyList<ResourceStatus> Statuses { get; }
         /// <summary> Gets the name of the corresponding resource in Kubernetes. </summary>
         public string CustomResourceName { get; }
+        /// <summary> Gets or sets Maximum capacity of this datastore in GBs. </summary>
+        public long? CapacityGB { get; }
+        /// <summary> Gets or sets Available space of this datastore in GBs. </summary>
+        public long? FreeSpaceGB { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

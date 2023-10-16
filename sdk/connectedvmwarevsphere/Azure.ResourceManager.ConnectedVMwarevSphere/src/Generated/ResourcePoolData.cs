@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         public ResourcePoolData(AzureLocation location) : base(location)
         {
+            DatastoreIds = new ChangeTrackingList<string>();
+            NetworkIds = new ChangeTrackingList<string>();
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
@@ -64,10 +66,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Gets or sets MemLimitMB specifies a memory usage limit in megabytes.
         /// Utilization will not exceed the specified limit even if there are available resources.
         /// </param>
+        /// <param name="memOverallUsageGB"> Gets the used physical memory on the pool in GB. </param>
+        /// <param name="memCapacityGB"> Gets the total amount of physical memory on the pool in GB. </param>
+        /// <param name="cpuOverallUsageMHz"> Gets the used CPU usage across all cores on the pool in MHz. </param>
+        /// <param name="cpuCapacityMHz"> Gets the max CPU usage across all cores on the pool in MHz. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
+        /// <param name="datastoreIds"> Gets the datastore ARM ids. </param>
+        /// <param name="networkIds"> Gets the network ARM ids. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ResourcePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string cpuSharesLevel, long? cpuReservationMHz, long? cpuLimitMHz, string memSharesLevel, long? memReservationMB, long? memLimitMB, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        internal ResourcePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string cpuSharesLevel, long? cpuReservationMHz, long? cpuLimitMHz, string memSharesLevel, long? memReservationMB, long? memLimitMB, long? memOverallUsageGB, long? memCapacityGB, long? cpuOverallUsageMHz, long? cpuCapacityMHz, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, IReadOnlyList<ResourceStatus> statuses, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -82,7 +90,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MemSharesLevel = memSharesLevel;
             MemReservationMB = memReservationMB;
             MemLimitMB = memLimitMB;
+            MemOverallUsageGB = memOverallUsageGB;
+            MemCapacityGB = memCapacityGB;
+            CpuOverallUsageMHz = cpuOverallUsageMHz;
+            CpuCapacityMHz = cpuCapacityMHz;
             CustomResourceName = customResourceName;
+            DatastoreIds = datastoreIds;
+            NetworkIds = networkIds;
             Statuses = statuses;
             ProvisioningState = provisioningState;
         }
@@ -131,11 +145,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Utilization will not exceed the specified limit even if there are available resources.
         /// </summary>
         public long? MemLimitMB { get; }
+        /// <summary> Gets the used physical memory on the pool in GB. </summary>
+        public long? MemOverallUsageGB { get; }
+        /// <summary> Gets the total amount of physical memory on the pool in GB. </summary>
+        public long? MemCapacityGB { get; }
+        /// <summary> Gets the used CPU usage across all cores on the pool in MHz. </summary>
+        public long? CpuOverallUsageMHz { get; }
+        /// <summary> Gets the max CPU usage across all cores on the pool in MHz. </summary>
+        public long? CpuCapacityMHz { get; }
         /// <summary> Gets the name of the corresponding resource in Kubernetes. </summary>
         public string CustomResourceName { get; }
+        /// <summary> Gets the datastore ARM ids. </summary>
+        public IReadOnlyList<string> DatastoreIds { get; }
+        /// <summary> Gets the network ARM ids. </summary>
+        public IReadOnlyList<string> NetworkIds { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<ResourceStatus> Statuses { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

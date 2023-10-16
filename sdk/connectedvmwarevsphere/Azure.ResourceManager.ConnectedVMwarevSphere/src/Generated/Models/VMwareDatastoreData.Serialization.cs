@@ -84,6 +84,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> moName = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
             Optional<string> customResourceName = default;
+            Optional<long> capacityGB = default;
+            Optional<long> freeSpaceGB = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -197,6 +199,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             customResourceName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("capacityGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacityGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("freeSpaceGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            freeSpaceGB = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -210,7 +230,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(provisioningState));
+            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(capacityGB), Optional.ToNullable(freeSpaceGB), Optional.ToNullable(provisioningState));
         }
     }
 }

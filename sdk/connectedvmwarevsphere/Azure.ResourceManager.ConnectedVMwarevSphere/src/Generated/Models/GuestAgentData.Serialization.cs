@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            {
+                writer.WritePropertyName("privateLinkScopeResourceId"u8);
+                writer.WriteStringValue(PrivateLinkScopeResourceId);
+            }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
@@ -51,12 +56,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<SystemData> systemData = default;
             Optional<string> uuid = default;
             Optional<GuestCredential> credentials = default;
+            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
             Optional<HttpProxyConfiguration> httpProxyConfig = default;
             Optional<ProvisioningAction> provisioningAction = default;
             Optional<string> status = default;
             Optional<string> customResourceName = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -106,6 +112,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             credentials = GuestCredential.DeserializeGuestCredential(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("privateLinkScopeResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateLinkScopeResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("httpProxyConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -150,14 +165,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new GuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new GuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, privateLinkScopeResourceId.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState));
         }
     }
 }

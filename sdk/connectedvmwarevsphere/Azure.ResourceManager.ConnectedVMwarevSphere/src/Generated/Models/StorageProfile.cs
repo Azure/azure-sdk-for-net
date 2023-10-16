@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> Defines the resource properties. </summary>
+    /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
     public partial class StorageProfile
     {
         /// <summary> Initializes a new instance of StorageProfile. </summary>
