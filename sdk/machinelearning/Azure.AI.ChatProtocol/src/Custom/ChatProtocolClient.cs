@@ -75,8 +75,8 @@ public partial class ChatProtocolClient
         }
     }
 
-    /// <summary> placeholder. </summary>
-    /// <param name="streamingChatCompletionOptions"> placeholder. </param>
+    /// <summary> Creates a new streaming chat completion.</summary>
+    /// <param name="streamingChatCompletionOptions"> The configuration for a streaming chat completion request. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="streamingChatCompletionOptions"/> is null. </exception>
     public virtual async Task<Response<IAsyncEnumerable<ChatCompletionChunk>>> CreateStreamingAsync(StreamingChatCompletionOptions streamingChatCompletionOptions, CancellationToken cancellationToken = default)
@@ -90,8 +90,8 @@ public partial class ChatProtocolClient
         return Response.FromValue(value, response);
     }
 
-    /// <summary> placeholder. </summary>
-    /// <param name="streamingChatCompletionOptions"> placeholder. </param>
+    /// <summary> Creates a new streaming chat completion.</summary>
+    /// <param name="streamingChatCompletionOptions"> The configuration for a streaming chat completion request. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="streamingChatCompletionOptions"/> is null. </exception>
     public virtual Response<IEnumerable<ChatCompletionChunk>> CreateStreaming(StreamingChatCompletionOptions streamingChatCompletionOptions, CancellationToken cancellationToken = default)

@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> The configuration for a streaming chat completion request. </summary>
     public partial class StreamingChatCompletionOptions
     {
         /// <summary> Initializes a new instance of StreamingChatCompletionOptions. </summary>
-        /// <param name="messages"> placeholder. </param>
+        /// <param name="messages"> The collection of context messages associated with this completion request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
         public StreamingChatCompletionOptions(IEnumerable<ChatMessage> messages)
         {
@@ -27,10 +27,10 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of StreamingChatCompletionOptions. </summary>
-        /// <param name="messages"> placeholder. </param>
-        /// <param name="stream"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="context"> placeholder. </param>
+        /// <param name="messages"> The collection of context messages associated with this completion request. </param>
+        /// <param name="stream"> Indicates whether the completion is a streaming or non-streaming completion. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="context"> Backend-specific context or arguments. </param>
         internal StreamingChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, IDictionary<string, BinaryData> context)
         {
             Messages = messages;
@@ -39,11 +39,11 @@ namespace Azure.AI.ChatProtocol
             Context = context;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The collection of context messages associated with this completion request. </summary>
         public IList<ChatMessage> Messages { get; }
 
         /// <summary>
-        /// placeholder
+        /// Backend-specific information for the tracking of a session.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -74,7 +74,7 @@ namespace Azure.AI.ChatProtocol
         /// </summary>
         public BinaryData SessionState { get; set; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific context or arguments.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

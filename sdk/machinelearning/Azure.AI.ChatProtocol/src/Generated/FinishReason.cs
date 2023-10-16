@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> Representation of the reason why a chat session has finished processing. </summary>
     public readonly partial struct FinishReason : IEquatable<FinishReason>
     {
         private readonly string _value;
@@ -24,17 +24,11 @@ namespace Azure.AI.ChatProtocol
 
         private const string StoppedValue = "stop";
         private const string TokenLimitReachedValue = "length";
-        private const string ContentFilteredValue = "content_filter";
-        private const string FunctionCallValue = "function_call";
 
-        /// <summary> placeholder. </summary>
+        /// <summary> Completion ended normally. </summary>
         public static FinishReason Stopped { get; } = new FinishReason(StoppedValue);
-        /// <summary> placeholder. </summary>
+        /// <summary> The completion exhausted available tokens before generation could complete. </summary>
         public static FinishReason TokenLimitReached { get; } = new FinishReason(TokenLimitReachedValue);
-        /// <summary> placeholder. </summary>
-        public static FinishReason ContentFiltered { get; } = new FinishReason(ContentFilteredValue);
-        /// <summary> placeholder. </summary>
-        public static FinishReason FunctionCall { get; } = new FinishReason(FunctionCallValue);
         /// <summary> Determines if two <see cref="FinishReason"/> values are the same. </summary>
         public static bool operator ==(FinishReason left, FinishReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FinishReason"/> values are not the same. </summary>

@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> A single response to a streaming completion request. </summary>
     public partial class ChatCompletionChunk
     {
         /// <summary> Initializes a new instance of ChatCompletionChunk. </summary>
-        /// <param name="choices"> placeholder. </param>
+        /// <param name="choices"> The collection of choice deltas received in this chunk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="choices"/> is null. </exception>
         internal ChatCompletionChunk(IEnumerable<ChoiceDelta> choices)
         {
@@ -26,13 +26,13 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatCompletionChunk. </summary>
-        /// <param name="choices"> placeholder. </param>
+        /// <param name="choices"> The collection of choice deltas received in this chunk. </param>
         internal ChatCompletionChunk(IReadOnlyList<ChoiceDelta> choices)
         {
             Choices = choices;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The collection of choice deltas received in this chunk. </summary>
         public IReadOnlyList<ChoiceDelta> Choices { get; }
     }
 }

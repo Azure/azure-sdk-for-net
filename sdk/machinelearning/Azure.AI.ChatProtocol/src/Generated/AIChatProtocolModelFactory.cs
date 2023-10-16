@@ -15,7 +15,7 @@ namespace Azure.AI.ChatProtocol
     public static partial class AIChatProtocolModelFactory
     {
         /// <summary> Initializes a new instance of ChatCompletion. </summary>
-        /// <param name="choices"> placeholder. </param>
+        /// <param name="choices"> The collection of generated completions. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatCompletion"/> instance for mocking. </returns>
         public static ChatCompletion ChatCompletion(IEnumerable<ChatChoice> choices = null)
         {
@@ -25,11 +25,11 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="message"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="context"> placeholder. </param>
-        /// <param name="finishReason"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="message"> The chat message for a given chat completion. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatChoice"/> instance for mocking. </returns>
         public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason finishReason = default)
         {
@@ -39,7 +39,7 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatCompletionChunk. </summary>
-        /// <param name="choices"> placeholder. </param>
+        /// <param name="choices"> The collection of choice deltas received in this chunk. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatCompletionChunk"/> instance for mocking. </returns>
         public static ChatCompletionChunk ChatCompletionChunk(IEnumerable<ChoiceDelta> choices = null)
         {
@@ -49,11 +49,11 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChoiceDelta. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="delta"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="context"> placeholder. </param>
-        /// <param name="finishReason"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="delta"> The partial message received for this choice. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         /// <returns> A new <see cref="ChatProtocol.ChoiceDelta"/> instance for mocking. </returns>
         public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason? finishReason = null)
         {
@@ -63,9 +63,9 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
-        /// <param name="content"> placeholder. </param>
-        /// <param name="role"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
+        /// <param name="content"> An incremental part of the text associated with the message. </param>
+        /// <param name="role"> The role associated with the message. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatMessageDelta"/> instance for mocking. </returns>
         public static ChatMessageDelta ChatMessageDelta(string content = null, ChatRole? role = null, BinaryData sessionState = null)
         {

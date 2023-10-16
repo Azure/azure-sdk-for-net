@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> The representation of a single generated completion. </summary>
     public partial class ChatChoice
     {
         /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="message"> placeholder. </param>
-        /// <param name="finishReason"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="message"> The chat message for a given chat completion. </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal ChatChoice(long index, ChatMessage message, FinishReason finishReason)
         {
@@ -30,11 +30,11 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="message"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="context"> placeholder. </param>
-        /// <param name="finishReason"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="message"> The chat message for a given chat completion. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> context, FinishReason finishReason)
         {
             Index = index;
@@ -44,12 +44,12 @@ namespace Azure.AI.ChatProtocol
             FinishReason = finishReason;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The index of the of the chat choice, relative to the other choices in the same completion. </summary>
         public long Index { get; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The chat message for a given chat completion. </summary>
         public ChatMessage Message { get; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific information for the tracking of a session.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -80,7 +80,7 @@ namespace Azure.AI.ChatProtocol
         /// </summary>
         public BinaryData SessionState { get; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific context or arguments.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.AI.ChatProtocol
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Context { get; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The reason this chat completion completed its generation. </summary>
         public FinishReason FinishReason { get; }
     }
 }

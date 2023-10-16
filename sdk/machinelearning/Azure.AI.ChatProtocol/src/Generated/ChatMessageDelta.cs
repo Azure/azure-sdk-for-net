@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> The representation of a delta message received in a streaming completion. </summary>
     public partial class ChatMessageDelta
     {
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
@@ -18,9 +18,9 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
-        /// <param name="content"> placeholder. </param>
-        /// <param name="role"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
+        /// <param name="content"> An incremental part of the text associated with the message. </param>
+        /// <param name="role"> The role associated with the message. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
         internal ChatMessageDelta(string content, ChatRole? role, BinaryData sessionState)
         {
             Content = content;
@@ -28,12 +28,12 @@ namespace Azure.AI.ChatProtocol
             SessionState = sessionState;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> An incremental part of the text associated with the message. </summary>
         public string Content { get; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The role associated with the message. </summary>
         public ChatRole? Role { get; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific information for the tracking of a session.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

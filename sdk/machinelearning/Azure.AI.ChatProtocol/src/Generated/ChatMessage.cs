@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
     public partial class ChatMessage
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="content"> placeholder. </param>
-        /// <param name="role"> placeholder. </param>
+        /// <param name="content"> The text associated with the message. </param>
+        /// <param name="role"> The role associated with the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public ChatMessage(string content, ChatRole role)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="content"> placeholder. </param>
-        /// <param name="role"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
+        /// <param name="content"> The text associated with the message. </param>
+        /// <param name="role"> The role associated with the message. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
         internal ChatMessage(string content, ChatRole role, BinaryData sessionState)
         {
             Content = content;
@@ -36,12 +36,12 @@ namespace Azure.AI.ChatProtocol
             SessionState = sessionState;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The text associated with the message. </summary>
         public string Content { get; set; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The role associated with the message. </summary>
         public ChatRole Role { get; set; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific information for the tracking of a session.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

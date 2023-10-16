@@ -61,8 +61,8 @@ namespace Azure.AI.ChatProtocol
             _apiVersion = options.Version;
         }
 
-        /// <summary> placeholder. </summary>
-        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownRecord to use. </param>
+        /// <summary> Creates a new chat completion. </summary>
+        /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
         /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='CreateAsync(ChatCompletionOptions,CancellationToken)']/*" />
@@ -75,8 +75,8 @@ namespace Azure.AI.ChatProtocol
             return Response.FromValue(ChatCompletion.FromResponse(response), response);
         }
 
-        /// <summary> placeholder. </summary>
-        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownRecord to use. </param>
+        /// <summary> Creates a new chat completion. </summary>
+        /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
         /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='Create(ChatCompletionOptions,CancellationToken)']/*" />
@@ -90,7 +90,7 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary>
-        /// [Protocol Method] placeholder
+        /// [Protocol Method] Creates a new chat completion.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -129,7 +129,7 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary>
-        /// [Protocol Method] placeholder
+        /// [Protocol Method] Creates a new chat completion.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -168,7 +168,7 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary>
-        /// [Protocol Method] placeholder
+        /// [Protocol Method] Creates a new streaming chat completion.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -206,7 +206,7 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary>
-        /// [Protocol Method] placeholder
+        /// [Protocol Method] Creates a new streaming chat completion.
         /// <list type="bullet">
         /// <item>
         /// <description>

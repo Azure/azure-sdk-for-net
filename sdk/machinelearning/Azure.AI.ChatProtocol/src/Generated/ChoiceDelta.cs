@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> The representation of an incremental choice received in a streaming completion. </summary>
     public partial class ChoiceDelta
     {
         /// <summary> Initializes a new instance of ChoiceDelta. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="delta"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="delta"> The partial message received for this choice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="delta"/> is null. </exception>
         internal ChoiceDelta(long index, ChatMessageDelta delta)
         {
@@ -28,11 +28,11 @@ namespace Azure.AI.ChatProtocol
         }
 
         /// <summary> Initializes a new instance of ChoiceDelta. </summary>
-        /// <param name="index"> placeholder. </param>
-        /// <param name="delta"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="context"> placeholder. </param>
-        /// <param name="finishReason"> placeholder. </param>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="delta"> The partial message received for this choice. </param>
+        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         internal ChoiceDelta(long index, ChatMessageDelta delta, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> context, FinishReason? finishReason)
         {
             Index = index;
@@ -42,12 +42,12 @@ namespace Azure.AI.ChatProtocol
             FinishReason = finishReason;
         }
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The index of the of the chat choice, relative to the other choices in the same completion. </summary>
         public long Index { get; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The partial message received for this choice. </summary>
         public ChatMessageDelta Delta { get; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific information for the tracking of a session.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -78,7 +78,7 @@ namespace Azure.AI.ChatProtocol
         /// </summary>
         public BinaryData SessionState { get; }
         /// <summary>
-        /// placeholder
+        /// Backend-specific context or arguments.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -108,7 +108,7 @@ namespace Azure.AI.ChatProtocol
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Context { get; }
-        /// <summary> placeholder. </summary>
+        /// <summary> The reason this chat completion completed its generation. </summary>
         public FinishReason? FinishReason { get; }
     }
 }

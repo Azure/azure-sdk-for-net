@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> placeholder. </summary>
+    /// <summary> A representation of the intended purpose of a message. </summary>
     public readonly partial struct ChatRole : IEquatable<ChatRole>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.AI.ChatProtocol
         private const string SystemValue = "system";
         private const string AssistantValue = "assistant";
 
-        /// <summary> placeholder. </summary>
+        /// <summary> The role that provides input to the completion. </summary>
         public static ChatRole User { get; } = new ChatRole(UserValue);
-        /// <summary> placeholder. </summary>
+        /// <summary> The role that instructs or configures the behavior of the assistant. </summary>
         public static ChatRole System { get; } = new ChatRole(SystemValue);
-        /// <summary> placeholder. </summary>
+        /// <summary> The role that provides responses to the system-instructed, user-prompted input. </summary>
         public static ChatRole Assistant { get; } = new ChatRole(AssistantValue);
         /// <summary> Determines if two <see cref="ChatRole"/> values are the same. </summary>
         public static bool operator ==(ChatRole left, ChatRole right) => left.Equals(right);
