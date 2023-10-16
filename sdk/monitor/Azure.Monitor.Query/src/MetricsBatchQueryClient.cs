@@ -77,14 +77,14 @@ namespace Azure.Monitor.Query
         public Uri Endpoint { get; }
 
         /// <summary>
-        /// pass in a list of resource ids, metric names, and a time range to query metrics for those resources.
+        /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
-        /// <param name="resourceIds"></param>
-        /// <param name="metricNames"></param>
-        /// <param name="metricNamespace"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
+        /// <param name="metricNames">The names of the metrics to query.</param>
+        /// <param name="metricNamespace">The namespace of the metrics to query.</param>
+        /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>A time-series metrics result for the requested metric names.</returns>
         public virtual Response<MetricResultsResponse> Batch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0)
@@ -171,15 +171,14 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// todo
+        /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
-        /// <param name="resourceIds"></param>
-        /// <param name="metricNames"></param>
-        /// <param name="metricNamespace"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
+        /// <param name="metricNames">The names of the metrics to query.</param>
+        /// <param name="metricNamespace">The namespace of the metrics to query.</param>
+        /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>A time-series metrics result for the requested metric names.</returns>
         public virtual async Task<Response<MetricResultsResponse>> BatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0)
