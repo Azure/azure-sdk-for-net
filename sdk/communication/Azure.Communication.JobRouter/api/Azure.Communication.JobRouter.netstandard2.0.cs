@@ -292,24 +292,6 @@ namespace Azure.Communication.JobRouter
         public string ClientId { get { throw null; } }
         public string FunctionKey { get { throw null; } }
     }
-    public partial class GetJobsOptions
-    {
-        public GetJobsOptions() { }
-        public string ChannelId { get { throw null; } set { } }
-        public string ClassificationPolicyId { get { throw null; } set { } }
-        public string QueueId { get { throw null; } set { } }
-        public System.DateTimeOffset? ScheduledAfter { get { throw null; } set { } }
-        public System.DateTimeOffset? ScheduledBefore { get { throw null; } set { } }
-        public Azure.Communication.JobRouter.RouterJobStatusSelector? Status { get { throw null; } set { } }
-    }
-    public partial class GetWorkersOptions
-    {
-        public GetWorkersOptions() { }
-        public string ChannelId { get { throw null; } set { } }
-        public bool HasCapacity { get { throw null; } set { } }
-        public string QueueId { get { throw null; } set { } }
-        public Azure.Communication.JobRouter.RouterWorkerStateSelector? State { get { throw null; } set { } }
-    }
     public abstract partial class JobMatchingMode
     {
         internal JobMatchingMode() { }
@@ -386,8 +368,9 @@ namespace Azure.Communication.JobRouter
         protected JobRouterClient() { }
         public JobRouterClient(string connectionString) { }
         public JobRouterClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options) { }
+        public JobRouterClient(System.Uri endpoint) { }
         public JobRouterClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
-        public JobRouterClient(System.Uri endpoint, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
+        public JobRouterClient(System.Uri endpoint, Azure.Communication.JobRouter.JobRouterClientOptions options) { }
         public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AcceptJobOffer(string workerId, string offerId, Azure.RequestContext context) { throw null; }
@@ -531,7 +514,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class PassThroughQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
-        internal PassThroughQueueSelectorAttachment() { }
+        public PassThroughQueueSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
         public string Key { get { throw null; } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } }
     }
@@ -761,7 +744,7 @@ namespace Azure.Communication.JobRouter
         public RouterWorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } }
         public System.TimeSpan? ExpiresAfter { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresAt { get { throw null; } }
+        public System.DateTimeOffset? ExpiresAt { get { throw null; } set { } }
         public string Key { get { throw null; } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } }
         public Azure.Communication.JobRouter.RouterWorkerSelectorStatus? Status { get { throw null; } }
