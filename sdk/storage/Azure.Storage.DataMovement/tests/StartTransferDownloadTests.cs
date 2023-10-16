@@ -1102,13 +1102,40 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
+        private async Task DownloadPageBlobAndVerify(
+            PageBlobClient blob,
+            long size = Constants.KB,
+            TransferManagerOptions transferManagerOptions = default,
+            DataTransferOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            using (Stream appendStream = await blob.OpenWriteAsync(true, 0, new() { Size = size, }))
+            {
+                await new MemoryStream(GetRandomBuffer(size)).CopyToAsync(appendStream, bufferSize: 4 * Constants.KB, cancellationToken);
+            }
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string fileName = Recording.Random.NextString(8);
+            string filePath = Path.Combine(disposingLocalDirectory.DirectoryPath, fileName);
+
+            PageBlobStorageResource sourceResource = new(blob);
+            LocalFileStorageResource destResource = new(filePath);
+
+            await new TransferValidator().TransferAndVerifyAsync(
+                sourceResource,
+                destResource,
+                async cToken => await blob.OpenReadAsync(cancellationToken: cToken),
+                cToken => Task.FromResult(File.OpenRead(filePath) as Stream),
+                options,
+                cancellationToken);
+        }
+
         [RecordedTest]
         public async Task PageBlobToLocal()
         {
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(testContainer.Container).ConfigureAwait(false);
+            await DownloadPageBlobAndVerify(testContainer.Container.GetPageBlobClient(GetNewBlobName())).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -1117,10 +1144,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingContainer testContainer = await GetTestContainerAsync();
-            string blobName = GetNewBlobName();
-            string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
-            PageBlobClient sourceClient = await CreatePageBlob(testContainer.Container, localSourceFile, blobName, size);
 
             // Create destination to overwrite
             string destFile = Path.GetTempFileName();
@@ -1131,13 +1155,13 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: 10,
-                size: Constants.KB,
-                blobCount: 1,
-                options: optionsList).ConfigureAwait(false);
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(10));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
+                size: size,
+                options: options,
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -1153,13 +1177,13 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: 10,
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(10));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
                 size: Constants.KB,
-                blobCount: 1,
-                options: optionsList).ConfigureAwait(false);
+                options: options,
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -1265,12 +1289,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: waitTimeInSec,
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
                 size: size,
-                options: optionsList).ConfigureAwait(false);
+                options: options,
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -1283,10 +1308,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
                 size: size,
-                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
@@ -1300,10 +1327,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
                 size: size,
-                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -1315,11 +1344,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                blobCount: blobCount,
-                size: size,
-                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            foreach (var _ in Enumerable.Range(0, blobCount))
+            {
+                await DownloadPageBlobAndVerify(
+                    testContainer.Container.GetPageBlobClient(GetNewBlobName()),
+                    size: size,
+                    cancellationToken: cts.Token).ConfigureAwait(false);
+            }
         }
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
@@ -1333,11 +1366,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                blobCount: blobCount,
-                size: size,
-                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            foreach (var _ in Enumerable.Range(0, blobCount))
+            {
+                await DownloadPageBlobAndVerify(
+                    testContainer.Container.GetPageBlobClient(GetNewBlobName()),
+                    size: size,
+                    cancellationToken: cts.Token).ConfigureAwait(false);
+            }
         }
 
         [RecordedTest]
@@ -1359,16 +1396,17 @@ namespace Azure.Storage.DataMovement.Tests
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
 
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: waitTimeInSec,
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
                 transferManagerOptions: managerOptions,
-                options: optionsList).ConfigureAwait(false);
+                options: options,
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
@@ -1390,10 +1428,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingContainer testContainer = await GetTestContainerAsync();
 
-            await DownloadPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: waitTimeInSec,
-                transferManagerOptions: managerOptions).ConfigureAwait(false);
+            CancellationTokenSource cts = new();
+            cts.CancelAfter(TimeSpan.FromSeconds(waitTimeInSec));
+            await DownloadPageBlobAndVerify(
+                testContainer.Container.GetPageBlobClient(GetNewBlobName()),
+                transferManagerOptions: managerOptions,
+                cancellationToken: cts.Token).ConfigureAwait(false);
         }
         #endregion SingleDownload Page Blob
 
