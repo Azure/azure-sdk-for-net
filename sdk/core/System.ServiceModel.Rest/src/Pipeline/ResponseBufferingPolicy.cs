@@ -120,7 +120,6 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             responseContent.Dispose();
             bufferedStream.Position = 0;
             PipelineContent bufferedContent = PipelineContent.CreateContent(bufferedStream);
-            bufferedContent.IsBuffered = true;
             message.Response.Content = bufferedContent;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled

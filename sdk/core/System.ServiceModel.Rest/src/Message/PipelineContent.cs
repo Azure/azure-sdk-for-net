@@ -62,14 +62,7 @@ namespace System.ServiceModel.Rest.Core
         public static explicit operator Stream(PipelineContent content)
             => content.ToStream();
 
-        internal bool IsBuffered
-        {
-            get;
-
-            // If we ever make this property public, it's important
-            // that the setter remain internal.
-            set;
-        }
+        internal virtual bool IsBuffered { get; }
 
         // This is virtual so we don't break the contract by adding an abstract method
         // but the default implementation can be optimized, so inheriting types should
@@ -201,6 +194,8 @@ namespace System.ServiceModel.Rest.Core
                 _stream = stream;
             }
 
+            internal override bool IsBuffered => _stream is MemoryStream;
+
             public override bool TryComputeLength(out long length)
             {
                 if (_stream.CanSeek)
@@ -261,7 +256,11 @@ namespace System.ServiceModel.Rest.Core
             private readonly ReadOnlyMemory<byte> _bytes;
 
             public MemoryPipelineContent(ReadOnlyMemory<byte> bytes)
-                => _bytes = bytes;
+            {
+                _bytes = bytes;
+            }
+
+            internal override bool IsBuffered => true;
 
             public override bool TryComputeLength(out long length)
             {
