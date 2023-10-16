@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("DistributionPolicy")]
     [CodeGenSuppress("DistributionPolicy")]
-    public partial class DistributionPolicy
+    public partial class DistributionPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
         internal DistributionPolicy()
@@ -49,5 +50,34 @@ namespace Azure.Communication.JobRouter.Models
         /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
         /// </summary>
         public DistributionMode Mode { get; internal set; }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(_offerExpiresAfterSeconds))
+            {
+                writer.WritePropertyName("offerExpiresAfterSeconds"u8);
+                writer.WriteNumberValue(_offerExpiresAfterSeconds.Value);
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteObjectValue(Mode);
+            }
+            writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }
