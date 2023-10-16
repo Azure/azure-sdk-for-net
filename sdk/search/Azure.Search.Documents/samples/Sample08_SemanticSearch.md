@@ -2,17 +2,17 @@
 
 Semantic search is a set of enhancements that make text-based searches more effective. When you enable semantic search on your service, it performs two primary functions:
 * **Improves Search Results**: It enhances the initial search results by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
-* **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, making it easier for users to understand and find what they're looking f
+* **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, making it easier for users to understand and find what they're looking for.
 
-In simpler terms, semantic search enhances search results to provide users with more accurate and easily understandable information. This enhancement can greatly enhance the user experience on a search page. You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview).
+You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview).
 
 It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable?tabs=enable-portal).
 
 This sample demonstrates how to create an index, upload data, and perform a query for semantic search.
 
-## Create a Index
+## Create an Index
 
-Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define Hotel fields. In addition to that, we will configure semantic settings that define a specific configuration to be used in the context of semantic capabilities.
+Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define `Hotel` fields. In addition to that, we will configure semantic settings that define a specific configuration to be used in the context of semantic capabilities.
 
 To accomplish this, we will create an instace of `SearchIndex` and define `Hotel` fields.
 
