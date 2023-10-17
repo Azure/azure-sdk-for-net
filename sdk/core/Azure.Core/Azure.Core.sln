@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel.Tests", "..\System.Net.ClientModel\tests\System.Net.ClientModel.Tests.csproj", "{180BE182-BB02-4505-9C8E-EA077D6917B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel.Tests.Public", "..\System.Net.ClientModel\tests\public\System.Net.ClientModel.Tests.Public.csproj", "{9586444D-7F1D-41AC-A720-0FEDD5F73573}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,10 @@ Global
 		{180BE182-BB02-4505-9C8E-EA077D6917B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180BE182-BB02-4505-9C8E-EA077D6917B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{180BE182-BB02-4505-9C8E-EA077D6917B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9586444D-7F1D-41AC-A720-0FEDD5F73573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9586444D-7F1D-41AC-A720-0FEDD5F73573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9586444D-7F1D-41AC-A720-0FEDD5F73573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9586444D-7F1D-41AC-A720-0FEDD5F73573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
