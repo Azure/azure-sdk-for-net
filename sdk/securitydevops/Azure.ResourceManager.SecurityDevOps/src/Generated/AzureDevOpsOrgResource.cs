@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsProjectResources and their operations over a AzureDevOpsProjectResource. </returns>
         public virtual AzureDevOpsProjectCollection GetAzureDevOpsProjects()
         {
-            return GetCachedClient(Client => new AzureDevOpsProjectCollection(Client, Id));
+            return GetCachedClient(client => new AzureDevOpsProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureDevOpsProjectResource>> GetAzureDevOpsProjectAsync(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureDevOpsProjectResource> GetAzureDevOpsProject(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
         {

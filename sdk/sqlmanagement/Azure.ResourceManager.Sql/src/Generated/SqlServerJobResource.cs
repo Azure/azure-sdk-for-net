@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobExecutionResources and their operations over a SqlServerJobExecutionResource. </returns>
         public virtual SqlServerJobExecutionCollection GetSqlServerJobExecutions()
         {
-            return GetCachedClient(Client => new SqlServerJobExecutionCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobExecutionCollection(client, Id));
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobStepResources and their operations over a SqlServerJobStepResource. </returns>
         public virtual SqlServerJobStepCollection GetSqlServerJobSteps()
         {
-            return GetCachedClient(Client => new SqlServerJobStepCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobStepCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobStepResource>> GetSqlServerJobStepAsync(string stepName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobStepResource> GetSqlServerJobStep(string stepName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobVersionResources and their operations over a SqlServerJobVersionResource. </returns>
         public virtual SqlServerJobVersionCollection GetSqlServerJobVersions()
         {
-            return GetCachedClient(Client => new SqlServerJobVersionCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobVersionCollection(client, Id));
         }
 
         /// <summary>
