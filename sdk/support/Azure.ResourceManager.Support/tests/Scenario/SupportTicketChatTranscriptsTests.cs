@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.Support.Tests
     internal class SupportTicketChatTranscriptsTests : SupportManagementTestBase
     {
         private SupportTicketChatTranscriptCollection _supportTicketChatTranscriptCollection;
-        private const string _existSupportTicketChatTranscriptsName = "0b60e9a8-98bd-ed11-83ff-000d3a18b532";
+        private const string _existSupportTicketChatTranscriptsName = "c87e909c-de24-4a91-b7c6-3872edb5e937";
 
         public SupportTicketChatTranscriptsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
-            string existSupportTicketName = "2303060030001646";
-            var supportTicket = DefaultSubscription.GetSubscriptionSupportTicket(existSupportTicketName);
+            string existSupportTicketName = "E2ETest638330921637198429";
+            var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(existSupportTicketName);
             _supportTicketChatTranscriptCollection = supportTicket.Value.GetSupportTicketChatTranscripts();
         }
 
