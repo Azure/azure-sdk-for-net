@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FederatedIdentityCredentialResource>> GetIfExistsAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _federatedIdentityCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FederatedIdentityCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        public virtual NullableResponse<FederatedIdentityCredentialResource> GetIfExists(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _federatedIdentityCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FederatedIdentityCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FederatedIdentityCredentialResource> IEnumerable<FederatedIdentityCredentialResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

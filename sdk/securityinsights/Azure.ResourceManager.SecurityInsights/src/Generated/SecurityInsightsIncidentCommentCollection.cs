@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IncidentComments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="incidentCommentId"> Incident comment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsIncidentCommentResource>> GetIfExistsAsync(string incidentCommentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
+
+            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsIncidentCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IncidentComments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="incidentCommentId"> Incident comment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsIncidentCommentResource> GetIfExists(string incidentCommentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
+
+            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsIncidentCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SecurityInsightsIncidentCommentResource> IEnumerable<SecurityInsightsIncidentCommentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

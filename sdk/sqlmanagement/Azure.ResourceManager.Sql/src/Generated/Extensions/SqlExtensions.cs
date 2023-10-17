@@ -2160,25 +2160,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region SqlServerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerResource" /> object. </returns>
-        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerResource.ValidateResourceId(id);
-                return new SqlServerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ManagedInstanceStartStopScheduleResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedInstanceStartStopScheduleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2212,25 +2193,6 @@ namespace Azure.ResourceManager.Sql
             {
                 LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
                 return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region FailoverGroupResource
-        /// <summary>
-        /// Gets an object representing a <see cref="FailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FailoverGroupResource" /> object. </returns>
-        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                FailoverGroupResource.ValidateResourceId(id);
-                return new FailoverGroupResource(client, id);
             }
             );
         }
@@ -2440,6 +2402,44 @@ namespace Azure.ResourceManager.Sql
             {
                 SqlDatabaseSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
                 return new SqlDatabaseSqlVulnerabilityAssessmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlServerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlServerResource" /> object. </returns>
+        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlServerResource.ValidateResourceId(id);
+                return new SqlServerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FailoverGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FailoverGroupResource" /> object. </returns>
+        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FailoverGroupResource.ValidateResourceId(id);
+                return new FailoverGroupResource(client, id);
             }
             );
         }

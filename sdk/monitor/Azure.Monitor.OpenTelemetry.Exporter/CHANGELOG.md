@@ -1,12 +1,22 @@
 # Release History
 
-## 1.0.0-beta.15 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+the telemetry offline for retrying at a later time.
+([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
 
 ### Other Changes
 

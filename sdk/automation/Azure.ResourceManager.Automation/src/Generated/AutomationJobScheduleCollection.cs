@@ -306,6 +306,72 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobSchedule_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The job schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<AutomationJobScheduleResource>> GetIfExistsAsync(Guid jobScheduleId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobScheduleJobScheduleClientDiagnostics.CreateScope("AutomationJobScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationJobScheduleJobScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationJobScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationJobScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobSchedule_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The job schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<AutomationJobScheduleResource> GetIfExists(Guid jobScheduleId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobScheduleJobScheduleClientDiagnostics.CreateScope("AutomationJobScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationJobScheduleJobScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationJobScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationJobScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomationJobScheduleResource> IEnumerable<AutomationJobScheduleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -13,15 +13,6 @@ Generate missing service level readme and updating metadata of the existing ones
 Location of the documentation repo. This repo may be sparsely checked out
 depending on the requirements for the domain
 
-.PARAMETER TenantId
-The aad tenant id/object id for ms.author.
-
-.PARAMETER ClientId
-The add client id/application id for ms.author.
-
-.PARAMETER ClientSecret
-The client secret of add app for ms.author.
-
 .PARAMETER ReadmeFolderRoot
 The readme folder root path, use default value here for backward compability. E.g. docs-ref-services in Java, JS, Python, api/overview/azure
 #>
@@ -31,16 +22,10 @@ param(
   [string] $DocRepoLocation,
 
   [Parameter(Mandatory = $false)]
-  [string]$TenantId,
+  [string]$ReadmeFolderRoot = "docs-ref-services",
 
   [Parameter(Mandatory = $false)]
-  [string]$ClientId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientSecret,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ReadmeFolderRoot = "docs-ref-services"
+  [array]$Monikers = @('latest', 'preview', 'legacy')
 )
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/Service-Level-Readme-Automation-Helpers.ps1
@@ -50,8 +35,7 @@ param(
 Set-StrictMode -Version 3
 
 $fullMetadata = Get-CSVMetadata
-$monikers = @("latest", "preview")
-foreach($moniker in $monikers) {
+foreach($moniker in $Monikers) {
   # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
   # E.g.
   # Key as: @azure/storage-blob
@@ -130,26 +114,17 @@ foreach($moniker in $monikers) {
     Write-Host "Building service: $service"
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
     $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
-    # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
-    $serviceBaseName = ServiceLevelReadmeNameStyle $service
-    $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
-    $msauthor = ""
-    if (!$author) {
-      LogError "Cannot fetch the author from CODEOWNER file."
-      $author = ""
-    }
-    elseif ($TenantId -and $ClientId -and $ClientSecret) {
-      $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author
-    }
-    # Default value
-    if (!$msauthor) {
-      LogError "No ms.author found for $author. "
-      $msauthor = $author
-    }
+
     # Add ability to override
     # Fetch the service readme name
     $msService = GetDocsMsService -packageInfo $servicePackages[0] -serviceName $service
-    generate-service-level-readme -docRepoLocation $DocRepoLocation -readmeBaseName $serviceReadmeBaseName -pathPrefix $ReadmeFolderRoot `
-      -packageInfos $servicePackages -serviceName $service -moniker $moniker -author $author -msAuthor $msauthor -msService $msService
+    generate-service-level-readme `
+      -docRepoLocation $DocRepoLocation `
+      -readmeBaseName $serviceReadmeBaseName `
+      -pathPrefix $ReadmeFolderRoot `
+      -packageInfos $servicePackages `
+      -serviceName $service `
+      -moniker $moniker `
+      -msService $msService  
   }
 }

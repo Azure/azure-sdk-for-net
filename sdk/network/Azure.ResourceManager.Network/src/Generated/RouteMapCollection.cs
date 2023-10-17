@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeMapName"> The name of the RouteMap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RouteMapResource>> GetIfExistsAsync(string routeMapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
+
+            using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _routeMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeMapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RouteMapResource>(response.GetRawResponse());
+                return Response.FromValue(new RouteMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeMapName"> The name of the RouteMap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        public virtual NullableResponse<RouteMapResource> GetIfExists(string routeMapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
+
+            using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _routeMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeMapName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RouteMapResource>(response.GetRawResponse());
+                return Response.FromValue(new RouteMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RouteMapResource> IEnumerable<RouteMapResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

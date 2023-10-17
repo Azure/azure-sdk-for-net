@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostName"> Name of the host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VMwareHostResource>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _vMwareHostHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VMwareHostResource>(response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostName"> Name of the host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual NullableResponse<VMwareHostResource> GetIfExists(string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _vMwareHostHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VMwareHostResource>(response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<VMwareHostResource> IEnumerable<VMwareHostResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

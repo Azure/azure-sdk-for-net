@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedNetworkResource>> GetIfExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+
+            using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkName"> The name of the Managed Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        public virtual NullableResponse<ManagedNetworkResource> GetIfExists(string managedNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+
+            using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ManagedNetworkResource> IEnumerable<ManagedNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

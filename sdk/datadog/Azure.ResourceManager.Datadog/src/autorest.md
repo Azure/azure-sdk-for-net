@@ -48,4 +48,8 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  DatadogAgreementResource: DatadogAgreementResourceProperties
+  MonitoredResource: MonitoredResourceContent
+
 ```

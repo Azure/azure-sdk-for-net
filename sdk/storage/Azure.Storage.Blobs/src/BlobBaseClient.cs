@@ -330,12 +330,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(
-                  blobUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                blobUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
         }

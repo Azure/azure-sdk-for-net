@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BastionHostResource>> GetIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+
+            using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _bastionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BastionHostResource>(response.GetRawResponse());
+                return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BastionHosts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        public virtual NullableResponse<BastionHostResource> GetIfExists(string bastionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+
+            using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _bastionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BastionHostResource>(response.GetRawResponse());
+                return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<BastionHostResource> IEnumerable<BastionHostResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

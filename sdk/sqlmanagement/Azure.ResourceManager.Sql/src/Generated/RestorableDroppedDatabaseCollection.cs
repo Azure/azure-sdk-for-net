@@ -249,6 +249,84 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual async Task<NullableResponse<RestorableDroppedDatabaseResource>> GetIfExistsAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+
+            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _restorableDroppedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, expand, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorableDroppedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual NullableResponse<RestorableDroppedDatabaseResource> GetIfExists(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+
+            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, expand, filter, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorableDroppedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RestorableDroppedDatabaseResource> IEnumerable<RestorableDroppedDatabaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

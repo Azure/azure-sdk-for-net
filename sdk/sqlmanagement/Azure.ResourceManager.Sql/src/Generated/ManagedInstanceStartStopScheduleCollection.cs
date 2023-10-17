@@ -304,6 +304,72 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="startStopScheduleName"> Name of the managed instance Start/Stop schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedInstanceStartStopScheduleResource>> GetIfExistsAsync(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceStartStopScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="startStopScheduleName"> Name of the managed instance Start/Stop schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedInstanceStartStopScheduleResource> GetIfExists(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceStartStopScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ManagedInstanceStartStopScheduleResource> IEnumerable<ManagedInstanceStartStopScheduleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

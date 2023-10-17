@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetBackupStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupId"> ID of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteBackupResource>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteBackupResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetBackupStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupId"> ID of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        public virtual NullableResponse<SiteBackupResource> GetIfExists(string backupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
+
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteBackupWebAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteBackupResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteBackupResource> IEnumerable<SiteBackupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

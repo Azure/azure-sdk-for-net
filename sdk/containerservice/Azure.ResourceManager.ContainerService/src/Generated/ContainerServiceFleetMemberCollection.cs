@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerServiceFleetMemberResource>> GetIfExistsAsync(string fleetMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerServiceFleetMemberFleetMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceFleetMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        public virtual NullableResponse<ContainerServiceFleetMemberResource> GetIfExists(string fleetMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerServiceFleetMemberFleetMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceFleetMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ContainerServiceFleetMemberResource> IEnumerable<ContainerServiceFleetMemberResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

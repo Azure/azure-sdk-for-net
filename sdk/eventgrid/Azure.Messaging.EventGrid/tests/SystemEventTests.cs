@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,6 +18,12 @@ namespace Azure.Messaging.EventGrid.Tests
             "SignalRServiceClientConnectionDisconnectedEventData",
             "SignalRServiceClientConnectionConnected",
             "SignalRServiceClientConnectionDisconnected",
+        };
+
+        private static readonly HashSet<string> s_etagCasingExlusions = new()
+        {
+            "AppConfigurationKeyValueDeletedEventData",
+            "AppConfigurationKeyValueModifiedEventData"
         };
 
         [Test]
@@ -43,6 +50,30 @@ namespace Azure.Messaging.EventGrid.Tests
             foreach (FieldInfo systemName in typeof(SystemEventNames).GetFields())
             {
                 ValidateName(systemName.Name);
+            }
+        }
+
+        [Test]
+        public void EventPropertiesCasedCorrectly()
+        {
+            foreach (Type systemEvent in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
+            {
+                if (s_etagCasingExlusions.Contains(systemEvent.Name))
+                {
+                    continue;
+                }
+
+                foreach (PropertyInfo propertyInfo in systemEvent.GetProperties())
+                {
+                    string name = propertyInfo.Name;
+                    if (name.ToLower() == "etag")
+                    {
+                        if (name != "ETag")
+                        {
+                            Assert.Fail($"{systemEvent}.{name} is not cased correctly. It should be cased as 'ETag'.");
+                        }
+                    }
+                }
             }
         }
 

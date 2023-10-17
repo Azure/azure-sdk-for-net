@@ -1,5 +1,21 @@
 # Release History
 
+## 4.20.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
 ## 4.18.0 (2023-09-12)
 
 ### Features Added

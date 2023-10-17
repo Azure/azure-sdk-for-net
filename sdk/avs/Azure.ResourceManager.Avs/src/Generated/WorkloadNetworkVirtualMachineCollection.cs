@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVirtualMachine</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkloadNetworkVirtualMachineResource>> GetIfExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+
+            using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworkVirtualMachineWorkloadNetworksRestClient.GetVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVirtualMachine</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        public virtual NullableResponse<WorkloadNetworkVirtualMachineResource> GetIfExists(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+
+            using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworkVirtualMachineWorkloadNetworksRestClient.GetVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<WorkloadNetworkVirtualMachineResource> IEnumerable<WorkloadNetworkVirtualMachineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

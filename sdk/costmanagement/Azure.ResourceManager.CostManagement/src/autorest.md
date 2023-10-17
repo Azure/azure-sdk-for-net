@@ -23,6 +23,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
 - /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}
@@ -123,6 +126,7 @@ rename-mapping:
   CheckNameAvailabilityReason: CostManagementUnavailabilityReason
   BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
   GrainParameter: GrainContent
+  AlertPropertiesDefinition.type: AlertType
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

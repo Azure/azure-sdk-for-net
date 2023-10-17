@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllCapabilitiesThatExtendAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2022-10-01-preview/examples/ListCapabilities.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2023-04-15-preview/examples/ListCapabilities.json
             // this example is just showing the usage of "Capabilities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2022-10-01-preview/examples/GetACapability.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2023-04-15-preview/examples/GetACapability.json
             // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2022-10-01-preview/examples/GetACapability.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2023-04-15-preview/examples/GetACapability.json
             // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,12 +129,58 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a Capability that extends a virtual machine Target resource.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
+        {
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2023-04-15-preview/examples/GetACapability.json
+            // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TargetResource created on azure
+            // for more information of creating TargetResource, please refer to the document of TargetResource
+            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string resourceGroupName = "exampleRG";
+            string parentProviderNamespace = "Microsoft.Compute";
+            string parentResourceType = "virtualMachines";
+            string parentResourceName = "exampleVM";
+            string targetName = "Microsoft-VirtualMachine";
+            ResourceIdentifier targetResourceId = TargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName);
+            TargetResource target = client.GetTargetResource(targetResourceId);
+
+            // get the collection of this CapabilityResource
+            CapabilityCollection collection = target.GetCapabilities();
+
+            // invoke the operation
+            string capabilityName = "Shutdown-1.0";
+            NullableResponse<CapabilityResource> response = await collection.GetIfExistsAsync(capabilityName);
+            CapabilityResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CapabilityData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Create/update a Capability that extends a virtual machine Target resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateUpdateACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2022-10-01-preview/examples/CreateOrUpdateACapability.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/preview/2023-04-15-preview/examples/CreateOrUpdateACapability.json
             // this example is just showing the usage of "Capabilities_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

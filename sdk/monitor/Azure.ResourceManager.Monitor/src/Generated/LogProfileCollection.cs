@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogProfileResource>> GetIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual NullableResponse<LogProfileResource> GetIfExists(string logProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LogProfileResource> IEnumerable<LogProfileResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

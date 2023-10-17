@@ -22,15 +22,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of PipelineExternalComputeScaleProperties. </summary>
         /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </param>
+        /// <param name="numberOfPipelineNodes"> Number of the pipeline nodes, which should be greater than 0 and less than 11. </param>
+        /// <param name="numberOfExternalNodes"> Number of the the external nodes, which should be greater than 0 and less than 11. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineExternalComputeScaleProperties(int? timeToLive, IDictionary<string, BinaryData> additionalProperties)
+        internal PipelineExternalComputeScaleProperties(int? timeToLive, int? numberOfPipelineNodes, int? numberOfExternalNodes, IDictionary<string, BinaryData> additionalProperties)
         {
             TimeToLive = timeToLive;
+            NumberOfPipelineNodes = numberOfPipelineNodes;
+            NumberOfExternalNodes = numberOfExternalNodes;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </summary>
         public int? TimeToLive { get; set; }
+        /// <summary> Number of the pipeline nodes, which should be greater than 0 and less than 11. </summary>
+        public int? NumberOfPipelineNodes { get; set; }
+        /// <summary> Number of the the external nodes, which should be greater than 0 and less than 11. </summary>
+        public int? NumberOfExternalNodes { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

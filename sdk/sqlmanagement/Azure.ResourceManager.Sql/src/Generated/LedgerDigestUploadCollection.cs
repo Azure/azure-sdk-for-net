@@ -304,6 +304,72 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<LedgerDigestUploadResource>> GetIfExistsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _ledgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LedgerDigestUploadResource>(response.GetRawResponse());
+                return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LedgerDigestUploads_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<LedgerDigestUploadResource> GetIfExists(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        {
+            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _ledgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LedgerDigestUploadResource>(response.GetRawResponse());
+                return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LedgerDigestUploadResource> IEnumerable<LedgerDigestUploadResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

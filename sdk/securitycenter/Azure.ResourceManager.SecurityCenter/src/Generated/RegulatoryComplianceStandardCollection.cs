@@ -244,6 +244,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RegulatoryComplianceStandardResource>> GetIfExistsAsync(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+
+            using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _regulatoryComplianceStandardRestClient.GetAsync(Id.SubscriptionId, regulatoryComplianceStandardName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RegulatoryComplianceStandardResource>(response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceStandardResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegulatoryComplianceStandards_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        public virtual NullableResponse<RegulatoryComplianceStandardResource> GetIfExists(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+
+            using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _regulatoryComplianceStandardRestClient.Get(Id.SubscriptionId, regulatoryComplianceStandardName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RegulatoryComplianceStandardResource>(response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceStandardResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RegulatoryComplianceStandardResource> IEnumerable<RegulatoryComplianceStandardResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

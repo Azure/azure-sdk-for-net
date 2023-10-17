@@ -245,6 +245,80 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
+
+            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        public virtual NullableResponse<BackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
+
+            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<BackupRecoveryPointResource> IEnumerable<BackupRecoveryPointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

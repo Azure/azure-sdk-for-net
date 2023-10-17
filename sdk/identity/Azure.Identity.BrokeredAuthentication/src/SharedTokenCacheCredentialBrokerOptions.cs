@@ -13,7 +13,7 @@ namespace Azure.Identity.BrokeredAuthentication
     public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
         /// <summary>
-        /// Gets or sets whether Microsoft Account (MSA) passthough.
+        /// Gets or sets whether Microsoft Account (MSA) passthrough is enabled.
         /// </summary>
         /// <value></value>
         public bool? IsMsaPassthroughEnabled { get; set; }

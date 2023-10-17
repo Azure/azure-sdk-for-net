@@ -8,7 +8,6 @@ csharp: true
 clear-output-folder: true
 skip-csproj: true
 library-name: MySql
-
 #mgmt-debug: 
 #  show-serialized-names: true
 
@@ -21,6 +20,9 @@ batch:
 namespace: Azure.ResourceManager.MySql
 require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
@@ -185,6 +187,9 @@ directive:
 namespace: Azure.ResourceManager.MySql.FlexibleServers
 require: https://github.com/Azure/azure-rest-api-specs/blob/6c6b16dc98d720304633b76c8e82c282ffa9cc08/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 modelerfour:
   flatten-payloads: false
 

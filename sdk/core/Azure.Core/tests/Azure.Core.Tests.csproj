@@ -4,7 +4,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +43,7 @@
     <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NextLinkOperationImplementation.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\OperationFinalStateVia.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\Optional.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\Page.cs" LinkBase="Shared" />

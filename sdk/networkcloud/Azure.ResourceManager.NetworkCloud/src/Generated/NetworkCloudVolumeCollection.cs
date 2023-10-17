@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudVolumeResource>> GetIfExistsAsync(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudVolumeVolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, volumeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudVolumeResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudVolumeResource> GetIfExists(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudVolumeVolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, volumeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudVolumeResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkCloudVolumeResource> IEnumerable<NetworkCloudVolumeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

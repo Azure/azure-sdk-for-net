@@ -233,6 +233,72 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ServiceAlertResource>> GetIfExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ServiceAlertResource> GetIfExists(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ServiceAlertResource> IEnumerable<ServiceAlertResource>.GetEnumerator()
         {
             return GetAll(options: null).GetEnumerator();

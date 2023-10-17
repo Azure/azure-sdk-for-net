@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Updated Microsoft.Identity.Client.Broker and Microsoft.Identity.Client.Extensions.Msal dependencies to version 4.56.0
 
 ## 1.0.0-beta.4 (2023-07-17)
 

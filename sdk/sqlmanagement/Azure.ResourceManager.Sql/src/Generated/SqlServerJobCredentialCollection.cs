@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of the credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerJobCredentialResource>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerJobCredentialJobCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobCredentials_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of the credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerJobCredentialResource> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerJobCredentialJobCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerJobCredentialResource> IEnumerable<SqlServerJobCredentialResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

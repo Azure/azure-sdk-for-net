@@ -324,7 +324,9 @@ namespace Azure.Storage.Queues
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
             : this(
                   queueUri,
-                  credential.AsPolicy(options),
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options,
                   sharedKeyCredential: null,
                   sasCredential: null,

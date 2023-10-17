@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             PrefixPath = Path.GetDirectoryName(fullPath);
             if (!Path.HasExtension(fullPath))
             {
-                throw Errors.InvalidTransferIdFileName(fullPath);
+                throw Errors.InvalidJobPartFileNameExtension(fullPath);
             }
             string fileName = Path.GetFileNameWithoutExtension(fullPath);
             string extension = Path.GetExtension(fullPath);
@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             if (endPartIndex - partStartIndex != DataMovementConstants.JobPartPlanFile.JobPartLength)
             {
-                throw Errors.InvalidJobPartFileName(fullPath);
+                throw Errors.InvalidJobPartNumberFileName(fullPath);
             }
             if (!int.TryParse(
                     fileName.Substring(partStartIndex, DataMovementConstants.JobPartPlanFile.JobPartLength),
