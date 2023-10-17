@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalReachConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalReachConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalReachConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalReachConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _globalReachConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalReachConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GlobalReachConnectionResource>> GetIfExistsAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+
+            using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _globalReachConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalReachConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalReachConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalReachConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        public virtual NullableResponse<GlobalReachConnectionResource> GetIfExists(string globalReachConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+
+            using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _globalReachConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalReachConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalReachConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkSimGroupSimGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkSimGroupResource>> GetIfExistsAsync(string simGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+
+            using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimGroupSimGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkSimGroupResource> GetIfExists(string simGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+
+            using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimGroupSimGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

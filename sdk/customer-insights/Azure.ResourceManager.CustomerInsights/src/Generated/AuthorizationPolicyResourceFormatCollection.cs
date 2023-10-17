@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/authorizationPolicies/{authorizationPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationPolicyName"> The name of the policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AuthorizationPolicyResourceFormatResource>> GetIfExistsAsync(string authorizationPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+
+            using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationPolicyResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/authorizationPolicies/{authorizationPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationPolicyName"> The name of the policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
+        public virtual NullableResponse<AuthorizationPolicyResourceFormatResource> GetIfExists(string authorizationPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+
+            using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationPolicyResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

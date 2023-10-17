@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Logic
         public virtual AsyncPageable<IntegrationAccountAssemblyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Logic
         public virtual Pageable<IntegrationAccountAssemblyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -312,6 +313,80 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/assemblies/{assemblyArtifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountAssemblies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assemblyArtifactName"> The assembly artifact name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountAssemblyDefinitionResource>> GetIfExistsAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+
+            using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountAssemblyDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountAssemblyDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/assemblies/{assemblyArtifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountAssemblies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assemblyArtifactName"> The assembly artifact name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountAssemblyDefinitionResource> GetIfExists(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+
+            using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assemblyArtifactName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountAssemblyDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountAssemblyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

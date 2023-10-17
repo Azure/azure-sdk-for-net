@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20230613.1
+      ref: refs/tags/azure-sdk-build-tools_20230829.1
 
 parameters: 
 - name: ShouldPublishToNuget

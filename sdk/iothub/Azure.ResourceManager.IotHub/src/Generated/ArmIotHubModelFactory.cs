@@ -103,6 +103,26 @@ namespace Azure.ResourceManager.IotHub.Models
             return new EventHubCompatibleEndpointProperties(retentionTimeInDays, partitionCount, partitionIds?.ToList(), eventHubCompatibleName, endpoint);
         }
 
+        /// <summary> Initializes a new instance of RoutingCosmosDBSqlApiProperties. </summary>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the cosmos DB account. </param>
+        /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the cosmos DB sql container endpoint. </param>
+        /// <param name="userAssignedIdentity"> Managed identity properties of routing cosmos DB container endpoint. </param>
+        /// <param name="primaryKey"> The primary key of the cosmos DB account. </param>
+        /// <param name="secondaryKey"> The secondary key of the cosmos DB account. </param>
+        /// <param name="databaseName"> The name of the cosmos DB database in the cosmos DB account. </param>
+        /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
+        /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
+        /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
+        /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, Uri endpointUri = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null)
+        {
+            return new RoutingCosmosDBSqlApiProperties(name, id, subscriptionId, resourceGroup, endpointUri, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, primaryKey, secondaryKey, databaseName, containerName, partitionKeyName, partitionKeyTemplate);
+        }
+
         /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>

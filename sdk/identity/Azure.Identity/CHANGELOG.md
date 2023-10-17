@@ -7,10 +7,17 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- `ManagedIdentityCredential` will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
+- `ManagedIdentityCredential` will now correctly retry when the instance metadata endpoint returns a 410 response. [#28568](https://github.com/Azure/azure-sdk-for-net/issues/28568)
 
 ### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.56.0
+
+## 1.10.1 (2023-09-12)
+
+### Bugs Fixed
+
+- `ManagedIdentityCredential` will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
+- Fixed an issue where interactive credentials would still prompt on the first GetToken request even when the cache is populated and an AuthenticationRecord is provided. [#38431](https://github.com/Azure/azure-sdk-for-net/issues/38431)
 
 ## 1.10.0 (2023-08-14)
 
@@ -71,7 +78,7 @@
 ## 1.8.2 (2023-02-08)
 
 ### Bugs Fixed
-- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret Microsoft Entra ID errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
 - Fix regional endpoint validation error when using `ManagedIdentityCredential`. [#32498])(https://github.com/Azure/azure-sdk-for-net/issues/32498)
 
 ## 1.8.1 (2023-01-13)
@@ -82,7 +89,7 @@
 ## 1.8.0 (2022-11-08)
 
 ### Bugs Fixed
-- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret Microsoft Entra ID errors with the need to login with `az login`. [#26894](https://github.com/Azure/azure-sdk-for-net/issues/26894), [#29109](https://github.com/Azure/azure-sdk-for-net/issues/29109)
 - `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable. [#30467](https://github.com/Azure/azure-sdk-for-net/issues/30467), [#32061](https://github.com/Azure/azure-sdk-for-net/issues/32061)
 
 ## 1.9.0-beta.1 (2022-10-13)
@@ -209,7 +216,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Features Added
 
 - `DefaultAzureCredentialOptions` now has a `InteractiveBrowserClientId` property which allows passing a ClientId value to the `InteractiveBrowserCredential` when constructing a `DefaultAzureCredential`.
-- Implement `OnBehalfOfCredential` which enables authentication to Azure Active Directory using an On-Behalf-Of flow.
+- Implement `OnBehalfOfCredential` which enables authentication to Microsoft Entra ID using an On-Behalf-Of flow.
 - Added support to `ManagedIdentityCredential` for Azure hosts using federated token exchange for managed identity.
 
 ### Bugs Fixed
@@ -219,7 +226,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Other Changes
 
 - Updated credentials using `MsalConfidentialClient` to include MSAL log output in logs
-- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when `IsPIILoggingEnabled` is set to true.
+- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCredential`, and `VisualStudioCodeCredential` when `IsPIILoggingEnabled` is set to true.
 
 ## 1.5.0-beta.3 (2021-08-10)
 
@@ -263,7 +270,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Added support to `ManagedIdentityCredential` for Bridge to Kubernetes local development authentication.
 - TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId. To support this feature, there is a new `AllowMultiTenantAuthentication` option on `TokenCredentialOptions`.
   - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
-- Added `OnBehalfOfFlowCredential` which enables support for AAD On-Behalf-Of (OBO) flow. See the [Azure Active Directory documentation](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) to learn more about OBO flow scenarios.
+- Added `OnBehalfOfFlowCredential` which enables support for Microsoft Entra On-Behalf-Of (OBO) flow. See the [Microsoft Entra ID documentation](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) to learn more about OBO flow scenarios.
 
 ```xml
 <ItemGroup>
@@ -283,7 +290,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### New Features
 
 - By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://docs.microsoft.com/azure/active-directory/develop/app-resilience-continuous-access-evaluation).
-This indicates to AAD that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
+This indicates to Microsoft Entra ID that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
 "AZURE_IDENTITY_DISABLE_CP1" to "true". Note: AppContext switches can also be configured via configuration like below:
 
 ```xml

@@ -82,7 +82,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 We have created a dotnet template to make creating new management SDK library easier than ever.
 
-See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md)].
+See [README file](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md).
 
 ----
 
@@ -172,10 +172,12 @@ dotnet test /p:CollectCoverage=true
 
 On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
 Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
-All covered projects should have 70% or better test coverage.
 
 By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
 To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
+
+> The Azure SDK team does not mandate a threshold for code coverage nor do we aggregate those metrics in any reports. This metric can be misleading e.g., a client library with a lot of models and few operations could have complete serialization coverage of models but no coverage for operations and still have a high metric.
+> We encourage teams to drill into the reports generated locally or in Azure Pipelines on the "Code Coverage" tab to analyze their code coverage as necessary e.g., any code teams have written or client library methods that call an endpoint.
 
 ## Public API additions
 

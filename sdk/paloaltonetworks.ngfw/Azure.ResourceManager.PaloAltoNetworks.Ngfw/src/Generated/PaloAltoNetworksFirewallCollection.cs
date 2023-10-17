@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 var response = _paloAltoNetworksFirewallFirewallsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, firewallName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PaloAltoNetworksFirewallResource>> GetIfExistsAsync(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using var scope = _paloAltoNetworksFirewallFirewallsClientDiagnostics.CreateScope("PaloAltoNetworksFirewallCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _paloAltoNetworksFirewallFirewallsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PaloAltoNetworksFirewallResource>(response.GetRawResponse());
+                return Response.FromValue(new PaloAltoNetworksFirewallResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"> Firewall resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
+        public virtual NullableResponse<PaloAltoNetworksFirewallResource> GetIfExists(string firewallName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
+            using var scope = _paloAltoNetworksFirewallFirewallsClientDiagnostics.CreateScope("PaloAltoNetworksFirewallCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _paloAltoNetworksFirewallFirewallsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, firewallName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PaloAltoNetworksFirewallResource>(response.GetRawResponse());
+                return Response.FromValue(new PaloAltoNetworksFirewallResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

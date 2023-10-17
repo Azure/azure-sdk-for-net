@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,6 +225,72 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 var response = _smartGroupRestClient.GetById(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SmartGroupResource>> GetIfExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _smartGroupRestClient.GetByIdAsync(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SmartGroupResource> GetIfExists(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _smartGroupRestClient.GetById(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

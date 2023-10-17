@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricConfigurationType? ConfigurationType { get; set; }
         /// <summary> Access Control List file URL. </summary>
         public Uri AclsUri { get; set; }
+        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
+        public CommunityActionType? DefaultAction { get; set; }
         /// <summary> List of match configurations. </summary>
         public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
         /// <summary> List of dynamic match configurations. </summary>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkDeviceResource>> GetIfExistsAsync(string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkDeviceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
+        public virtual NullableResponse<NetworkDeviceResource> GetIfExists(string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkDeviceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

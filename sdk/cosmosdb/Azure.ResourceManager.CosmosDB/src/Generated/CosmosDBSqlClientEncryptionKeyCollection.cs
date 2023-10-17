@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlClientEncryptionKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlClientEncryptionKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.GetClientEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetClientEncryptionKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBSqlClientEncryptionKeyResource>> GetIfExistsAsync(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientEncryptionKeyName, nameof(clientEncryptionKeyName));
+
+            using var scope = _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlClientEncryptionKeyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.GetClientEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlClientEncryptionKeyResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetClientEncryptionKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientEncryptionKeyName"> Cosmos DB ClientEncryptionKey name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientEncryptionKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientEncryptionKeyName"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBSqlClientEncryptionKeyResource> GetIfExists(string clientEncryptionKeyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientEncryptionKeyName, nameof(clientEncryptionKeyName));
+
+            using var scope = _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlClientEncryptionKeyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.GetClientEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlClientEncryptionKeyResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

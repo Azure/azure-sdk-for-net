@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineResource(Client, BackupEngineData.DeserializeBackupEngineData(e)), _backupEngineClientDiagnostics, Pipeline, "BackupEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineResource(Client, BackupEngineData.DeserializeBackupEngineData(e)), _backupEngineClientDiagnostics, Pipeline, "BackupEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineResource(Client, BackupEngineData.DeserializeBackupEngineData(e)), _backupEngineClientDiagnostics, Pipeline, "BackupEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineResource(Client, BackupEngineData.DeserializeBackupEngineData(e)), _backupEngineClientDiagnostics, Pipeline, "BackupEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,6 +251,84 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 var response = _backupEngineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupEngineName"> Name of the backup management server. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BackupEngineResource>> GetIfExistsAsync(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
+
+            using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _backupEngineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupEngineResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupEngineName"> Name of the backup management server. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
+        public virtual NullableResponse<BackupEngineResource> GetIfExists(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
+
+            using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _backupEngineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BackupEngineResource>(response.GetRawResponse());
+                return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

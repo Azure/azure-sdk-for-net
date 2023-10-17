@@ -73,6 +73,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricIPCommunityResource item in subscriptionResource.GetNetworkFabricIPCommunitiesAsync())
+            {
+                NetworkFabricIPCommunityData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
+
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await ipCommunity.DeleteAsync(WaitUntil.Completed);

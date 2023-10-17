@@ -19,192 +19,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMachineLearningModelFactory
     {
-        /// <summary> Initializes a new instance of MachineLearningError. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
-        public static MachineLearningError MachineLearningError(ResponseError error = null)
-        {
-            return new MachineLearningError(error);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
-        /// <param name="description"> The description of this workspace. </param>
-        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
-        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
-        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
-        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
-        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="encryption"> The encryption settings of Azure ML workspace. </param>
-        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
-        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
-        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
-        /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
-        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
-        /// <param name="cosmosDbCollectionsThroughput"> The service managed resource settings. </param>
-        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
-        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
-        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
-        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, string workspaceId = null, string description = null, string friendlyName = null, string keyVault = null, string applicationInsights = null, string containerRegistry = null, string storageAccount = null, Uri discoveryUri = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningEncryptionSetting encryption = null, bool? isHbiWorkspace = null, string serviceProvisionedResourceGroup = null, int? privateLinkCount = null, string imageBuildCompute = null, bool? allowPublicAccessWhenBehindVnet = null, MachineLearningPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, MachineLearningNotebookResourceInfo notebookInfo = null, int? cosmosDbCollectionsThroughput = null, string primaryUserAssignedIdentity = null, Guid? tenantId = null, bool? isStorageHnsEnabled = null, Uri mlFlowTrackingUri = null, bool? isV1LegacyMode = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
-
-            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, sku, workspaceId, description, friendlyName, keyVault, applicationInsights, containerRegistry, storageAccount, discoveryUri, provisioningState, encryption, isHbiWorkspace, serviceProvisionedResourceGroup, privateLinkCount, imageBuildCompute, allowPublicAccessWhenBehindVnet, publicNetworkAccess, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), notebookInfo, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, primaryUserAssignedIdentity, tenantId, isStorageHnsEnabled, mlFlowTrackingUri, isV1LegacyMode);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningPrivateEndpoint privateEndpoint = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, identity, sku, privateEndpoint, connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
-        {
-            return new MachineLearningPrivateEndpoint(id, subnetArmId);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
-        /// <param name="fqdn"></param>
-        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
-        /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
-        /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
-        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = null, string resourceId = null, MachineLearningNotebookPreparationError notebookPreparationError = null)
-        {
-            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
-        /// <param name="errorMessage"></param>
-        /// <param name="statusCode"></param>
-        /// <returns> A new <see cref="Models.MachineLearningNotebookPreparationError"/> instance for mocking. </returns>
-        public static MachineLearningNotebookPreparationError MachineLearningNotebookPreparationError(string errorMessage = null, int? statusCode = null)
-        {
-            return new MachineLearningNotebookPreparationError(errorMessage, statusCode);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseResult. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceDiagnoseResult MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value = null)
-        {
-            return new MachineLearningWorkspaceDiagnoseResult(value);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
-        /// <param name="userDefinedRouteResults"></param>
-        /// <param name="networkSecurityRuleResults"></param>
-        /// <param name="resourceLockResults"></param>
-        /// <param name="dnsResolutionResults"></param>
-        /// <param name="storageAccountResults"></param>
-        /// <param name="keyVaultResults"></param>
-        /// <param name="containerRegistryResults"></param>
-        /// <param name="applicationInsightsResults"></param>
-        /// <param name="otherResults"></param>
-        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResultValue"/> instance for mocking. </returns>
-        public static MachineLearningDiagnoseResultValue MachineLearningDiagnoseResultValue(IEnumerable<MachineLearningDiagnoseResult> userDefinedRouteResults = null, IEnumerable<MachineLearningDiagnoseResult> networkSecurityRuleResults = null, IEnumerable<MachineLearningDiagnoseResult> resourceLockResults = null, IEnumerable<MachineLearningDiagnoseResult> dnsResolutionResults = null, IEnumerable<MachineLearningDiagnoseResult> storageAccountResults = null, IEnumerable<MachineLearningDiagnoseResult> keyVaultResults = null, IEnumerable<MachineLearningDiagnoseResult> containerRegistryResults = null, IEnumerable<MachineLearningDiagnoseResult> applicationInsightsResults = null, IEnumerable<MachineLearningDiagnoseResult> otherResults = null)
-        {
-            userDefinedRouteResults ??= new List<MachineLearningDiagnoseResult>();
-            networkSecurityRuleResults ??= new List<MachineLearningDiagnoseResult>();
-            resourceLockResults ??= new List<MachineLearningDiagnoseResult>();
-            dnsResolutionResults ??= new List<MachineLearningDiagnoseResult>();
-            storageAccountResults ??= new List<MachineLearningDiagnoseResult>();
-            keyVaultResults ??= new List<MachineLearningDiagnoseResult>();
-            containerRegistryResults ??= new List<MachineLearningDiagnoseResult>();
-            applicationInsightsResults ??= new List<MachineLearningDiagnoseResult>();
-            otherResults ??= new List<MachineLearningDiagnoseResult>();
-
-            return new MachineLearningDiagnoseResultValue(userDefinedRouteResults?.ToList(), networkSecurityRuleResults?.ToList(), resourceLockResults?.ToList(), dnsResolutionResults?.ToList(), storageAccountResults?.ToList(), keyVaultResults?.ToList(), containerRegistryResults?.ToList(), applicationInsightsResults?.ToList(), otherResults?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResult. </summary>
-        /// <param name="code"> Code for workspace setup error. </param>
-        /// <param name="level"> Level of workspace setup error. </param>
-        /// <param name="message"> Message of workspace setup error. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResult"/> instance for mocking. </returns>
-        public static MachineLearningDiagnoseResult MachineLearningDiagnoseResult(string code = null, MachineLearningDiagnoseResultLevel? level = null, string message = null)
-        {
-            return new MachineLearningDiagnoseResult(code, level, message);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
-        /// <param name="userStorageResourceId"></param>
-        /// <param name="appInsightsInstrumentationKey"></param>
-        /// <param name="containerRegistryCredentials"></param>
-        /// <param name="notebookAccessKeys"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string userStorageKey = null, string userStorageResourceId = null, string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null)
-        {
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey, userStorageResourceId, appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
-        /// <param name="location"></param>
-        /// <param name="username"></param>
-        /// <param name="passwords"></param>
-        /// <returns> A new <see cref="Models.MachineLearningContainerRegistryCredentials"/> instance for mocking. </returns>
-        public static MachineLearningContainerRegistryCredentials MachineLearningContainerRegistryCredentials(AzureLocation? location = null, string username = null, IEnumerable<MachineLearningPasswordDetail> passwords = null)
-        {
-            passwords ??= new List<MachineLearningPasswordDetail>();
-
-            return new MachineLearningContainerRegistryCredentials(location, username, passwords?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
-        public static MachineLearningPasswordDetail MachineLearningPasswordDetail(string name = null, string value = null)
-        {
-            return new MachineLearningPasswordDetail(name, value);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
-        /// <param name="primaryAccessKey"></param>
-        /// <param name="secondaryAccessKey"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = null, string secondaryAccessKey = null)
-        {
-            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey);
-        }
-
         /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
@@ -226,6 +40,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUsageName MachineLearningUsageName(string value = null, string localizedValue = null)
         {
             return new MachineLearningUsageName(value, localizedValue);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningError. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
+        public static MachineLearningError MachineLearningError(ResponseError error = null)
+        {
+            return new MachineLearningError(error);
         }
 
         /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
@@ -315,8 +137,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties">
         /// Compute properties
-        /// Please note <see cref="MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
+        /// Please note <see cref="Models.MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
         public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningComputeProperties properties = null)
@@ -358,102 +180,384 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new AmlComputeNodeInformation(nodeId, privateIPAddress, publicIPAddress, port, nodeState, runId);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
-        /// <param name="notebookResourceId"></param>
-        /// <param name="hostName"></param>
-        /// <param name="publicDns"></param>
-        /// <param name="accessToken"></param>
-        /// <param name="tokenType"></param>
-        /// <param name="expiresIn"></param>
-        /// <param name="refreshToken"></param>
-        /// <param name="scope"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId = null, string hostName = null, string publicDns = null, string accessToken = null, string tokenType = null, int? expiresIn = null, string refreshToken = null, string scope = null)
-        {
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId, hostName, publicDns, accessToken, tokenType, expiresIn, refreshToken, scope);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of MachineLearningCodeContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
-        public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningCodeContainerData"/> instance for mocking. </returns>
+        public static MachineLearningCodeContainerData MachineLearningCodeContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeContainerProperties properties = null)
         {
+            return new MachineLearningCodeContainerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningCodeContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="provisioningState"> Provisioning state for the code container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningCodeContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
+        {
+            properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
 
-            return new MachineLearningPrivateLinkResource(id, name, resourceType, systemData, tags, location, identity, sku, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new MachineLearningCodeContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = null)
+        /// <summary> Initializes a new instance of MachineLearningAssetContainer. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <returns> A new <see cref="Models.MachineLearningAssetContainer"/> instance for mocking. </returns>
+        public static MachineLearningAssetContainer MachineLearningAssetContainer(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
         {
-            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey);
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningAssetContainer(description, properties, tags, isArchived, latestVersion, nextVersion);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningCodeVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningCodeVersionData"/> instance for mocking. </returns>
+        public static MachineLearningCodeVersionData MachineLearningCodeVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeVersionProperties properties = null)
+        {
+            return new MachineLearningCodeVersionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningCodeVersionProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="codeUri"> Uri where code is located. </param>
+        /// <param name="provisioningState"> Provisioning state for the code version. </param>
+        /// <returns> A new <see cref="Models.MachineLearningCodeVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningCodeVersionProperties MachineLearningCodeVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, Uri codeUri = null, RegistryAssetProvisioningState? provisioningState = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningCodeVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, codeUri, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of PendingUploadResponseDto. </summary>
+        /// <param name="blobReferenceForConsumption"> Container level read, write, list SAS. </param>
+        /// <param name="pendingUploadId"> ID for this upload request. </param>
+        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
+        /// <returns> A new <see cref="Models.PendingUploadResponseDto"/> instance for mocking. </returns>
+        public static PendingUploadResponseDto PendingUploadResponseDto(BlobReferenceForConsumptionDto blobReferenceForConsumption = null, string pendingUploadId = null, PendingUploadType? pendingUploadType = null)
+        {
+            return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType);
+        }
+
+        /// <summary> Initializes a new instance of BlobReferenceForConsumptionDto. </summary>
+        /// <param name="blobUri">
+        /// Blob URI path for client to upload data.
+        /// Example: https://blob.windows.core.net/Container/Path
+        /// </param>
+        /// <param name="credential">
+        /// Credential info to access storage account
+        /// Please note <see cref="PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SasCredentialDto"/>.
+        /// </param>
+        /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
+        /// <returns> A new <see cref="Models.BlobReferenceForConsumptionDto"/> instance for mocking. </returns>
+        public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = null, PendingUploadCredentialDto credential = null, ResourceIdentifier storageAccountArmId = null)
+        {
+            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningComponentContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningComponentContainerData"/> instance for mocking. </returns>
+        public static MachineLearningComponentContainerData MachineLearningComponentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentContainerProperties properties = null)
+        {
+            return new MachineLearningComponentContainerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningComponentContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="provisioningState"> Provisioning state for the component container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningComponentContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningComponentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningComponentVersionData"/> instance for mocking. </returns>
+        public static MachineLearningComponentVersionData MachineLearningComponentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentVersionProperties properties = null)
+        {
+            return new MachineLearningComponentVersionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningComponentVersionProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="componentSpec">
+        /// Defines Component definition details.
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
+        /// </param>
+        /// <param name="provisioningState"> Provisioning state for the component version. </param>
+        /// <param name="stage"> Stage in the component lifecycle. </param>
+        /// <returns> A new <see cref="Models.MachineLearningComponentVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningComponentVersionProperties MachineLearningComponentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, BinaryData componentSpec = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningComponentVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, componentSpec, provisioningState, stage);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningDataContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningDataContainerData"/> instance for mocking. </returns>
+        public static MachineLearningDataContainerData MachineLearningDataContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataContainerProperties properties = null)
+        {
+            return new MachineLearningDataContainerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningDataContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDataContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningDataContainerProperties MachineLearningDataContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, MachineLearningDataType dataType = default)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningDataContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, dataType);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// [Required] Additional attributes of the entity.
+        /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceConnectionData MachineLearningWorkspaceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningWorkspaceConnectionProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
+        public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
         {
-            return new MachineLearningWorkspaceConnectionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningDataVersionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
+        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentContainerData"/> instance for mocking. </returns>
+        public static MachineLearningEnvironmentContainerData MachineLearningEnvironmentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentContainerProperties properties = null)
         {
-            return new MachineLearningFqdnEndpoints(properties);
+            return new MachineLearningEnvironmentContainerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
-        /// <param name="category"></param>
-        /// <param name="endpoints"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
+        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="provisioningState"> Provisioning state for the environment container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningEnvironmentContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
-            endpoints ??= new List<MachineLearningFqdnEndpoint>();
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList());
+            return new MachineLearningEnvironmentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>
-        /// <param name="domainName"></param>
-        /// <param name="endpointDetails"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpoint MachineLearningFqdnEndpoint(string domainName = null, IEnumerable<MachineLearningFqdnEndpointDetail> endpointDetails = null)
+        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentVersionData"/> instance for mocking. </returns>
+        public static MachineLearningEnvironmentVersionData MachineLearningEnvironmentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentVersionProperties properties = null)
         {
-            endpointDetails ??= new List<MachineLearningFqdnEndpointDetail>();
-
-            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList());
+            return new MachineLearningEnvironmentVersionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
-        /// <param name="port"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointDetail"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpointDetail MachineLearningFqdnEndpointDetail(int? port = null)
+        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
+        /// <param name="build"> Configuration settings for Docker build context. </param>
+        /// <param name="condaFile">
+        /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
+        /// </param>
+        /// <param name="environmentType">
+        /// Environment type is either user managed or curated by the Azure ML service
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
+        /// </param>
+        /// <param name="image">
+        /// Name of the image that will be used for the environment.
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
+        /// </param>
+        /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if environment is an Intellectual Property. </param>
+        /// <param name="osType"> The OS type of the environment. </param>
+        /// <param name="provisioningState"> Provisioning state for the environment version. </param>
+        /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
+        /// <returns> A new <see cref="Models.MachineLearningEnvironmentVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, AutoRebuildSetting? autoRebuild = null, MachineLearningBuildContext build = null, string condaFile = null, MachineLearningEnvironmentType? environmentType = null, string image = null, MachineLearningInferenceContainerProperties inferenceConfig = null, IntellectualProperty intellectualProperty = null, MachineLearningOperatingSystemType? osType = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
         {
-            return new MachineLearningFqdnEndpointDetail(port);
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningEnvironmentVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, autoRebuild, build, condaFile, environmentType, image, inferenceConfig, intellectualProperty, osType, provisioningState, stage);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningModelContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningModelContainerData"/> instance for mocking. </returns>
+        public static MachineLearningModelContainerData MachineLearningModelContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelContainerProperties properties = null)
+        {
+            return new MachineLearningModelContainerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningModelContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="provisioningState"> Provisioning state for the model container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningModelContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningModelContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningModelVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningModelVersionData"/> instance for mocking. </returns>
+        public static MachineLearningModelVersionData MachineLearningModelVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelVersionProperties properties = null)
+        {
+            return new MachineLearningModelVersionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="flavors"> Mapping of model flavors to their properties. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if model is an Intellectual Property. </param>
+        /// <param name="jobName"> Name of the training job which produced this model. </param>
+        /// <param name="modelType"> The storage format for this entity. Used for NCD. </param>
+        /// <param name="modelUri"> The URI path to the model contents. </param>
+        /// <param name="provisioningState"> Provisioning state for the model version. </param>
+        /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
+        /// <returns> A new <see cref="Models.MachineLearningModelVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningModelVersionProperties MachineLearningModelVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IDictionary<string, MachineLearningFlavorData> flavors = null, IntellectualProperty intellectualProperty = null, string jobName = null, string modelType = null, Uri modelUri = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            flavors ??= new Dictionary<string, MachineLearningFlavorData>();
+
+            return new MachineLearningModelVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, flavors, intellectualProperty, jobName, modelType, modelUri, provisioningState, stage);
+        }
+
+        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
+        /// <param name="baseEnvironmentSource">
+        /// Base environment to start with.
+        /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BaseEnvironmentType"/>.
+        /// </param>
+        /// <param name="buildId"> Build id of the image build operation. </param>
+        /// <param name="buildState"> Build state of the image build operation. </param>
+        /// <param name="environmentVariables"> Collection of environment variables. </param>
+        /// <param name="inferencingServer">
+        /// Inferencing server configurations.
+        /// Please note <see cref="InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
+        /// </param>
+        /// <param name="inputs"> Collection of inputs. </param>
+        /// <param name="logUri"> Log url of the image build operation. </param>
+        /// <param name="modelConfiguration"> Model configuration including the mount mode. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="targetEnvironmentId"> Asset ID of the target environment created by package operation. </param>
+        /// <returns> A new <see cref="Models.ModelPackageResult"/> instance for mocking. </returns>
+        public static ModelPackageResult ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource = null, string buildId = null, PackageBuildState? buildState = null, IReadOnlyDictionary<string, string> environmentVariables = null, InferencingServer inferencingServer = null, IEnumerable<ModelPackageInput> inputs = null, Uri logUri = null, ModelConfiguration modelConfiguration = null, IReadOnlyDictionary<string, string> tags = null, string targetEnvironmentId = null)
+        {
+            environmentVariables ??= new Dictionary<string, string>();
+            inputs ??= new List<ModelPackageInput>();
+            tags ??= new Dictionary<string, string>();
+
+            return new ModelPackageResult(baseEnvironmentSource, buildId, buildState, environmentVariables, inferencingServer, inputs?.ToList(), logUri, modelConfiguration, tags, targetEnvironmentId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointData. </summary>
@@ -535,10 +639,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="compute"> Compute target for batch inference operation. </param>
+        /// <param name="deploymentConfiguration">
+        /// Properties relevant to different deployment types.
+        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
+        /// </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -556,7 +665,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
         /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
+        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningOutputPathAssetReference"/> and <see cref="MachineLearningIdAssetReference"/>.
         /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
@@ -570,153 +679,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningBatchDeploymentProperties"/> instance for mocking. </returns>
-        public static MachineLearningBatchDeploymentProperties MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, string compute = null, int? errorThreshold = null, MachineLearningBatchLoggingLevel? loggingLevel = null, int? maxConcurrencyPerInstance = null, long? miniBatchSize = null, MachineLearningAssetReferenceBase model = null, MachineLearningBatchOutputAction? outputAction = null, string outputFileName = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningDeploymentResourceConfiguration resources = null, MachineLearningBatchRetrySettings retrySettings = null)
+        public static MachineLearningBatchDeploymentProperties MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, string compute = null, BatchDeploymentConfiguration deploymentConfiguration = null, int? errorThreshold = null, MachineLearningBatchLoggingLevel? loggingLevel = null, int? maxConcurrencyPerInstance = null, long? miniBatchSize = null, MachineLearningAssetReferenceBase model = null, MachineLearningBatchOutputAction? outputAction = null, string outputFileName = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningDeploymentResourceConfiguration resources = null, MachineLearningBatchRetrySettings retrySettings = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, compute, errorThreshold, loggingLevel, maxConcurrencyPerInstance, miniBatchSize, model, outputAction, outputFileName, provisioningState, resources, retrySettings);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningCodeContainerData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningCodeContainerData"/> instance for mocking. </returns>
-        public static MachineLearningCodeContainerData MachineLearningCodeContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeContainerProperties properties = null)
-        {
-            return new MachineLearningCodeContainerData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningCodeContainerProperties. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="latestVersion"> The latest version inside this container. </param>
-        /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningCodeContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
-        {
-            properties ??= new Dictionary<string, string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningCodeContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningAssetContainer. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="latestVersion"> The latest version inside this container. </param>
-        /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAssetContainer"/> instance for mocking. </returns>
-        public static MachineLearningAssetContainer MachineLearningAssetContainer(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
-        {
-            properties ??= new Dictionary<string, string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningAssetContainer(description, properties, tags, isArchived, latestVersion, nextVersion);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningCodeVersionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningCodeVersionData"/> instance for mocking. </returns>
-        public static MachineLearningCodeVersionData MachineLearningCodeVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeVersionProperties properties = null)
-        {
-            return new MachineLearningCodeVersionData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningComponentContainerData"/> instance for mocking. </returns>
-        public static MachineLearningComponentContainerData MachineLearningComponentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentContainerProperties properties = null)
-        {
-            return new MachineLearningComponentContainerData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerProperties. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="latestVersion"> The latest version inside this container. </param>
-        /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComponentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
-        {
-            properties ??= new Dictionary<string, string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningComponentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningComponentVersionData"/> instance for mocking. </returns>
-        public static MachineLearningComponentVersionData MachineLearningComponentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentVersionProperties properties = null)
-        {
-            return new MachineLearningComponentVersionData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningDataContainerData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningDataContainerData"/> instance for mocking. </returns>
-        public static MachineLearningDataContainerData MachineLearningDataContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataContainerProperties properties = null)
-        {
-            return new MachineLearningDataContainerData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningDataContainerProperties. </summary>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="latestVersion"> The latest version inside this container. </param>
-        /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <param name="dataType"> [Required] Specifies the type of data. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDataContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningDataContainerProperties MachineLearningDataContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, MachineLearningDataType dataType = default)
-        {
-            properties ??= new Dictionary<string, string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningDataContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, dataType);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
-        /// </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
-        public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
-        {
-            return new MachineLearningDataVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningBatchDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, compute, deploymentConfiguration, errorThreshold, loggingLevel, maxConcurrencyPerInstance, miniBatchSize, model, outputAction, outputFileName, provisioningState, resources, retrySettings);
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreData. </summary>
@@ -726,8 +694,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
+        /// Please note <see cref="Models.MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningAzureBlobDatastore"/>, <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="Models.MachineLearningAzureFileDatastore"/>, <see cref="Models.HdfsDatastore"/> and <see cref="Models.OneLakeDatastore"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningDatastoreData"/> instance for mocking. </returns>
         public static MachineLearningDatastoreData MachineLearningDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDatastoreProperties properties = null)
@@ -742,88 +710,172 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <returns> A new <see cref="Models.MachineLearningDatastoreProperties"/> instance for mocking. </returns>
-        public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, string datastoreType = "Unknown", bool? isDefault = null)
+        public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, string datastoreType = "Unknown", IntellectualProperty intellectualProperty = null, bool? isDefault = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, isDefault);
+            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentContainerData"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentContainerData MachineLearningEnvironmentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentContainerProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetContainerData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetContainerData MachineLearningFeatureSetContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureSetContainerProperties properties = null)
         {
-            return new MachineLearningEnvironmentContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureSetContainerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningEnvironmentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
+        /// <param name="provisioningState"> Provisioning state for the featureset container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetContainerProperties MachineLearningFeatureSetContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningEnvironmentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningFeatureSetContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentVersionData"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentVersionData MachineLearningEnvironmentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentVersionProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureData MachineLearningFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureProperties properties = null)
         {
-            return new MachineLearningEnvironmentVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetVersionData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetVersionData MachineLearningFeatureSetVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureSetVersionProperties properties = null)
+        {
+            return new MachineLearningFeatureSetVersionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="entities"> Specifies list of entities. </param>
+        /// <param name="materializationSettings"> Specifies the materialization settings. </param>
+        /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
+        /// <param name="specificationPath"> Specifies the feature spec details. </param>
+        /// <param name="stage"> Specifies the asset stage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetVersionProperties MachineLearningFeatureSetVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<string> entities = null, MaterializationSettings materializationSettings = null, RegistryAssetProvisioningState? provisioningState = null, string specificationPath = null, string stage = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            entities ??= new List<string>();
+
+            return new MachineLearningFeatureSetVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, entities?.ToList(), materializationSettings, provisioningState, specificationPath != null ? new FeaturesetSpecification(specificationPath) : null, stage);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetJob. </summary>
+        /// <param name="createdOn"> Specifies the created date. </param>
+        /// <param name="displayName"> Specifies the display name. </param>
+        /// <param name="duration"> Specifies the duration. </param>
+        /// <param name="experimentId"> Specifies the experiment id. </param>
+        /// <param name="featureWindow"> Specifies the backfill feature window to be materialized. </param>
+        /// <param name="jobId"> Specifies the job id. </param>
+        /// <param name="status"> Specifies the job status. </param>
+        /// <param name="tags"> Specifies the tags if any. </param>
+        /// <param name="featureStoreJobType"> Specifies the feature store job type. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetJob"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetJob MachineLearningFeatureSetJob(DateTimeOffset? createdOn = null, string displayName = null, TimeSpan? duration = null, string experimentId = null, FeatureWindow featureWindow = null, string jobId = null, MachineLearningJobStatus? status = null, IReadOnlyDictionary<string, string> tags = null, FeatureStoreJobType? featureStoreJobType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningFeatureSetJob(createdOn, displayName, duration, experimentId, featureWindow, jobId, status, tags, featureStoreJobType);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureStoreEntityContainerData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityContainerData MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureStoreEntityContainerProperties properties = null)
+        {
+            return new MachineLearningFeatureStoreEntityContainerData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
-        /// <param name="build"> Configuration settings for Docker build context. </param>
-        /// <param name="condaFile">
-        /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
-        /// </param>
-        /// <param name="environmentType">
-        /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
-        /// </param>
-        /// <param name="image">
-        /// Name of the image that will be used for the environment.
-        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
-        /// </param>
-        /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
-        /// <param name="osType"> The OS type of the environment. </param>
-        /// <returns> A new <see cref="Models.MachineLearningEnvironmentVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isAnonymous = null, bool? isArchived = null, AutoRebuildSetting? autoRebuild = null, MachineLearningBuildContext build = null, string condaFile = null, MachineLearningEnvironmentType? environmentType = null, string image = null, MachineLearningInferenceContainerProperties inferenceConfig = null, MachineLearningOperatingSystemType? osType = null)
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
+        /// <param name="provisioningState"> Provisioning state for the featurestore entity container. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityContainerProperties MachineLearningFeatureStoreEntityContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningEnvironmentVersionProperties(description, properties, tags, isAnonymous, isArchived, autoRebuild, build, condaFile, environmentType, image, inferenceConfig, osType);
+            return new MachineLearningFeatureStoreEntityContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeaturestoreEntityVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeaturestoreEntityVersionData"/> instance for mocking. </returns>
+        public static MachineLearningFeaturestoreEntityVersionData MachineLearningFeaturestoreEntityVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureStoreEntityVersionProperties properties = null)
+        {
+            return new MachineLearningFeaturestoreEntityVersionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityVersionProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="indexColumns"> Specifies index columns. </param>
+        /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
+        /// <param name="stage"> Specifies the asset stage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityVersionProperties MachineLearningFeatureStoreEntityVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<IndexColumn> indexColumns = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            indexColumns ??= new List<IndexColumn>();
+
+            return new MachineLearningFeatureStoreEntityVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, indexColumns?.ToList(), provisioningState, stage);
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobData. </summary>
@@ -833,8 +885,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
+        /// Please note <see cref="Models.MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.LabelingJobProperties"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningJobData"/> instance for mocking. </returns>
         public static MachineLearningJobData MachineLearningJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningJobProperties properties = null)
@@ -858,74 +910,142 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobProperties"/> instance for mocking. </returns>
-        public static MachineLearningJobProperties MachineLearningJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, string jobType = "Unknown", IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null)
+        public static MachineLearningJobProperties MachineLearningJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, string jobType = "Unknown", NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
 
-            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status);
+            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status);
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
         /// <param name="jobServiceType"> Endpoint type. </param>
-        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="nodes">
+        /// Nodes that user would like to start the service on.
+        /// If Nodes is not set or set to null, the service will only be started on leader node.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
+        /// </param>
+        /// <param name="port"> Port for endpoint set by user. </param>
         /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="status"> Status of endpoint. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobService"/> instance for mocking. </returns>
-        public static MachineLearningJobService MachineLearningJobService(string endpoint = null, string errorMessage = null, string jobServiceType = null, int? port = null, IDictionary<string, string> properties = null, string status = null)
+        public static MachineLearningJobService MachineLearningJobService(string endpoint = null, string errorMessage = null, string jobServiceType = null, JobNodes nodes = null, int? port = null, IDictionary<string, string> properties = null, string status = null)
         {
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningJobService(endpoint, errorMessage, jobServiceType, port, properties, status);
+            return new MachineLearningJobService(endpoint, errorMessage, jobServiceType, nodes, port, properties, status);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelContainerData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningLabelingJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningModelContainerData"/> instance for mocking. </returns>
-        public static MachineLearningModelContainerData MachineLearningModelContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelContainerProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningLabelingJobData"/> instance for mocking. </returns>
+        public static MachineLearningLabelingJobData MachineLearningLabelingJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabelingJobProperties properties = null)
         {
-            return new MachineLearningModelContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningLabelingJobData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelContainerProperties. </summary>
+        /// <summary> Initializes a new instance of LabelingJobProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="componentId"> ARM resource ID of the component resource. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
+        /// <param name="displayName"> Display name of job. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
+        /// Defaults to AmlToken if null.
+        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
+        /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="latestVersion"> The latest version inside this container. </param>
-        /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningModelContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null)
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="createdOn"> Created time of the job in UTC timezone. </param>
+        /// <param name="dataConfiguration"> Configuration of data used in the job. </param>
+        /// <param name="jobInstructionsUri"> Labeling instructions of the job. </param>
+        /// <param name="labelCategories"> Label categories of the job. </param>
+        /// <param name="labelingJobMediaProperties">
+        /// Media type specific properties in the job.
+        /// Please note <see cref="LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LabelingJobImageProperties"/> and <see cref="LabelingJobTextProperties"/>.
+        /// </param>
+        /// <param name="mlAssistConfiguration">
+        /// Configuration of MLAssist feature in the job.
+        /// Please note <see cref="MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MachineLearningAssistEnabledConfiguration"/>.
+        /// </param>
+        /// <param name="progressMetrics"> Progress metrics of the job. </param>
+        /// <param name="projectId"> Internal id of the job(Previously called project). </param>
+        /// <param name="provisioningState"> Specifies the labeling job provisioning state. </param>
+        /// <param name="statusMessages"> Status messages of the job. </param>
+        /// <returns> A new <see cref="Models.LabelingJobProperties"/> instance for mocking. </returns>
+        public static LabelingJobProperties LabelingJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, DateTimeOffset? createdOn = null, LabelingDataConfiguration dataConfiguration = null, Uri jobInstructionsUri = null, IDictionary<string, LabelCategory> labelCategories = null, LabelingJobMediaProperties labelingJobMediaProperties = null, MachineLearningAssistConfiguration mlAssistConfiguration = null, ProgressMetrics progressMetrics = null, Guid? projectId = null, JobProvisioningState? provisioningState = null, IEnumerable<JobStatusMessage> statusMessages = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
+            services ??= new Dictionary<string, MachineLearningJobService>();
+            labelCategories ??= new Dictionary<string, LabelCategory>();
+            statusMessages ??= new List<JobStatusMessage>();
 
-            return new MachineLearningModelContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new LabelingJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Labeling, notificationSetting, secretsConfiguration, services, status, createdOn, dataConfiguration, jobInstructionsUri != null ? new LabelingJobInstructions(jobInstructionsUri) : null, labelCategories, labelingJobMediaProperties, mlAssistConfiguration, progressMetrics, projectId, provisioningState, statusMessages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelVersionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningModelVersionData"/> instance for mocking. </returns>
-        public static MachineLearningModelVersionData MachineLearningModelVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelVersionProperties properties = null)
+        /// <summary> Initializes a new instance of ProgressMetrics. </summary>
+        /// <param name="completedDatapointCount"> The completed datapoint count. </param>
+        /// <param name="incrementalDataLastRefreshOn"> The time of last successful incremental data refresh in UTC. </param>
+        /// <param name="skippedDatapointCount"> The skipped datapoint count. </param>
+        /// <param name="totalDatapointCount"> The total datapoint count. </param>
+        /// <returns> A new <see cref="Models.ProgressMetrics"/> instance for mocking. </returns>
+        public static ProgressMetrics ProgressMetrics(long? completedDatapointCount = null, DateTimeOffset? incrementalDataLastRefreshOn = null, long? skippedDatapointCount = null, long? totalDatapointCount = null)
         {
-            return new MachineLearningModelVersionData(id, name, resourceType, systemData, properties);
+            return new ProgressMetrics(completedDatapointCount, incrementalDataLastRefreshOn, skippedDatapointCount, totalDatapointCount);
+        }
+
+        /// <summary> Initializes a new instance of JobStatusMessage. </summary>
+        /// <param name="code"> Service-defined message code. </param>
+        /// <param name="createdOn"> Time in UTC at which the message was created. </param>
+        /// <param name="level"> Severity level of message. </param>
+        /// <param name="message"> A human-readable representation of the message code. </param>
+        /// <returns> A new <see cref="Models.JobStatusMessage"/> instance for mocking. </returns>
+        public static JobStatusMessage JobStatusMessage(string code = null, DateTimeOffset? createdOn = null, JobStatusMessageLevel? level = null, string message = null)
+        {
+            return new JobStatusMessage(code, createdOn, level, message);
+        }
+
+        /// <summary> Initializes a new instance of ExportSummary. </summary>
+        /// <param name="endOn"> The time when the export was completed. </param>
+        /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
+        /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>
+        /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
+        /// <param name="startOn"> The time when the export was requested. </param>
+        /// <returns> A new <see cref="Models.ExportSummary"/> instance for mocking. </returns>
+        public static ExportSummary ExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string format = "Unknown", string labelingJobId = null, DateTimeOffset? startOn = null)
+        {
+            return new UnknownExportSummary(endOn, exportedRowCount, format, labelingJobId, startOn);
         }
 
         /// <summary> Initializes a new instance of MachineLearningOnlineEndpointData. </summary>
@@ -961,16 +1081,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// ARM resource ID of the compute if it exists.
         /// optional
         /// </param>
+        /// <param name="mirrorTraffic"> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="publicNetworkAccess"> Set to "Enabled" for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineEndpointProperties"/> instance for mocking. </returns>
-        public static MachineLearningOnlineEndpointProperties MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = null, MachineLearningEndpointAuthKeys keys = null, IDictionary<string, string> properties = null, Uri scoringUri = null, Uri swaggerUri = null, string compute = null, MachineLearningEndpointProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccess = null, IDictionary<string, int> traffic = null)
+        public static MachineLearningOnlineEndpointProperties MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = null, MachineLearningEndpointAuthKeys keys = null, IDictionary<string, string> properties = null, Uri scoringUri = null, Uri swaggerUri = null, string compute = null, IDictionary<string, int> mirrorTraffic = null, MachineLearningEndpointProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccess = null, IDictionary<string, int> traffic = null)
         {
             properties ??= new Dictionary<string, string>();
+            mirrorTraffic ??= new Dictionary<string, int>();
             traffic ??= new Dictionary<string, int>();
 
-            return new MachineLearningOnlineEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, compute, provisioningState, publicNetworkAccess, traffic);
+            return new MachineLearningOnlineEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, compute, mirrorTraffic, provisioningState, publicNetworkAccess, traffic);
         }
 
         /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentData. </summary>
@@ -984,8 +1106,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
+        /// Please note <see cref="Models.MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningKubernetesOnlineDeployment"/> and <see cref="Models.MachineLearningManagedOnlineDeployment"/>.
         /// </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineDeploymentData"/> instance for mocking. </returns>
@@ -999,10 +1121,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentProperties. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
         /// <param name="instanceType"> Compute instance type. </param>
@@ -1021,12 +1144,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineDeploymentProperties"/> instance for mocking. </returns>
-        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string endpointComputeType = "Unknown", string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
+        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, DataCollector dataCollector = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string endpointComputeType = "Unknown", string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
         }
 
         /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
@@ -1097,7 +1220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="displayName"> Display name of schedule. </param>
         /// <param name="isEnabled"> Is the schedule enabled?. </param>
@@ -1116,6 +1239,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningScheduleProperties(description, properties, tags, action, displayName, isEnabled, provisioningState, trigger);
         }
 
+        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
+        /// <param name="discoveryUri"> Discovery URL for the Registry. </param>
+        /// <param name="intellectualPropertyPublisher"> IntellectualPropertyPublisher for the registry. </param>
+        /// <param name="managedResourceId"> ResourceId of the managed RG if the registry has system created resources. </param>
+        /// <param name="mlFlowRegistryUri"> MLFlow Registry URI for the Registry. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections info used for pending connections in private link portal. </param>
+        /// <param name="publicNetworkAccess">
+        /// Is the Registry accessible from the internet?
+        /// Possible values: "Enabled" or "Disabled"
+        /// </param>
+        /// <param name="regionDetails"> Details of each region the registry is in. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningRegistryData"/> instance for mocking. </returns>
+        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, Uri discoveryUri = null, string intellectualPropertyPublisher = null, ResourceIdentifier managedResourceId = null, Uri mlFlowRegistryUri = null, IEnumerable<RegistryPrivateEndpointConnection> privateEndpointConnections = null, string publicNetworkAccess = null, IEnumerable<RegistryRegionArmDetails> regionDetails = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<RegistryPrivateEndpointConnection>();
+            regionDetails ??= new List<RegistryRegionArmDetails>();
+
+            return new MachineLearningRegistryData(id, name, resourceType, systemData, tags, location, identity, kind, sku, discoveryUri, intellectualPropertyPublisher, managedResourceId != null ? new ArmResourceId(managedResourceId) : null, mlFlowRegistryUri, privateEndpointConnections?.ToList(), publicNetworkAccess, regionDetails?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of RegistryPrivateEndpoint. </summary>
+        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
+        /// <returns> A new <see cref="Models.RegistryPrivateEndpoint"/> instance for mocking. </returns>
+        public static RegistryPrivateEndpoint RegistryPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
+        {
+            return new RegistryPrivateEndpoint(id, subnetArmId);
+        }
+
+        /// <summary> Initializes a new instance of PrivateEndpointBase. </summary>
+        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
+        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = null)
+        {
+            return new PrivateEndpointBase(id);
+        }
+
         /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
         /// <param name="id"> Specifies the feature ID. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
@@ -1124,6 +1294,334 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUserFeature MachineLearningUserFeature(string id = null, string displayName = null, string description = null)
         {
             return new MachineLearningUserFeature(id, displayName, description);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="kind"></param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
+        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="associatedWorkspaces"></param>
+        /// <param name="containerRegistries"></param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
+        /// <param name="description"> The description of this workspace. </param>
+        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
+        /// <param name="enableDataIsolation"></param>
+        /// <param name="encryption"></param>
+        /// <param name="existingWorkspaces"></param>
+        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
+        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
+        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
+        /// <param name="hubResourceId"></param>
+        /// <param name="imageBuildCompute"> The compute name for image build. </param>
+        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="keyVaults"></param>
+        /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
+        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
+        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
+        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
+        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
+        /// <param name="cosmosDbCollectionsThroughput"> The service managed resource settings. </param>
+        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
+        /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
+        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="storageAccounts"></param>
+        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
+        /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
+        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
+        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
+        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, bool? allowPublicAccessWhenBehindVnet = null, string applicationInsights = null, IEnumerable<string> associatedWorkspaces = null, IEnumerable<string> containerRegistries = null, string containerRegistry = null, string description = null, Uri discoveryUri = null, bool? enableDataIsolation = null, MachineLearningEncryptionSetting encryption = null, IEnumerable<string> existingWorkspaces = null, FeatureStoreSettings featureStoreSettings = null, string friendlyName = null, bool? isHbiWorkspace = null, ResourceIdentifier hubResourceId = null, string imageBuildCompute = null, string keyVault = null, IEnumerable<string> keyVaults = null, ManagedNetworkSettings managedNetwork = null, Uri mlFlowTrackingUri = null, MachineLearningNotebookResourceInfo notebookInfo = null, string primaryUserAssignedIdentity = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, int? privateLinkCount = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccessType = null, int? cosmosDbCollectionsThroughput = null, string serviceProvisionedResourceGroup = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, int? softDeleteRetentionInDays = null, string storageAccount = null, IEnumerable<string> storageAccounts = null, bool? isStorageHnsEnabled = null, string systemDatastoresAuthMode = null, Guid? tenantId = null, bool? isV1LegacyMode = null, WorkspaceHubConfig workspaceHubConfig = null, string workspaceId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            associatedWorkspaces ??= new List<string>();
+            containerRegistries ??= new List<string>();
+            existingWorkspaces ??= new List<string>();
+            keyVaults ??= new List<string>();
+            privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
+            storageAccounts ??= new List<string>();
+
+            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, kind, sku, allowPublicAccessWhenBehindVnet, applicationInsights, associatedWorkspaces?.ToList(), containerRegistries?.ToList(), containerRegistry, description, discoveryUri, enableDataIsolation, encryption, existingWorkspaces?.ToList(), featureStoreSettings, friendlyName, isHbiWorkspace, hubResourceId, imageBuildCompute, keyVault, keyVaults?.ToList(), managedNetwork, mlFlowTrackingUri, notebookInfo, primaryUserAssignedIdentity, privateEndpointConnections?.ToList(), privateLinkCount, provisioningState, publicNetworkAccessType, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, serviceProvisionedResourceGroup, sharedPrivateLinkResources?.ToList(), softDeleteRetentionInDays, storageAccount, storageAccounts?.ToList(), isStorageHnsEnabled, systemDatastoresAuthMode, tenantId, isV1LegacyMode, workspaceHubConfig, workspaceId);
+        }
+
+        /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
+        /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
+        /// <param name="networkId"></param>
+        /// <param name="outboundRules">
+        /// Dictionary of &lt;OutboundRule&gt;
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
+        /// </param>
+        /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
+        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = null, string networkId = null, IDictionary<string, MachineLearningOutboundRule> outboundRules = null, ManagedNetworkProvisionStatus status = null)
+        {
+            outboundRules ??= new Dictionary<string, MachineLearningOutboundRule>();
+
+            return new ManagedNetworkSettings(isolationMode, networkId, outboundRules, status);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <param name="fqdn"></param>
+        /// <param name="isPrivateLinkEnabled"></param>
+        /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
+        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
+        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = null, bool? isPrivateLinkEnabled = null, MachineLearningNotebookPreparationError notebookPreparationError = null, string resourceId = null)
+        {
+            return new MachineLearningNotebookResourceInfo(fqdn, isPrivateLinkEnabled, notebookPreparationError, resourceId);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <param name="errorMessage"></param>
+        /// <param name="statusCode"></param>
+        /// <returns> A new <see cref="Models.MachineLearningNotebookPreparationError"/> instance for mocking. </returns>
+        public static MachineLearningNotebookPreparationError MachineLearningNotebookPreparationError(string errorMessage = null, int? statusCode = null)
+        {
+            return new MachineLearningNotebookPreparationError(errorMessage, statusCode);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
+        /// <param name="privateEndpoint"> The Private Endpoint resource. </param>
+        /// <param name="connectionState"> The connection state. </param>
+        /// <param name="provisioningState"> The current provisioning state. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningPrivateEndpoint privateEndpoint = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, identity, sku, privateEndpoint, connectionState, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <param name="id"> e.g. /subscriptions/{networkSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </param>
+        /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
+        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
+        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
+        {
+            return new MachineLearningPrivateEndpoint(id, subnetArmId);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionData MachineLearningWorkspaceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningWorkspaceConnectionProperties properties = null)
+        {
+            return new MachineLearningWorkspaceConnectionData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseResult. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceDiagnoseResult MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value = null)
+        {
+            return new MachineLearningWorkspaceDiagnoseResult(value);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <param name="userDefinedRouteResults"></param>
+        /// <param name="networkSecurityRuleResults"></param>
+        /// <param name="resourceLockResults"></param>
+        /// <param name="dnsResolutionResults"></param>
+        /// <param name="storageAccountResults"></param>
+        /// <param name="keyVaultResults"></param>
+        /// <param name="containerRegistryResults"></param>
+        /// <param name="applicationInsightsResults"></param>
+        /// <param name="otherResults"></param>
+        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResultValue"/> instance for mocking. </returns>
+        public static MachineLearningDiagnoseResultValue MachineLearningDiagnoseResultValue(IEnumerable<MachineLearningDiagnoseResult> userDefinedRouteResults = null, IEnumerable<MachineLearningDiagnoseResult> networkSecurityRuleResults = null, IEnumerable<MachineLearningDiagnoseResult> resourceLockResults = null, IEnumerable<MachineLearningDiagnoseResult> dnsResolutionResults = null, IEnumerable<MachineLearningDiagnoseResult> storageAccountResults = null, IEnumerable<MachineLearningDiagnoseResult> keyVaultResults = null, IEnumerable<MachineLearningDiagnoseResult> containerRegistryResults = null, IEnumerable<MachineLearningDiagnoseResult> applicationInsightsResults = null, IEnumerable<MachineLearningDiagnoseResult> otherResults = null)
+        {
+            userDefinedRouteResults ??= new List<MachineLearningDiagnoseResult>();
+            networkSecurityRuleResults ??= new List<MachineLearningDiagnoseResult>();
+            resourceLockResults ??= new List<MachineLearningDiagnoseResult>();
+            dnsResolutionResults ??= new List<MachineLearningDiagnoseResult>();
+            storageAccountResults ??= new List<MachineLearningDiagnoseResult>();
+            keyVaultResults ??= new List<MachineLearningDiagnoseResult>();
+            containerRegistryResults ??= new List<MachineLearningDiagnoseResult>();
+            applicationInsightsResults ??= new List<MachineLearningDiagnoseResult>();
+            otherResults ??= new List<MachineLearningDiagnoseResult>();
+
+            return new MachineLearningDiagnoseResultValue(userDefinedRouteResults?.ToList(), networkSecurityRuleResults?.ToList(), resourceLockResults?.ToList(), dnsResolutionResults?.ToList(), storageAccountResults?.ToList(), keyVaultResults?.ToList(), containerRegistryResults?.ToList(), applicationInsightsResults?.ToList(), otherResults?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningDiagnoseResult. </summary>
+        /// <param name="code"> Code for workspace setup error. </param>
+        /// <param name="level"> Level of workspace setup error. </param>
+        /// <param name="message"> Message of workspace setup error. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResult"/> instance for mocking. </returns>
+        public static MachineLearningDiagnoseResult MachineLearningDiagnoseResult(string code = null, MachineLearningDiagnoseResultLevel? level = null, string message = null)
+        {
+            return new MachineLearningDiagnoseResult(code, level, message);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
+        /// <param name="containerRegistryCredentials"></param>
+        /// <param name="notebookAccessKeys"></param>
+        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
+        /// <param name="userStorageKey"> The access key of the workspace storage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null, string userStorageResourceId = null, string userStorageKey = null)
+        {
+            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys, userStorageResourceId, userStorageKey);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <param name="location"> The location of the workspace ACR. </param>
+        /// <param name="passwords"></param>
+        /// <param name="username"> The username of the workspace ACR. </param>
+        /// <returns> A new <see cref="Models.MachineLearningContainerRegistryCredentials"/> instance for mocking. </returns>
+        public static MachineLearningContainerRegistryCredentials MachineLearningContainerRegistryCredentials(AzureLocation? location = null, IEnumerable<MachineLearningPasswordDetail> passwords = null, string username = null)
+        {
+            passwords ??= new List<MachineLearningPasswordDetail>();
+
+            return new MachineLearningContainerRegistryCredentials(location, passwords?.ToList(), username);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
+        public static MachineLearningPasswordDetail MachineLearningPasswordDetail(string name = null, string value = null)
+        {
+            return new MachineLearningPasswordDetail(name, value);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <param name="primaryAccessKey"> The primary access key of the Notebook. </param>
+        /// <param name="secondaryAccessKey"> The secondary access key of the Notebook. </param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = null, string secondaryAccessKey = null)
+        {
+            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="expiresIn"></param>
+        /// <param name="hostName"></param>
+        /// <param name="notebookResourceId"></param>
+        /// <param name="publicDns"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="scope"></param>
+        /// <param name="tokenType"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string accessToken = null, int? expiresIn = null, string hostName = null, string notebookResourceId = null, string publicDns = null, string refreshToken = null, string scope = null, string tokenType = null)
+        {
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken, expiresIn, hostName, notebookResourceId, publicDns, refreshToken, scope, tokenType);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
+        /// <param name="userStorageKey"> The access key of the storage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = null)
+        {
+            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
+        {
+            return new MachineLearningFqdnEndpoints(properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
+        /// <param name="category"></param>
+        /// <param name="endpoints"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
+        {
+            endpoints ??= new List<MachineLearningFqdnEndpoint>();
+
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>
+        /// <param name="domainName"></param>
+        /// <param name="endpointDetails"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoint"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpoint MachineLearningFqdnEndpoint(string domainName = null, IEnumerable<MachineLearningFqdnEndpointDetail> endpointDetails = null)
+        {
+            endpointDetails ??= new List<MachineLearningFqdnEndpointDetail>();
+
+            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        /// <param name="port"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointDetail"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointDetail MachineLearningFqdnEndpointDetail(int? port = null)
+        {
+            return new MachineLearningFqdnEndpointDetail(port);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningOutboundRuleBasicData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Outbound Rule for the managed network of a machine learning workspace.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
+        /// </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/> instance for mocking. </returns>
+        public static MachineLearningOutboundRuleBasicData MachineLearningOutboundRuleBasicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningOutboundRule properties = null)
+        {
+            return new MachineLearningOutboundRuleBasicData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
+        public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new MachineLearningPrivateLinkResource(id, name, resourceType, systemData, tags, location, identity, sku, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of MachineLearningAksCompute. </summary>
@@ -1250,39 +1748,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new AmlCompute(ComputeType.AmlCompute, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
-        /// <param name="vmSize"> Virtual Machine Size. </param>
-        /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
-        /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
-        /// <param name="sshSettings"> Specifies policy and settings for SSH access. </param>
-        /// <param name="connectivityEndpoints"> Describes all connectivity endpoints available for this ComputeInstance. </param>
-        /// <param name="applications"> Describes available applications and their endpoints on this ComputeInstance. </param>
-        /// <param name="createdBy"> Describes information on user who created this ComputeInstance. </param>
-        /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
-        /// <param name="state"> The current state of this ComputeInstance. </param>
-        /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
-        /// <param name="personalComputeInstanceAssignedUser"> Settings for a personal compute instance. </param>
-        /// <param name="scripts"> Details of customized scripts to execute for setting up the cluster. </param>
-        /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        /// <param name="schedulesComputeStartStop"> The list of schedules to be applied on the computes. </param>
-        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
-        /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
-        /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
-        /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
-        /// <param name="versionsRuntime"> ComputeInstance version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceProperties"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceProperties MachineLearningComputeInstanceProperties(string vmSize = null, ResourceIdentifier subnetId = null, MachineLearningApplicationSharingPolicy? applicationSharingPolicy = null, MachineLearningComputeInstanceSshSettings sshSettings = null, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints = null, IEnumerable<MachineLearningComputeInstanceApplication> applications = null, MachineLearningComputeInstanceCreatedBy createdBy = null, IEnumerable<MachineLearningError> errors = null, MachineLearningComputeInstanceState? state = null, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = null, MachineLearningComputeInstanceAssignedUser personalComputeInstanceAssignedUser = null, MachineLearningScriptsToExecute scripts = null, MachineLearningComputeInstanceLastOperation lastOperation = null, IEnumerable<MachineLearningComputeStartStopSchedule> schedulesComputeStartStop = null, bool? enableNodePublicIP = null, IEnumerable<MachineLearningComputeInstanceContainer> containers = null, IEnumerable<MachineLearningComputeInstanceDataDisk> dataDisks = null, IEnumerable<MachineLearningComputeInstanceDataMount> dataMounts = null, string versionsRuntime = null)
-        {
-            applications ??= new List<MachineLearningComputeInstanceApplication>();
-            errors ??= new List<MachineLearningError>();
-            schedulesComputeStartStop ??= new List<MachineLearningComputeStartStopSchedule>();
-            containers ??= new List<MachineLearningComputeInstanceContainer>();
-            dataDisks ??= new List<MachineLearningComputeInstanceDataDisk>();
-            dataMounts ??= new List<MachineLearningComputeInstanceDataMount>();
-
-            return new MachineLearningComputeInstanceProperties(vmSize, subnetId != null ? new ResourceId(subnetId) : null, applicationSharingPolicy, sshSettings, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, personalComputeInstanceAssignedUser != null ? new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser) : null, scripts != null ? new SetupScripts(scripts) : null, lastOperation, schedulesComputeStartStop != null ? new ComputeSchedules(schedulesComputeStartStop?.ToList()) : null, enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), versionsRuntime != null ? new ComputeInstanceVersion(versionsRuntime) : null);
-        }
-
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
@@ -1292,6 +1757,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceSshSettings MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess = null, string adminUserName = null, int? sshPort = null, string adminPublicKey = null)
         {
             return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey);
+        }
+
+        /// <summary> Initializes a new instance of ImageMetadata. </summary>
+        /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
+        /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
+        /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
+        /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
+        public static ImageMetadata ImageMetadata(string currentImageVersion = null, string latestImageVersion = null, bool? isLatestOSImageVersion = null)
+        {
+            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion);
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceConnectivityEndpoints. </summary>
@@ -1339,23 +1814,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
         /// <param name="action"> [Required] The compute power action. </param>
         /// <param name="triggerType"> [Required] The schedule trigger type. </param>
-        /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
-        /// <param name="cron"> Required if triggerType is Cron. </param>
+        /// <param name="recurrenceSchedule"> Required if triggerType is Recurrence. </param>
+        /// <param name="cronSchedule"> Required if triggerType is Cron. </param>
         /// <param name="schedule"> [Deprecated] Not used any more. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeStartStopSchedule"/> instance for mocking. </returns>
-        public static MachineLearningComputeStartStopSchedule MachineLearningComputeStartStopSchedule(string id = null, MachineLearningComputeProvisioningStatus? provisioningStatus = null, MachineLearningScheduleStatus? status = null, MachineLearningComputePowerAction? action = null, MachineLearningTriggerType? triggerType = null, MachineLearningRecurrenceTrigger recurrence = null, CronTrigger cron = null, MachineLearningScheduleBase schedule = null)
+        public static MachineLearningComputeStartStopSchedule MachineLearningComputeStartStopSchedule(string id = null, MachineLearningComputeProvisioningStatus? provisioningStatus = null, MachineLearningScheduleStatus? status = null, MachineLearningComputePowerAction? action = null, MachineLearningTriggerType? triggerType = null, ComputeStartStopRecurrenceSchedule recurrenceSchedule = null, ComputeStartStopCronSchedule cronSchedule = null, MachineLearningScheduleBase schedule = null)
         {
-            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrence, cron, schedule);
-        }
-
-        /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
-        /// <param name="id"> A system assigned id for the schedule. </param>
-        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
-        /// <param name="status"> Is the schedule enabled or disabled?. </param>
-        /// <returns> A new <see cref="Models.MachineLearningScheduleBase"/> instance for mocking. </returns>
-        public static MachineLearningScheduleBase MachineLearningScheduleBase(string id = null, MachineLearningScheduleProvisioningState? provisioningStatus = null, MachineLearningScheduleStatus? status = null)
-        {
-            return new MachineLearningScheduleBase(id, provisioningStatus, status);
+            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrenceSchedule, cronSchedule, schedule);
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
@@ -1582,6 +2047,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -1597,22 +2064,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
+        /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <param name="taskDetails">
         /// [Required] This represents scenario which can be one of Tables/NLP/Image
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
+        /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/> and <see cref="Models.TextNer"/>.
         /// </param>
         /// <returns> A new <see cref="Models.AutoMLJob"/> instance for mocking. </returns>
-        public static AutoMLJob AutoMLJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobOutput> outputs = null, MachineLearningJobResourceConfiguration resources = null, AutoMLVertical taskDetails = null)
+        public static AutoMLJob AutoMLJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobOutput> outputs = null, JobQueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null, AutoMLVertical taskDetails = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
             environmentVariables ??= new Dictionary<string, string>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new AutoMLJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.AutoML, services, status, environmentId, environmentVariables, outputs, resources, taskDetails);
+            return new AutoMLJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.AutoML, notificationSetting, secretsConfiguration, services, status, environmentId, environmentVariables, outputs, queueSettings, resources, taskDetails);
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
@@ -1622,21 +2091,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="accountName"> Storage account name. </param>
         /// <param name="containerName"> Storage account container name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <param name="resourceGroup"> Azure Resource Group name. </param>
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureBlobDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string containerName = null, string endpoint = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
+        public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string containerName = null, string endpoint = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureBlobDatastore(description, properties, tags, credentials, DatastoreType.AzureBlob, isDefault, accountName, containerName, endpoint, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureBlobDatastore(description, properties, tags, credentials, DatastoreType.AzureBlob, intellectualProperty, isDefault, accountName, containerName, endpoint, protocol, serviceDataAccessAuthIdentity, resourceGroup, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen1Datastore. </summary>
@@ -1646,18 +2118,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
+        /// <param name="resourceGroup"> Azure Resource Group name. </param>
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string storeName = null)
+        public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string storeName = null, string resourceGroup = null, string subscriptionId = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureDataLakeGen1Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen1, isDefault, serviceDataAccessAuthIdentity, storeName);
+            return new MachineLearningAzureDataLakeGen1Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen1, intellectualProperty, isDefault, serviceDataAccessAuthIdentity, storeName, resourceGroup, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen2Datastore. </summary>
@@ -1667,21 +2142,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <param name="resourceGroup"> Azure Resource Group name. </param>
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string endpoint = null, string filesystem = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
+        public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string filesystem = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureDataLakeGen2Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen2, isDefault, accountName, endpoint, filesystem, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureDataLakeGen2Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen2, intellectualProperty, isDefault, accountName, endpoint, filesystem, protocol, serviceDataAccessAuthIdentity, resourceGroup, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
@@ -1691,21 +2169,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <param name="resourceGroup"> Azure Resource Group name. </param>
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureFileDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string endpoint = null, string fileShareName = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
+        public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string fileShareName = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureFileDatastore(description, properties, tags, credentials, DatastoreType.AzureFile, isDefault, accountName, endpoint, fileShareName, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureFileDatastore(description, properties, tags, credentials, DatastoreType.AzureFile, intellectualProperty, isDefault, accountName, endpoint, fileShareName, protocol, serviceDataAccessAuthIdentity, resourceGroup, subscriptionId);
+        }
+
+        /// <summary> Initializes a new instance of CocoExportSummary. </summary>
+        /// <param name="endOn"> The time when the export was completed. </param>
+        /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
+        /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
+        /// <param name="startOn"> The time when the export was requested. </param>
+        /// <param name="containerName"> The container name to which the labels will be exported. </param>
+        /// <param name="snapshotPath"> The output path where the labels will be exported. </param>
+        /// <returns> A new <see cref="Models.CocoExportSummary"/> instance for mocking. </returns>
+        public static CocoExportSummary CocoExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string labelingJobId = null, DateTimeOffset? startOn = null, string containerName = null, string snapshotPath = null)
+        {
+            return new CocoExportSummary(endOn, exportedRowCount, ExportFormatType.Coco, labelingJobId, startOn, containerName, snapshotPath);
         }
 
         /// <summary> Initializes a new instance of MachineLearningCommandJob. </summary>
@@ -1723,17 +2217,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
+        /// <param name="mlflowAutologger"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="distribution">
-        /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
+        /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, Ray, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
@@ -1749,27 +2246,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="parameters"> Input parameters. </param>
+        /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningCommandJob"/> instance for mocking. </returns>
-        public static MachineLearningCommandJob MachineLearningCommandJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, ResourceIdentifier codeId = null, string command = null, MachineLearningDistributionConfiguration distribution = null, ResourceIdentifier environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningCommandJobLimits limits = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData parameters = null, MachineLearningJobResourceConfiguration resources = null)
+        public static MachineLearningCommandJob MachineLearningCommandJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningFlowAutoLoggerState? mlflowAutologger = null, ResourceIdentifier codeId = null, string command = null, MachineLearningDistributionConfiguration distribution = null, ResourceIdentifier environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningCommandJobLimits limits = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData parameters = null, JobQueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
             environmentVariables ??= new Dictionary<string, string>();
             inputs ??= new Dictionary<string, MachineLearningJobInput>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningCommandJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Command, services, status, codeId, command, distribution, environmentId, environmentVariables, inputs, limits, outputs, parameters, resources);
+            return new MachineLearningCommandJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Command, notificationSetting, secretsConfiguration, services, status, mlflowAutologger.HasValue ? new AutologgerSettings(mlflowAutologger.Value) : null, codeId, command, distribution, environmentId, environmentVariables, inputs, limits, outputs, parameters, queueSettings, resources);
+        }
+
+        /// <summary> Initializes a new instance of CsvExportSummary. </summary>
+        /// <param name="endOn"> The time when the export was completed. </param>
+        /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
+        /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
+        /// <param name="startOn"> The time when the export was requested. </param>
+        /// <param name="containerName"> The container name to which the labels will be exported. </param>
+        /// <param name="snapshotPath"> The output path where the labels will be exported. </param>
+        /// <returns> A new <see cref="Models.CsvExportSummary"/> instance for mocking. </returns>
+        public static CsvExportSummary CsvExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string labelingJobId = null, DateTimeOffset? startOn = null, string containerName = null, string snapshotPath = null)
+        {
+            return new CsvExportSummary(endOn, exportedRowCount, ExportFormatType.CSV, labelingJobId, startOn, containerName, snapshotPath);
+        }
+
+        /// <summary> Initializes a new instance of DatasetExportSummary. </summary>
+        /// <param name="endOn"> The time when the export was completed. </param>
+        /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
+        /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
+        /// <param name="startOn"> The time when the export was requested. </param>
+        /// <param name="labeledAssetName"> The unique name of the labeled data asset. </param>
+        /// <returns> A new <see cref="Models.DatasetExportSummary"/> instance for mocking. </returns>
+        public static DatasetExportSummary DatasetExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string labelingJobId = null, DateTimeOffset? startOn = null, string labeledAssetName = null)
+        {
+            return new DatasetExportSummary(endOn, exportedRowCount, ExportFormatType.Dataset, labelingJobId, startOn, labeledAssetName);
+        }
+
+        /// <summary> Initializes a new instance of HdfsDatastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="credentials">
+        /// [Required] Account credentials.
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
+        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
+        /// <param name="hdfsServerCertificate"> The TLS cert of the HDFS server. Needs to be a base64 encoded string. Required if "Https" protocol is selected. </param>
+        /// <param name="nameNodeAddress"> [Required] IP Address or DNS HostName. </param>
+        /// <param name="protocol"> Protocol used to communicate with the storage account (Https/Http). </param>
+        /// <returns> A new <see cref="Models.HdfsDatastore"/> instance for mocking. </returns>
+        public static HdfsDatastore HdfsDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string hdfsServerCertificate = null, string nameNodeAddress = null, string protocol = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new HdfsDatastore(description, properties, tags, credentials, DatastoreType.Hdfs, intellectualProperty, isDefault, hdfsServerCertificate, nameNodeAddress, protocol);
         }
 
         /// <summary> Initializes a new instance of MachineLearningKubernetesOnlineDeployment. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
         /// <param name="instanceType"> Compute instance type. </param>
         /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
@@ -1788,21 +2336,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
         /// <returns> A new <see cref="Models.MachineLearningKubernetesOnlineDeployment"/> instance for mocking. </returns>
-        public static MachineLearningKubernetesOnlineDeployment MachineLearningKubernetesOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null, MachineLearningContainerResourceRequirements containerResourceRequirements = null)
+        public static MachineLearningKubernetesOnlineDeployment MachineLearningKubernetesOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, DataCollector dataCollector = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null, MachineLearningContainerResourceRequirements containerResourceRequirements = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Kubernetes, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, containerResourceRequirements);
+            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Kubernetes, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, containerResourceRequirements);
         }
 
         /// <summary> Initializes a new instance of MachineLearningManagedOnlineDeployment. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
         /// <param name="instanceType"> Compute instance type. </param>
         /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
@@ -1820,12 +2369,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningManagedOnlineDeployment"/> instance for mocking. </returns>
-        public static MachineLearningManagedOnlineDeployment MachineLearningManagedOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
+        public static MachineLearningManagedOnlineDeployment MachineLearningManagedOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, DataCollector dataCollector = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningManagedOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Managed, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new MachineLearningManagedOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Managed, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+        }
+
+        /// <summary> Initializes a new instance of OneLakeDatastore. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="credentials">
+        /// [Required] Account credentials.
+        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
+        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
+        /// <param name="artifact">
+        /// [Required] OneLake artifact backing the datastore.
+        /// Please note <see cref="OneLakeArtifact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LakeHouseArtifact"/>.
+        /// </param>
+        /// <param name="endpoint"> OneLake endpoint to use for the datastore. </param>
+        /// <param name="oneLakeWorkspaceName"> [Required] OneLake workspace name. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <returns> A new <see cref="Models.OneLakeDatastore"/> instance for mocking. </returns>
+        public static OneLakeDatastore OneLakeDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, OneLakeArtifact artifact = null, string endpoint = null, string oneLakeWorkspaceName = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new OneLakeDatastore(description, properties, tags, credentials, DatastoreType.OneLake, intellectualProperty, isDefault, artifact, endpoint, oneLakeWorkspaceName, serviceDataAccessAuthIdentity);
         }
 
         /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
@@ -1843,6 +2420,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -1862,16 +2441,90 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
         /// <returns> A new <see cref="Models.MachineLearningPipelineJob"/> instance for mocking. </returns>
-        public static MachineLearningPipelineJob MachineLearningPipelineJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, IDictionary<string, MachineLearningJobInput> inputs = null, IDictionary<string, BinaryData> jobs = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData settings = null, ResourceIdentifier sourceJobId = null)
+        public static MachineLearningPipelineJob MachineLearningPipelineJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, IDictionary<string, MachineLearningJobInput> inputs = null, IDictionary<string, BinaryData> jobs = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData settings = null, ResourceIdentifier sourceJobId = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
             inputs ??= new Dictionary<string, MachineLearningJobInput>();
             jobs ??= new Dictionary<string, BinaryData>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningPipelineJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Pipeline, services, status, inputs, jobs, outputs, settings, sourceJobId);
+            return new MachineLearningPipelineJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Pipeline, notificationSetting, secretsConfiguration, services, status, inputs, jobs, outputs, settings, sourceJobId);
+        }
+
+        /// <summary> Initializes a new instance of SasCredentialDto. </summary>
+        /// <param name="sasUri"> Full SAS Uri, including the storage, container/blob path and SAS token. </param>
+        /// <returns> A new <see cref="Models.SasCredentialDto"/> instance for mocking. </returns>
+        public static SasCredentialDto SasCredentialDto(Uri sasUri = null)
+        {
+            return new SasCredentialDto(PendingUploadCredentialType.Sas, sasUri);
+        }
+
+        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="componentId"> ARM resource ID of the component resource. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
+        /// <param name="displayName"> Display name of job. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
+        /// Defaults to AmlToken if null.
+        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
+        /// </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
+        /// <param name="services">
+        /// List of JobEndpoints.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="archives"> Archive files used in the job. </param>
+        /// <param name="args"> Arguments for the job. </param>
+        /// <param name="codeId"> [Required] ARM resource ID of the code asset. </param>
+        /// <param name="conf"> Spark configured properties. </param>
+        /// <param name="entry">
+        /// [Required] The entry to execute on startup of the job.
+        /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
+        /// </param>
+        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="files"> Files used in the job. </param>
+        /// <param name="inputs">
+        /// Mapping of input data bindings used in the job.
+        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// </param>
+        /// <param name="jars"> Jar files used in the job. </param>
+        /// <param name="outputs">
+        /// Mapping of output data bindings used in the job.
+        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
+        /// </param>
+        /// <param name="pyFiles"> Python files used in the job. </param>
+        /// <param name="queueSettings"> Queue settings for the job. </param>
+        /// <param name="resources"> Compute Resource configuration for the job. </param>
+        /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
+        public static SparkJob SparkJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, IEnumerable<string> archives = null, string args = null, string codeId = null, IDictionary<string, string> conf = null, SparkJobEntry entry = null, string environmentId = null, IEnumerable<string> files = null, IDictionary<string, MachineLearningJobInput> inputs = null, IEnumerable<string> jars = null, IDictionary<string, MachineLearningJobOutput> outputs = null, IEnumerable<string> pyFiles = null, JobQueueSettings queueSettings = null, SparkResourceConfiguration resources = null)
+        {
+            properties ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
+            services ??= new Dictionary<string, MachineLearningJobService>();
+            archives ??= new List<string>();
+            conf ??= new Dictionary<string, string>();
+            files ??= new List<string>();
+            inputs ??= new Dictionary<string, MachineLearningJobInput>();
+            jars ??= new List<string>();
+            outputs ??= new Dictionary<string, MachineLearningJobOutput>();
+            pyFiles ??= new List<string>();
+
+            return new SparkJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Spark, notificationSetting, secretsConfiguration, services, status, archives?.ToList(), args, codeId, conf, entry, environmentId, files?.ToList(), inputs, jars?.ToList(), outputs, pyFiles?.ToList(), queueSettings, resources);
         }
 
         /// <summary> Initializes a new instance of MachineLearningSweepJob. </summary>
@@ -1889,6 +2542,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -1911,6 +2566,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
+        /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
         /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -1919,15 +2575,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> [Required] Trial component definition. </param>
         /// <returns> A new <see cref="Models.MachineLearningSweepJob"/> instance for mocking. </returns>
-        public static MachineLearningSweepJob MachineLearningSweepJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningEarlyTerminationPolicy earlyTermination = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningSweepJobLimits limits = null, MachineLearningObjective objective = null, IDictionary<string, MachineLearningJobOutput> outputs = null, SamplingAlgorithm samplingAlgorithm = null, BinaryData searchSpace = null, MachineLearningTrialComponent trial = null)
+        public static MachineLearningSweepJob MachineLearningSweepJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningEarlyTerminationPolicy earlyTermination = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningSweepJobLimits limits = null, MachineLearningObjective objective = null, IDictionary<string, MachineLearningJobOutput> outputs = null, JobQueueSettings queueSettings = null, SamplingAlgorithm samplingAlgorithm = null, BinaryData searchSpace = null, MachineLearningTrialComponent trial = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
+            secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
             inputs ??= new Dictionary<string, MachineLearningJobInput>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningSweepJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, services, status, earlyTermination, inputs, limits, objective, outputs, samplingAlgorithm, searchSpace, trial);
+            return new MachineLearningSweepJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, notificationSetting, secretsConfiguration, services, status, earlyTermination, inputs, limits, objective, outputs, queueSettings, samplingAlgorithm, searchSpace, trial);
         }
 
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
@@ -1942,12 +2599,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
         /// </param>
         /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
+        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
+        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
-        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextClassificationMultilabel(logVerbosity, targetColumnName, TaskType.TextClassificationMultilabel, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
+            searchSpace ??= new List<NlpParameterSubspace>();
+
+            return new TextClassificationMultilabel(logVerbosity, targetColumnName, TaskType.TextClassificationMultilabel, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, fixedParameters, limitSettings, searchSpace?.ToList(), sweepSettings, validationData);
         }
 
         /// <summary> Initializes a new instance of TextNer. </summary>
@@ -1962,12 +2624,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
         /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
+        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
+        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
-        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextNer(logVerbosity, targetColumnName, TaskType.TextNER, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
+            searchSpace ??= new List<NlpParameterSubspace>();
+
+            return new TextNer(logVerbosity, targetColumnName, TaskType.TextNER, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, fixedParameters, limitSettings, searchSpace?.ToList(), sweepSettings, validationData);
+        }
+
+        /// <summary> Initializes a new instance of ServiceTagDestination. </summary>
+        /// <param name="action"> The action enum for networking rule. </param>
+        /// <param name="addressPrefixes"> Optional, if provided, the ServiceTag property will be ignored. </param>
+        /// <param name="portRanges"></param>
+        /// <param name="protocol"></param>
+        /// <param name="serviceTag"></param>
+        /// <returns> A new <see cref="Models.ServiceTagDestination"/> instance for mocking. </returns>
+        public static ServiceTagDestination ServiceTagDestination(NetworkingRuleAction? action = null, IEnumerable<string> addressPrefixes = null, string portRanges = null, string protocol = null, string serviceTag = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new ServiceTagDestination(action, addressPrefixes?.ToList(), portRanges, protocol, serviceTag);
         }
     }
 }

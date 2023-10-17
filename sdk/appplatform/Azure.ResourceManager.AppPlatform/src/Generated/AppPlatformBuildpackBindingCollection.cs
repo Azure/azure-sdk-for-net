@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformBuildpackBindingBuildpackBindingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/buildpackBindings/{buildpackBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildpackBinding_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildpackBindingName"> The name of the Buildpack Binding Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformBuildpackBindingResource>> GetIfExistsAsync(string buildpackBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+
+            using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformBuildpackBindingBuildpackBindingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildpackBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildpackBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/buildpackBindings/{buildpackBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildpackBinding_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildpackBindingName"> The name of the Buildpack Binding Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformBuildpackBindingResource> GetIfExists(string buildpackBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildpackBindingName, nameof(buildpackBindingName));
+
+            using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformBuildpackBindingBuildpackBindingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildpackBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildpackBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

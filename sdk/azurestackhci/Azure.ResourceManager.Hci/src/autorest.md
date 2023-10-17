@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.Hci
 require: https://github.com/Azure/azure-rest-api-specs/blob/d82babc9bd0fa25260d04e52d841c2a6f59792c8/specification/azurestackhci/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -28,7 +31,7 @@ format-by-name-rules:
   '*ApplicationObjectId': 'uuid'
   '*ServicePrincipalObjectId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -97,7 +100,7 @@ rename-mapping:
   Step: HciUpdateStep
   OfferCollection: HciOfferCollection
   OfferData: HciOfferData
-
+  ClusterPatch.identity.type: ManagedServiceIdentityType
 
 directive:
   - from: swagger-document

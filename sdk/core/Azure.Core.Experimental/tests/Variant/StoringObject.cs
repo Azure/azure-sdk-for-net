@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringObject
     {
@@ -12,7 +12,7 @@ namespace Azure
         public void BasicStorage()
         {
             A a = new();
-            Value value = new(a);
+            Variant value = new(a);
             Assert.AreEqual(typeof(A), value.Type);
             Assert.AreSame(a, value.As<A>());
 
@@ -25,7 +25,7 @@ namespace Azure
         public void DerivedRetrieval()
         {
             B b = new();
-            Value value = new(b);
+            Variant value = new(b);
             Assert.AreEqual(typeof(B), value.Type);
             Assert.AreSame(b, value.As<A>());
             Assert.AreSame(b, value.As<B>());
@@ -45,7 +45,7 @@ namespace Azure
         public void AsInterface()
         {
             I a = new A();
-            Value value = new(a);
+            Variant value = new(a);
             Assert.AreEqual(typeof(A), value.Type);
 
             Assert.AreSame(a, value.As<A>());

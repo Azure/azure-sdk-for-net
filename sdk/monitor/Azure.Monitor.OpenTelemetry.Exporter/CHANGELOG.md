@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.15 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+the telemetry offline for retrying at a later time.
+([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#38430](https://github.com/Azure/azure-sdk-for-net/pull/38430))
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  - OpenTelemetry 1.6.0
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0
 
 ## 1.0.0-beta.14 (2023-08-09)
 

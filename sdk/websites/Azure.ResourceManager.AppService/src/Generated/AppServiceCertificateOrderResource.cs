@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -810,7 +811,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<CertificateOrderAction> RetrieveCertificateActionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -831,7 +832,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<CertificateOrderAction> RetrieveCertificateActions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -852,7 +853,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -873,7 +874,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
         }
     }
 }

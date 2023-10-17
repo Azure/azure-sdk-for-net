@@ -444,7 +444,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// The available derived classes include <see cref="Models.ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
         public static IntegrationRuntimeResource IntegrationRuntimeResource(string id = null, string name = null, string type = null, string etag = null, IntegrationRuntime properties = null)
@@ -832,8 +832,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties">
         /// Properties of the trigger.
-        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
+        /// Please note <see cref="Models.Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.BlobEventsTrigger"/>, <see cref="Models.BlobTrigger"/>, <see cref="Models.ChainingTrigger"/>, <see cref="Models.CustomEventsTrigger"/>, <see cref="Models.MultiplePipelineTrigger"/>, <see cref="Models.RerunTumblingWindowTrigger"/>, <see cref="Models.ScheduleTrigger"/> and <see cref="Models.TumblingWindowTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Models.TriggerResource"/> instance for mocking. </returns>
         public static TriggerResource TriggerResource(string id = null, string name = null, string type = null, string etag = null, Trigger properties = null)

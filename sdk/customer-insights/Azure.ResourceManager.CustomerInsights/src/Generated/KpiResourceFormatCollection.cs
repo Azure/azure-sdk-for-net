@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _kpiResourceFormatKpiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/kpi/{kpiName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Kpi_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kpiName"> The name of the KPI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KpiResourceFormatResource>> GetIfExistsAsync(string kpiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+
+            using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _kpiResourceFormatKpiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KpiResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/kpi/{kpiName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Kpi_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kpiName"> The name of the KPI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
+        public virtual NullableResponse<KpiResourceFormatResource> GetIfExists(string kpiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+
+            using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _kpiResourceFormatKpiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KpiResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

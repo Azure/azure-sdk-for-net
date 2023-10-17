@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -377,7 +378,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual AsyncPageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +441,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Pageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStats(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>

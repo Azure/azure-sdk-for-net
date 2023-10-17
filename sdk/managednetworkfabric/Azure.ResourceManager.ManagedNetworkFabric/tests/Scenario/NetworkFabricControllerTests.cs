@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
                 {
-                    Name = "managedResourceGroupName",
-                    Location = new AzureLocation("eastus"),
+                    Name = TestEnvironment.NetworkFabricControllerName + "-mrg",
+                    Location = new AzureLocation(TestEnvironment.Location),
                 },
                 IsWorkloadManagementNetworkEnabled = IsWorkloadManagementNetworkEnabled.True,
                 IPv4AddressSpace = "172.253.0.0/19",
@@ -82,6 +82,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
+
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricControllerResource item in subscriptionResource.GetNetworkFabricControllersAsync())
+            {
+                NetworkFabricControllerData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
