@@ -41,6 +41,11 @@ namespace Azure.Storage.DataMovement.JobPlan
         public string DestinationProviderId;
 
         /// <summary>
+        /// Whether the transfer is of a container or not.
+        /// </summary>
+        public bool IsContainer;
+
+        /// <summary>
         /// Whether or not the enumeration of the parent container has completed.
         /// </summary>
         public bool EnumerationComplete;
@@ -67,6 +72,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPlanOperation operationType,
             string sourceProviderId,
             string destinationProviderId,
+            bool isContainer,
             bool enumerationComplete,
             DataTransferStatus jobStatus,
             string parentSourcePath,
@@ -95,6 +101,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             OperationType = operationType;
             SourceProviderId = sourceProviderId;
             DestinationProviderId = destinationProviderId;
+            IsContainer = isContainer;
             EnumerationComplete = enumerationComplete;
             JobStatus = jobStatus;
             ParentSourcePath = parentSourcePath;
@@ -126,6 +133,9 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // DestinationProviderId
             WritePaddedString(writer, DestinationProviderId, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
+
+            // IsContainer
+            writer.Write(Convert.ToByte(IsContainer));
 
             // EnumerationComplete
             writer.Write(Convert.ToByte(EnumerationComplete));
@@ -180,6 +190,10 @@ namespace Azure.Storage.DataMovement.JobPlan
             // DestinationProviderId
             string destProviderId = ReadPaddedString(reader, DataMovementConstants.JobPlanFile.ProviderIdNumBytes);
 
+            // IsContainer
+            byte isContainerByte = reader.ReadByte();
+            bool isContainer = Convert.ToBoolean(isContainerByte);
+
             // EnumerationComplete
             byte enumerationCompleteByte = reader.ReadByte();
             bool enumerationComplete = Convert.ToBoolean(enumerationCompleteByte);
@@ -224,6 +238,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 operationType,
                 sourceProviderId,
                 destProviderId,
+                isContainer,
                 enumerationComplete,
                 jobPlanStatus.ToDataTransferStatus(),
                 parentSourcePath,
