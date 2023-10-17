@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
             Optional<TimeSpan> interval = default;
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
-            Optional<string> resourceid = default;
+            Optional<ResourceIdentifier> resourceid = default;
             IReadOnlyList<QueryBatchMetric> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,11 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("resourceid"u8))
                 {
-                    resourceid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

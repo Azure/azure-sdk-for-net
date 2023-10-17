@@ -18,5 +18,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The end time, in datetime format, for which the data was retrieved. </summary>
         [CodeGenMember("Endtime")]
         public DateTimeOffset EndTime { get; }
+
+        /// <summary> The resource that has been queried for metrics. </summary>
+        [CodeGenMember("Resourceid")]
+        public ResourceIdentifier ResourceId { get; }
     }
 }

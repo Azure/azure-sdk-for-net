@@ -35,16 +35,16 @@ namespace Azure.Monitor.Query.Models
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="resourceregion"> The region of the resource been queried for metrics. </param>
-        /// <param name="resourceid"> The resource that has been queried for metrics. </param>
+        /// <param name="resourceId"> The resource that has been queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceregion, string resourceid, IReadOnlyList<QueryBatchMetric> value)
+        internal MetricResultsResponseValuesItem(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, string resourceregion, ResourceIdentifier resourceId, IReadOnlyList<QueryBatchMetric> value)
         {
             StartTime = startTime;
             EndTime = endTime;
             Interval = interval;
             Namespace = @namespace;
             Resourceregion = resourceregion;
-            Resourceid = resourceid;
+            ResourceId = resourceId;
             Value = value;
         }
         /// <summary> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
@@ -53,8 +53,6 @@ namespace Azure.Monitor.Query.Models
         public string Namespace { get; }
         /// <summary> The region of the resource been queried for metrics. </summary>
         public string Resourceregion { get; }
-        /// <summary> The resource that has been queried for metrics. </summary>
-        public string Resourceid { get; }
         /// <summary> The value of the collection. </summary>
         public IReadOnlyList<QueryBatchMetric> Value { get; }
     }
