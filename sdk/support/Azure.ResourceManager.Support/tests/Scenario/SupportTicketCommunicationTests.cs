@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Support.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Tests
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Support.Tests
     {
         private SupportTicketCommunicationCollection _supportTicketCommunicationCollection;
         private const string _existSupportTicketCommunicationName = "0b60e9a8-98bd-ed11-83ff-000d3a18b532";
+        private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
+        private const string _existSupportTicketName = "2310120040010764";
 
         public SupportTicketCommunicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -23,8 +26,7 @@ namespace Azure.ResourceManager.Support.Tests
         [SetUp]
         public async Task SetUp()
         {
-            string existSupportTicketName = "2303060030001646";
-            var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(existSupportTicketName);
+            var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(_existSupportTicketName);
             _supportTicketCommunicationCollection = supportTicket.Value.GetSupportTicketCommunications();
         }
 
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Get()
         {
             var supportTicketCommunication = await _supportTicketCommunicationCollection.GetAsync(_existSupportTicketCommunicationName);
-            ValidateSupportTicketCommunicationData(supportTicketCommunication.Value.Data);
+            ValidateSupportTicketCommunicationData(supportTicketCommunication.Value.Data, _existSupportTicketCommunicationName);
         }
 
         [RecordedTest]
@@ -47,14 +49,25 @@ namespace Azure.ResourceManager.Support.Tests
         {
             var list = await _supportTicketCommunicationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateSupportTicketCommunicationData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketCommunicationName).Data);
+            ValidateSupportTicketCommunicationData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketCommunicationName).Data, _existSupportTicketCommunicationName);
         }
 
-        private void ValidateSupportTicketCommunicationData(SupportTicketCommunicationData supportTicketCommunication)
+        [RecordedTest]
+        public async Task Create()
+        {
+            var communicationName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var resource = SupportTicketCommunicationResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketName, communicationName);
+            var communicationData = new SupportTicketCommunicationData(resource, communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow);
+            await _supportTicketCommunicationCollection.CreateOrUpdateAsync(WaitUntil.Completed, communicationName, communicationData);
+            var supportTicketFileWorkspace = await _supportTicketCommunicationCollection.GetAsync(communicationName);
+            ValidateSupportTicketCommunicationData(supportTicketFileWorkspace.Value.Data, communicationName);
+        }
+
+        private void ValidateSupportTicketCommunicationData(SupportTicketCommunicationData supportTicketCommunication, string comunicationName)
         {
             Assert.IsNotNull(supportTicketCommunication);
             Assert.IsNotEmpty(supportTicketCommunication.Id);
-            Assert.AreEqual(supportTicketCommunication.Name, _existSupportTicketCommunicationName);
+            Assert.AreEqual(supportTicketCommunication.Name, comunicationName);
         }
     }
 }

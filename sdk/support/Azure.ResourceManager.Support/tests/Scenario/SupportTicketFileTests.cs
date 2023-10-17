@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Get()
         {
             var supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
-            ValidateSupportTicketFileData(supportTicketFile.Value.Data);
+            ValidateSupportTicketFileData(supportTicketFile.Value.Data, _existSupportTicketFileName);
         }
 
         [RecordedTest]
@@ -51,14 +52,25 @@ namespace Azure.ResourceManager.Support.Tests
         {
             var list = await _supportTicketFileCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateSupportTicketFileData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketFileName).Data);
+            ValidateSupportTicketFileData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketFileName).Data, _existSupportTicketFileName);
         }
 
-        private void ValidateSupportTicketFileData(FileDetailData supportTicketFile)
+        [RecordedTest]
+        public async Task Create()
+        {
+            var fileName = $"dotnet_{DateTime.Now.Ticks.ToString()}.txt";
+            var resource = SupportTicketFileResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName, fileName);
+            var fileData = new FileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 2621440, 2796204, 2);
+            await _supportTicketFileCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, fileData);
+            var supportTicketFileWorkspace = await _supportTicketFileCollection.GetAsync(fileName);
+            ValidateSupportTicketFileData(supportTicketFileWorkspace.Value.Data, fileName);
+        }
+
+        private void ValidateSupportTicketFileData(FileDetailData supportTicketFile, string fileName)
         {
             Assert.IsNotNull(supportTicketFile);
             Assert.IsNotEmpty(supportTicketFile.Id);
-            Assert.AreEqual(supportTicketFile.Name, _existSupportTicketFileName);
+            Assert.AreEqual(supportTicketFile.Name, fileName);
         }
     }
 }

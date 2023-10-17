@@ -37,14 +37,23 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Get()
         {
             var supportTicketFileWorkspace = await _subscriptionFileWorkspaceCollection.GetAsync(_existSupportTicketFileWorkspaceName);
-            ValidateSupportTicketFileWorkspaceData(supportTicketFileWorkspace.Value.Data);
+            ValidateSupportTicketFileWorkspaceData(supportTicketFileWorkspace.Value.Data, _existSupportTicketFileWorkspaceName);
         }
 
-        private void ValidateSupportTicketFileWorkspaceData(FileWorkspaceDetailData supportTicketFileWorkspace)
+        [RecordedTest]
+        public async Task Create()
+        {
+            var workspaceName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            await _subscriptionFileWorkspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName);
+            var supportTicketFileWorkspace = await _subscriptionFileWorkspaceCollection.GetAsync(workspaceName);
+            ValidateSupportTicketFileWorkspaceData(supportTicketFileWorkspace.Value.Data, workspaceName);
+        }
+
+        private void ValidateSupportTicketFileWorkspaceData(FileWorkspaceDetailData supportTicketFileWorkspace, string fileWorkspaceName)
         {
             Assert.IsNotNull(supportTicketFileWorkspace);
             Assert.IsNotEmpty(supportTicketFileWorkspace.Id);
-            Assert.AreEqual(supportTicketFileWorkspace.Name, _existSupportTicketFileWorkspaceName);
+            Assert.AreEqual(supportTicketFileWorkspace.Name, fileWorkspaceName);
         }
     }
 }
