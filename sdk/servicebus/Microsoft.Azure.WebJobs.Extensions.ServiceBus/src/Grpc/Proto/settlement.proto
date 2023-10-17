@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 // this namespace will be shared between isolated worker and WebJobs extension so make it somewhat generic
