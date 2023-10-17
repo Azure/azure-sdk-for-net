@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
@@ -217,6 +218,30 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private static string GenerateCacheKey(string fullyQualifiedNamespace, string entityPath)
         {
             return $"{fullyQualifiedNamespace}/{entityPath}";
+        }
+
+        // This class does not implement IAsyncDisposable as doing so could break existing user code. We can consider making this break
+        // on the next major version upgrade.
+        internal async Task DisposeAsync()
+        {
+            foreach (var receiver in MessageReceiverCache.Values)
+            {
+                await receiver.DisposeAsync().ConfigureAwait(false);
+            }
+            MessageReceiverCache.Clear();
+
+            foreach (var sender in MessageSenderCache.Values)
+            {
+                await sender.DisposeAsync().ConfigureAwait(false);
+            }
+            MessageSenderCache.Clear();
+
+            foreach (var client in ClientCache.Values)
+            {
+                await client.DisposeAsync().ConfigureAwait(false);
+            }
+            ClientCache.Clear();
+            ActionsCache.Clear();
         }
     }
 }
