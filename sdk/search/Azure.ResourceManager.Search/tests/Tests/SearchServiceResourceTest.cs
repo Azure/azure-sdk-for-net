@@ -336,5 +336,35 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
             Assert.AreEqual(SearchAadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
         }
+
+        [Test]
+        public async Task DisableAndEnableSemanticSearchAsync()
+        {
+            await setResourceGroup();
+            var name = Recording.GenerateAssetName("search");
+            var data = new SearchServiceData(DefaultLocation)
+            {
+                SkuName = SearchSkuName.Standard,
+                PartitionCount = 1,
+                ReplicaCount = 1,
+                SemanticSearch = SearchSemanticSearch.Disabled
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Disabled);
+
+            data.SemanticSearch = SearchSemanticSearch.Free;
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Free);
+
+            data.SemanticSearch = SearchSemanticSearch.Standard;
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Standard);
+        }
     }
 }
