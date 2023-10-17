@@ -140,6 +140,40 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void TheSameSequenceNumbersAndReplicationSegmentsAreEqual()
+        {
+            var first = EventPosition.FromSequenceNumber(12, "5");
+            var second = EventPosition.FromSequenceNumber(12, "5");
+
+            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentSequenceNumbersAndReplicationSegmentsAreNotEqual()
+        {
+            var first = EventPosition.FromSequenceNumber(234234, "2");
+            var second = EventPosition.FromSequenceNumber(234234234, "2");
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public void TheSameInclusiveFlagsAreEqual(bool isInclusive)
@@ -212,15 +246,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var inclusive = true;
             var offset = 123;
             var sequence = 778;
+            var replicationSegment = "5";
             var enqueued = DateTimeOffset.Now.AddHours(1);
 
             Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
             Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
             Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented.");
             Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{ sequence }]"), "The sequence should be represented.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence, replicationSegment).ToString(), Contains.Substring($"[{replicationSegment}]"), "The replication segment should be represented.");
             Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
             Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the offset.");
             Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the sequence number.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence, replicationSegment, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the sequence number.");
         }
     }
 }

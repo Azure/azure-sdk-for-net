@@ -70,13 +70,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="replicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
+        /// <param name="lastReplicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
         public LastEnqueuedEventProperties(long? lastSequenceNumber,
                                            long? lastOffset,
-                                           string replicationSegment,
+                                           string lastReplicationSegment,
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {

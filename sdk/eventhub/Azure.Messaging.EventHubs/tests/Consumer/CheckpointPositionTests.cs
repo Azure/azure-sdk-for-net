@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventPosition" />
+    ///   The suite of tests for the <see cref="CheckpointPosition" />
     ///   struct.
     /// </summary>
     ///

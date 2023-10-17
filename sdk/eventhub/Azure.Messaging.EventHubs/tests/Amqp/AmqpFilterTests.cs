@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
@@ -38,18 +39,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildFilterExpressionPrefersOffset()
+        public void BuildFilterExpressionPrefersSequenceNumber()
         {
             // Set all properties for the event position.
 
-            var offset = 1;
-            var position = EventPosition.FromOffset(offset);
-            position.SequenceNumber = 222;
-            position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var offset = "1";
+            var sequenceNumber = 222;
+            var replicationSegment = "4";
+            var eventPosition = EventPosition.FromSequenceNumber(sequenceNumber, replicationSegment);
+            eventPosition.Offset = offset;
+            eventPosition.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
-            var filter = AmqpFilter.BuildFilterExpression(position);
-            Assert.That(filter, Contains.Substring(AmqpFilter.OffsetName), "The offset should have precedence for filtering.");
-            Assert.That(filter, Contains.Substring(offset.ToString()), "The offset value should be present in the filter.");
+            var filter = AmqpFilter.BuildFilterExpression(eventPosition);
+            Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence for filtering.");
+            Assert.That(filter, Contains.Substring(sequenceNumber.ToString()), "The sequence number value should be present in the filter.");
+            Assert.That(filter, Contains.Substring(replicationSegment), "The replication segment value should be present in the filter.");
         }
 
         /// <summary>

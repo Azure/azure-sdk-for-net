@@ -28,7 +28,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastReplicationSegment">The replication segment that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         ///
@@ -41,7 +40,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
                                                        long? lastPartitionOffset = null,
-                                                       string lastReplicationSegment = null,
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
@@ -84,11 +82,6 @@ namespace Azure.Messaging.EventHubs.Amqp
            {
                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset.Value;
            }
-
-            if (!string.IsNullOrEmpty(lastReplicationSegment))
-            {
-                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedReplicationSegment.ToString()] = lastReplicationSegment;
-            }
 
             if (lastPartitionEnqueuedTime.HasValue)
            {
@@ -340,27 +333,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), out var value)))
             {
                 return (long)value;
-            }
-
-            return defaultValue;
-        }
-
-        /// <summary>
-        ///   Retrieves the replication segment of the last event published to the partition from an <see cref="AmqpAnnotatedMessage" />.
-        /// </summary>
-        ///
-        /// <param name="instance">The instance that this method was invoked on.</param>
-        /// <param name="defaultValue">The value to return if the last offset is not represented in the <paramref name="instance"/>.</param>
-        ///
-        /// <returns>The replication segment of the last event published to the partition, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
-        ///
-        public static string GetLastReplicationSegment(this AmqpAnnotatedMessage instance,
-                                                   string defaultValue = default)
-        {
-            if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
-                && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedReplicationSegment.ToString(), out var value)))
-            {
-                return ((int)value).ToString();
             }
 
             return defaultValue;

@@ -57,9 +57,9 @@ namespace Azure.Messaging.EventHubs
         {
             // Build the filter expression, in the order of significance.
 
-            if (eventPosition.SequenceNumber.HasValue)
+            if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
             {
-                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.ReplicationSegment ?? ""}:{eventPosition.SequenceNumber.Value}";
+                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.ReplicationSegment ?? ""}:{eventPosition.SequenceNumber}";
             }
 
             if (!string.IsNullOrEmpty(eventPosition.Offset))

@@ -873,6 +873,76 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ConsumerCanReadFromSequenceNumberAndReplicationSegment(bool isInclusive)
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var seedEvents = EventGenerator.CreateEvents(50).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
+
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
+                {
+                    // Seed the partition with a set of events prior to reading.  When the send call returns, all events were
+                    // accepted by the Event Hubs service and should be available in the partition.  Provide a minor delay to
+                    // allow for any latency within the service.
+
+                    var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+
+                    await SendEventsAsync(connectionString, seedEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+                    await Task.Delay(250);
+
+                    // Query the partition and determine the offset of the last enqueued event, then send the new set
+                    // of events that should appear after the starting position.
+
+                    var partitionProperties = await consumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token);
+                    var lastSequence = partitionProperties.LastEnqueuedSequenceNumber;
+                    var lastReplicationSegment = partitionProperties.LastEnqueuedReplicationSegment;
+
+                    var startingPosition = EventPosition.FromSequenceNumber(lastSequence, lastReplicationSegment, isInclusive);
+
+                    await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+
+                    // Read the events and validate the resulting state.
+
+                    var expectedCount = sourceEvents.Count;
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+
+                    if (isInclusive)
+                    {
+                        ++expectedCount;
+                        expectedEvents = expectedEvents.Concat(new[] { seedEvents.Last().MessageId });
+                    }
+
+                    var readState = await ReadEventsFromPartitionAsync(consumer, partition, expectedEvents, cancellationSource.Token, startingPosition);
+
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
+                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.Data.SequenceNumber == lastSequence), Is.EqualTo(isInclusive), $"The event with sequence number [{lastSequence}] was {((isInclusive) ? "not" : "")} in the set of read events, which is inconsistent with the inclusive flag.");
+
+                    foreach (var sourceEvent in sourceEvents)
+                    {
+                        var sourceId = sourceEvent.MessageId;
+                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                        Assert.That(sourceEvent.IsEquivalentTo(readEvent.Data), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
+                    }
+                }
+
+                cancellationSource.Cancel();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ConsumerCanReadFromEnqueuedTime()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1453,7 +1523,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerSupercedesNonExclusiveActiveReader()
+        public async Task ExclusiveConsumerSupersedesNonExclusiveActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1517,7 +1587,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerWithHigherOwnerLevelSupercedesActiveReader()
+        public async Task ConsumerWithHigherOwnerLevelSupersedesActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1583,7 +1653,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerDoesNotSupercedNonExclusiveActiveReaderOnAnotherPartition()
+        public async Task ExclusiveConsumerDoesNotSupersedeNonExclusiveActiveReaderOnAnotherPartition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -1648,7 +1718,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerDoesNotSupercedNonExclusiveActiveReaderOnAnotherConsumerGroup()
+        public async Task ExclusiveConsumerDoesNotSupersedeNonExclusiveActiveReaderOnAnotherConsumerGroup()
         {
             var consumerGroups = new[] { "customGroup", "customTwo" };
 
@@ -1752,7 +1822,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerIsNotCompromisedByBeingSupercededByAnotherReaderWithHigherLevel()
+        public async Task ConsumerIsNotCompromisedByBeingSupersededByAnotherReaderWithHigherLevel()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -1931,6 +2001,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedReplicationSegment, Is.Not.EqualTo(default(string)), "The last replication segment should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
                 }
             }

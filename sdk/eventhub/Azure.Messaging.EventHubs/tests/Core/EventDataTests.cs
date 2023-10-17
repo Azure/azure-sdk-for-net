@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void NonIdempotentStatePropertyAcessorsDeferToTheAmqpMessage()
+        public void NonIdempotentStatePropertyAccessorsDeferToTheAmqpMessage()
         {
             var sequenceNumber = 123L;
             var offset = 456L;

@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs
             new FactoryPartitionContext("<< NULL >>", "<< NULL >>", "<< NULL >>", partitionId, lastEnqueuedEventProperties);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
         /// </summary>
         ///
         /// <param name="eventBody">The data to use as the body of the event.</param>
@@ -171,14 +171,38 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventData EventData(BinaryData eventBody,
+                                          IDictionary<string, object> properties,
+                                          IReadOnlyDictionary<string, object> systemProperties,
+                                          string partitionKey,
+                                          long sequenceNumber,
+                                          long offset,
+                                          DateTimeOffset enqueuedTime) =>
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, null, enqueuedTime, partitionKey);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties that accompany events read from the Event Hubs service.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="replicationSegment">The replication segment assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        ///
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
                                           IReadOnlyDictionary<string, object> systemProperties = null,
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
+                                          string replicationSegment = null,
                                           DateTimeOffset enqueuedTime = default) =>
-             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, null, enqueuedTime, partitionKey);
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch" /> class.

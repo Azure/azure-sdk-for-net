@@ -32,6 +32,12 @@ namespace Azure.Messaging.EventHubs
         public long BeginningSequenceNumber { get; }
 
         /// <summary>
+        ///   The first replication segment available for events in the partition.
+        /// </summary>
+        ///
+        public string BeginningReplicationSegment { get; }
+
+        /// <summary>
         ///   The sequence number of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
@@ -120,6 +126,7 @@ namespace Azure.Messaging.EventHubs
             EventHubName = eventHubName;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
+            BeginningReplicationSegment = beginningReplicationSegment;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedReplicationSegment = lastReplicationSegment;

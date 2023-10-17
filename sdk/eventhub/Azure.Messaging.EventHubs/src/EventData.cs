@@ -591,7 +591,6 @@ namespace Azure.Messaging.EventHubs
                 partitionKey,
                 lastPartitionSequenceNumber,
                 lastPartitionOffset,
-                lastReplicationSegment,
                 lastPartitionEnqueuedTime,
                 lastPartitionPropertiesRetrievalTime);
 
@@ -624,7 +623,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -657,7 +656,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -690,7 +689,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
