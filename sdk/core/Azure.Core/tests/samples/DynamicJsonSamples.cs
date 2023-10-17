@@ -61,7 +61,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
-            using dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
