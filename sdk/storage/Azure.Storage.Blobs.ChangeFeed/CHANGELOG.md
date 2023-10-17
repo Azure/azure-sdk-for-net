@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.39 (Unreleased)
+## 12.0.0-preview.39 (2023-10-16)
 - Added support for service version 2023-11-03.
 
 ## 12.0.0-preview.38 (2023-09-12)

@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -42,7 +40,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create fallback queue
             string fallbackQueueId = "fallback-q-id";
-            Response<Models.RouterQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: fallbackQueueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -73,7 +71,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create initial queue
             string jobQueueId = "job-queue-id";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(
                     queueId: jobQueueId,
                     distributionPolicyId: distributionPolicyId)
