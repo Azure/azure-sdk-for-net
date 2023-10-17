@@ -7,12 +7,10 @@
 
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsRouterWorkerSelectorConverter))]
     public partial class AcsRouterWorkerSelector
     {
         internal static AcsRouterWorkerSelector DeserializeAcsRouterWorkerSelector(JsonElement element)
@@ -81,19 +79,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterWorkerSelector(key.Value, Optional.ToNullable(labelOperator), labelValue.Value, Optional.ToNullable(ttlSeconds), Optional.ToNullable(state), Optional.ToNullable(expirationTime));
-        }
-
-        internal partial class AcsRouterWorkerSelectorConverter : JsonConverter<AcsRouterWorkerSelector>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsRouterWorkerSelector model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override AcsRouterWorkerSelector Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRouterWorkerSelector(document.RootElement);
-            }
         }
     }
 }

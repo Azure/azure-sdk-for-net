@@ -21,9 +21,6 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Remove="Generated\Models\AcsRouterWorkerSelector.Serialization.cs" />
-    <Compile Remove="Customization\AcsRouterWorkerSelector_backCompat.cs" />
-    <Compile Remove="Customization\AcsRouterWorkerSelector_backCompat.Serialization.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />

@@ -163,7 +163,6 @@ directive:
       {
           $[path]["properties"]["labelOperator"]["x-namespace"] = namespace;
           $[path]["properties"]["state"]["x-namespace"] = namespace;
-          $[path]["x-csharp-usage"] = "model,output,converter";
       }
     }
 ```
