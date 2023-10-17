@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportTicketFileWorkspace);
             Assert.IsNotEmpty(supportTicketFileWorkspace.Id);
-            Assert.AreEqual(supportTicketFileWorkspace.Name, supportTicketFileWorkspace.Name);
+            Assert.AreEqual(supportTicketFileWorkspace.Name, _existSupportTicketFileWorkspaceName);
         }
     }
 }

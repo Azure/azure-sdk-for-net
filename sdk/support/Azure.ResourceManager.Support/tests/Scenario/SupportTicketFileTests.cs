@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.Support.Tests
     {
         private SupportTicketFileCollection _supportTicketFileCollection;
         private const string _existSupportTicketFileWorkspaceName = "dotnet_test_workspacename";
+        private const string _existSupportTicketFileName = "dotnet_test_filename.txt";
+        private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
+
         private SubscriptionFileWorkspaceResource subscriptionFileWorkspaceResource { get; set; }
 
         public SupportTicketFileTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -24,12 +27,9 @@ namespace Azure.ResourceManager.Support.Tests
         [SetUp]
         public async Task SetUp()
         {
-            // currently not working
-            var resource = SubscriptionFileWorkspaceResource.CreateResourceIdentifier("cca0326c-4c31-46d8-8fcb-c67023a46f4b", _existSupportTicketFileWorkspaceName);
-            //SupportTicketFileResource.CreateResourceIdentifier("cca0326c-4c31-46d8-8fcb-c67023a46f4b", _existSupportTicketFileWorkspaceName, )
+            var resource = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName);
             subscriptionFileWorkspaceResource = await Task.Run(() => Client.GetSubscriptionFileWorkspaceResource(resource));
             _supportTicketFileCollection = subscriptionFileWorkspaceResource.GetSupportTicketFiles();
-            //_subscriptionFileWorkspaceCollection = await Task.Run(() => DefaultSubscription.GetFi());
         }
 
         [RecordedTest]
@@ -42,15 +42,23 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var supportTicketFileWorkspace = await Task.Run(() => _supportTicketFileCollection.GetAll());
-            //ValidateSupportTicketFileData(supportTicketFileWorkspace.Value.Data);
+            var supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
+            ValidateSupportTicketFileData(supportTicketFile.Value.Data);
         }
 
-        private void ValidateSupportTicketFileData(FileDetailData supportTicketFileWorkspace)
+        [RecordedTest]
+        public async Task GetAll()
         {
-            Assert.IsNotNull(supportTicketFileWorkspace);
-            Assert.IsNotEmpty(supportTicketFileWorkspace.Id);
-            Assert.AreEqual(supportTicketFileWorkspace.Name, supportTicketFileWorkspace.Name);
+            var list = await _supportTicketFileCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateSupportTicketFileData(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketFileName).Data);
+        }
+
+        private void ValidateSupportTicketFileData(FileDetailData supportTicketFile)
+        {
+            Assert.IsNotNull(supportTicketFile);
+            Assert.IsNotEmpty(supportTicketFile.Id);
+            Assert.AreEqual(supportTicketFile.Name, _existSupportTicketFileName);
         }
     }
 }
