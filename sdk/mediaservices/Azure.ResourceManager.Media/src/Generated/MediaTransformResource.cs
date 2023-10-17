@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaJobResources and their operations over a MediaJobResource. </returns>
         public virtual MediaJobCollection GetMediaJobs()
         {
-            return GetCachedClient(Client => new MediaJobCollection(Client, Id));
+            return GetCachedClient(client => new MediaJobCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaJobResource>> GetMediaJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="jobName"> The Job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaJobResource> GetMediaJob(string jobName, CancellationToken cancellationToken = default)
         {

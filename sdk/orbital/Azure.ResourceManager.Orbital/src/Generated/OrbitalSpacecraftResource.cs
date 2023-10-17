@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An object representing collection of OrbitalContactResources and their operations over a OrbitalContactResource. </returns>
         public virtual OrbitalContactCollection GetOrbitalContacts()
         {
-            return GetCachedClient(Client => new OrbitalContactCollection(Client, Id));
+            return GetCachedClient(client => new OrbitalContactCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="contactName"> Contact name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OrbitalContactResource>> GetOrbitalContactAsync(string contactName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="contactName"> Contact name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OrbitalContactResource> GetOrbitalContact(string contactName, CancellationToken cancellationToken = default)
         {

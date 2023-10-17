@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubAuthorizationRuleResources and their operations over a NotificationHubAuthorizationRuleResource. </returns>
         public virtual NotificationHubAuthorizationRuleCollection GetNotificationHubAuthorizationRules()
         {
-            return GetCachedClient(Client => new NotificationHubAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new NotificationHubAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationHubAuthorizationRuleResource> GetNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
