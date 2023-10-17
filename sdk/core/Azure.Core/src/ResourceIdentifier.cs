@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -526,7 +527,7 @@ namespace Azure.Core
         /// If the method returns false, result will be null.
         /// </param>
         /// <returns> True if the parse operation was successful; otherwise, false. </returns>
-        public static bool TryParse(string input, out ResourceIdentifier? result)
+        public static bool TryParse(string input, [MaybeNullWhen(false)] out ResourceIdentifier? result)
         {
             result = null;
             if (string.IsNullOrEmpty(input))
