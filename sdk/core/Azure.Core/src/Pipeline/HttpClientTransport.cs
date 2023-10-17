@@ -9,8 +9,8 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel.Rest;
-using System.ServiceModel.Rest.Core;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Threading;
 using System.Threading.Tasks;
 

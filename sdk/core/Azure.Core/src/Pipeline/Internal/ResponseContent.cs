@@ -3,8 +3,8 @@
 
 using System.Buffers;
 using System.IO;
-using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Internal;
+using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
