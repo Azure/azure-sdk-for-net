@@ -434,142 +434,6 @@ namespace Azure.Core.Amqp.Shared
         }
 
         /// <summary>
-        ///   Translates the data body segments into the corresponding set of
-        ///   <see cref="Data" /> instances.
-        /// </summary>
-        ///
-        /// <param name="dataBody">The data body to translate.</param>
-        ///
-        /// <returns>The set of <see cref="Data" /> instances that represents the <paramref name="dataBody" />.</returns>
-        ///
-        private static IEnumerable<Data> TranslateDataBody(IEnumerable<ReadOnlyMemory<byte>> dataBody)
-        {
-            foreach (var bodySegment in dataBody)
-            {
-                if (!MemoryMarshal.TryGetArray(bodySegment, out ArraySegment<byte> dataSegment))
-                {
-                    dataSegment = new ArraySegment<byte>(bodySegment.ToArray());
-                }
-
-                yield return new Data
-                {
-                    Value = dataSegment
-                };
-            }
-        }
-
-        /// <summary>
-        ///   Translates the data body elements into the corresponding set of
-        ///   <see cref="AmqpSequence" /> instances.
-        /// </summary>
-        ///
-        /// <param name="sequenceBody">The sequence body to translate.</param>
-        ///
-        /// <returns>The set of <see cref="AmqpSequence" /> instances that represents the <paramref name="sequenceBody" /> in AMQP format.</returns>
-        ///
-        private static IEnumerable<AmqpSequence> TranslateSequenceBody(IEnumerable<IList<object>> sequenceBody)
-        {
-            foreach (var item in sequenceBody)
-            {
-                yield return new AmqpSequence((IList)item);
-            }
-        }
-
-        /// <summary>
-        ///   Translates the data body into the corresponding set of
-        ///   <see cref="AmqpValue" /> instance.
-        /// </summary>
-        ///
-        /// <param name="valueBody">The sequence body to translate.</param>
-        ///
-        /// <returns>The <see cref="AmqpValue" /> instance that represents the <paramref name="valueBody" /> in AMQP format.</returns>
-        ///
-        private static AmqpValue TranslateValueBody(object valueBody)
-        {
-            if (TryCreateAmqpPropertyValueFromNetProperty(valueBody, out var amqpValue, allowBodyTypes: true))
-            {
-                return new AmqpValue { Value = amqpValue };
-            }
-
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "{0} is not a supported value body type.", valueBody.GetType().Name));
-        }
-
-        /// <summary>
-        ///   Attempts to read the data body of an <see cref="AmqpMessage" />.
-        /// </summary>
-        ///
-        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
-        /// <param name="dataBody">The value of the data body, if read.</param>
-        ///
-        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryGetDataBody(AmqpMessage source, out AmqpMessageBody? dataBody)
-        {
-            if (((source.BodyType & SectionFlag.Data) == 0) || (source.DataBody == null))
-            {
-                dataBody = null;
-                return false;
-            }
-
-            dataBody = AmqpMessageBody.FromData(MessageBody.FromDataSegments(source.DataBody));
-            return true;
-        }
-
-        /// <summary>
-        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
-        /// </summary>
-        ///
-        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
-        /// <param name="sequenceBody">The value of the sequence body, if read.</param>
-        ///
-        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryGetSequenceBody(AmqpMessage source, out AmqpMessageBody? sequenceBody)
-        {
-            if ((source.BodyType & SectionFlag.AmqpSequence) == 0)
-            {
-                sequenceBody = null;
-                return false;
-            }
-
-            var bodyContent = new List<IList<object>>();
-
-            foreach (var item in source.SequenceBody)
-            {
-                bodyContent.Add((IList<object>)item.List);
-            }
-
-            sequenceBody = AmqpMessageBody.FromSequence(bodyContent);
-            return true;
-        }
-
-        /// <summary>
-        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
-        /// </summary>
-        ///
-        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
-        /// <param name="valueBody">The value body, if read.</param>
-        ///
-        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryGetValueBody(AmqpMessage source, out AmqpMessageBody? valueBody)
-        {
-            if (((source.BodyType & SectionFlag.AmqpValue) == 0) || (source.ValueBody?.Value == null))
-            {
-                valueBody = null;
-                return false;
-            }
-
-            if (TryCreateNetPropertyFromAmqpProperty(source.ValueBody.Value, out var translatedValue, allowBodyTypes: true))
-            {
-                valueBody = AmqpMessageBody.FromValue(translatedValue!);
-                return true;
-            }
-
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "{0} is not a supported value body type.", source.ValueBody.Value.GetType().Name));
-        }
-
-        /// <summary>
         ///   Attempts to create an AMQP property value for a given event property.
         /// </summary>
         ///
@@ -748,6 +612,142 @@ namespace Azure.Core.Amqp.Shared
             }
 
             return (convertedPropertyValue != null);
+        }
+
+        /// <summary>
+        ///   Translates the data body segments into the corresponding set of
+        ///   <see cref="Data" /> instances.
+        /// </summary>
+        ///
+        /// <param name="dataBody">The data body to translate.</param>
+        ///
+        /// <returns>The set of <see cref="Data" /> instances that represents the <paramref name="dataBody" />.</returns>
+        ///
+        private static IEnumerable<Data> TranslateDataBody(IEnumerable<ReadOnlyMemory<byte>> dataBody)
+        {
+            foreach (var bodySegment in dataBody)
+            {
+                if (!MemoryMarshal.TryGetArray(bodySegment, out ArraySegment<byte> dataSegment))
+                {
+                    dataSegment = new ArraySegment<byte>(bodySegment.ToArray());
+                }
+
+                yield return new Data
+                {
+                    Value = dataSegment
+                };
+            }
+        }
+
+        /// <summary>
+        ///   Translates the data body elements into the corresponding set of
+        ///   <see cref="AmqpSequence" /> instances.
+        /// </summary>
+        ///
+        /// <param name="sequenceBody">The sequence body to translate.</param>
+        ///
+        /// <returns>The set of <see cref="AmqpSequence" /> instances that represents the <paramref name="sequenceBody" /> in AMQP format.</returns>
+        ///
+        private static IEnumerable<AmqpSequence> TranslateSequenceBody(IEnumerable<IList<object>> sequenceBody)
+        {
+            foreach (var item in sequenceBody)
+            {
+                yield return new AmqpSequence((IList)item);
+            }
+        }
+
+        /// <summary>
+        ///   Translates the data body into the corresponding set of
+        ///   <see cref="AmqpValue" /> instance.
+        /// </summary>
+        ///
+        /// <param name="valueBody">The sequence body to translate.</param>
+        ///
+        /// <returns>The <see cref="AmqpValue" /> instance that represents the <paramref name="valueBody" /> in AMQP format.</returns>
+        ///
+        private static AmqpValue TranslateValueBody(object valueBody)
+        {
+            if (TryCreateAmqpPropertyValueFromNetProperty(valueBody, out var amqpValue, allowBodyTypes: true))
+            {
+                return new AmqpValue { Value = amqpValue };
+            }
+
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "{0} is not a supported value body type.", valueBody.GetType().Name));
+        }
+
+        /// <summary>
+        ///   Attempts to read the data body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="dataBody">The value of the data body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetDataBody(AmqpMessage source, out AmqpMessageBody? dataBody)
+        {
+            if (((source.BodyType & SectionFlag.Data) == 0) || (source.DataBody == null))
+            {
+                dataBody = null;
+                return false;
+            }
+
+            dataBody = AmqpMessageBody.FromData(MessageBody.FromDataSegments(source.DataBody));
+            return true;
+        }
+
+        /// <summary>
+        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="sequenceBody">The value of the sequence body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetSequenceBody(AmqpMessage source, out AmqpMessageBody? sequenceBody)
+        {
+            if ((source.BodyType & SectionFlag.AmqpSequence) == 0)
+            {
+                sequenceBody = null;
+                return false;
+            }
+
+            var bodyContent = new List<IList<object>>();
+
+            foreach (var item in source.SequenceBody)
+            {
+                bodyContent.Add((IList<object>)item.List);
+            }
+
+            sequenceBody = AmqpMessageBody.FromSequence(bodyContent);
+            return true;
+        }
+
+        /// <summary>
+        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="valueBody">The value body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetValueBody(AmqpMessage source, out AmqpMessageBody? valueBody)
+        {
+            if (((source.BodyType & SectionFlag.AmqpValue) == 0) || (source.ValueBody?.Value == null))
+            {
+                valueBody = null;
+                return false;
+            }
+
+            if (TryCreateNetPropertyFromAmqpProperty(source.ValueBody.Value, out var translatedValue, allowBodyTypes: true))
+            {
+                valueBody = AmqpMessageBody.FromValue(translatedValue!);
+                return true;
+            }
+
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "{0} is not a supported value body type.", source.ValueBody.Value.GetType().Name));
         }
 
         private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object?> pair)

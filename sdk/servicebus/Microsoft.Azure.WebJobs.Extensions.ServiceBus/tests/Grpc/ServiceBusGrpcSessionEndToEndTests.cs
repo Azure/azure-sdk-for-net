@@ -132,7 +132,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var receiver = await client.AcceptNextSessionAsync(FirstQueueScope.QueueName);
             var abandonedMessage = (await receiver.ReceiveMessagesAsync(1)).Single();
             Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual(TimeSpan.FromSeconds(60), abandonedMessage.ApplicationProperties["key"]);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), abandonedMessage.ApplicationProperties["timespan"]);
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Uri, abandonedMessage.ApplicationProperties["uri"]);
+            Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
+            Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Guid, abandonedMessage.ApplicationProperties["guid"]);
             Assert.IsEmpty(provider.ActionsCache);
         }
 
@@ -212,6 +216,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusBindToSessionMessageAndAbandon
         {
+            internal static DateTime DateTimeNow { get; } = DateTime.UtcNow;
+            internal static DateTimeOffset DateTimeOffsetNow { get; } = DateTimeOffset.UtcNow;
+            internal static Guid Guid { get; } = Guid.NewGuid();
+            internal static Uri Uri { get; } = new Uri("http://nonExistingServiceBusWebsite.com");
+
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
@@ -221,7 +230,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new AbandonRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object> {{ "key", TimeSpan.FromSeconds(60)}})
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>
+                        {
+                            { "timespan", TimeSpan.FromSeconds(60) },
+                            { "uri", Uri },
+                            { "datetime", DateTimeNow },
+                            { "datetimeoffset", DateTimeOffsetNow },
+                            { "guid", Guid },
+                        })
                     },
                     new MockServerCallContext());
                 _waitHandle1.Set();
