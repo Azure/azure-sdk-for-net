@@ -164,7 +164,7 @@
       "x-ms-parameter-location": "method"
     },
     "MetricNamespaceParameter": {
-      "name": "metricNamespace",
+      "name": "metricnamespace",
       "in": "query",
       "required": true,
       "type": "string",
@@ -172,7 +172,7 @@
       "x-ms-parameter-location": "method"
     },
     "MetricNamesParameter": {
-      "name": "metricNames",
+      "name": "metricnames",
       "in": "query",
       "required": true,
       "type": "array",
