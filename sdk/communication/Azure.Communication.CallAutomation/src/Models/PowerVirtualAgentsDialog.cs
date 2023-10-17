@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
 
             BotAppId = botAppId;
             Context = context;
-            // TODO: Language = language;
+            Language = language;
         }
 
         /// <summary> Initializes a new instance of PowerVirtualAgentsDialog. </summary>
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
         internal PowerVirtualAgentsDialog(DialogInputType kind, IDictionary<string, object> context, string botAppId, string language) : base(DialogInputType.PowerVirtualAgents, context)
         {
             BotAppId = botAppId;
-            // TODO: Language = language;
+            Language = language;
         }
     }
 }

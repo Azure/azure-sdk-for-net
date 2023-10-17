@@ -9,12 +9,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for the Unmute Participant Request.
     /// </summary>
-    public class UnmuteParticipantsOptions
+    public class UnmuteParticipantOptions
     {
         /// <summary>
         /// Creates a new UnmuteParticipantOptions object.
         /// </summary>
-        public UnmuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipant)
+        public UnmuteParticipantOptions(IEnumerable<CommunicationIdentifier> targetParticipant)
         {
             TargetParticipants = targetParticipant.ToList<CommunicationIdentifier>();
         }

@@ -9,12 +9,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for the Mute Participant Request.
     /// </summary>
-    public class MuteParticipantsOptions
+    public class MuteParticipantOptions
     {
         /// <summary>
         /// Creates a new MuteParticipantOptions object.
         /// </summary>
-        public MuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
+        public MuteParticipantOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
         {
             TargetParticipants = targetParticipants.ToList<CommunicationIdentifier>();
         }

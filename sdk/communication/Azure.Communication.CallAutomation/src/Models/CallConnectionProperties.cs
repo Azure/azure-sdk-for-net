@@ -20,7 +20,8 @@ namespace Azure.Communication.CallAutomation
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
             string mediaSubscriptionId,
-            string dataSubscriptionId
+            string dataSubscriptionId,
+            CommunicationUserIdentifier answeredBy
             )
         {
             CallConnectionId = callConnectionId;
@@ -33,6 +34,7 @@ namespace Azure.Communication.CallAutomation
             SourceDisplayName = sourceDisplayName;
             MediaSubscriptionId = mediaSubscriptionId;
             DataSubscriptionId = dataSubscriptionId;
+            AnsweredBy = answeredBy;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)

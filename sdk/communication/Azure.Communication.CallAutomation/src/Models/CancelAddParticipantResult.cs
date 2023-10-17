@@ -97,8 +97,7 @@ namespace Azure.Communication.CallAutomation
                             true,
                             successEvent,
                             null,
-                            successEvent?.InvitationId,
-                            successEvent?.Participant);
+                            successEvent?.InvitationId);
                     }
 
                 case CancelAddParticipantFailed:

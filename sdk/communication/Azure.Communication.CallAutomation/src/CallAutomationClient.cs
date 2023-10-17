@@ -240,9 +240,9 @@ namespace Azure.Communication.CallAutomation
         {
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUri != null)
+            if (options.CognitiveServicesEndpoint != null)
             {
-                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
@@ -618,9 +618,9 @@ namespace Azure.Communication.CallAutomation
                options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUri != null)
+            if (options.CognitiveServicesEndpoint != null)
             {
-                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -647,9 +647,9 @@ namespace Azure.Communication.CallAutomation
                options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
-            if (options.AzureCognitiveServicesEndpointUri != null)
+            if (options.CognitiveServicesEndpoint != null)
             {
-                request.CognitiveServicesEndpoint = options.AzureCognitiveServicesEndpointUri.AbsoluteUri;
+                request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint.AbsoluteUri;
             }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);

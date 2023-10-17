@@ -26,11 +26,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// This is blocking call. Wait for <see cref="SendDtmfEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// This is blocking call. Wait for <see cref="SendDtmfTonesEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesFailed"/> event.</returns>
-        public SendDtmfEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="SendDtmfTonesEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesFailed"/> event.</returns>
+        public SendDtmfTonesEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -48,11 +48,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="SendDtmfEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// Wait for <see cref="SendDtmfTonesEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="SendDtmfEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesCompleted"/> event.</returns>
-        public async Task<SendDtmfEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="SendDtmfTonesEventResult"/> which contains either <see cref="SendDtmfTonesCompleted"/> event or <see cref="SendDtmfTonesCompleted"/> event.</returns>
+        public async Task<SendDtmfTonesEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -69,16 +69,16 @@ namespace Azure.Communication.CallAutomation
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static SendDtmfEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        private static SendDtmfTonesEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
-            SendDtmfEventResult result = default;
+            SendDtmfTonesEventResult result = default;
             switch (returnedEvent)
             {
                 case SendDtmfTonesCompleted:
-                    result = new SendDtmfEventResult(true, (SendDtmfTonesCompleted)returnedEvent, null);
+                    result = new SendDtmfTonesEventResult(true, (SendDtmfTonesCompleted)returnedEvent, null);
                     break;
                 case SendDtmfTonesFailed:
-                    result = new SendDtmfEventResult(false, null, (SendDtmfTonesFailed)returnedEvent);
+                    result = new SendDtmfTonesEventResult(false, null, (SendDtmfTonesFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

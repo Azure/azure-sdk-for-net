@@ -31,6 +31,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback URI override for this transfer call request.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public Uri OperationCallbackUri { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,9 +19,13 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class BaseDialog
     {
         /// <summary> Initializes a new instance of BaseDialog. </summary>
-        protected BaseDialog()
+        /// <param name="context"> Dialog context. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
+        protected BaseDialog(IDictionary<string, object> context)
         {
-            Context = new ChangeTrackingDictionary<string, object>();
+            Argument.AssertNotNull(context, nameof(context));
+
+            Context = context;
         }
 
         /// <summary> Initializes a new instance of BaseDialog. </summary>

@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The endpoint uri of the Azure Cognitive Services resource attached
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUri { get; set; }
+        public Uri CognitiveServicesEndpoint { get; set; }
 
         /// <summary>
         /// The identifier of the call automation entity which answers the call.

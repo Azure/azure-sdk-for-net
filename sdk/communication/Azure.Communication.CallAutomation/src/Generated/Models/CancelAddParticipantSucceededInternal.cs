@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Successful cancel add participant event. </summary>
@@ -18,16 +16,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of CancelAddParticipantSucceededInternal. </summary>
-        /// <param name="participant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CancelAddParticipantSucceededInternal(CommunicationIdentifierModel participant, string invitationId, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
+        internal CancelAddParticipantSucceededInternal(string invitationId, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
         {
-            Participant = participant;
             InvitationId = invitationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
@@ -36,8 +32,6 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
         }
 
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
-        public CommunicationIdentifierModel Participant { get; }
         /// <summary> Invitation ID used to cancel the request. </summary>
         public string InvitationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>

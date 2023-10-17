@@ -18,24 +18,26 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("botAppId"u8);
             writer.WriteStringValue(BotAppId);
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsCollectionDefined(Context))
+            writer.WritePropertyName("context"u8);
+            writer.WriteStartObject();
+            foreach (var item in Context)
             {
-                writer.WritePropertyName("context"u8);
-                writer.WriteStartObject();
-                foreach (var item in Context)
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteNullValue();
+                    continue;
                 }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(item.Value);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -46,13 +48,19 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string botAppId = default;
+            Optional<string> language = default;
             DialogInputType kind = default;
-            Optional<IDictionary<string, object>> context = default;
+            IDictionary<string, object> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("botAppId"u8))
                 {
                     botAppId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("language"u8))
+                {
+                    language = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -62,10 +70,6 @@ namespace Azure.Communication.CallAutomation
                 }
                 if (property.NameEquals("context"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -82,7 +86,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PowerVirtualAgentsDialog(kind, Optional.ToDictionary(context), botAppId);
+            return new PowerVirtualAgentsDialog(kind, context, botAppId, language.Value);
         }
     }
 }

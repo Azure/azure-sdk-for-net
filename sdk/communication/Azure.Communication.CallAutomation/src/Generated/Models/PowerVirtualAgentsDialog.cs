@@ -14,28 +14,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Power Virtual Agents Dialog. </summary>
     public partial class PowerVirtualAgentsDialog : BaseDialog
     {
-        /// <summary> Initializes a new instance of PowerVirtualAgentsDialog. </summary>
-        /// <param name="botAppId"> Bot identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botAppId"/> is null. </exception>
-        public PowerVirtualAgentsDialog(string botAppId)
-        {
-            Argument.AssertNotNull(botAppId, nameof(botAppId));
-
-            BotAppId = botAppId;
-            Kind = new DialogInputType("PowerVirtualAgentsDialog");
-        }
-
-        /// <summary> Initializes a new instance of PowerVirtualAgentsDialog. </summary>
-        /// <param name="kind"> Determines the type of the dialog. </param>
-        /// <param name="context"> Dialog context. </param>
-        /// <param name="botAppId"> Bot identifier. </param>
-        internal PowerVirtualAgentsDialog(DialogInputType kind, IDictionary<string, object> context, string botAppId) : base(kind, context)
-        {
-            BotAppId = botAppId;
-            Kind = kind;
-        }
-
         /// <summary> Bot identifier. </summary>
         public string BotAppId { get; set; }
+        /// <summary> Language. </summary>
+        public string Language { get; set; }
     }
 }

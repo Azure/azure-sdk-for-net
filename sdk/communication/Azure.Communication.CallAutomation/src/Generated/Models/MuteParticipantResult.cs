@@ -7,17 +7,17 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The response payload for unmuting participants from the call. </summary>
-    public partial class UnmuteParticipantsResult
+    /// <summary> The result payload for muting participants from the call. </summary>
+    public partial class MuteParticipantResult
     {
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
-        internal UnmuteParticipantsResult()
+        /// <summary> Initializes a new instance of MuteParticipantResult. </summary>
+        internal MuteParticipantResult()
         {
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of MuteParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal UnmuteParticipantsResult(string operationContext)
+        internal MuteParticipantResult(string operationContext)
         {
             OperationContext = operationContext;
         }
