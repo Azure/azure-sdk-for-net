@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Indexes;
-using System.Threading.Tasks;
 #pragma warning disable SA1402 // File may only contain a single type
 
-namespace Azure.Search.Documents.Tests.samples.VectorSearch
+namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
     public static partial class VectorSearchCommons
     {

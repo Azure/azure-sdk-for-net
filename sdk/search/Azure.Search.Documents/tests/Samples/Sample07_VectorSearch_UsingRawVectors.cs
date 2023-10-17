@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
-namespace Azure.Search.Documents.Tests.samples.VectorSearch
+namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
     public partial class VectorSearchUsingRawVectors : SearchTestBase
     {

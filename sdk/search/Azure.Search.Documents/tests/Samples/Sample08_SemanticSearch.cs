@@ -3,14 +3,14 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 using System.Linq;
+using Azure.Core.TestFramework;
 
-namespace Azure.Search.Documents.Tests.samples
+namespace Azure.Search.Documents.Tests.Samples
 {
     public partial class SemanticSearch : SearchTestBase
     {
@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Tests.samples
         }
 
         [Test]
-       // [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticSearchTest()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -31,6 +31,7 @@ namespace Azure.Search.Documents.Tests.samples
                 indexClient = await CreateIndex(resources, indexName);
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
+                await Task.Delay(TimeSpan.FromSeconds(1));
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Query
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
@@ -78,7 +79,7 @@ namespace Azure.Search.Documents.Tests.samples
             }
             finally
             {
-              //  await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
