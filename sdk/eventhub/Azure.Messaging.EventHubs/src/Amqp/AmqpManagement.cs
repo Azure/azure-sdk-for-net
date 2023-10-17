@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs
             ///   The message property that identifies the last replication segment enqueued for a partition.
             /// </summary>
             ///
-            public static MapKey PartitionLastEnqueuedReplicationSegment { get; } = new MapKey("last_enqueued_replicationgroupepoch");
+            public static MapKey PartitionLastEnqueuedReplicationSegment { get; } = new MapKey("last_enqueued_sequence_number_epoch");
 
             /// <summary>
             ///   The message property that identifies the last time enqueued for a partition.
