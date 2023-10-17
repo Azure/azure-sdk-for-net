@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventGridTopicResource>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _eventGridTopicTopicsClientDiagnostics.CreateScope("EventGridTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventGridTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Name of the topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual NullableResponse<EventGridTopicResource> GetIfExists(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _eventGridTopicTopicsClientDiagnostics.CreateScope("EventGridTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventGridTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, topicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<EventGridTopicResource> IEnumerable<EventGridTopicResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

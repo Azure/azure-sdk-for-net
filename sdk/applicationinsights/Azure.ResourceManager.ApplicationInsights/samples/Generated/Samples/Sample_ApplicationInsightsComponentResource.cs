@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            TagsResource componentTags = new TagsResource()
+            ComponentTag componentTags = new ComponentTag()
             {
                 Tags =
 {

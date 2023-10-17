@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
+        /// The available derived classes include <see cref="Models.SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Synapse.SynapseIntegrationRuntimeData"/> instance for mocking. </returns>
@@ -1436,8 +1436,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The integration runtime name. </param>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
+        /// Please note <see cref="Models.SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/> and <see cref="Models.SynapseSelfHostedIntegrationRuntimeStatus"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatusResult"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeStatusResult SynapseIntegrationRuntimeStatusResult(string name = null, SynapseIntegrationRuntimeStatus properties = null)

@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -86,31 +83,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 ["Label_3"] = new LabelValue("Value_Updated_3"),
                 ["Label_4"] = new LabelValue("Value_4")
             });
-        }
-
-        [Test]
-        public async Task CreateQueueAndRemoveProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-            var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueAndRemoveProperty));
-            var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueAndRemoveProperty));
-            var queueName = "DefaultQueueWithLabels" + queueId;
-            var createQueueResponse = await routerClient.CreateQueueAsync(
-                new CreateQueueOptions(queueId,
-                    createDistributionPolicyResponse.Value.Id)
-                {
-                    Name = queueName,
-                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
-                });
-            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
-
-            Assert.False(string.IsNullOrWhiteSpace(createQueueResponse.Value.Name));
-
-            var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }));
-
-            var queriedQueue = await routerClient.GetQueueAsync(queueId);
-            Assert.True(string.IsNullOrWhiteSpace(queriedQueue.Value.Name));
         }
 
         #endregion Queue Tests

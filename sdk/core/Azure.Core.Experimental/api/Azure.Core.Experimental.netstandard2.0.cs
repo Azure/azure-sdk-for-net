@@ -121,6 +121,7 @@ namespace Azure
         public static implicit operator Azure.Variant (ushort value) { throw null; }
         public static implicit operator Azure.Variant (uint value) { throw null; }
         public static implicit operator Azure.Variant (ulong value) { throw null; }
+        public override string? ToString() { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
     }
 }

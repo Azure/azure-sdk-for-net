@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironmentsCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppConnectedEnvironmentCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppConnectedEnvironmentCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironmentsCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppConnectedEnvironmentCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppConnectedEnvironmentCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppConnectedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ContainerAppConnectedEnvironmentCertificateResource> IEnumerable<ContainerAppConnectedEnvironmentCertificateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

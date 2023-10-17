@@ -399,6 +399,49 @@ Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAs
 Uri imageUri = imageGenerations.Value.Data[0].Url;
 ```
 
+### Transcribe audio data with Whisper speech models
+
+```C# Snippet:TranscribeAudio
+using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
+
+var transcriptionOptions = new AudioTranscriptionOptions()
+{
+    AudioData = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
+};
+
+Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    transcriptionOptions);
+AudioTranscription transcription = transcriptionResponse.Value;
+
+// When using Simple, SRT, or VTT formats, only transcription.Text will be populated
+Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+Console.WriteLine(transcription.Text);
+```
+
+### Translate audio data to English with Whisper speech models
+
+```C# Snippet:TranslateAudio
+using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
+
+var translationOptions = new AudioTranslationOptions()
+{
+    AudioData = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranslationFormat.Verbose,
+};
+
+Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    translationOptions);
+AudioTranslation translation = translationResponse.Value;
+
+// When using Simple, SRT, or VTT formats, only translation.Text will be populated
+Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
+// .Text will be translated to English (ISO-639-1 "en")
+Console.WriteLine(translation.Text);
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.

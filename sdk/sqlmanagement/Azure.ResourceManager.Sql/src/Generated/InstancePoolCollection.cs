@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<InstancePoolResource>> GetIfExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
+
+            using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<InstancePoolResource>(response.GetRawResponse());
+                return Response.FromValue(new InstancePoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        public virtual NullableResponse<InstancePoolResource> GetIfExists(string instancePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
+
+            using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<InstancePoolResource>(response.GetRawResponse());
+                return Response.FromValue(new InstancePoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<InstancePoolResource> IEnumerable<InstancePoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

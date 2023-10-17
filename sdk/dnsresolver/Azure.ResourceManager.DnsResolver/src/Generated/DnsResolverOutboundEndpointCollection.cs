@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsResolverOutboundEndpointResource>> GetIfExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+
+            using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverOutboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual NullableResponse<DnsResolverOutboundEndpointResource> GetIfExists(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+
+            using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverOutboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DnsResolverOutboundEndpointResource> IEnumerable<DnsResolverOutboundEndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

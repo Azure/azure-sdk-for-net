@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskAccesses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DiskAccessResource>> GetIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+
+            using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _diskAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskAccessResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskAccessResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskAccesses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        public virtual NullableResponse<DiskAccessResource> GetIfExists(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+
+            using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diskAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskAccessResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskAccessResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DiskAccessResource> IEnumerable<DiskAccessResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
+            Optional<string> size = default;
             Optional<int> priority = default;
             Optional<IList<FirewallPolicyRuleCollectionInfo>> ruleCollections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -105,6 +106,11 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("size"u8))
+                        {
+                            size = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FirewallPolicyRuleCollectionGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(priority), Optional.ToList(ruleCollections), Optional.ToNullable(provisioningState));
+            return new FirewallPolicyRuleCollectionGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), size.Value, Optional.ToNullable(priority), Optional.ToList(ruleCollections), Optional.ToNullable(provisioningState));
         }
     }
 }

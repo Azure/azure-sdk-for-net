@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionId"> Action ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsAlertRuleActionResource>> GetIfExistsAsync(string actionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionId, nameof(actionId));
+
+            using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsAlertRuleActionActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsAlertRuleActionResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionId"> Action ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsAlertRuleActionResource> GetIfExists(string actionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionId, nameof(actionId));
+
+            using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsAlertRuleActionActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsAlertRuleActionResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SecurityInsightsAlertRuleActionResource> IEnumerable<SecurityInsightsAlertRuleActionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

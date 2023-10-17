@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The BlockBlobStorageResource class.
     /// </summary>
-    public class BlockBlobStorageResource : StorageResourceItem
+    internal class BlockBlobStorageResource : StorageResourceItemInternal
     {
         internal BlockBlobClient BlobClient { get; set; }
         internal BlockBlobStorageResourceOptions _options;
@@ -31,15 +30,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected override string ResourceId => "BlockBlob";
 
-        /// <summary>
-        /// Gets the Uri of the StorageResource
-        /// </summary>
         public override Uri Uri => BlobClient.Uri;
+
+        public override string ProviderId => "blob";
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
@@ -328,6 +323,30 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new BlobSourceCheckpointData();
+        }
+
+        /// <summary>
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                BlobType.Block,
+                _options.HttpHeaders,
+                _options.AccessTier,
+                _options.Metadata,
+                _options.Tags,
+                default); // TODO: Update when we support encryption scopes
         }
 
         private void GrabEtag(Response response)

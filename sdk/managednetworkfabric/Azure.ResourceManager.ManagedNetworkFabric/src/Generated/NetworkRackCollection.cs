@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkRackResource>> GetIfExistsAsync(string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkRackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkRackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkRackResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkRackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
+        public virtual NullableResponse<NetworkRackResource> GetIfExists(string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkRackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkRackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkRackResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkRackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkRackResource> IEnumerable<NetworkRackResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

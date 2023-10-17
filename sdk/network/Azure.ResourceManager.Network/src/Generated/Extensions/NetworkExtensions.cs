@@ -1325,6 +1325,44 @@ namespace Azure.ResourceManager.Network
             return GetNetworkArmClientMockingExtension(client).GetWebApplicationFirewallPolicyResource(id);
         }
 
+        #region VirtualMachineScaleSetNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkResource" /> object. </returns>
+        public static VirtualMachineScaleSetNetworkResource GetVirtualMachineScaleSetNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetNetworkResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetNetworkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetVmNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmNetworkResource" /> object. </returns>
+        public static VirtualMachineScaleSetVmNetworkResource GetVirtualMachineScaleSetVmNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetVmNetworkResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetVmNetworkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of ManagementGroupNetworkManagerConnectionResources in the ManagementGroupResource. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagementGroupNetworkManagerConnectionResources and their operations over a ManagementGroupNetworkManagerConnectionResource. </returns>

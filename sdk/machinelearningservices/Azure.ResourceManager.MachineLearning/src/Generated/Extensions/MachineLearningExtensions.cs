@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningRegistryCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningRegistryCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
-        public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningRegistryCodeContainerResource" /> object. </returns>
+        public static MachineLearningRegistryCodeContainerResource GetMachineLearningRegistryCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
-        public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
+        public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningWorkspaceConnectionResource(id);
         }
@@ -201,25 +201,25 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningEnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningEnvironmentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningFeatureSetContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningFeatureSetContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningFeatureSetContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
-        public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningFeatureSetContainerResource" /> object. </returns>
+        public static MachineLearningFeatureSetContainerResource GetMachineLearningFeatureSetContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningEnvironmentContainerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningFeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningFeatureResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
-        public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningFeatureResource" /> object. </returns>
+        public static MachineLearningFeatureResource GetMachineLearningFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningEnvironmentVersionResource(id);
         }
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningLabelingJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningLabelingJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningLabelingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
-        public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource" /> object. </returns>
+        public static MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningModelContainerResource(id);
         }
@@ -294,6 +294,157 @@ namespace Azure.ResourceManager.MachineLearning
         public static MachineLearningScheduleResource GetMachineLearningScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningScheduleResource(id);
+        }
+
+        #region MachineLearningRegistryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningRegistryResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningRegistryResource" /> object. </returns>
+        public static MachineLearningRegistryResource GetMachineLearningRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningRegistryResource.ValidateResourceId(id);
+                return new MachineLearningRegistryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
+        public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningWorkspaceResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningWorkspaceConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
+        public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningOutboundRuleBasicResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningOutboundRuleBasicResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOutboundRuleBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource" /> object. </returns>
+        public static MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
+                return new MachineLearningOutboundRuleBasicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningPrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
+        public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new MachineLearningPrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of MachineLearningRegistryResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MachineLearningRegistryResources and their operations over a MachineLearningRegistryResource. </returns>
+        public static MachineLearningRegistryCollection GetMachineLearningRegistries(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMachineLearningRegistries();
+        }
+
+        /// <summary>
+        /// Get registry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MachineLearningRegistryResource>> GetMachineLearningRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetMachineLearningRegistries().GetAsync(registryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get registry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MachineLearningRegistryResource> GetMachineLearningRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetMachineLearningRegistries().Get(registryName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>
@@ -574,6 +725,94 @@ namespace Azure.ResourceManager.MachineLearning
         public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List registries by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningRegistryResource> GetMachineLearningRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningRegistriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List registries by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningRegistryResource> GetMachineLearningRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningRegistries(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available machine learning workspaces under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, kind, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available machine learning workspaces under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, kind, cancellationToken);
         }
     }
 }

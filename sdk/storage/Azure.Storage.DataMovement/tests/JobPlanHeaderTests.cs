@@ -23,8 +23,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultTransferId, header.TransferId);
             Assert.AreEqual(DefaultCreateTime, header.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, header.OperationType);
+            Assert.AreEqual(DefaultSourceProviderId, header.SourceProviderId);
+            Assert.AreEqual(DefaultDestinationProviderId, header.DestinationProviderId);
             Assert.AreEqual(false, header.EnumerationComplete);
-            Assert.AreEqual(DefaultJobPlanStatus, header.JobStatus);
+            Assert.AreEqual(DefaultJobStatus, header.JobStatus);
             Assert.AreEqual(DefaultSourcePath, header.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, header.ParentDestinationPath);
         }
@@ -41,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
                 header.Serialize(headerStream);
 
                 BinaryReader reader = new(fileStream);
-                byte[] expected = reader.ReadBytes((int) fileStream.Length);
+                byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = headerStream.ToArray();
 
                 CollectionAssert.AreEqual(expected, actual);
@@ -77,8 +79,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultTransferId, deserialized.TransferId);
             Assert.AreEqual(DefaultCreateTime, deserialized.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, deserialized.OperationType);
+            Assert.AreEqual(DefaultSourceProviderId, deserialized.SourceProviderId);
+            Assert.AreEqual(DefaultDestinationProviderId, deserialized.DestinationProviderId);
             Assert.AreEqual(false, deserialized.EnumerationComplete);
-            Assert.AreEqual(DefaultJobPlanStatus, deserialized.JobStatus);
+            Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
         }

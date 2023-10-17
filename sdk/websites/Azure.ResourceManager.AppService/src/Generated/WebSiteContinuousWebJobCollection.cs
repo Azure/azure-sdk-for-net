@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetContinuousWebJob</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteContinuousWebJobResource>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteContinuousWebJobWebAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteContinuousWebJobResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteContinuousWebJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetContinuousWebJob</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual NullableResponse<WebSiteContinuousWebJobResource> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteContinuousWebJobResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteContinuousWebJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<WebSiteContinuousWebJobResource> IEnumerable<WebSiteContinuousWebJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

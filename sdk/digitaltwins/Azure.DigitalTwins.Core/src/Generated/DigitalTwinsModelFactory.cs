@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -48,6 +49,22 @@ namespace Azure.DigitalTwins.Core
         public static DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null)
         {
             return new DigitalTwinsEventRoute(id, endpointName, filter);
+        }
+
+        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <param name="id"> The identifier of the import job. </param>
+        /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
+        /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="createdDateTime"> Start time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="lastActionDateTime"> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
+        /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
+        public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
+        {
+            return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
         }
     }
 }

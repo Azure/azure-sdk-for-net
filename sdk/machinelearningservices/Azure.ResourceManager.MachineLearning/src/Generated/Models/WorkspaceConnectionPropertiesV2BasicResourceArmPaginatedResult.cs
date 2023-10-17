@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
-        /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink)
+        /// <param name="value"></param>
+        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceConnectionData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
     }
 }

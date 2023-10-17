@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// A class representing the MyWorkbook data model.
     /// An Application Insights private workbook definition.
     /// </summary>
-    public partial class MyWorkbookData : Models.MyWorkbookResource
+    public partial class MyWorkbookData : MyWorkbookResourceContent
     {
         /// <summary> Initializes a new instance of MyWorkbookData. </summary>
         public MyWorkbookData()

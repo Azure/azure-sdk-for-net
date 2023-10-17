@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Datadog
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogAgreementResource> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogAgreementResourceProperties" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Datadog
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogAgreementResource> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogAgreementResourceProperties" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatadogAgreementResourceProperties> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> The DatadogAgreementResource to use. </param>
+        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DatadogAgreementResource>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
             return await GetDatadogSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> The DatadogAgreementResource to use. </param>
+        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DatadogAgreementResource> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
+        public static Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
             return GetDatadogSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateMarketplaceAgreement(body, cancellationToken);
         }

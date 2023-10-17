@@ -49,6 +49,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of ExtensionValueResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
+        public virtual ExtensionValueCollection GetExtensionValues(AzureLocation location, string publisher, string extensionType)
+        {
+            return new ExtensionValueCollection(Client, Id, location, publisher, extensionType);
+        }
+
         /// <summary>
         /// Lists all the hybrid machines in the specified subscription. Use the nextLink property in the response to get the next page of hybrid machines.
         /// <list type="bullet">

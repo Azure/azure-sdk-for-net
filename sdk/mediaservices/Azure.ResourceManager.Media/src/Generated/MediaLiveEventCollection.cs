@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.Media
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaLiveEventResource>> GetIfExistsAsync(string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveEventLiveEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveEventResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        public virtual NullableResponse<MediaLiveEventResource> GetIfExists(string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveEventLiveEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveEventResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MediaLiveEventResource> IEnumerable<MediaLiveEventResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

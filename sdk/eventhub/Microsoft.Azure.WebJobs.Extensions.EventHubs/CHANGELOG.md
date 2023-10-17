@@ -1,6 +1,22 @@
 # Release History
 
-## 6.0.0 (2023-09-06)
+## 6.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 6.0.1 (2023-10-10)
+
+### Bugs Fixed
+
+- Added support for the legacy checkpoint format when making scaling decisions.
+
+## 6.0.0 (2023-09-12)
 
 ### Breaking Changes
 
@@ -16,7 +32,7 @@
 
 - When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
   To detect if the function app is in Drain Mode, use dependency injection to inject the
-  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing 
+  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing
   will now occur when the function app is in Drain Mode.
 
 ## 5.4.0 (2023-06-06)
