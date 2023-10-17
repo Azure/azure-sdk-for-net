@@ -27,10 +27,15 @@ namespace Azure.Core.Tests
             yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"));
         }
 
-        public static IEnumerable<TestCaseData> GetBinaryDataData()
+        public static object[] BinaryDataCases =
         {
-            yield return new TestCaseData(BinaryData.FromString("\"test\""));
-        }
+            new object[] { BinaryData.FromString("\"test\"") },
+            new object[] { new BinaryData(1)},
+            new object[] { new BinaryData(1.1)},
+            new object[] { new BinaryData(true)},
+            new object[] { BinaryData.FromObjectAsJson(new {name="a", age=1})},
+            new object[] { new BinaryData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"))}
+        };
 
         [TestCase(1, 2)]
         [TestCase("a", "b")]
@@ -192,7 +197,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        [TestCaseSource("GetBinaryDataData")]
+        [TestCaseSource(nameof(BinaryDataCases))]
         public void TestFromObjectForBinaryData(BinaryData value)
         {
             var content = RequestContentHelper.FromObject(value);
@@ -200,7 +205,6 @@ namespace Azure.Core.Tests
             content.WriteTo(stream, default);
             stream.Position = 0;
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
             Assert.AreEqual(value.ToObjectFromJson(), BinaryData.FromString(document.RootElement.GetRawText()).ToObjectFromJson());
         }
     }
