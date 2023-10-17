@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
   <type>microsoft.graph.authenticationEvent.tokenIssuanceStart</type>
-  <source>/tenants/d33b1c3f-49c2-8cb3-963b-ca195de1e704/applications/d56ef0c3-a4e8-b26c-484c-8873b560eab3</source>
+  <source>/tenants/00000000-0000-0000-0000-000000000002/applications/00000000-0000-0000-0000-000000000001</source>
   <data>
     <odata.type>
       microsoft.graph.onTokenIssuanceStartCalloutData
     </odata.type>
-    <tenantId>d33b1c3f-49c2-8cb3-963b-ca195de1e704</tenantId>
-    <authenticationEventListenerId>6fd9cb25-ff72-304b-7b27-5fd793aa3c2f</authenticationEventListenerId>
-    <customAuthenticationExtensionId>ce1b2217-fdf9-a19f-2f46-a639514a4107</customAuthenticationExtensionId>
+    <tenantId>00000000-0000-0000-0000-000000000002</tenantId>
+    <authenticationEventListenerId>00000000-0000-0000-0000-000000000003</authenticationEventListenerId>
+    <customAuthenticationExtensionId>00000000-0000-0000-0000-000000000004</customAuthenticationExtensionId>
     <authenticationContext>
-      <correlationId>1dc14bea-414b-a99e-64de-b4702d82ab59</correlationId>
+      <correlationId>00000000-0000-0000-0000-000000000005</correlationId>
       <client>
-        <ip>30.51.176.110</ip>
+        <ip>127.0.0.1</ip>
         <locale>en-us</locale>
         <market>en-us</market>
       </client>
       <protocol>OAUTH2.0</protocol>
       <clientServicePrincipal>
-        <id>1dc14bea-414b-a99e-64de-b4702d82ab59</id>
-        <appId>d56ef0c3-a4e8-b26c-484c-8873b560eab3</appId>
+        <id>00000000-0000-0000-0000-000000000005</id>
+        <appId>00000000-0000-0000-0000-000000000001</appId>
         <appDisplayName>My Test application</appDisplayName>
         <displayName>My Test application</displayName>
       </clientServicePrincipal>
       <resourceServicePrincipal>
-        <id>8de396f3-6559-a65c-398e-43a2fc6a2141</id>
-        <appId>d56ef0c3-a4e8-b26c-484c-8873b560eab3</appId>
+        <id>00000000-0000-0000-0000-000000000006</id>
+        <appId>00000000-0000-0000-0000-000000000001</appId>
         <appDisplayName>My Test application</appDisplayName>
         <displayName>My Test application</displayName>
       </resourceServicePrincipal>
@@ -33,13 +33,13 @@
         <createdDateTime>2016-03-01T15:23:40Z</createdDateTime>
         <displayName>Bob</displayName>
         <givenName>Bob Smith</givenName>
-        <id>90847c2a-e29d-4d2f-9f54-c5b4d3f26471</id>
+        <id>00000000-0000-0000-0000-000000000007</id>
         <mail>bob@contoso.com</mail>
         <preferredLanguage>en-us</preferredLanguage>
         <surname>Smith</surname>
         <userPrincipalName>bob@contoso.com</userPrincipalName>
         <userType>Member</userType>
       </user>
-    </authenticationContext>undefined
+    </authenticationContext>
   </data>
 </root>
