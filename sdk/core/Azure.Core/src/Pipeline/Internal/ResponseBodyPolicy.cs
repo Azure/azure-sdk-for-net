@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.IO;
+using System.Net.ClientModel.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Buffers;
 
 namespace Azure.Core.Pipeline
 {
@@ -15,145 +14,81 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
-        // Same value as Stream.CopyTo uses by default
-        private const int DefaultCopyBufferSize = 81920;
-
+        private readonly ResponseBufferingPolicy _policy;
         private readonly TimeSpan _networkTimeout;
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
+            _policy = new ResponseBufferingPolicy(networkTimeout);
             _networkTimeout = networkTimeout;
         }
 
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
-            ProcessAsync(message, pipeline, true);
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
 
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            CancellationToken oldToken = message.CancellationToken;
-            using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
+            AzureCorePipelineEnumerator executor = new(message, pipeline);
 
-            var networkTimeout = _networkTimeout;
-
-            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+            // Get the network timeout for this particular invocation of the pipeline.
+            // We either use the default that the policy was constructed with at
+            // pipeline-creation time, or we get an override value from the message that
+            // we use for the duration of this invocation only.
+            TimeSpan invocationNetworkTimeout = _networkTimeout;
+            if (ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
             {
-                networkTimeout = networkTimeoutOverride;
+                invocationNetworkTimeout = networkTimeoutOverride;
             }
 
-            cts.CancelAfter(networkTimeout);
             try
             {
-                message.CancellationToken = cts.Token;
                 if (async)
                 {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessNext(message, pipeline);
-                }
-            }
-            catch (OperationCanceledException ex)
-            {
-                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
-                throw;
-            }
-            finally
-            {
-                message.CancellationToken = oldToken;
-                cts.CancelAfter(Timeout.Infinite);
-            }
-
-            Stream? responseContentStream = message.Response.ContentStream;
-            if (responseContentStream == null || responseContentStream.CanSeek)
-            {
-                return;
-            }
-
-            if (message.BufferResponse)
-            {
-                // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-                // register callback to dispose the stream on cancellation.
-                if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
-                {
-                    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
+                    _policy.Process(message, executor);
                 }
 
-                try
+                if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
                 {
-                    var bufferedStream = new MemoryStream();
-                    if (async)
+                    // We default to buffering the response if not set on message.
+                    bufferResponse = true;
+                }
+
+                if (!bufferResponse && invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+                {
+                    // TODO: tidy this up - there is a bug here if customer overrides default transport
+                    Stream? responseContentStream = message.Response.ContentStream;
+                    if (responseContentStream == null || responseContentStream.CanSeek)
                     {
-                        await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        CopyTo(responseContentStream, bufferedStream, cts);
+                        return;
                     }
 
-                    responseContentStream.Dispose();
-                    bufferedStream.Position = 0;
-                    message.Response.ContentStream = bufferedStream;
+                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
                 }
-                // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
-                catch (Exception ex)
-                    when (ex is ObjectDisposedException
-                              or IOException
-                              or OperationCanceledException
-                              or NotSupportedException)
+            }
+            catch (TaskCanceledException e)
+            {
+                // TODO: come back and clean this up.
+                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
                 {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
-                    throw;
+                    string exceptionMessage = e.Message +
+                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+#if NETCOREAPP2_1_OR_GREATER
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+#else
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
+#endif
                 }
-            }
-            else if (networkTimeout != Timeout.InfiniteTimeSpan)
-            {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
-            }
-        }
-
-        private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
-        {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-            try
-            {
-                while (true)
+                else
                 {
-                    cancellationTokenSource.CancelAfter(_networkTimeout);
-#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
-                    int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
-#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                    if (bytesRead == 0) break;
-                    await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
+                    throw e;
                 }
-            }
-            finally
-            {
-                cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-        }
-
-        private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
-        {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-            try
-            {
-                int read;
-                while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
-                {
-                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                    cancellationTokenSource.CancelAfter(_networkTimeout);
-                    destination.Write(buffer, 0, read);
-                }
-            }
-            finally
-            {
-                cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-                ArrayPool<byte>.Shared.Return(buffer);
             }
         }
 

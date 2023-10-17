@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -16,7 +15,8 @@ namespace Azure.Core
     public abstract class Request : IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private RequestUriBuilder? _uri;
+        private RequestUriBuilder? _uriBuilder;
+        private string? _clientRequestId;
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -25,12 +25,12 @@ namespace Azure.Core
         {
             get
             {
-                return _uri ??= new RequestUriBuilder();
+                return _uriBuilder ??= new RequestUriBuilder();
             }
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-                _uri = value;
+                _uriBuilder = value;
             }
         }
 
@@ -43,6 +43,19 @@ namespace Azure.Core
         /// Gets or sets the request content.
         /// </summary>
         public virtual RequestContent? Content { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
+        /// </summary>
+        public virtual string ClientRequestId
+        {
+            get => _clientRequestId ??= Guid.NewGuid().ToString();
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _clientRequestId = value;
+            }
+        }
 
         /// <summary>
         /// Adds a header value to the header collection.
@@ -96,11 +109,6 @@ namespace Azure.Core
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
-
-        /// <summary>
-        /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
-        /// </summary>
-        public abstract string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets the response HTTP headers.

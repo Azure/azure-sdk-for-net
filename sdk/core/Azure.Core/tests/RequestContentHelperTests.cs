@@ -152,39 +152,5 @@ namespace Azure.Core.Tests
                 }
             }
         }
-
-        [TestCase("a")]
-        [TestCase(true)]
-        [TestCase(1)]
-        [TestCase(1.0)]
-        [TestCaseSource("GetOneDateTimeData")]
-        public void TestFromObject<T>(T value)
-        {
-            var content = RequestContentHelper.FromObject(value);
-            var stream = new MemoryStream();
-            content.WriteTo(stream, default);
-            stream.Position = 0;
-            var document = JsonDocument.Parse(stream);
-            switch (value)
-            {
-                case string:
-                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
-                    Assert.AreEqual($"\"{value}\"", document.RootElement.GetRawText());
-                    break;
-                case bool:
-                    Assert.AreEqual(value, document.RootElement.GetBoolean());
-                    break;
-                case int:
-                    Assert.AreEqual(value, document.RootElement.GetInt32());
-                    break;
-                case double:
-                    Assert.AreEqual(value, document.RootElement.GetDouble());
-                    break;
-                case DateTimeOffset:
-                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
-                    Assert.AreEqual(value, DateTimeOffset.Parse(document.RootElement.GetString()));
-                    break;
-            }
-        }
     }
 }

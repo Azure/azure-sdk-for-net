@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Azure.Core
 {
-    internal class RawRequestUriBuilder: RequestUriBuilder
+    internal class RawRequestUriBuilder : RequestUriBuilder
     {
         private const string SchemeSeparator = "://";
         private const char HostSeparator = '/';

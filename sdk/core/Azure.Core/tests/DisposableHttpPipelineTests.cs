@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -44,7 +43,7 @@ namespace Azure.Core.Tests
             public override Request CreateRequest() { throw new NotImplementedException(); }
 
             public bool DisposeCalled;
-            public void Dispose() => DisposeCalled = true;
+            public override void Dispose() => DisposeCalled = true;
         }
 
         private class MockPolicy : HttpPipelineTransportPolicy

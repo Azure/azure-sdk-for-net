@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuth
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication.Tests", "Azure.Identity.BrokeredAuthentication\tests\Azure.Identity.BrokeredAuthentication.Tests.csproj", "{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{B8BF1ED4-DD68-4504-9060-008D1A980958}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{B8BF1ED4-DD68-4504-9060-008D1A980958}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel", "..\core\System.Net.ClientModel\src\System.Net.ClientModel.csproj", "{29EB786E-A66C-48A5-87D7-A6D17C900CBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{B8BF1ED4-DD68-4504-9060-008D1A980958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8BF1ED4-DD68-4504-9060-008D1A980958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8BF1ED4-DD68-4504-9060-008D1A980958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EB786E-A66C-48A5-87D7-A6D17C900CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EB786E-A66C-48A5-87D7-A6D17C900CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EB786E-A66C-48A5-87D7-A6D17C900CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EB786E-A66C-48A5-87D7-A6D17C900CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

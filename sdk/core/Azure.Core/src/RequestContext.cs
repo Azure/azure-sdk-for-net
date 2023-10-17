@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.ComponentModel;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -12,7 +15,7 @@ namespace Azure
     /// <summary>
     /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
-    public class RequestContext
+    public class RequestContext : RequestOptions
     {
         private bool _frozen;
 
@@ -27,12 +30,35 @@ namespace Azure
         /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ErrorOptions ErrorOptions
+        {
+            get => FromErrorBehavior(ErrorBehavior);
+            set
+            {
+                ErrorBehavior = ToErrorBehavior(value);
+            }
+        }
 
-        /// <summary>
-        /// The token to check for cancellation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        private ErrorOptions FromErrorBehavior(ErrorBehavior errorOptions)
+        {
+            return errorOptions switch
+            {
+                ErrorBehavior.Default => ErrorOptions.Default,
+                ErrorBehavior.NoThrow => ErrorOptions.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
+        }
+
+        private ErrorBehavior ToErrorBehavior(ErrorOptions errorOptions)
+        {
+            return errorOptions switch
+            {
+                ErrorOptions.Default => ErrorBehavior.Default,
+                ErrorOptions.NoThrow => ErrorBehavior.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -46,6 +72,37 @@ namespace Azure
         /// </summary>
         /// <param name="options"></param>
         public static implicit operator RequestContext(ErrorOptions options) => new RequestContext { ErrorOptions = options };
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Apply(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Unexpected message type: '{message.GetType()}'.");
+            }
+
+            Apply(httpMessage);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public void Apply(HttpMessage message)
+        {
+            message.CancellationToken = CancellationToken;
+
+            // TODO: Note, we don't set response classifier here, but need to rethink this
+            // story e2e.
+
+            if (NetworkTimeout.HasValue)
+            {
+                ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+            }
+        }
 
         /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.

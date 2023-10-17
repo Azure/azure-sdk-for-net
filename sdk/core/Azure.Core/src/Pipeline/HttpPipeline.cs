@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.ClientModel.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline
+    public class HttpPipeline : Pipeline<HttpMessage>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -91,16 +92,15 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()
-        {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
-        }
+        public override HttpMessage CreateMessage()
+            => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -110,12 +110,15 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            var message = CreateMessage();
-            if (classifier != null)
-            {
-                message.ResponseClassifier = classifier;
-            }
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
+
+            // TODO: Note: Azure.Core-based libraries are going to need to somehow create the
+            // message by passing in the request context to create message so that
+            // message.ApplyContext() will be applied.  This is a bit of a tangle, but
+            // I think we can solve it with a little reworkd.
+
             message.ApplyRequestContext(context, classifier);
+
             return message;
         }
 
@@ -144,13 +147,19 @@ namespace Azure.Core.Pipeline
             return SendAsync(message);
         }
 
-        private async ValueTask SendAsync(HttpMessage message)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override async ValueTask SendAsync(HttpMessage message)
         {
-            var length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            int length = _pipeline.Length + message.Policies!.Count;
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
             try
             {
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally
@@ -173,20 +182,29 @@ namespace Azure.Core.Pipeline
             if (message.Policies == null || message.Policies.Count == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                return;
             }
-            else
+
+            Send(message);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Send(HttpMessage message)
+        {
+            int length = _pipeline.Length + message.Policies!.Count;
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
+            try
             {
-                var length = _pipeline.Length + message.Policies.Count;
-                var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                try
-                {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
-                    pipeline.Span[0].Process(message, pipeline.Slice(1));
-                }
-                finally
-                {
-                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
-                }
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
+                pipeline.Span[0].Process(message, pipeline.Slice(1));
+            }
+            finally
+            {
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
             }
         }
 
@@ -258,7 +276,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Copy over client policies and splice in custom policies at designated indices
-            var pipeline = _pipeline.Span;
+            ReadOnlySpan<HttpPipelinePolicy> pipeline = _pipeline.Span;
             int transportIndex = pipeline.Length - 1;
 
             pipeline.Slice(0, _perCallIndex).CopyTo(policies);
@@ -291,7 +309,7 @@ namespace Azure.Core.Pipeline
             int count = 0;
             if (source != null)
             {
-                foreach (var policy in source)
+                foreach ((HttpPipelinePosition Position, HttpPipelinePolicy Policy) policy in source)
                 {
                     if (policy.Position == position)
                     {
@@ -328,7 +346,7 @@ namespace Azure.Core.Pipeline
                 if (parent != null)
                 {
                     Properties = new Dictionary<string, object?>(parent.Properties);
-                    foreach (var kvp in messageProperties)
+                    foreach (KeyValuePair<string, object?> kvp in messageProperties)
                     {
                         Properties[kvp.Key] = kvp.Value;
                     }

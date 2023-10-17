@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Pipeline;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -12,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
@@ -23,24 +24,26 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
+            : base(ToPipelineRequest(request))
         {
-            Argument.AssertNotNull(request, nameof(Request));
+            Argument.AssertNotNull(request, nameof(request));
+
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+
             Request = request;
             ResponseClassifier = responseClassifier;
-            BufferResponse = true;
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -52,36 +55,55 @@ namespace Azure.Core
                 }
                 return _response;
             }
-            set => _response = value;
+
+            set
+            {
+                _response = value;
+                base.Response = ToPipelineResponse(value)!;
+            }
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public new bool HasResponse => _response != null || base.HasResponse;
 
-        internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
+        internal void ClearResponse() => Response = null!;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        // TODO: revisit this per not shadowing anymore
+        public new ResponseClassifier ResponseClassifier
+        {
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
         /// </summary>
-        public bool BufferResponse { get; set; }
+        public bool BufferResponse
+        {
+            get => ResponseBufferingPolicy.TryGetBufferResponse(this, out bool bufferResponse) ? bufferResponse : true;
+            set => ResponseBufferingPolicy.SetBufferResponse(this, value);
+        }
 
         /// <summary>
-        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
+        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> will be used instead.
         /// Defaults to <c>null</c>.
         /// </summary>
-        public TimeSpan? NetworkTimeout { get; set; }
+        public TimeSpan? NetworkTimeout
+        {
+            get => ResponseBufferingPolicy.TryGetNetworkTimeout(this, out TimeSpan timeout) ? timeout : null;
+            set
+            {
+                if (value.HasValue)
+                {
+                    ResponseBufferingPolicy.SetNetworkTimeout(this, value.Value);
+                }
+            }
+        }
 
         internal int RetryNumber { get; set; }
 
@@ -101,6 +123,9 @@ namespace Azure.Core
 
             context.Freeze();
 
+            context.Apply(this);
+
+            // Azure-specific extensibility piece
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
@@ -153,33 +178,14 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Returns the response content stream and releases it ownership to the caller.
+        ///
+        /// After calling this method, any attempt to use the
+        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
+        /// properties on <see cref="Response"/> will result in an exception being thrown.
         /// </summary>
-        /// <param name="type">The property type.</param>
-        /// <param name="value">The property value.</param>
-        /// <remarks>
-        /// The key value is of type <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that though the accessor methods
-        /// are public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
-        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage. Secondly, <c>Type</c>
-        /// comparisons are faster than string comparisons.
-        /// </remarks>
-        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(Type type, out object? value) =>
-            _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
-
-        /// <summary>
-        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
-        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
-        /// </summary>
-        /// <param name="type">The key for the value.</param>
-        /// <param name="value">The property value.</param>
-        public void SetProperty(Type type, object value) =>
-            _propertyBag.Set((ulong)type.TypeHandle.Value, value);
-
-        /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
-        /// </summary>
-        /// <returns>The content stream or null if response didn't have any.</returns>
+        /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
+        /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
             switch (_response?.ContentStream)
@@ -191,22 +197,6 @@ namespace Azure.Core
                     return stream;
                 default:
                     return null;
-            }
-        }
-
-        /// <summary>
-        /// Disposes the request and response.
-        /// </summary>
-        public void Dispose()
-        {
-            Request.Dispose();
-            _propertyBag.Dispose();
-
-            var response = _response;
-            if (response != null)
-            {
-                _response = null;
-                response.Dispose();
             }
         }
 
@@ -265,5 +255,52 @@ namespace Azure.Core
         /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
+        private static PipelineRequest ToPipelineRequest(Request request)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            {
+                return pipelineRequest!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
+            return new PipelineRequestAdapter(request);
+        }
+
+        private static PipelineResponse? ToPipelineResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
+            {
+                return pipelineResponse!;
+            }
+
+            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
+            return new PipelineResponseAdapter(response);
+        }
+
+        /// <summary>
+        /// Disposes the request and response.
+        /// </summary>
+        public override void Dispose()
+        {
+            Request.Dispose();
+            _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
+
+            base.Dispose();
+        }
     }
 }

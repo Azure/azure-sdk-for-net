@@ -6,11 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,16 +47,16 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-            ProcessInternal(message, false).EnsureCompleted();
+            ProcessSyncOrAsync(message, false).EnsureCompleted();
         }
 
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
         {
-            await ProcessInternal(message, true).ConfigureAwait(false);
+            await ProcessSyncOrAsync(message, true).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessInternal(HttpMessage message, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {
             var request = CreateRequest(message.Request);
 
@@ -107,7 +104,7 @@ namespace Azure.Core.Pipeline
                     webResponse = exception.Response;
                 }
 
-                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
+                message.Response = new HttpWebTransportResponse(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
             }
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
@@ -262,16 +259,52 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override Request CreateRequest()
         {
-            return new HttpWebRequestImplementation();
+            return new HttpWebTransportRequest();
         }
 
-        private sealed class HttpWebResponseImplementation : Response
+        private sealed class HttpWebTransportRequest : Request
+        {
+            public HttpWebTransportRequest()
+            {
+                Method = RequestMethod.Get;
+            }
+
+            private readonly DictionaryHeaders _headers = new();
+
+            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+
+            protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
+
+            protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
+
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
+
+            protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
+
+            protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
+
+            public override RequestContent? Content { get; set; }
+
+            public override void Dispose()
+            {
+                var content = Content;
+                if (content != null)
+                {
+                    Content = null;
+                    content.Dispose();
+                }
+            }
+        }
+
+        private sealed class HttpWebTransportResponse : Response
         {
             private readonly HttpWebResponse _webResponse;
             private Stream? _contentStream;
             private Stream? _originalContentStream;
 
-            public HttpWebResponseImplementation(string clientRequestId, HttpWebResponse webResponse)
+            public HttpWebTransportResponse(string clientRequestId, HttpWebResponse webResponse)
             {
                 _webResponse = webResponse;
                 _originalContentStream = _webResponse.GetResponseStream();
@@ -328,53 +361,6 @@ namespace Azure.Core.Pipeline
                 foreach (var key in _webResponse.Headers.AllKeys)
                 {
                     yield return new HttpHeader(key, _webResponse.Headers.Get(key));
-                }
-            }
-        }
-
-        private sealed class HttpWebRequestImplementation : Request
-        {
-            public HttpWebRequestImplementation()
-            {
-                Method = RequestMethod.Get;
-            }
-
-            private string? _clientRequestId;
-            private readonly DictionaryHeaders _headers = new();
-
-            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
-
-            protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
-
-            protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
-
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
-
-            protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
-
-            protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
-
-            public override string ClientRequestId
-            {
-                get => _clientRequestId ??= Guid.NewGuid().ToString();
-                set
-                {
-                    Argument.AssertNotNull(value, nameof(value));
-                    _clientRequestId = value;
-                }
-            }
-
-            public override RequestContent? Content { get; set; }
-
-            public override void Dispose()
-            {
-                var content = Content;
-                if (content != null)
-                {
-                    Content = null;
-                    content.Dispose();
                 }
             }
         }
