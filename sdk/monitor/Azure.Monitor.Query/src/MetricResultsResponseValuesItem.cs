@@ -22,5 +22,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The resource that has been queried for metrics. </summary>
         [CodeGenMember("Resourceid")]
         public ResourceIdentifier ResourceId { get; }
+
+        /// <summary> The region of the resource been queried for metrics. </summary>
+        [CodeGenMember("Resourceregion")]
+        public string ResourceRegion { get; }
     }
 }

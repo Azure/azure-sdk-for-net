@@ -350,7 +350,7 @@ namespace Azure.Monitor.Query.Tests
 
             MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
-            Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].Resourceid);
+            Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].ResourceId);
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
             for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {

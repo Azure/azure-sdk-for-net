@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added the `MetricsBatchQueryClient` client to support batch querying of metrics.
-- Added `Batch` and `BatchAsync` methods to `MetricsBatchQueryClient`
+- Added `QueryBatch` and `QueryBatchAsync` methods to `MetricsBatchQueryClient`
 
 ### Breaking Changes
 
