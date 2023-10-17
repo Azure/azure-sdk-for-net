@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Support.Tests
     internal class SupportTicketChatTranscriptsTests : SupportManagementTestBase
     {
         private SupportTicketChatTranscriptCollection _supportTicketChatTranscriptCollection;
-        private const string _existSupportTicketChatTranscriptsName = "c87e909c-de24-4a91-b7c6-3872edb5e937";
+        private const string _existSupportTicketChatTranscriptsName = "0730c70e-5a8e-4fd7-94aa-35f922ea3efe";
 
         public SupportTicketChatTranscriptsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Support.Tests
         [SetUp]
         public async Task SetUp()
         {
-            string existSupportTicketName = "E2ETest638330921637198429";
+            string existSupportTicketName = "2310120040010764";
             var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(existSupportTicketName);
             _supportTicketChatTranscriptCollection = supportTicket.Value.GetSupportTicketChatTranscripts();
         }

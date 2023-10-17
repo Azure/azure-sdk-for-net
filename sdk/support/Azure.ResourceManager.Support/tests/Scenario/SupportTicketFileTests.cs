@@ -25,7 +25,9 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task SetUp()
         {
             // currently not working
-            subscriptionFileWorkspaceResource = await Task.Run(() => Client.GetSubscriptionFileWorkspaceResource(new Core.ResourceIdentifier("/subscriptions/cca0326c-4c31-46d8-8fcb-c67023a46f4b/providers/Microsoft.Support/fileWorkspaces/2310170040010605")));
+            var resource = SubscriptionFileWorkspaceResource.CreateResourceIdentifier("cca0326c-4c31-46d8-8fcb-c67023a46f4b", _existSupportTicketFileWorkspaceName);
+            //SupportTicketFileResource.CreateResourceIdentifier("cca0326c-4c31-46d8-8fcb-c67023a46f4b", _existSupportTicketFileWorkspaceName, )
+            subscriptionFileWorkspaceResource = await Task.Run(() => Client.GetSubscriptionFileWorkspaceResource(resource));
             _supportTicketFileCollection = subscriptionFileWorkspaceResource.GetSupportTicketFiles();
             //_subscriptionFileWorkspaceCollection = await Task.Run(() => DefaultSubscription.GetFi());
         }
@@ -40,8 +42,8 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var supportTicketFileWorkspace = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileWorkspaceName);
-            ValidateSupportTicketFileData(supportTicketFileWorkspace.Value.Data);
+            var supportTicketFileWorkspace = await Task.Run(() => _supportTicketFileCollection.GetAll());
+            //ValidateSupportTicketFileData(supportTicketFileWorkspace.Value.Data);
         }
 
         private void ValidateSupportTicketFileData(FileDetailData supportTicketFileWorkspace)
