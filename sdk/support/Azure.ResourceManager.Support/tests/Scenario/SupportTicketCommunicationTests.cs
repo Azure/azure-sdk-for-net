@@ -15,9 +15,11 @@ namespace Azure.ResourceManager.Support.Tests
     internal class SupportTicketCommunicationTests : SupportManagementTestBase
     {
         private SupportTicketCommunicationCollection _supportTicketCommunicationCollection;
+        private SubscriptionSupportTicketResource _subscriptionSupportTicketResource;
         private const string _existSupportTicketCommunicationName = "0b60e9a8-98bd-ed11-83ff-000d3a18b532";
         private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
         private const string _existSupportTicketName = "2310120040010764";
+        private string _communicationName;
 
         public SupportTicketCommunicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -26,8 +28,10 @@ namespace Azure.ResourceManager.Support.Tests
         [SetUp]
         public async Task SetUp()
         {
+            _communicationName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
             var supportTicket = await DefaultSubscription.GetSubscriptionSupportTicketAsync(_existSupportTicketName);
-            _supportTicketCommunicationCollection = supportTicket.Value.GetSupportTicketCommunications();
+            _subscriptionSupportTicketResource = supportTicket.Value;
+            _supportTicketCommunicationCollection = _subscriptionSupportTicketResource.GetSupportTicketCommunications();
         }
 
         [RecordedTest]
@@ -35,6 +39,15 @@ namespace Azure.ResourceManager.Support.Tests
         {
             var flag = await _supportTicketCommunicationCollection.ExistsAsync(_existSupportTicketCommunicationName);
             Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task CheckCommunicationNameAvailability()
+        {
+            var content = new SupportNameAvailabilityContent(_communicationName, SupportResourceType.MicrosoftSupportCommunications);
+            var result = await _subscriptionSupportTicketResource.CheckCommunicationNameAvailabilityAsync(content);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Value.IsNameAvailable, true);
         }
 
         [RecordedTest]
@@ -55,12 +68,11 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Create()
         {
-            var communicationName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
-            var resource = SupportTicketCommunicationResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketName, communicationName);
-            var communicationData = new SupportTicketCommunicationData(resource, communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow);
-            await _supportTicketCommunicationCollection.CreateOrUpdateAsync(WaitUntil.Completed, communicationName, communicationData);
-            var supportTicketFileWorkspace = await _supportTicketCommunicationCollection.GetAsync(communicationName);
-            ValidateSupportTicketCommunicationData(supportTicketFileWorkspace.Value.Data, communicationName);
+            var resource = SupportTicketCommunicationResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketName, _communicationName);
+            var communicationData = new SupportTicketCommunicationData(resource, _communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow);
+            await _supportTicketCommunicationCollection.CreateOrUpdateAsync(WaitUntil.Completed, _communicationName, communicationData);
+            var supportTicketFileWorkspace = await _supportTicketCommunicationCollection.GetAsync(_communicationName);
+            ValidateSupportTicketCommunicationData(supportTicketFileWorkspace.Value.Data, _communicationName);
         }
 
         private void ValidateSupportTicketCommunicationData(SupportTicketCommunicationData supportTicketCommunication, string comunicationName)
