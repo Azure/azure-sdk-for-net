@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Support.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Tests
@@ -15,7 +16,8 @@ namespace Azure.ResourceManager.Support.Tests
     {
         private SubscriptionSupportTicketCollection _supportAzureServiceCollection => DefaultSubscription.GetSubscriptionSupportTickets();
 
-        private const string _existSupportTicketName = "2303060030001646";
+        private const string _existSupportTicketName = "2310120040010764";
+        private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
 
         public SupportTicketTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -29,10 +31,21 @@ namespace Azure.ResourceManager.Support.Tests
         }
 
         [RecordedTest]
+        public async Task CheckSupportTicketNameAvailability()
+        {
+            var supportTicketName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
+            var content = new SupportNameAvailabilityContent(supportTicketName, SupportResourceType.MicrosoftSupportSupportTickets);
+            var result = await supportTicket.Value.CheckCommunicationNameAvailabilityAsync(content);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Value.IsNameAvailable, true);
+        }
+
+        [RecordedTest]
         public async Task Get()
         {
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
-            ValidateSupportTicket(supportTicket.Value.Data);
+            ValidateGetSupportTicket(supportTicket.Value.Data, _existSupportTicketName);
         }
 
         [RecordedTest]
@@ -40,14 +53,69 @@ namespace Azure.ResourceManager.Support.Tests
         {
             var list = await _supportAzureServiceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateSupportTicket(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketName).Data);
+            ValidateGetSupportTicket(list.FirstOrDefault(item => item.Data.Name == _existSupportTicketName).Data, _existSupportTicketName);
         }
 
-        private void ValidateSupportTicket(SupportTicketData supportTicket)
+        [RecordedTest]
+        public async Task Create()
+        {
+            var supportTicketName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketDataForCreateOperation());
+            var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
+            Assert.IsNotNull(supportTicket);
+            Assert.IsNotEmpty(supportTicket.Value.Data.Id);
+            Assert.AreEqual(supportTicket.Value.Data.Name, supportTicketName);
+            Assert.AreEqual(supportTicket.Value.Data.Title, "dotnet sdk unit test, please close");
+        }
+
+        [RecordedTest]
+        public async Task Update()
+        {
+            var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
+            var severity = supportTicket.Value.Data.Severity;
+            var firstName = supportTicket.Value.Data.ContactDetails.FirstName;
+            await supportTicket.Value.UpdateAsync(BuildSupportTicketForUpdateOperation(supportTicket.Value.Data));
+            supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
+            Assert.IsNotNull(supportTicket);
+            Assert.IsNotEmpty(supportTicket.Value.Data.Id);
+            Assert.AreEqual(supportTicket.Value.Data.Name, _existSupportTicketName);
+            Assert.AreNotEqual(supportTicket.Value.Data.Severity, severity);
+            Assert.AreNotEqual(supportTicket.Value.Data.ContactDetails.FirstName, firstName);
+        }
+
+        private void ValidateGetSupportTicket(SupportTicketData supportTicket, string supportTicketName)
         {
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Id);
-            Assert.AreEqual(supportTicket.Name, _existSupportTicketName);
+            Assert.AreEqual(supportTicket.Name, supportTicketName);
+        }
+
+        private SupportTicketData BuildSupportTicketDataForCreateOperation()
+        {
+            var ticket = new SupportTicketData();
+            ticket.AdvancedDiagnosticConsent = "No";
+            ticket.ServiceId = "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201";
+            ticket.ProblemClassificationId = "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201/problemclassifications/03014459-4572-f8f0-32b0-88833f234f25";
+            ticket.Title = "dotnet sdk unit test, please close";
+            ticket.Description = "dotnet sdk unit test, please close";
+            ticket.ProblemStartOn = DateTimeOffset.UtcNow;
+            ticket.Severity = "Minimal";
+            ticket.Require24X7Response = false;
+            ticket.ContactDetails = new SupportContactProfile("test", "test", PreferredContactMethod.Email, "test@microsoft.com", "Dateline Standard Time", "USA", "en-us");
+            return ticket;
+        }
+
+        private UpdateSupportTicket BuildSupportTicketForUpdateOperation(SupportTicketData supportTicket)
+        {
+            var firstName = $"firstName_{DateTime.Now.Ticks.ToString()}";
+            //  Change severity to Minimal if Moderate and vice versa
+            var severity = supportTicket.Severity.Value == "Minimal" ? "Moderate" : "Minimal";
+            var updateSupportTicket = new UpdateSupportTicket()
+            {
+                Severity = severity,
+                ContactDetails = new SupportContactProfileContent() { FirstName = firstName }
+            };
+            return updateSupportTicket;
         }
     }
 }
