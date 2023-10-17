@@ -67,7 +67,6 @@ namespace Azure.AI.OpenAI
             return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
@@ -107,7 +106,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
