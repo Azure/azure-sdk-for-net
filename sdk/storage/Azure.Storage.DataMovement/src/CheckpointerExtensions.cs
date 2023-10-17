@@ -70,9 +70,11 @@ namespace Azure.Storage.DataMovement
                 SourceTypeId = sourceTypeId,
                 SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
+                SourceCheckpointData = header.SourceCheckpointData,
                 DestinationTypeId = destinationTypeId,
                 DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
+                DestinationCheckpointData = header.DestinationCheckpointData,
                 IsContainer = header.IsContainer,
             };
         }

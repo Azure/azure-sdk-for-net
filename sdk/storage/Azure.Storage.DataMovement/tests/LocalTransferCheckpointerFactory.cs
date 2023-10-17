@@ -47,7 +47,6 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
         internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
         internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
-        internal static readonly MockResourceCheckpointData _mockCheckpointData = new MockResourceCheckpointData();
 
         private string _checkpointerPath;
 
@@ -159,8 +158,8 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceCheckpointData destinationCheckpointData = default)
         {
             status ??= new DataTransferStatus();
-            sourceCheckpointData ??= _mockCheckpointData;
-            destinationCheckpointData ??= _mockCheckpointData;
+            sourceCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
+            destinationCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
 
             JobPlanHeader header = new JobPlanHeader(
                 DataMovementConstants.JobPlanFile.SchemaVersion,

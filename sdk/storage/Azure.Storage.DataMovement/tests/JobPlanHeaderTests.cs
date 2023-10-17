@@ -10,8 +10,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPlanHeaderTests : DataMovementTestBase
     {
-        private MockResourceCheckpointData _checkpointData = new();
-
         public JobPlanHeaderTests(bool async) : base(async, default)
         {
         }
@@ -30,8 +28,8 @@ namespace Azure.Storage.DataMovement.Tests
                 DefaultJobStatus,
                 DefaultSourcePath,
                 DefaultDestinationPath,
-                _checkpointData,
-                _checkpointData);
+                MockResourceCheckpointData.DefaultInstance,
+                MockResourceCheckpointData.DefaultInstance);
         }
 
         [Test]
@@ -107,8 +105,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
-            CollectionAssert.AreEqual(_checkpointData.Bytes, deserialized.SourceCheckpointData);
-            CollectionAssert.AreEqual(_checkpointData.Bytes, deserialized.DestinationCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.SourceCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.DestinationCheckpointData);
         }
     }
 }
