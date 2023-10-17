@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDiagnosticAnalysisResources and their operations over a SiteDiagnosticAnalysisResource. </returns>
         public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
         {
-            return GetCachedClient(Client => new SiteDiagnosticAnalysisCollection(Client, Id));
+            return GetCachedClient(client => new SiteDiagnosticAnalysisCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticAnalysisResource>> GetSiteDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticAnalysisResource> GetSiteDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDiagnosticDetectorResources and their operations over a SiteDiagnosticDetectorResource. </returns>
         public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
         {
-            return GetCachedClient(Client => new SiteDiagnosticDetectorCollection(Client, Id));
+            return GetCachedClient(client => new SiteDiagnosticDetectorCollection(client, Id));
         }
 
         /// <summary>
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetSiteDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticDetectorResource> GetSiteDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
         {

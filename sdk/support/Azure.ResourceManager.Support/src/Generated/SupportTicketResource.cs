@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketCommunicationResources and their operations over a SupportTicketCommunicationResource. </returns>
         public virtual SupportTicketCommunicationCollection GetSupportTicketCommunications()
         {
-            return GetCachedClient(Client => new SupportTicketCommunicationCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketCommunicationCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketCommunicationResource>> GetSupportTicketCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketCommunicationResource> GetSupportTicketCommunication(string communicationName, CancellationToken cancellationToken = default)
         {
