@@ -129,6 +129,22 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new BlobSourceCheckpointData();
+        }
+
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                _options.BlobType,
+                _options.BlobOptions.HttpHeaders,
+                _options.BlobOptions.AccessTier,
+                _options.BlobOptions.Metadata,
+                _options.BlobOptions.Tags,
+                default); // TODO: Update when we support encryption scopes
+        }
+
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
                 ? string.Join("/", DirectoryPrefix, path)

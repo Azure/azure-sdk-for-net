@@ -87,20 +87,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
         }
 
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return null;
         }
 
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return null;
         }

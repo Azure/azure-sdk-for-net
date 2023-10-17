@@ -79,7 +79,9 @@ namespace Azure.Storage.DataMovement
                 false, /* enumerationComplete */
                 new DataTransferStatusInternal(),
                 source.Uri.ToSanitizedString(),
-                destination.Uri.ToSanitizedString());
+                destination.Uri.ToSanitizedString(),
+                source.GetSourceCheckpointData(),
+                destination.GetDestinationCheckpointData());
 
             using (Stream headerStream = new MemoryStream())
             {

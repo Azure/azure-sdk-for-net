@@ -49,5 +49,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 yield return new ShareFileStorageResource(client, ResourceOptions);
             }
         }
+
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

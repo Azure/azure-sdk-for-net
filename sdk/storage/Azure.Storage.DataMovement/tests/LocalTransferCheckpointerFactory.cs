@@ -47,6 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
         internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
         internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly MockResourceCheckpointData _mockCheckpointData = new MockResourceCheckpointData();
 
         private string _checkpointerPath;
 
@@ -68,7 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
                     jobPartCount: _partCountDefault);
             }
 
-            // Return constructed chekcpointer
+            // Return constructed checkpointer
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
 
@@ -153,9 +154,14 @@ namespace Azure.Storage.DataMovement.Tests
             string sourceProviderId = _testSourceProviderId,
             string destinationProviderId = _testDestinationProviderId,
             bool isContainer = false,
-            DataTransferStatus status = default)
+            DataTransferStatus status = default,
+            StorageResourceCheckpointData sourceCheckpointData = default,
+            StorageResourceCheckpointData destinationCheckpointData = default)
         {
             status ??= new DataTransferStatus();
+            sourceCheckpointData ??= _mockCheckpointData;
+            destinationCheckpointData ??= _mockCheckpointData;
+
             JobPlanHeader header = new JobPlanHeader(
                 DataMovementConstants.JobPlanFile.SchemaVersion,
                 transferId,
@@ -167,7 +173,9 @@ namespace Azure.Storage.DataMovement.Tests
                 false, /* enumerationComplete */
                 status,
                 parentSourcePath,
-                parentDestinationPath);
+                parentDestinationPath,
+                sourceCheckpointData,
+                destinationCheckpointData);
 
             string filePath = Path.Combine(checkpointPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
             using (FileStream stream = File.Create(filePath))

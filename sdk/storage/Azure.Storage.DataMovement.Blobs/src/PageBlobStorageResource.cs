@@ -287,20 +287,12 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new BlobSourceCheckpointData();
         }
 
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Page,

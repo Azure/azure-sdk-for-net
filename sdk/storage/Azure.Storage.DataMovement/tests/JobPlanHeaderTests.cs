@@ -10,14 +10,34 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPlanHeaderTests : DataMovementTestBase
     {
+        private MockResourceCheckpointData _checkpointData = new();
+
         public JobPlanHeaderTests(bool async) : base(async, default)
         {
+        }
+
+        private JobPlanHeader CreateJobPlanHeader()
+        {
+            return new JobPlanHeader(
+                DataMovementConstants.JobPlanFile.SchemaVersion,
+                DefaultTransferId,
+                DefaultCreateTime,
+                DefaultJobPlanOperation,
+                DefaultSourceProviderId,
+                DefaultDestinationProviderId,
+                isContainer: false,
+                enumerationComplete: false,
+                DefaultJobStatus,
+                DefaultSourcePath,
+                DefaultDestinationPath,
+                _checkpointData,
+                _checkpointData);
         }
 
         [Test]
         public void Ctor()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
 
             Assert.AreEqual(DataMovementConstants.JobPlanFile.SchemaVersion, header.Version);
             Assert.AreEqual(DefaultTransferId, header.TransferId);
@@ -35,7 +55,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Serialize()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
             string samplePath = Path.Combine("Resources", "SampleJobPlanFile.b1.ndm");
 
             using (MemoryStream headerStream = new MemoryStream(DataMovementConstants.JobPlanFile.VariableLengthStartIndex))
@@ -54,7 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Deserialize()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
 
             using (Stream stream = new MemoryStream(DataMovementConstants.JobPlanFile.VariableLengthStartIndex))
             {
@@ -87,6 +107,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
+            CollectionAssert.AreEqual(_checkpointData.Bytes, deserialized.SourceCheckpointData);
+            CollectionAssert.AreEqual(_checkpointData.Bytes, deserialized.DestinationCheckpointData);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public override int Length => 0;
 
-        protected override void Serialize(Stream stream)
+        public override void Serialize(Stream stream)
         {
         }
     }

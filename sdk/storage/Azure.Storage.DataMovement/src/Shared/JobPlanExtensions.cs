@@ -257,25 +257,24 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Writes the length and offset field for the given byte array
-        /// and increments currentVariableLengthIndex accordingly.
+        /// Writes the given length and offset and increments currentOffset accordingly.
         /// </summary>
         /// <param name="writer">The writer to write to.</param>
-        /// <param name="bytes">The data to write info about.</param>
-        /// <param name="currentVariableLengthIndex">
-        /// A reference to the current index of the variable length fields
+        /// <param name="length">The length of the variable length field.</param>
+        /// <param name="currentOffset">
+        /// A reference to the current offset of the variable length fields
         /// that will be used to set the offset and then incremented.
         /// </param>
         internal static void WriteVariableLengthFieldInfo(
             BinaryWriter writer,
-            byte[] bytes,
-            ref int currentVariableLengthIndex)
+            int length,
+            ref int currentOffset)
         {
             // Write the offset, -1 if size is 0
-            if (bytes.Length > 0)
+            if (length > 0)
             {
-                writer.Write(currentVariableLengthIndex);
-                currentVariableLengthIndex += bytes.Length;
+                writer.Write(currentOffset);
+                currentOffset += length;
             }
             else
             {
@@ -283,7 +282,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // Write the length
-            writer.Write(bytes.Length);
+            writer.Write(length);
         }
 
         internal static string ToSanitizedString(this Uri uri)

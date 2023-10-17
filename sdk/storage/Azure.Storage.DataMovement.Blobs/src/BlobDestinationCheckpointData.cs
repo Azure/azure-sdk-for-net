@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : new byte[0];
         }
 
-        protected override void Serialize(Stream stream)
+        public override void Serialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -97,31 +97,31 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write((byte)BlobType);
 
             // ContentType offset/length
-            WriteVariableLengthFieldInfo(writer, _contentTypeBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _contentTypeBytes.Length, ref currentVariableLengthIndex);
 
             // ContentEncoding offset/length
-            WriteVariableLengthFieldInfo(writer, _contentEncodingBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _contentEncodingBytes.Length, ref currentVariableLengthIndex);
 
             // ContentLanguage offset/length
-            WriteVariableLengthFieldInfo(writer, _contentLanguageBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _contentLanguageBytes.Length, ref currentVariableLengthIndex);
 
             // ContentDisposition offset/length
-            WriteVariableLengthFieldInfo(writer, _contentDispositionBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _contentDispositionBytes.Length, ref currentVariableLengthIndex);
 
             // CacheControl offset/length
-            WriteVariableLengthFieldInfo(writer, _cacheControlBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _cacheControlBytes.Length, ref currentVariableLengthIndex);
 
             // AccessTier
             writer.Write((byte)AccessTier.ToJobPlanAccessTier());
 
             // Metadata offset/length
-            WriteVariableLengthFieldInfo(writer, _metadataBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _metadataBytes.Length, ref currentVariableLengthIndex);
 
             // Tags offset/length
-            WriteVariableLengthFieldInfo(writer, _tagsBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _tagsBytes.Length, ref currentVariableLengthIndex);
 
             // CpkScope offset/length
-            WriteVariableLengthFieldInfo(writer, _cpkScopeBytes, ref currentVariableLengthIndex);
+            WriteVariableLengthFieldInfo(writer, _cpkScopeBytes.Length, ref currentVariableLengthIndex);
 
             writer.Write(_contentTypeBytes);
             writer.Write(_contentEncodingBytes);
