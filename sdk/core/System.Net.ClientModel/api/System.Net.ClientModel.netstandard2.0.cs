@@ -21,7 +21,7 @@ namespace System.Net.ClientModel
     }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
-        public NullableResult(T? value, System.Net.ClientModel.Core.PipelineResponse response) { }
+        internal NullableResult() { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.Net.ClientModel.Core.PipelineResponse GetRawResponse() { throw null; }
@@ -53,13 +53,14 @@ namespace System.Net.ClientModel
     public abstract partial class Result
     {
         protected Result() { }
+        public static System.Net.ClientModel.NullableResult<T> FromNullableValue<T>(T? value, System.Net.ClientModel.Core.PipelineResponse response) { throw null; }
         public static System.Net.ClientModel.Result FromResponse(System.Net.ClientModel.Core.PipelineResponse response) { throw null; }
         public static System.Net.ClientModel.Result<T> FromValue<T>(T value, System.Net.ClientModel.Core.PipelineResponse response) { throw null; }
         public abstract System.Net.ClientModel.Core.PipelineResponse GetRawResponse();
     }
     public partial class Result<T> : System.Net.ClientModel.NullableResult<T>
     {
-        public Result(T value, System.Net.ClientModel.Core.PipelineResponse response) : base (default(T), default(System.Net.ClientModel.Core.PipelineResponse)) { }
+        internal Result() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }

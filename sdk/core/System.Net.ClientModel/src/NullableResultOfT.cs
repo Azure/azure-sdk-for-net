@@ -11,7 +11,7 @@ public class NullableResult<T> : Result
     private T? _value;
     private PipelineResponse _response;
 
-    public NullableResult(T? value, PipelineResponse response)
+    internal NullableResult(T? value, PipelineResponse response)
     {
         Debug.Assert(response != null);
         _response = response!;

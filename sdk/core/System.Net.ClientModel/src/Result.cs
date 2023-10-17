@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Internal;
 
 namespace System.Net.ClientModel;
 
@@ -14,7 +15,22 @@ public abstract class Result
 
     public static Result<T> FromValue<T>(T value, PipelineResponse response)
     {
+        // Null values are required to go through NullableResult<T>
+        if (value is null)
+        {
+            throw new ArgumentException("Result<T> contract guarantees that Result<T>.Value is non-null.  Please call Result.FromNullableValue instead.", nameof(value));
+        }
+
+        ClientUtilities.AssertNotNull(response, nameof(response));
+
         return new ValueResult<T>(value, response);
+    }
+
+    public static NullableResult<T> FromNullableValue<T>(T? value, PipelineResponse response)
+    {
+        ClientUtilities.AssertNotNull(response, nameof(response));
+
+        return new NullableResult<T>(value, response);
     }
 
     internal class SimpleResult : Result

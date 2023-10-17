@@ -31,7 +31,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions() : this(Default, null)
+        protected ClientOptions(): this(Default, null)
         {
         }
 
