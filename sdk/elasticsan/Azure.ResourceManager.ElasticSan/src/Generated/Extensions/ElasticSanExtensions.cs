@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan.Mocking;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,119 +20,97 @@ namespace Azure.ResourceManager.ElasticSan
     /// <summary> A class to add extension methods to Azure.ResourceManager.ElasticSan. </summary>
     public static partial class ElasticSanExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ElasticSanArmClientMockingExtension GetElasticSanArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new ElasticSanArmClientMockingExtension(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ElasticSanResourceGroupMockingExtension GetElasticSanResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new ElasticSanResourceGroupMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ElasticSanSubscriptionMockingExtension GetElasticSanSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ElasticSanSubscriptionMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ElasticSanResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticSanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticSanResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanArmClientMockingExtension.GetElasticSanResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticSanResource" /> object. </returns>
         public static ElasticSanResource GetElasticSanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticSanResource.ValidateResourceId(id);
-                return new ElasticSanResource(client, id);
-            }
-            );
+            return GetElasticSanArmClientMockingExtension(client).GetElasticSanResource(id);
         }
-        #endregion
 
-        #region ElasticSanVolumeGroupResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticSanVolumeGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticSanVolumeGroupResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanVolumeGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanArmClientMockingExtension.GetElasticSanVolumeGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticSanVolumeGroupResource" /> object. </returns>
         public static ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticSanVolumeGroupResource.ValidateResourceId(id);
-                return new ElasticSanVolumeGroupResource(client, id);
-            }
-            );
+            return GetElasticSanArmClientMockingExtension(client).GetElasticSanVolumeGroupResource(id);
         }
-        #endregion
 
-        #region ElasticSanVolumeResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticSanVolumeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticSanVolumeResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanArmClientMockingExtension.GetElasticSanVolumeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticSanVolumeResource" /> object. </returns>
         public static ElasticSanVolumeResource GetElasticSanVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticSanVolumeResource.ValidateResourceId(id);
-                return new ElasticSanVolumeResource(client, id);
-            }
-            );
+            return GetElasticSanArmClientMockingExtension(client).GetElasticSanVolumeResource(id);
         }
-        #endregion
 
-        #region ElasticSanPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticSanPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticSanPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanArmClientMockingExtension.GetElasticSanPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticSanPrivateEndpointConnectionResource" /> object. </returns>
         public static ElasticSanPrivateEndpointConnectionResource GetElasticSanPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticSanPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ElasticSanPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetElasticSanArmClientMockingExtension(client).GetElasticSanPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of ElasticSanResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ElasticSanResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanResourceGroupMockingExtension.GetElasticSans()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ElasticSanResources and their operations over a ElasticSanResource. </returns>
         public static ElasticSanCollection GetElasticSans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetElasticSans();
+            return GetElasticSanResourceGroupMockingExtension(resourceGroupResource).GetElasticSans();
         }
 
         /// <summary>
@@ -146,16 +125,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>ElasticSans_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanResourceGroupMockingExtension.GetElasticSanAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ElasticSanResource>> GetElasticSanAsync(this ResourceGroupResource resourceGroupResource, string elasticSanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetElasticSans().GetAsync(elasticSanName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticSanResourceGroupMockingExtension(resourceGroupResource).GetElasticSanAsync(elasticSanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,16 +153,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>ElasticSans_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanResourceGroupMockingExtension.GetElasticSan(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ElasticSanResource> GetElasticSan(this ResourceGroupResource resourceGroupResource, string elasticSanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetElasticSans().Get(elasticSanName, cancellationToken);
+            return GetElasticSanResourceGroupMockingExtension(resourceGroupResource).GetElasticSan(elasticSanName, cancellationToken);
         }
 
         /// <summary>
@@ -194,6 +181,10 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanSubscriptionMockingExtension.GetSkus(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
@@ -201,7 +192,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An async collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+            return GetElasticSanSubscriptionMockingExtension(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -216,6 +207,10 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanSubscriptionMockingExtension.GetSkus(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> A collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticSanSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(filter, cancellationToken);
+            return GetElasticSanSubscriptionMockingExtension(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>
@@ -238,13 +233,17 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>ElasticSans_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanSubscriptionMockingExtension.GetElasticSans(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticSanResource> GetElasticSansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticSansAsync(cancellationToken);
+            return GetElasticSanSubscriptionMockingExtension(subscriptionResource).GetElasticSansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -259,13 +258,17 @@ namespace Azure.ResourceManager.ElasticSan
         /// <description>ElasticSans_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ElasticSanSubscriptionMockingExtension.GetElasticSans(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticSanResource> GetElasticSans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticSans(cancellationToken);
+            return GetElasticSanSubscriptionMockingExtension(subscriptionResource).GetElasticSans(cancellationToken);
         }
     }
 }

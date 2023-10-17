@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualApplicationResources and their operations over a VirtualApplicationResource. </returns>
         public virtual VirtualApplicationCollection GetVirtualApplications()
         {
-            return GetCachedClient(Client => new VirtualApplicationCollection(Client, Id));
+            return GetCachedClient(client => new VirtualApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualApplicationResource>> GetVirtualApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualApplicationResource> GetVirtualApplication(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualDesktopResources and their operations over a VirtualDesktopResource. </returns>
         public virtual VirtualDesktopCollection GetVirtualDesktops()
         {
-            return GetCachedClient(Client => new VirtualDesktopCollection(Client, Id));
+            return GetCachedClient(client => new VirtualDesktopCollection(client, Id));
         }
 
         /// <summary>
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualDesktopResource>> GetVirtualDesktopAsync(string desktopName, CancellationToken cancellationToken = default)
         {
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualDesktopResource> GetVirtualDesktop(string desktopName, CancellationToken cancellationToken = default)
         {

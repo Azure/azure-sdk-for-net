@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of ProjectAttachedNetworkConnectionResources and their operations over a ProjectAttachedNetworkConnectionResource. </returns>
         public virtual ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections()
         {
-            return GetCachedClient(Client => new ProjectAttachedNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ProjectAttachedNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of AllowedEnvironmentTypeResources and their operations over a AllowedEnvironmentTypeResource. </returns>
         public virtual AllowedEnvironmentTypeCollection GetAllowedEnvironmentTypes()
         {
-            return GetCachedClient(Client => new AllowedEnvironmentTypeCollection(Client, Id));
+            return GetCachedClient(client => new AllowedEnvironmentTypeCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAllowedEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AllowedEnvironmentTypeResource> GetAllowedEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterProjectEnvironmentResources and their operations over a DevCenterProjectEnvironmentResource. </returns>
         public virtual DevCenterProjectEnvironmentCollection GetDevCenterProjectEnvironments()
         {
-            return GetCachedClient(Client => new DevCenterProjectEnvironmentCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterProjectEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetDevCenterProjectEnvironmentAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterProjectEnvironmentResource> GetDevCenterProjectEnvironment(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of ProjectDevBoxDefinitionResources and their operations over a ProjectDevBoxDefinitionResource. </returns>
         public virtual ProjectDevBoxDefinitionCollection GetProjectDevBoxDefinitions()
         {
-            return GetCachedClient(Client => new ProjectDevBoxDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new ProjectDevBoxDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetProjectDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProjectDevBoxDefinitionResource> GetProjectDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterPoolResources and their operations over a DevCenterPoolResource. </returns>
         public virtual DevCenterPoolCollection GetDevCenterPools()
         {
-            return GetCachedClient(Client => new DevCenterPoolCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterPoolResource>> GetDevCenterPoolAsync(string poolName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterPoolResource> GetDevCenterPool(string poolName, CancellationToken cancellationToken = default)
         {
