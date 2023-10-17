@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public VmWorkloadProtectedItem()
         {
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
+            NodesList = new ChangeTrackingList<DistributedNodesInfo>();
             ProtectedItemType = "AzureVmWorkloadProtectedItem";
         }
 
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
+        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemHealthStatus"> Health status of the backup item, evaluated based on last heartbeat received. </param>
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
-        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
+        /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
+        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, IList<DistributedNodesInfo> nodesList) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays)
         {
             FriendlyName = friendlyName;
             ServerName = serverName;
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemHealthStatus = protectedItemHealthStatus;
             ExtendedInfo = extendedInfo;
             KpisHealths = kpisHealths;
+            NodesList = nodesList;
             ProtectedItemType = protectedItemType ?? "AzureVmWorkloadProtectedItem";
         }
 
@@ -101,5 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public VmWorkloadProtectedItemExtendedInfo ExtendedInfo { get; set; }
         /// <summary> Health details of different KPIs. </summary>
         public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
+        /// <summary> List of the nodes in case of distributed container. </summary>
+        public IList<DistributedNodesInfo> NodesList { get; }
     }
 }

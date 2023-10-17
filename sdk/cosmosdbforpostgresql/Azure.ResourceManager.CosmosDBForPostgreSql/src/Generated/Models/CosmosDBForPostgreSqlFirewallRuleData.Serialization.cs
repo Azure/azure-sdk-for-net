@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -20,9 +21,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIPAddress);
+            writer.WriteStringValue(StartIPAddress.ToString());
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIPAddress);
+            writer.WriteStringValue(EndIPAddress.ToString());
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -37,9 +38,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string startIPAddress = default;
-            string endIPAddress = default;
-            Optional<ProvisioningState> provisioningState = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
+            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         if (property0.NameEquals("startIpAddress"u8))
                         {
-                            startIPAddress = property0.Value.GetString();
+                            startIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endIpAddress"u8))
                         {
-                            endIPAddress = property0.Value.GetString();
+                            endIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

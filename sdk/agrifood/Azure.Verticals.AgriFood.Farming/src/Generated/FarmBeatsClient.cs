@@ -34,19 +34,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Initializes a new instance of FarmBeatsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public FarmBeatsClient(TokenCredential credential) : this(credential, new Uri(""), new FarmBeatsClientOptions())
+        public FarmBeatsClient(TokenCredential credential) : this(new Uri(""), credential, new FarmBeatsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of FarmBeatsClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public FarmBeatsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public FarmBeatsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

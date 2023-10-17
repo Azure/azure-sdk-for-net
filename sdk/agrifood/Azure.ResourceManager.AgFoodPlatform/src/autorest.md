@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.AgFoodPlatform
 require: https://github.com/Azure/azure-rest-api-specs/tree/e31e3938529269e0e6a81f60b2fdc6d2aec5b9df/specification/agrifood/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -24,7 +27,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

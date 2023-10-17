@@ -3,4 +3,4 @@
 
 ﻿using Microsoft.Azure.Functions.Worker.Extensions.Abstractions;
 
-[assembly: ExtensionInformation("Microsoft.Azure.WebJobs.Extensions.WebPubSub", "1.5.0")]
+[assembly: ExtensionInformation("Microsoft.Azure.WebJobs.Extensions.WebPubSub", "1.7.0")]

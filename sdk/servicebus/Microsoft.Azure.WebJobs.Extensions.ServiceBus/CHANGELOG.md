@@ -1,6 +1,6 @@
 # Release History
 
-## 5.13.0-beta.1 (Unreleased)
+## 5.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.13.0 (2023-10-11)
+
+### Features Added
+
+- Added `MaxConcurrentCallsPerSession` to `ServiceBusOptions` to allow configuring the maximum number of concurrent calls per session.
+
+### Other Changes
+
+- Added dependency on Grpc libraries in order to support message settlement from isolated worker.
 
 ## 5.12.0 (2023-08-11)
 

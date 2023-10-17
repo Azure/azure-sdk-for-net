@@ -309,6 +309,78 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<AuthorizationRoleDefinitionResource>> GetIfExistsAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.GetAsync(Id, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual NullableResponse<AuthorizationRoleDefinitionResource> GetIfExists(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Get(Id, roleDefinitionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AuthorizationRoleDefinitionResource> IEnumerable<AuthorizationRoleDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

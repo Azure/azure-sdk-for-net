@@ -574,11 +574,23 @@ namespace Azure.Storage.DataMovement.JobPlan
             // RehydratePriorityType
             writer.Write((byte)RehydratePriorityType);
 
-            // AtomicJobStatus
-            writer.Write((byte)AtomicJobStatus);
+            // AtomicJobStatus.State
+            writer.Write((byte)AtomicJobStatus.State);
 
-            // AtomicPartStatus
-            writer.Write((byte)AtomicPartStatus);
+            // AtomicJobStatus.HasFailedItems
+            writer.Write(Convert.ToByte(AtomicJobStatus.HasFailedItems));
+
+            // AtomicJobStatus.HasSkippedItems
+            writer.Write(Convert.ToByte(AtomicJobStatus.HasSkippedItems));
+
+            // AtomicPartStatus.State
+            writer.Write((byte)AtomicPartStatus.State);
+
+            // AtomicPartStatus.HasFailedItems
+            writer.Write(Convert.ToByte(AtomicPartStatus.HasFailedItems));
+
+            // AtomicPartStatus.HasSkippedItems
+            writer.Write(Convert.ToByte(AtomicPartStatus.HasSkippedItems));
         }
 
         public static JobPartPlanHeader Deserialize(Stream stream)
@@ -820,13 +832,35 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte rehydratePriorityTypeByte = reader.ReadByte();
             JobPartPlanRehydratePriorityType rehydratePriorityType = (JobPartPlanRehydratePriorityType)rehydratePriorityTypeByte;
 
-            // AtomicJobStatus
+            // AtomicJobStatus.State
             byte atomicJobStatusByte = reader.ReadByte();
-            DataTransferStatus atomicJobStatus = (DataTransferStatus)atomicJobStatusByte;
+            DataTransferState jobStatusState = (DataTransferState)atomicJobStatusByte;
 
-            // AtomicPartStatus
+            // AtomicJobStatus.HasFailedItems
+            bool jobStatusHasFailed = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicJobStatus.HasSkippedItems
+            bool jobStatusHasSkipped = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicPartStatus.State
             byte atomicPartStatusByte = reader.ReadByte();
-            DataTransferStatus atomicPartStatus = (DataTransferStatus)atomicPartStatusByte;
+            DataTransferState partStatusState = (DataTransferState)atomicPartStatusByte;
+
+            // AtomicPartStatus.HasFailedItems
+            bool partStatusHasFailed = Convert.ToBoolean(reader.ReadByte());
+
+            // AtomicPartStatus.HasSkippedItems
+            bool partStatusHasSkipped = Convert.ToBoolean(reader.ReadByte());
+
+            DataTransferStatus atomicJobStatus = new DataTransferStatusInternal(
+                jobStatusState,
+                jobStatusHasFailed,
+                jobStatusHasSkipped);
+
+            DataTransferStatus atomicPartStatus = new DataTransferStatusInternal(
+                partStatusState,
+                partStatusHasFailed,
+                partStatusHasSkipped);
 
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: blobType,
@@ -900,7 +934,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         {
             if (version != DataMovementConstants.JobPartPlanFile.SchemaVersion)
             {
-                throw Errors.UnsupportedSchemaVersionHeader(version);
+                throw Errors.UnsupportedJobPartSchemaVersionHeader(version);
             }
         }
     }

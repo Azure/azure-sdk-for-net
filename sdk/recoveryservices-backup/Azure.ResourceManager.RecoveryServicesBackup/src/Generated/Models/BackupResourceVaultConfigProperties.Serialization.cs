@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("softDeleteFeatureState"u8);
                 writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
             }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
+                writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
+            }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupStorageTypeState> storageTypeState = default;
             Optional<EnhancedSecurityState> enhancedSecurityState = default;
             Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
+            Optional<int> softDeleteRetentionPeriodInDays = default;
             Optional<IList<string>> resourceGuardOperationRequests = default;
             Optional<bool> isSoftDeleteFeatureStateEditable = default;
             foreach (var property in element.EnumerateObject())
@@ -119,6 +125,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteFeatureState = new SoftDeleteFeatureState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -143,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable));
+            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable));
         }
     }
 }

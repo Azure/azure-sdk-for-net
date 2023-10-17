@@ -71,6 +71,7 @@
     "dotnetcli",
     "dtmf",
     "eastus",
+    "entra",
     "epsg",
     "expando",
     "fhir",
@@ -114,6 +115,9 @@
     "unhold",
     "uninstrumented",
     "vcpus",
+    "Vectorizable",
+    "Vectorizer",
+    "Vectorizers",
     "vmss",
     "vnet",
     "westcentralus",
@@ -426,6 +430,12 @@
       ]
     },
     {
+      "filename": "**/sdk/defendereasm/**/*.cs",
+      "words": [
+        "easm"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -487,6 +497,14 @@
       "filename": "**/sdk/guestconfiguration/**/*.cs",
       "words": [
         "Hcrp"
+      ]
+    },
+    {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
       ]
     },
     {
@@ -860,6 +878,14 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
+      "words": [
+        "dras",
+        "nics",
+        "reprotect"
+      ]
+    },
+    {
       "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
       "words": [
         "vcenter",
@@ -873,6 +899,7 @@
         "ahub",
         "payg",
         "vcpus",
+        "esxi",
         "seleted",
         "dras"
       ]
@@ -881,6 +908,14 @@
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
+      "words": [
+        "capi",
+        "kvaio",
+        "scvmm"
       ]
     },
     {

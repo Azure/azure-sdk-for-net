@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
+        /// <param name="userStorageKey"> The access key of the storage. </param>
         internal MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey)
         {
             UserStorageKey = userStorageKey;
         }
 
-        /// <summary> Gets the user storage key. </summary>
+        /// <summary> The access key of the storage. </summary>
         public string UserStorageKey { get; }
     }
 }

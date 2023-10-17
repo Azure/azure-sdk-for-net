@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Tests
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         /// <summary>
-        /// The version of the REST API to test against.  This will be passed
+        /// The version of the REST API to test against. This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
         private readonly FormRecognizerClientOptions.ServiceVersion _serviceVersion;
@@ -27,6 +27,7 @@ namespace Azure.AI.FormRecognizer.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
+
             JsonPathSanitizers.Add("$..accessToken");
             JsonPathSanitizers.Add("$..source");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
@@ -104,16 +105,15 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Trains a model and returns the associated <see cref="DisposableTrainedModel"/> instance, from which
-        /// the model ID can be obtained. Upon disposal, the model will be deleted.
+        /// the model ID can be obtained. A cached model may be returned instead when running in live mode.
         /// </summary>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="containerType">Type of container to use to execute training.</param>
         /// <param name="modelName">Optional model name.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
+        protected async ValueTask<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
         {
-            var trainingClient = CreateFormTrainingClient();
-
+            var client = CreateFormTrainingClient();
             string trainingFiles = containerType switch
             {
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
@@ -123,14 +123,21 @@ namespace Azure.AI.FormRecognizer.Tests
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, modelName);
-        }
+            // Skip caching on record and playback modes.
+            if (Recording.Mode == RecordedTestMode.Record || Recording.Mode == RecordedTestMode.Playback)
+            {
+                return await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName);
+            }
 
-        protected enum ContainerType
-        {
-            Singleforms,
-            MultipageFiles,
-            SelectionMarks
+            var modelKey = new TrainedModelCache.ModelKey(_serviceVersion, containerType.ToString(), useTrainingLabels, modelName);
+
+            if (!TrainedModelCache.Models.TryGetValue(modelKey, out DisposableTrainedModel model))
+            {
+                model = await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName, deleteOnDisposal: false);
+                TrainedModelCache.Models.Add(modelKey, model);
+            }
+
+            return model;
         }
 
         protected void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
@@ -335,6 +342,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
+        }
+
+        protected enum ContainerType
+        {
+            Singleforms,
+            MultipageFiles,
+            SelectionMarks
         }
     }
 }

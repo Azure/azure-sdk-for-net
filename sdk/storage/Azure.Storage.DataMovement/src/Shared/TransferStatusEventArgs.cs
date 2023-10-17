@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the <see cref="Storage.DataMovement.DataTransferStatus"/> of the job.
         /// </summary>
-        public DataTransferStatus StorageTransferStatus { get; }
+        public DataTransferStatus TransferStatus { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransferStatusEventArgs"/>.
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
             : base (transferId, isRunningSynchronously, cancellationToken)
         {
-            StorageTransferStatus = transferStatus;
+            TransferStatus = transferStatus;
         }
     }
 }

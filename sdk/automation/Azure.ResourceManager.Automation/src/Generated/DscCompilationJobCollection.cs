@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="compilationJobName"> The DSC configuration Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DscCompilationJobResource>> GetIfExistsAsync(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dscCompilationJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DscCompilationJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="compilationJobName"> The DSC configuration Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        public virtual NullableResponse<DscCompilationJobResource> GetIfExists(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dscCompilationJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DscCompilationJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DscCompilationJobResource> IEnumerable<DscCompilationJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Media
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountFilters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The Account Filter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaServicesAccountFilterResource>> GetIfExistsAsync(string filterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaServicesAccountFilterAccountFiltersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaServicesAccountFilterResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaServicesAccountFilterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountFilters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The Account Filter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        public virtual NullableResponse<MediaServicesAccountFilterResource> GetIfExists(string filterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaServicesAccountFilterAccountFiltersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaServicesAccountFilterResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaServicesAccountFilterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MediaServicesAccountFilterResource> IEnumerable<MediaServicesAccountFilterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             WebTestResource webTest = client.GetWebTestResource(webTestResourceId);
 
             // invoke the operation
-            TagsResource webTestTags = new TagsResource()
+            ComponentTag webTestTags = new ComponentTag()
             {
                 Tags =
 {

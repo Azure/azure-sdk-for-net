@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoutingIntentResource>> GetIfExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+
+            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _routingIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        public virtual NullableResponse<RoutingIntentResource> GetIfExists(string routingIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+
+            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RoutingIntentResource> IEnumerable<RoutingIntentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

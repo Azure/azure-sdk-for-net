@@ -97,9 +97,10 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2023_08_03) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2023_11_03) { }
         public bool? AllowSourceTrailingDot { get { throw null; } set { } }
         public bool? AllowTrailingDot { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareTokenIntent? ShareTokenIntent { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
@@ -124,6 +125,7 @@ namespace Azure.Storage.Files.Shares
             V2023_01_03 = 17,
             V2023_05_03 = 18,
             V2023_08_03 = 19,
+            V2023_11_03 = 20,
         }
     }
     public partial class ShareDirectoryClient
@@ -509,6 +511,24 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareAccessTier (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ShareAudience : System.IEquatable<Azure.Storage.Files.Shares.Models.ShareAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ShareAudience(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareAudience CreateShareServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Files.Shares.Models.ShareAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareAudience left, Azure.Storage.Files.Shares.Models.ShareAudience right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.ShareAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAudience left, Azure.Storage.Files.Shares.Models.ShareAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ShareCorsRule

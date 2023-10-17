@@ -1,16 +1,24 @@
 # Release History
 
-## 1.35.0-beta.1 (Unreleased)
+## 1.36.0-beta.1 (Unreleased)
 
 ### Features Added
-
--Added `ModelSerializer` which provides a public API to serialize and deserialize models.  The new API works with any classes that implement `IModelSerializeable`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.35.0 (2023-09-07)
+
+### Features Added
+
+- Expand the set of supported `DynamicData` property types to included heterogeneous arrays of allowed types.
+
+### Breaking Changes
+
+- Added the nullability annotation to `NullableResponse<T>.Value` to indicate that it is a nullable type.
 
 ## 1.34.0 (2023-07-11)
 

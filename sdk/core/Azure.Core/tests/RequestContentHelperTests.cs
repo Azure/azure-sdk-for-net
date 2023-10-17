@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Xml;
-using System.Xml.Linq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -21,6 +20,11 @@ namespace Azure.Core.Tests
         public static IEnumerable<TestCaseData> GetDateTimeData()
         {
             yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"), DateTimeOffset.Parse("2022-09-26T18:38:00Z"));
+        }
+
+        public static IEnumerable<TestCaseData> GetOneDateTimeData()
+        {
+            yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"));
         }
 
         [TestCase(1, 2)]
@@ -146,6 +150,40 @@ namespace Azure.Core.Tests
                 {
                     Assert.AreEqual(expectedDictionary["k" + count++].ToObjectFromJson(), BinaryData.FromString(property.Value.GetRawText()).ToObjectFromJson());
                 }
+            }
+        }
+
+        [TestCase("a")]
+        [TestCase(true)]
+        [TestCase(1)]
+        [TestCase(1.0)]
+        [TestCaseSource("GetOneDateTimeData")]
+        public void TestFromObject<T>(T value)
+        {
+            var content = RequestContentHelper.FromObject(value);
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+            var document = JsonDocument.Parse(stream);
+            switch (value)
+            {
+                case string:
+                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
+                    Assert.AreEqual($"\"{value}\"", document.RootElement.GetRawText());
+                    break;
+                case bool:
+                    Assert.AreEqual(value, document.RootElement.GetBoolean());
+                    break;
+                case int:
+                    Assert.AreEqual(value, document.RootElement.GetInt32());
+                    break;
+                case double:
+                    Assert.AreEqual(value, document.RootElement.GetDouble());
+                    break;
+                case DateTimeOffset:
+                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
+                    Assert.AreEqual(value, DateTimeOffset.Parse(document.RootElement.GetString()));
+                    break;
             }
         }
     }

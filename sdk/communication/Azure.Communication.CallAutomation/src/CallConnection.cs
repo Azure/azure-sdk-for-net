@@ -840,5 +840,99 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="invitationId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(string invitationId, CancellationToken cancellationToken = default)
+        {
+            return CancelAddParticipantAsync(new CancelAddParticipantOptions(invitationId), cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            scope.Start();
+
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new CancelAddParticipantRequestInternal(options.InvitationId)
+                {
+                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                    CallbackUri = options.CallbackUri?.AbsoluteUri,
+                };
+                var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                var result = new CancelAddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="invitationId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(string invitationId, CancellationToken cancellationToken = default)
+        {
+            return CancelAddParticipant(new CancelAddParticipantOptions(invitationId), cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            scope.Start();
+
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new CancelAddParticipantRequestInternal(options.InvitationId)
+                {
+                    OperationContext = options.OperationContext,
+                    CallbackUri = options.CallbackUri?.AbsoluteUri,
+                };
+                var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
+                var result = new CancelAddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/permissionBindings/{permissionBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="permissionBindingName"> Name of the permission binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventGridNamespacePermissionBindingResource>> GetIfExistsAsync(string permissionBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+
+            using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventGridNamespacePermissionBindingPermissionBindingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, permissionBindingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespacePermissionBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespacePermissionBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/permissionBindings/{permissionBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="permissionBindingName"> Name of the permission binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        public virtual NullableResponse<EventGridNamespacePermissionBindingResource> GetIfExists(string permissionBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+
+            using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventGridNamespacePermissionBindingPermissionBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, permissionBindingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespacePermissionBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespacePermissionBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<EventGridNamespacePermissionBindingResource> IEnumerable<EventGridNamespacePermissionBindingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

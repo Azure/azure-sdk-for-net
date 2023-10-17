@@ -178,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
-                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                        _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
                         result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin, _isAadEnabled);
                     }
                     else
