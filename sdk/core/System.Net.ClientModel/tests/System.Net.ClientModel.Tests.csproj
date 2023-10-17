@@ -13,7 +13,6 @@
   
   <ItemGroup>
     <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
