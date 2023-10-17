@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeStoreAccountInformationResources and their operations over a DataLakeStoreAccountInformationResource. </returns>
         public virtual DataLakeStoreAccountInformationCollection GetAllDataLakeStoreAccountInformation()
         {
-            return GetCachedClient(Client => new DataLakeStoreAccountInformationCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeStoreAccountInformationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="dataLakeStoreAccountName"> The name of the Data Lake Store account to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataLakeStoreAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataLakeStoreAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeStoreAccountInformationResource>> GetDataLakeStoreAccountInformationAsync(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="dataLakeStoreAccountName"> The name of the Data Lake Store account to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataLakeStoreAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataLakeStoreAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeStoreAccountInformationResource> GetDataLakeStoreAccountInformation(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsStorageAccountInformationResources and their operations over a DataLakeAnalyticsStorageAccountInformationResource. </returns>
         public virtual DataLakeAnalyticsStorageAccountInformationCollection GetAllDataLakeAnalyticsStorageAccountInformation()
         {
-            return GetCachedClient(Client => new DataLakeAnalyticsStorageAccountInformationCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeAnalyticsStorageAccountInformationCollection(client, Id));
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeAnalyticsStorageAccountInformationResource>> GetDataLakeAnalyticsStorageAccountInformationAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeAnalyticsStorageAccountInformationResource> GetDataLakeAnalyticsStorageAccountInformation(string storageAccountName, CancellationToken cancellationToken = default)
         {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsComputePolicyResources and their operations over a DataLakeAnalyticsComputePolicyResource. </returns>
         public virtual DataLakeAnalyticsComputePolicyCollection GetDataLakeAnalyticsComputePolicies()
         {
-            return GetCachedClient(Client => new DataLakeAnalyticsComputePolicyCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeAnalyticsComputePolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeAnalyticsComputePolicyResource>> GetDataLakeAnalyticsComputePolicyAsync(string computePolicyName, CancellationToken cancellationToken = default)
         {
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeAnalyticsComputePolicyResource> GetDataLakeAnalyticsComputePolicy(string computePolicyName, CancellationToken cancellationToken = default)
         {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsFirewallRuleResources and their operations over a DataLakeAnalyticsFirewallRuleResource. </returns>
         public virtual DataLakeAnalyticsFirewallRuleCollection GetDataLakeAnalyticsFirewallRules()
         {
-            return GetCachedClient(Client => new DataLakeAnalyticsFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeAnalyticsFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeAnalyticsFirewallRuleResource>> GetDataLakeAnalyticsFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeAnalyticsFirewallRuleResource> GetDataLakeAnalyticsFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {

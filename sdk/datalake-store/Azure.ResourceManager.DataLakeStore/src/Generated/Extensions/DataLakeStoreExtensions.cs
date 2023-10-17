@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataLakeStore.Mocking;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,119 +20,97 @@ namespace Azure.ResourceManager.DataLakeStore
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataLakeStore. </summary>
     public static partial class DataLakeStoreExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataLakeStoreArmClientMockingExtension GetDataLakeStoreArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new DataLakeStoreArmClientMockingExtension(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DataLakeStoreResourceGroupMockingExtension GetDataLakeStoreResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new DataLakeStoreResourceGroupMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataLakeStoreSubscriptionMockingExtension GetDataLakeStoreSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataLakeStoreSubscriptionMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DataLakeStoreAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataLakeStoreAccountResource" /> object. </returns>
         public static DataLakeStoreAccountResource GetDataLakeStoreAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeStoreAccountResource.ValidateResourceId(id);
-                return new DataLakeStoreAccountResource(client, id);
-            }
-            );
+            return GetDataLakeStoreArmClientMockingExtension(client).GetDataLakeStoreAccountResource(id);
         }
-        #endregion
 
-        #region DataLakeStoreFirewallRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataLakeStoreFirewallRuleResource" /> object. </returns>
         public static DataLakeStoreFirewallRuleResource GetDataLakeStoreFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeStoreFirewallRuleResource.ValidateResourceId(id);
-                return new DataLakeStoreFirewallRuleResource(client, id);
-            }
-            );
+            return GetDataLakeStoreArmClientMockingExtension(client).GetDataLakeStoreFirewallRuleResource(id);
         }
-        #endregion
 
-        #region DataLakeStoreVirtualNetworkRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreVirtualNetworkRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> object. </returns>
         public static DataLakeStoreVirtualNetworkRuleResource GetDataLakeStoreVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeStoreVirtualNetworkRuleResource.ValidateResourceId(id);
-                return new DataLakeStoreVirtualNetworkRuleResource(client, id);
-            }
-            );
+            return GetDataLakeStoreArmClientMockingExtension(client).GetDataLakeStoreVirtualNetworkRuleResource(id);
         }
-        #endregion
 
-        #region DataLakeStoreTrustedIdProviderResource
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreTrustedIdProviderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreTrustedIdProviderResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreTrustedIdProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreTrustedIdProviderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataLakeStoreTrustedIdProviderResource" /> object. </returns>
         public static DataLakeStoreTrustedIdProviderResource GetDataLakeStoreTrustedIdProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeStoreTrustedIdProviderResource.ValidateResourceId(id);
-                return new DataLakeStoreTrustedIdProviderResource(client, id);
-            }
-            );
+            return GetDataLakeStoreArmClientMockingExtension(client).GetDataLakeStoreTrustedIdProviderResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of DataLakeStoreAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataLakeStoreAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataLakeStoreAccountResources and their operations over a DataLakeStoreAccountResource. </returns>
         public static DataLakeStoreAccountCollection GetDataLakeStoreAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataLakeStoreAccounts();
+            return GetDataLakeStoreResourceGroupMockingExtension(resourceGroupResource).GetDataLakeStoreAccounts();
         }
 
         /// <summary>
@@ -146,16 +125,20 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeStoreAccountResource>> GetDataLakeStoreAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataLakeStoreAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreResourceGroupMockingExtension(resourceGroupResource).GetDataLakeStoreAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,16 +153,20 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataLakeStoreAccountResource> GetDataLakeStoreAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataLakeStoreAccounts().Get(accountName, cancellationToken);
+            return GetDataLakeStoreResourceGroupMockingExtension(resourceGroupResource).GetDataLakeStoreAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -194,6 +181,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -201,9 +192,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetAccountsOptions();
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(options, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -218,6 +207,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -225,9 +218,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetAccountsOptions();
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(options, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
         /// <summary>
@@ -242,6 +233,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.CheckDataLakeStoreAccountNameAvailability(AzureLocation,DataLakeStoreAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -250,9 +245,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeStoreAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).CheckDataLakeStoreAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -267,6 +260,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.CheckDataLakeStoreAccountNameAvailability(AzureLocation,DataLakeStoreAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -275,9 +272,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeStoreAccountNameAvailability(location, content, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).CheckDataLakeStoreAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -292,13 +287,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetCapability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetCapabilityByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityByLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetCapabilityByLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -313,13 +312,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetCapability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetCapabilityByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataLakeStoreCapabilityInformation> GetCapabilityByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityByLocation(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetCapabilityByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -334,6 +337,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetUsage</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -341,7 +348,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -356,6 +363,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetUsage</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -363,7 +374,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
+            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
     }
 }
