@@ -258,7 +258,7 @@ namespace System.Net.ClientModel.Internal
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
     }
-    public static partial class ModelSerializationExtensions
+    public static partial class ModelReaderWriterExtensions
     {
         public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
         public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
