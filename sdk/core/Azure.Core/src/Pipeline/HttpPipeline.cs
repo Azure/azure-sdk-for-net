@@ -5,7 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.Net.ClientModel.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 

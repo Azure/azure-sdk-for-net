@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.ServiceModel.Rest.Core;
+using System.Net.ClientModel.Core;
 
 namespace Azure.Core
 {
