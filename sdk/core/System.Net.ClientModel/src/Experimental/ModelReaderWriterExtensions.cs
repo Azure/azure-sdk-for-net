@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace System.Net.ClientModel.Internal
 {
-    public static class ModelSerializationExtensions
+    public static class ModelReaderWriterExtensions
     {
         // TODO: These are copied from shared source files. If they become
         // public we need to refactor and consolidate to a single place.

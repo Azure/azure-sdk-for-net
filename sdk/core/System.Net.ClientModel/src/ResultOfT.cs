@@ -9,10 +9,16 @@ namespace System.Net.ClientModel;
 
 public class Result<T> : NullableResult<T>
 {
-    public Result(T value, PipelineResponse response) : base(value, response)
+    internal Result(T value, PipelineResponse response) : base(value, response)
     {
         Debug.Assert(value != null);
         Debug.Assert(response != null);
+
+        // Null values are required to use NullableResult<T>
+        if (value is null)
+        {
+            throw new ArgumentException("Result<T> contract guarantees that Result<T>.Value is non-null.", nameof(value));
+        }
     }
 
     public override T Value => base.Value!;
