@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
-        internal HttpMessage CreateBatchRequest(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime, string endtime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter)
+        internal HttpMessage CreateBatchRequest(string subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList resourceIds, string startTime, string endTime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,22 +47,22 @@ namespace Azure.Monitor.Query
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/metrics:getBatch", false);
-            if (starttime != null)
+            if (startTime != null)
             {
-                uri.AppendQuery("starttime", starttime, true);
+                uri.AppendQuery("startTime", startTime, true);
             }
-            if (endtime != null)
+            if (endTime != null)
             {
-                uri.AppendQuery("endtime", endtime, true);
+                uri.AppendQuery("endTime", endTime, true);
             }
             if (interval != null)
             {
                 uri.AppendQuery("interval", interval.Value, "P", true);
             }
-            uri.AppendQuery("metricnamespace", metricnamespace, true);
-            if (metricnames != null && Optional.IsCollectionDefined(metricnames))
+            uri.AppendQuery("metricNamespace", metricNamespace, true);
+            if (metricNames != null && Optional.IsCollectionDefined(metricNames))
             {
-                uri.AppendQueryDelimited("metricnames", metricnames, ",", true);
+                uri.AppendQueryDelimited("metricNames", metricNames, ",", true);
             }
             if (aggregation != null)
             {
@@ -92,15 +92,15 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric values for multiple resources. </summary>
         /// <param name="subscriptionId"> The subscription identifier for the resources in this batch. </param>
-        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricNamespace"> Metric namespace that contains the requested metric names. </param>
+        /// <param name="metricNames"> The names of the metrics (comma separated) to retrieve. </param>
         /// <param name="resourceIds"> The comma separated list of resource IDs to query metrics for. </param>
-        /// <param name="starttime">
+        /// <param name="startTime">
         /// The start time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. If you have specified the endtime parameter, then this parameter is required.
         /// If only starttime is specified, then endtime defaults to the current time.
         /// If no time interval is specified, the default is 1 hour.
         /// </param>
-        /// <param name="endtime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
+        /// <param name="endTime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
         /// <param name="interval">
         /// The interval (i.e. timegrain) of the query.
         /// *Examples: PT15M, PT1H, P1D*
@@ -121,27 +121,27 @@ namespace Azure.Monitor.Query
         /// </param>
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public async Task<Response<MetricResultsResponse>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricNamespace"/>, <paramref name="metricNames"/> or <paramref name="resourceIds"/> is null. </exception>
+        public async Task<Response<MetricResultsResponse>> BatchAsync(string subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList resourceIds, string startTime = null, string endTime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            if (metricnamespace == null)
+            if (metricNamespace == null)
             {
-                throw new ArgumentNullException(nameof(metricnamespace));
+                throw new ArgumentNullException(nameof(metricNamespace));
             }
-            if (metricnames == null)
+            if (metricNames == null)
             {
-                throw new ArgumentNullException(nameof(metricnames));
+                throw new ArgumentNullException(nameof(metricNames));
             }
             if (resourceIds == null)
             {
                 throw new ArgumentNullException(nameof(resourceIds));
             }
 
-            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, resourceIds, starttime, endtime, interval, aggregation, top, orderby, filter);
+            using var message = CreateBatchRequest(subscriptionId, metricNamespace, metricNames, resourceIds, startTime, endTime, interval, aggregation, top, orderby, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -159,15 +159,15 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric values for multiple resources. </summary>
         /// <param name="subscriptionId"> The subscription identifier for the resources in this batch. </param>
-        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricNamespace"> Metric namespace that contains the requested metric names. </param>
+        /// <param name="metricNames"> The names of the metrics (comma separated) to retrieve. </param>
         /// <param name="resourceIds"> The comma separated list of resource IDs to query metrics for. </param>
-        /// <param name="starttime">
+        /// <param name="startTime">
         /// The start time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. If you have specified the endtime parameter, then this parameter is required.
         /// If only starttime is specified, then endtime defaults to the current time.
         /// If no time interval is specified, the default is 1 hour.
         /// </param>
-        /// <param name="endtime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
+        /// <param name="endTime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
         /// <param name="interval">
         /// The interval (i.e. timegrain) of the query.
         /// *Examples: PT15M, PT1H, P1D*
@@ -188,27 +188,27 @@ namespace Azure.Monitor.Query
         /// </param>
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public Response<MetricResultsResponse> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricNamespace"/>, <paramref name="metricNames"/> or <paramref name="resourceIds"/> is null. </exception>
+        public Response<MetricResultsResponse> Batch(string subscriptionId, string metricNamespace, IEnumerable<string> metricNames, ResourceIdList resourceIds, string startTime = null, string endTime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            if (metricnamespace == null)
+            if (metricNamespace == null)
             {
-                throw new ArgumentNullException(nameof(metricnamespace));
+                throw new ArgumentNullException(nameof(metricNamespace));
             }
-            if (metricnames == null)
+            if (metricNames == null)
             {
-                throw new ArgumentNullException(nameof(metricnames));
+                throw new ArgumentNullException(nameof(metricNames));
             }
             if (resourceIds == null)
             {
                 throw new ArgumentNullException(nameof(resourceIds));
             }
 
-            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, resourceIds, starttime, endtime, interval, aggregation, top, orderby, filter);
+            using var message = CreateBatchRequest(subscriptionId, metricNamespace, metricNames, resourceIds, startTime, endTime, interval, aggregation, top, orderby, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

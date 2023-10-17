@@ -45,12 +45,10 @@ namespace Azure.Monitor.Query
     public partial class MetricsBatchQueryClient
     {
         protected MetricsBatchQueryClient() { }
-        public MetricsBatchQueryClient(Azure.Core.TokenCredential credential) { }
-        public MetricsBatchQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsBatchQueryClientOptions options) { }
         public MetricsBatchQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsBatchQueryClientOptions options = null) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricResultsResponse> Batch(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricResultsResponse>> BatchAsync(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricResultsResponse> QueryBatch(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricResultsResponse>> QueryBatchAsync(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsBatchQueryClientOptions : Azure.Core.ClientOptions
     {
@@ -313,12 +311,12 @@ namespace Azure.Monitor.Query.Models
     public partial class MetricResultsResponseValuesItem
     {
         internal MetricResultsResponseValuesItem() { }
-        public string Endtime { get { throw null; } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
         public System.TimeSpan? Interval { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string Resourceid { get { throw null; } }
         public string Resourceregion { get { throw null; } }
-        public string Starttime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.QueryBatchMetric> Value { get { throw null; } }
     }
     public partial class MetricsQueryResult
@@ -387,7 +385,7 @@ namespace Azure.Monitor.Query.Models
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? granularity = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricResult MetricResult(string id, string resourceType, string name, Azure.Monitor.Query.Models.MetricUnit unit, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricTimeSeriesElement> timeSeries) { throw null; }
         public static Azure.Monitor.Query.Models.MetricResultsResponse MetricResultsResponse(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricResultsResponseValuesItem> values = null) { throw null; }
-        public static Azure.Monitor.Query.Models.MetricResultsResponseValuesItem MetricResultsResponseValuesItem(string starttime = null, string endtime = null, System.TimeSpan? interval = default(System.TimeSpan?), string @namespace = null, string resourceregion = null, string resourceid = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.QueryBatchMetric> value = null) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricResultsResponseValuesItem MetricResultsResponseValuesItem(System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset), System.TimeSpan? interval = default(System.TimeSpan?), string @namespace = null, string resourceregion = null, string resourceid = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.QueryBatchMetric> value = null) { throw null; }
         public static Azure.Monitor.Query.Models.MetricsQueryResult MetricsQueryResult(int? cost, string timespan, System.TimeSpan? granularity, string @namespace, string resourceRegion, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> metrics) { throw null; }
         public static Azure.Monitor.Query.Models.MetricTimeSeriesElement MetricTimeSeriesElement(System.Collections.Generic.IReadOnlyDictionary<string, string> metadataValues, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricValue> values) { throw null; }
         public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
@@ -452,12 +450,6 @@ namespace Azure.Monitor.Query.Models
         internal QueryBatchTimeSeriesElement() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.QueryBatchMetricValue> Data { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.QueryBatchMetadataValue> Metadatavalues { get { throw null; } }
-    }
-    public partial class ResourceIdList
-    {
-        public ResourceIdList() { }
-        public ResourceIdList(System.Collections.Generic.List<string> resourceIds) { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Resourceids { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

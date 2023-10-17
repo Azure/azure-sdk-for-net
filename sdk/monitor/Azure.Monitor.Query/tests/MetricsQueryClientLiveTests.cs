@@ -343,7 +343,7 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            Response<MetricResultsResponse> metricsResultsResponse = await client.BatchAsync(
+            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
                 resourceIds: new List<string> { resourceId },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
@@ -372,7 +372,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.Throws<ArgumentException>(()=>
             {
-                client.Batch(
+                client.QueryBatch(
                 resourceIds: new List<string>(),
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts");

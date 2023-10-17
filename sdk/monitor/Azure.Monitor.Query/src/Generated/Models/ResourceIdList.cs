@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The comma separated list of resource IDs to query metrics for. </summary>
-    public partial class ResourceIdList
+    internal partial class ResourceIdList
     {
         /// <summary> Initializes a new instance of ResourceIdList. </summary>
         public ResourceIdList()

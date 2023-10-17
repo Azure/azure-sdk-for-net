@@ -16,32 +16,10 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class MetricsBatchQueryClient
     {
-        private static readonly Uri _defaultEndpoint = new Uri("https://metrics.monitor.azure.com/.default");
-
         private readonly MetricsBatchRestClient _metricBatchClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/>. Uses the default 'https://metrics.monitor.azure.com/.default' endpoint.
-        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
-        /// var client = new MetricsQueryClient(new DefaultAzureCredential());
-        /// </code>
-        /// </summary>
-        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsBatchQueryClient(TokenCredential credential) : this(credential, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/>. Uses the default 'https://metrics.monitor.azure.com/.default' endpoint.
-        /// </summary>
-        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsBatchQueryClient(TokenCredential credential, MetricsBatchQueryClientOptions options) : this(_defaultEndpoint, credential, options)
-        {
-        }
-
-        /// <summary>
+         /// <summary>
         /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/>.
         /// </summary>
         /// <param name="endpoint">The data plane service endpoint to use. For example <c>https://metrics.monitor.azure.com/.default</c> for public cloud.</param>
@@ -85,13 +63,18 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual Response<MetricResultsResponse> Batch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricResultsResponse> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count == 0)
+            if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs can not be empty");
+                throw new ArgumentException("Resource IDs or metricNames can not be empty");
             }
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(Batch)}");
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(QueryBatch)}");
             scope.Start();
 
             try
@@ -179,13 +162,18 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual async Task<Response<MetricResultsResponse>> BatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricResultsResponse>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count == 0)
+            if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs can not be empty");
+                throw new ArgumentException("Resource IDs or metricNames can not be empty");
             }
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(Batch)}");
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(QueryBatch)}");
             scope.Start();
 
             try

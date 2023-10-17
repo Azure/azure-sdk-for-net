@@ -595,8 +595,8 @@ Note, each resource must be in the same region as the endpoint passed in when in
 ```C# Snippet:QueryBatchMetrics
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-MetricsBatchQueryClient client = new MetricsBatchQueryClient(new DefaultAzureCredential());
-Response<MetricResultsResponse> metricsResultsResponse = await client.BatchAsync(
+MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
     resourceIds: new List<string> { resourceId },
     metricNames: new List<string> { "Ingress" },
     metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);

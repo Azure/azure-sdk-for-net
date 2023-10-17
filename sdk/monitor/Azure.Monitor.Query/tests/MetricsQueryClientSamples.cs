@@ -143,8 +143,8 @@ namespace Azure.Monitor.Query.Tests
 #else
             string resourceId = TestEnvironment.StorageAccountId;
 #endif
-            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new DefaultAzureCredential());
-            Response<MetricResultsResponse> metricsResultsResponse = await client.BatchAsync(
+            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
                 resourceIds: new List<string> { resourceId },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);

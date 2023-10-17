@@ -49,19 +49,19 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
-        /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="resourceregion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceid"> The resource that has been queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
         /// <returns> A new <see cref="Models.MetricResultsResponseValuesItem"/> instance for mocking. </returns>
-        public static MetricResultsResponseValuesItem MetricResultsResponseValuesItem(string starttime = null, string endtime = null, TimeSpan? interval = null, string @namespace = null, string resourceregion = null, string resourceid = null, IEnumerable<QueryBatchMetric> value = null)
+        public static MetricResultsResponseValuesItem MetricResultsResponseValuesItem(DateTimeOffset startTime = default, DateTimeOffset endTime = default, TimeSpan? interval = null, string @namespace = null, string resourceregion = null, string resourceid = null, IEnumerable<QueryBatchMetric> value = null)
         {
             value ??= new List<QueryBatchMetric>();
 
-            return new MetricResultsResponseValuesItem(starttime, endtime, interval, @namespace, resourceregion, resourceid, value?.ToList());
+            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceregion, resourceid, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of QueryBatchMetric. </summary>

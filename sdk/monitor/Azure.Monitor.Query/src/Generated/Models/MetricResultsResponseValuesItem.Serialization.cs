@@ -20,8 +20,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            string starttime = default;
-            string endtime = default;
+            DateTimeOffset starttime = default;
+            DateTimeOffset endtime = default;
             Optional<TimeSpan> interval = default;
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
@@ -31,12 +31,12 @@ namespace Azure.Monitor.Query.Models
             {
                 if (property.NameEquals("starttime"u8))
                 {
-                    starttime = property.Value.GetString();
+                    starttime = property.Value.GetDateTimeOffset(null);
                     continue;
                 }
                 if (property.NameEquals("endtime"u8))
                 {
-                    endtime = property.Value.GetString();
+                    endtime = property.Value.GetDateTimeOffset(null);
                     continue;
                 }
                 if (property.NameEquals("interval"u8))
