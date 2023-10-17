@@ -1228,6 +1228,13 @@
         "runpath",
         "Cves"
       ]
+    },
+    {
+      "filename": "**/sdk/monitor/**/*.cs",
+      "words": [
+        "resourceId",
+        "ResourceId"
+      ]
     }
   ],
   "allowCompoundWords": true
