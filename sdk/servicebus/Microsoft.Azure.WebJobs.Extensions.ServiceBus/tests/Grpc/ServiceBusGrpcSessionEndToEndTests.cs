@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var receiver = await client.AcceptNextSessionAsync(FirstQueueScope.QueueName);
             var abandonedMessage = (await receiver.ReceiveMessagesAsync(1)).Single();
             Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual(TimeSpan.FromSeconds(60), abandonedMessage.ApplicationProperties["timespan"]);
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.TimeSpan, abandonedMessage.ApplicationProperties["timespan"]);
             Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Uri, abandonedMessage.ApplicationProperties["uri"]);
             Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
             Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
@@ -220,6 +220,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             internal static DateTimeOffset DateTimeOffsetNow { get; } = DateTimeOffset.UtcNow;
             internal static Guid Guid { get; } = Guid.NewGuid();
             internal static Uri Uri { get; } = new Uri("http://nonExistingServiceBusWebsite.com");
+            internal static TimeSpan TimeSpan { get; } = TimeSpan.FromSeconds(60);
 
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
@@ -232,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         Locktoken = message.LockToken,
                         PropertiesToModify = EncodeDictionary(new Dictionary<string, object>
                         {
-                            { "timespan", TimeSpan.FromSeconds(60) },
+                            { "timespan", TimeSpan },
                             { "uri", Uri },
                             { "datetime", DateTimeNow },
                             { "datetimeoffset", DateTimeOffsetNow },
