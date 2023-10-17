@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="xunit" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\src\System.Net.ClientModel.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,23 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
-using System;
 using System.Net.ClientModel;
-using System.Threading;
+using System.Net.ClientModel.Core.Pipeline;
 
 namespace OpenAI;
 
 public class OpenAIClient
 {
-    private readonly HttpPipeline _pipeline;
+    private readonly MessagePipeline _pipeline;
     private readonly KeyCredential _credential;
 
     public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
     {
         _credential = credential;
-        _pipeline = HttpPipelineBuilder.Build(new PipelineBuilderOptions());
+        _pipeline = MessagePipeline.Create(options);
     }
 
     //public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
@@ -47,5 +44,5 @@ public class OpenAIClient
     //    return Result.FromValue(completions, message.Response);
     //}
 
-    private class PipelineBuilderOptions : ClientOptions { }
+    private class PipelineBuilderOptions : PipelineOptions { }
 }
