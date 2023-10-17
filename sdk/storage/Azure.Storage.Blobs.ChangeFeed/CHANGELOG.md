@@ -1,5 +1,15 @@
 # Release History
 
+## 12.0.0-preview.40 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.0.0-preview.39 (2023-10-16)
 - Added support for service version 2023-11-03.
 
