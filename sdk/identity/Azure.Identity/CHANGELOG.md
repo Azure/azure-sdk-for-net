@@ -12,6 +12,13 @@
 ### Other Changes
 - Updated Microsoft.Identity.Client dependency to version 4.56.0
 
+## 1.10.2 (2023-10-10)
+
+### Bugs Fixed
+
+- Bug fixes for development time credentials.
+
+
 ## 1.10.1 (2023-09-12)
 
 ### Bugs Fixed
