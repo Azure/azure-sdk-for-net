@@ -33,7 +33,6 @@ namespace Azure.Storage.Files.Shares.Models
             ShareLeaseDuration? leaseDuration = default;
             string enabledProtocols = default;
             ShareRootSquash? rootSquash = default;
-            bool? enableSnapshotVirtualDirectoryAccess = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
                 lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
@@ -106,11 +105,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 rootSquash = rootSquashElement.Value.ToShareRootSquash();
             }
-            if (element.Element("EnableSnapshotVirtualDirectoryAccess") is XElement enableSnapshotVirtualDirectoryAccessElement)
-            {
-                enableSnapshotVirtualDirectoryAccess = (bool?)enableSnapshotVirtualDirectoryAccessElement;
-            }
-            return new SharePropertiesInternal(lastModified, etag, quota, provisionedIops, provisionedIngressMBps, provisionedEgressMBps, provisionedBandwidthMiBps, nextAllowedQuotaDowngradeTime, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierTransitionState, leaseStatus, leaseState, leaseDuration, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess);
+            return new SharePropertiesInternal(lastModified, etag, quota, provisionedIops, provisionedIngressMBps, provisionedEgressMBps, provisionedBandwidthMiBps, nextAllowedQuotaDowngradeTime, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierTransitionState, leaseStatus, leaseState, leaseDuration, enabledProtocols, rootSquash);
         }
     }
 }
