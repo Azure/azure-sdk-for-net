@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-		<Description>Tests of System.Net.ClientModel types and public contracts.</Description>
+		<Description>Tests of System.Net.ClientModel internal types and internal contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
 		<Nullable>enabled</Nullable>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
@@ -15,13 +15,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="clients\System.Net.ClientModel.Tests.Clients.csproj" />
+    <ProjectReference Include="..\..\src\System.Net.ClientModel.csproj" />
+    <ProjectReference Include="..\clients\System.Net.ClientModel.Tests.Clients.csproj" />
   </ItemGroup>
-	
-	<ItemGroup>
-		<Compile Remove="clients/**" />
-		<Compile Remove="internal/**" />
-	</ItemGroup>
 
 </Project>
