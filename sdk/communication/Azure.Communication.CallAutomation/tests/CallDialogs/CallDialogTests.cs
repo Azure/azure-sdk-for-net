@@ -17,10 +17,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             {
                 "context",
-                new
+                new Dictionary<string, object>
                 {
-                    contextName = "name",
-                    secondProperty = 1
+                    { "name", 1 }
                 }
             }
         };
@@ -31,22 +30,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 "context"
             }
         };
-        private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        private static readonly StartDialog _startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithCustomObjectOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContextWithObject)
+        private static readonly StartDialog _startDialogWithCustomObjectOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithStringOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContextWithString)
+        private static readonly StartDialog _startDialogWithStringOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithString))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        private static readonly StartDialog _startDialogWithIdOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };

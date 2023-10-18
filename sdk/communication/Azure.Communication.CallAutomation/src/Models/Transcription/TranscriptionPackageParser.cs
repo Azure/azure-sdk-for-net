@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Text.Json;
-using Azure.Communication.CallAutomation.Models.Transcription;
 
 namespace Azure.Communication.CallAutomation
 {

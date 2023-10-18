@@ -177,7 +177,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.PlayOptions = new PlayOptionsInternal(options.Loop);
                 request.OperationContext = options.OperationContext;
-                request.OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri;
+                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
 
             if (request.OperationContext == default)

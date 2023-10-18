@@ -69,10 +69,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             "The third test string to be recognized by cognition service"
         };
 
-        private static RecognizeChoice _recognizeChoice1 = new RecognizeChoice("testLabel1", s_strings);
-        private static RecognizeChoice _recognizeChoice2 = new RecognizeChoice("testLabel2", s_strings);
+        private static RecognitionChoice _recognizeChoice1 = new RecognitionChoice("testLabel1", s_strings);
+        private static RecognitionChoice _recognizeChoice2 = new RecognitionChoice("testLabel2", s_strings);
 
-        private static readonly List<RecognizeChoice> s_recognizeChoices = new List<RecognizeChoice>()
+        private static readonly List<RecognitionChoice> s_recognizeChoices = new List<RecognitionChoice>()
         {
             _recognizeChoice1,
             _recognizeChoice2
@@ -159,9 +159,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             _fileSource.PlaySourceCacheId = "playSourceId";
         }
 
-        private CallMedia GetCallMedia(int responseCode)
+        private CallMedia GetCallMedia(int responseCode, object? responseContent = null)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode, responseContent);
             return callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
         public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
-            _callMedia = GetCallMedia(202);
+            _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = await operation(_callMedia);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
@@ -276,7 +276,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
         public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
-            _callMedia = GetCallMedia(202);
+            _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = operation(_callMedia);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
@@ -679,10 +679,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<SendDtmfTonesResult>>?[]
                 {
-                   callMedia => callMedia.SendDtmf(
+                   callMedia => callMedia.SendDtmfTones(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       new CommunicationUserIdentifier("targetUserId"),
-                       "context"
+                       new CommunicationUserIdentifier("targetUserId")
                        )
                 }
             };
@@ -694,7 +693,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<SendDtmfTonesResult>>>?[]
                 {
-                   callMedia => callMedia.SendDtmfAsync(
+                   callMedia => callMedia.SendDtmfTonesAsync(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
                        new CommunicationUserIdentifier("targetUserId")
                        )

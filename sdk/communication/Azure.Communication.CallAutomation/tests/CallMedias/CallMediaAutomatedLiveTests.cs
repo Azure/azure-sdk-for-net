@@ -105,7 +105,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                 // send dtmf tones to the target user
                 var tones = new DtmfTone[] { DtmfTone.One };
-                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfAsync(tones, target);
+                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfTonesAsync(tones, target);
                 Assert.AreEqual(StatusCodes.Status202Accepted, sendDtmfResponse.GetRawResponse().Status);
 
                 // wait for ContinuousDtmfRecognitionToneReceived event
