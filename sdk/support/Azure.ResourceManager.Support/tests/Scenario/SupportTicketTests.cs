@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Create()
         {
             var supportTicketName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
-            await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketDataForCreateOperation());
+            await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketData());
             var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Support.Tests
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             var severity = supportTicket.Value.Data.Severity;
             var firstName = supportTicket.Value.Data.ContactDetails.FirstName;
-            await supportTicket.Value.UpdateAsync(BuildSupportTicketForUpdateOperation(supportTicket.Value.Data));
+            await supportTicket.Value.UpdateAsync(BuildUpdateSupportTicket(supportTicket.Value.Data));
             supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Support.Tests
             Assert.AreEqual(supportTicket.Name, supportTicketName);
         }
 
-        private SupportTicketData BuildSupportTicketDataForCreateOperation()
+        private SupportTicketData BuildSupportTicketData()
         {
             var ticket = new SupportTicketData();
             ticket.AdvancedDiagnosticConsent = "No";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Support.Tests
             return ticket;
         }
 
-        private UpdateSupportTicket BuildSupportTicketForUpdateOperation(SupportTicketData supportTicket)
+        private UpdateSupportTicket BuildUpdateSupportTicket(SupportTicketData supportTicket)
         {
             var firstName = $"firstName_{DateTime.Now.Ticks.ToString()}";
             //  Change severity to Minimal if Moderate and vice versa
