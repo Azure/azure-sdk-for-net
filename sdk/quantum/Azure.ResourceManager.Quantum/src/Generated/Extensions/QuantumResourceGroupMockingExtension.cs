@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <returns> An object representing collection of QuantumWorkspaceResources and their operations over a QuantumWorkspaceResource. </returns>
         public virtual QuantumWorkspaceCollection GetQuantumWorkspaces()
         {
-            return GetCachedClient(Client => new QuantumWorkspaceCollection(Client, Id));
+            return GetCachedClient(client => new QuantumWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<QuantumWorkspaceResource> GetQuantumWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {

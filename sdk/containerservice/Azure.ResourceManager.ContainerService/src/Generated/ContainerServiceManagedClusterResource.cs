@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceMaintenanceConfigurationResources and their operations over a ContainerServiceMaintenanceConfigurationResource. </returns>
         public virtual ContainerServiceMaintenanceConfigurationCollection GetContainerServiceMaintenanceConfigurations()
         {
-            return GetCachedClient(Client => new ContainerServiceMaintenanceConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceMaintenanceConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceMaintenanceConfigurationResource>> GetContainerServiceMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
         {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceMaintenanceConfigurationResource> GetContainerServiceMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceAgentPoolResources and their operations over a ContainerServiceAgentPoolResource. </returns>
         public virtual ContainerServiceAgentPoolCollection GetContainerServiceAgentPools()
         {
-            return GetCachedClient(Client => new ContainerServiceAgentPoolCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceAgentPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="agentPoolName"> The name of the agent pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceAgentPoolResource>> GetContainerServiceAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="agentPoolName"> The name of the agent pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceAgentPoolResource> GetContainerServiceAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServicePrivateEndpointConnectionResources and their operations over a ContainerServicePrivateEndpointConnectionResource. </returns>
         public virtual ContainerServicePrivateEndpointConnectionCollection GetContainerServicePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ContainerServicePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServicePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServicePrivateEndpointConnectionResource>> GetContainerServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServicePrivateEndpointConnectionResource> GetContainerServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceTrustedAccessRoleBindingResources and their operations over a ContainerServiceTrustedAccessRoleBindingResource. </returns>
         public virtual ContainerServiceTrustedAccessRoleBindingCollection GetContainerServiceTrustedAccessRoleBindings()
         {
-            return GetCachedClient(Client => new ContainerServiceTrustedAccessRoleBindingCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceTrustedAccessRoleBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trustedAccessRoleBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trustedAccessRoleBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceTrustedAccessRoleBindingResource>> GetContainerServiceTrustedAccessRoleBindingAsync(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trustedAccessRoleBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trustedAccessRoleBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceTrustedAccessRoleBindingResource> GetContainerServiceTrustedAccessRoleBinding(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {

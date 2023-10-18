@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary> Gets a collection of CurrentUsagesBaseResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
         public virtual CurrentUsagesBaseCollection GetCurrentUsagesBases(ResourceIdentifier scope)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary> Gets a collection of CurrentQuotaLimitBaseResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
         public virtual CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(ResourceIdentifier scope)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
         /// - SKU name for Microsoft.Compute
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary> Gets a collection of QuotaRequestDetailResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public virtual QuotaRequestDetailCollection GetQuotaRequestDetails(ResourceIdentifier scope)
         {
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<QuotaRequestDetailResource> GetQuotaRequestDetail(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {

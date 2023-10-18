@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <returns> An object representing collection of ContainerRegistryResources and their operations over a ContainerRegistryResource. </returns>
         public virtual ContainerRegistryCollection GetContainerRegistries()
         {
-            return GetCachedClient(Client => new ContainerRegistryCollection(Client, Id));
+            return GetCachedClient(client => new ContainerRegistryCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerRegistryResource>> GetContainerRegistryAsync(string registryName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerRegistryResource> GetContainerRegistry(string registryName, CancellationToken cancellationToken = default)
         {

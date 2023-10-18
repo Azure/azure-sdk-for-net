@@ -53,10 +53,64 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="location"> The location of the Extension being received. </param>
         /// <param name="publisher"> The publisher of the Extension being received. </param>
         /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
         public virtual ExtensionValueCollection GetExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
             return new ExtensionValueCollection(Client, Id, location, publisher, extensionType);
+        }
+
+        /// <summary>
+        /// Gets an Extension Metadata based on location, publisher, extensionType and version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <param name="version"> The version of the Extension being received. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExtensionValueResource>> GetExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        {
+            return await GetExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Extension Metadata based on location, publisher, extensionType and version
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the Extension being received. </param>
+        /// <param name="publisher"> The publisher of the Extension being received. </param>
+        /// <param name="extensionType"> The extensionType of the Extension being received. </param>
+        /// <param name="version"> The version of the Extension being received. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExtensionValueResource> GetExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
         }
 
         /// <summary>

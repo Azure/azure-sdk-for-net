@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary> Gets a collection of EventSubscriptionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
         public virtual EventSubscriptionCollection GetEventSubscriptions(ResourceIdentifier scope)
         {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventSubscriptionResource> GetEventSubscription(ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary> Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
         public virtual ExtensionTopicResource GetExtensionTopic(ResourceIdentifier scope)
         {

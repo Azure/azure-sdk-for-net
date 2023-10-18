@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of UpdateRunResources and their operations over a UpdateRunResource. </returns>
         public virtual UpdateRunCollection GetUpdateRuns()
         {
-            return GetCachedClient(Client => new UpdateRunCollection(Client, Id));
+            return GetCachedClient(client => new UpdateRunCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<UpdateRunResource>> GetUpdateRunAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<UpdateRunResource> GetUpdateRun(string updateRunName, CancellationToken cancellationToken = default)
         {

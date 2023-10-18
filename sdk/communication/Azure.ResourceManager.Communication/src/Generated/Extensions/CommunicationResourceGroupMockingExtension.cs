@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public virtual CommunicationServiceResourceCollection GetCommunicationServiceResources()
         {
-            return GetCachedClient(Client => new CommunicationServiceResourceCollection(Client, Id));
+            return GetCachedClient(client => new CommunicationServiceResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommunicationServiceResource> GetCommunicationServiceResource(string communicationServiceName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
         public virtual EmailServiceResourceCollection GetEmailServiceResources()
         {
-            return GetCachedClient(Client => new EmailServiceResourceCollection(Client, Id));
+            return GetCachedClient(client => new EmailServiceResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </summary>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </summary>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EmailServiceResource> GetEmailServiceResource(string emailServiceName, CancellationToken cancellationToken = default)
         {

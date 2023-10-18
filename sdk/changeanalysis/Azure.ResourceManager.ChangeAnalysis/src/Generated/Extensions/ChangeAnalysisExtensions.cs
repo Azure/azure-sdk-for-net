@@ -20,26 +20,17 @@ namespace Azure.ResourceManager.ChangeAnalysis
     {
         private static ChangeAnalysisResourceGroupMockingExtension GetChangeAnalysisResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ChangeAnalysisResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static ChangeAnalysisSubscriptionMockingExtension GetChangeAnalysisSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ChangeAnalysisSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static ChangeAnalysisTenantMockingExtension GetChangeAnalysisTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ChangeAnalysisTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ChangeAnalysisTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
@@ -54,6 +45,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisResourceGroupMockingExtension.GetChangesByResourceGroup(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -78,6 +73,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisResourceGroupMockingExtension.GetChangesByResourceGroup(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -102,6 +101,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisSubscriptionMockingExtension.GetChangesBySubscription(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -126,6 +129,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisSubscriptionMockingExtension.GetChangesBySubscription(DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -150,6 +157,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>ResourceChanges_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisTenantMockingExtension.GetResourceChanges(string,DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -177,6 +188,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <description>ResourceChanges_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ChangeAnalysisTenantMockingExtension.GetResourceChanges(string,DateTimeOffset,DateTimeOffset,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>

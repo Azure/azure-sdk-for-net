@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.Maps
     {
         private static MapsArmClientMockingExtension GetMapsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new MapsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new MapsArmClientMockingExtension(client0));
         }
 
         private static MapsResourceGroupMockingExtension GetMapsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MapsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MapsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static MapsSubscriptionMockingExtension GetMapsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MapsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MapsSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="MapsAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsArmClientMockingExtension.GetMapsAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -58,6 +53,10 @@ namespace Azure.ResourceManager.Maps
         /// <summary>
         /// Gets an object representing a <see cref="MapsCreatorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsArmClientMockingExtension.GetMapsCreatorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -67,7 +66,13 @@ namespace Azure.ResourceManager.Maps
             return GetMapsArmClientMockingExtension(client).GetMapsCreatorResource(id);
         }
 
-        /// <summary> Gets a collection of MapsAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of MapsAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
@@ -87,12 +92,16 @@ namespace Azure.ResourceManager.Maps
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MapsAccountResource>> GetMapsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -111,12 +120,16 @@ namespace Azure.ResourceManager.Maps
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MapsAccountResource> GetMapsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -135,6 +148,10 @@ namespace Azure.ResourceManager.Maps
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsSubscriptionMockingExtension.GetMapsAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,6 +173,10 @@ namespace Azure.ResourceManager.Maps
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MapsSubscriptionMockingExtension.GetMapsAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <returns> An object representing collection of NewRelicMonitorResources and their operations over a NewRelicMonitorResource. </returns>
         public virtual NewRelicMonitorResourceCollection GetNewRelicMonitorResources()
         {
-            return GetCachedClient(Client => new NewRelicMonitorResourceCollection(Client, Id));
+            return GetCachedClient(client => new NewRelicMonitorResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </summary>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NewRelicMonitorResource>> GetNewRelicMonitorResourceAsync(string monitorName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </summary>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NewRelicMonitorResource> GetNewRelicMonitorResource(string monitorName, CancellationToken cancellationToken = default)
         {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public virtual CustomLocationCollection GetCustomLocations()
         {
-            return GetCachedClient(Client => new CustomLocationCollection(Client, Id));
+            return GetCachedClient(client => new CustomLocationCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomLocationResource>> GetCustomLocationAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CustomLocationResource> GetCustomLocation(string resourceName, CancellationToken cancellationToken = default)
         {

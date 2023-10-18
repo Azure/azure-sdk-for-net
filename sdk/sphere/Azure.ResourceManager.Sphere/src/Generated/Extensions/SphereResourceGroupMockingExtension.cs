@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
         public virtual SphereCatalogCollection GetSphereCatalogs()
         {
-            return GetCachedClient(Client => new SphereCatalogCollection(Client, Id));
+            return GetCachedClient(client => new SphereCatalogCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereCatalogResource> GetSphereCatalog(string catalogName, CancellationToken cancellationToken = default)
         {

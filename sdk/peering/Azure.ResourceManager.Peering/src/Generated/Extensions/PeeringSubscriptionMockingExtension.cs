@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> An object representing collection of PeerAsnResources and their operations over a PeerAsnResource. </returns>
         public virtual PeerAsnCollection GetPeerAsns()
         {
-            return GetCachedClient(Client => new PeerAsnCollection(Client, Id));
+            return GetCachedClient(client => new PeerAsnCollection(client, Id));
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="peerAsnName"> The peer ASN name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeerAsnResource>> GetPeerAsnAsync(string peerAsnName, CancellationToken cancellationToken = default)
         {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="peerAsnName"> The peer ASN name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peerAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeerAsnResource> GetPeerAsn(string peerAsnName, CancellationToken cancellationToken = default)
         {

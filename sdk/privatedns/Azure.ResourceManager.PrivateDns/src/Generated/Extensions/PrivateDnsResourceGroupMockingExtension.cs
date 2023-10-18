@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
         public virtual PrivateDnsZoneCollection GetPrivateDnsZones()
         {
-            return GetCachedClient(Client => new PrivateDnsZoneCollection(Client, Id));
+            return GetCachedClient(client => new PrivateDnsZoneCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </summary>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateDnsZoneResource>> GetPrivateDnsZoneAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </summary>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PrivateDnsZoneResource> GetPrivateDnsZone(string privateZoneName, CancellationToken cancellationToken = default)
         {

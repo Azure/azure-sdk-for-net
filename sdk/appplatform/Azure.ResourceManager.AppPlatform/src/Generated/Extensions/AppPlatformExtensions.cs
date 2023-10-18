@@ -22,39 +22,31 @@ namespace Azure.ResourceManager.AppPlatform
     {
         private static AppPlatformArmClientMockingExtension GetAppPlatformArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new AppPlatformArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new AppPlatformArmClientMockingExtension(client0));
         }
 
         private static AppPlatformResourceGroupMockingExtension GetAppPlatformResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new AppPlatformResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new AppPlatformResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static AppPlatformSubscriptionMockingExtension GetAppPlatformSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new AppPlatformSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new AppPlatformSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static AppPlatformTenantMockingExtension GetAppPlatformTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new AppPlatformTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new AppPlatformTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformServiceResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -67,6 +59,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformConfigServerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformConfigServerResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformConfigServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformConfigServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -79,6 +75,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformConfigurationServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformConfigurationServiceResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformConfigurationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformConfigurationServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -91,6 +91,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformServiceRegistryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformServiceRegistryResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformServiceRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformServiceRegistryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -103,6 +107,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuildServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuildServiceResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuildServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuildServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuildResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuildResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -127,6 +139,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuildResultResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuildResultResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuildResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuildResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -139,6 +155,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformSupportedBuildpackResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformSupportedBuildpackResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformSupportedBuildpackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformSupportedBuildpackResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -151,6 +171,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformSupportedStackResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformSupportedStackResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformSupportedStackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformSupportedStackResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -163,6 +187,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuildpackBindingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuildpackBindingResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuildpackBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuildpackBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -175,6 +203,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuilderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuilderResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuilderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuilderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -187,6 +219,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBuildServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBuildServiceAgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBuildServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBuildServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -199,6 +235,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformMonitoringSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformMonitoringSettingResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformMonitoringSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformMonitoringSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -211,6 +251,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformAppResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformAppResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformAppResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -223,6 +267,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformBindingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformBindingResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -235,6 +283,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformStorageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformStorageResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformStorageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -247,6 +299,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformCertificateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -259,6 +315,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformCustomDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -271,6 +331,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -283,6 +347,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformGatewayResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -295,6 +363,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformGatewayRouteConfigResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformGatewayRouteConfigResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformGatewayRouteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformGatewayRouteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -307,6 +379,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformGatewayCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformGatewayCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformGatewayCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformGatewayCustomDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -319,6 +395,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformApiPortalResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformApiPortalResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformApiPortalResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformApiPortalResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -331,6 +411,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Gets an object representing an <see cref="AppPlatformApiPortalCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppPlatformApiPortalCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformApiPortalCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformArmClientMockingExtension.GetAppPlatformApiPortalCustomDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -340,7 +424,13 @@ namespace Azure.ResourceManager.AppPlatform
             return GetAppPlatformArmClientMockingExtension(client).GetAppPlatformApiPortalCustomDomainResource(id);
         }
 
-        /// <summary> Gets a collection of AppPlatformServiceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of AppPlatformServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformResourceGroupMockingExtension.GetAppPlatformServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
         public static AppPlatformServiceCollection GetAppPlatformServices(this ResourceGroupResource resourceGroupResource)
@@ -360,12 +450,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformResourceGroupMockingExtension.GetAppPlatformServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AppPlatformServiceResource>> GetAppPlatformServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
@@ -384,12 +478,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformResourceGroupMockingExtension.GetAppPlatformService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AppPlatformServiceResource> GetAppPlatformService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
@@ -408,6 +506,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.CheckAppPlatformNameAvailability(AzureLocation,AppPlatformNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
@@ -431,6 +533,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.CheckAppPlatformNameAvailability(AzureLocation,AppPlatformNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
@@ -454,6 +560,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.GetAppPlatformServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -475,6 +585,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Services_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.GetAppPlatformServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -496,6 +610,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -517,6 +635,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformSubscriptionMockingExtension.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -538,6 +660,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>RuntimeVersions_ListRuntimeVersions</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformTenantMockingExtension.GetRuntimeVersions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -559,6 +685,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <description>RuntimeVersions_ListRuntimeVersions</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AppPlatformTenantMockingExtension.GetRuntimeVersions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

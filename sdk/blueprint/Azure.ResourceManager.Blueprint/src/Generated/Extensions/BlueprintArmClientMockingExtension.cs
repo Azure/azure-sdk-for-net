@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary> Gets a collection of BlueprintResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of BlueprintResources and their operations over a BlueprintResource. </returns>
         public virtual BlueprintCollection GetBlueprints(ResourceIdentifier scope)
         {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlueprintResource>> GetBlueprintAsync(ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BlueprintResource> GetBlueprint(ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         }
 
         /// <summary> Gets a collection of AssignmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of AssignmentResources and their operations over a AssignmentResource. </returns>
         public virtual AssignmentCollection GetAssignments(ResourceIdentifier scope)
         {
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AssignmentResource>> GetAssignmentAsync(ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AssignmentResource> GetAssignment(ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {

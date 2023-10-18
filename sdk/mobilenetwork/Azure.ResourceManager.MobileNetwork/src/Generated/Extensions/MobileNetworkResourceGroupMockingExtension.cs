@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public virtual MobileNetworkCollection GetMobileNetworks()
         {
-            return GetCachedClient(Client => new MobileNetworkCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(string mobileNetworkName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkResource> GetMobileNetwork(string mobileNetworkName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public virtual PacketCoreControlPlaneCollection GetPacketCoreControlPlanes()
         {
-            return GetCachedClient(Client => new PacketCoreControlPlaneCollection(Client, Id));
+            return GetCachedClient(client => new PacketCoreControlPlaneCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
         public virtual MobileNetworkSimGroupCollection GetMobileNetworkSimGroups()
         {
-            return GetCachedClient(Client => new MobileNetworkSimGroupCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkSimGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(string simGroupName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(string simGroupName, CancellationToken cancellationToken = default)
         {

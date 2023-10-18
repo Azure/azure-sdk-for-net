@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <returns> An object representing collection of SearchServiceResources and their operations over a SearchServiceResource. </returns>
         public virtual SearchServiceCollection GetSearchServices()
         {
-            return GetCachedClient(Client => new SearchServiceCollection(Client, Id));
+            return GetCachedClient(client => new SearchServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SearchServiceResource> GetSearchService(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {

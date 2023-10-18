@@ -13,25 +13,26 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 
-namespace Azure.ResourceManager.ResourceConnector
+namespace Azure.ResourceManager.ResourceConnector.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class ResourceConnectorSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _resourceConnectorApplianceAppliancesClientDiagnostics;
         private AppliancesRestOperations _resourceConnectorApplianceAppliancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected ResourceConnectorSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceConnectorSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorSubscriptionMockingExtension.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorSubscriptionMockingExtension.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
+            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorSubscriptionMockingExtension.GetTelemetryConfigAppliance");
             scope.Start();
             try
             {
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(CancellationToken cancellationToken = default)
         {
-            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
+            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorSubscriptionMockingExtension.GetTelemetryConfigAppliance");
             scope.Start();
             try
             {

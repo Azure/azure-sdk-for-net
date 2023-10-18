@@ -22,23 +22,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     {
         private static MarketplaceOrderingArmClientMockingExtension GetMarketplaceOrderingArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new MarketplaceOrderingArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new MarketplaceOrderingArmClientMockingExtension(client0));
         }
 
         private static MarketplaceOrderingSubscriptionMockingExtension GetMarketplaceOrderingSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MarketplaceOrderingSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MarketplaceOrderingSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="MarketplaceAgreementTermResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingArmClientMockingExtension.GetMarketplaceAgreementTermResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -51,6 +49,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <summary>
         /// Gets an object representing a <see cref="MarketplaceAgreementResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingArmClientMockingExtension.GetMarketplaceAgreementResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -60,7 +62,13 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return GetMarketplaceOrderingArmClientMockingExtension(client).GetMarketplaceAgreementResource(id);
         }
 
-        /// <summary> Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTerms()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
         public static MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this SubscriptionResource subscriptionResource)
@@ -80,6 +88,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTermAsync(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -87,8 +99,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceAgreementTermResource>> GetMarketplaceAgreementTermAsync(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -107,6 +119,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTerm(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -114,15 +130,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MarketplaceAgreementTermResource> GetMarketplaceAgreementTerm(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
             return GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementTerm(offerType, publisherId, offerId, planId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MarketplaceAgreementResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of MarketplaceAgreementResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreements()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
         public static MarketplaceAgreementCollection GetMarketplaceAgreements(this SubscriptionResource subscriptionResource)
@@ -142,14 +164,18 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceAgreementResource>> GetMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -168,14 +194,18 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreement(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MarketplaceAgreementResource> GetMarketplaceAgreement(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
         public virtual AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata()
         {
-            return GetCachedClient(Client => new AuthorizationProviderOperationsMetadataCollection(Client, Id));
+            return GetCachedClient(client => new AuthorizationProviderOperationsMetadataCollection(client, Id));
         }
 
         /// <summary>

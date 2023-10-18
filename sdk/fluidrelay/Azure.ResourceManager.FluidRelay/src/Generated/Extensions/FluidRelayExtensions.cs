@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.FluidRelay
     {
         private static FluidRelayArmClientMockingExtension GetFluidRelayArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new FluidRelayArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new FluidRelayArmClientMockingExtension(client0));
         }
 
         private static FluidRelayResourceGroupMockingExtension GetFluidRelayResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new FluidRelayResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new FluidRelayResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static FluidRelaySubscriptionMockingExtension GetFluidRelaySubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new FluidRelaySubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new FluidRelaySubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="FluidRelayServerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FluidRelayServerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelayArmClientMockingExtension.GetFluidRelayServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -58,6 +53,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <summary>
         /// Gets an object representing a <see cref="FluidRelayContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FluidRelayContainerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelayArmClientMockingExtension.GetFluidRelayContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -67,7 +66,13 @@ namespace Azure.ResourceManager.FluidRelay
             return GetFluidRelayArmClientMockingExtension(client).GetFluidRelayContainerResource(id);
         }
 
-        /// <summary> Gets a collection of FluidRelayServerResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of FluidRelayServerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelayResourceGroupMockingExtension.GetFluidRelayServers()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FluidRelayServerResources and their operations over a FluidRelayServerResource. </returns>
         public static FluidRelayServerCollection GetFluidRelayServers(this ResourceGroupResource resourceGroupResource)
@@ -87,12 +92,16 @@ namespace Azure.ResourceManager.FluidRelay
         /// <description>FluidRelayServers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelayResourceGroupMockingExtension.GetFluidRelayServerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FluidRelayServerResource>> GetFluidRelayServerAsync(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
@@ -111,12 +120,16 @@ namespace Azure.ResourceManager.FluidRelay
         /// <description>FluidRelayServers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelayResourceGroupMockingExtension.GetFluidRelayServer(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<FluidRelayServerResource> GetFluidRelayServer(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
@@ -135,6 +148,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <description>FluidRelayServers_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelaySubscriptionMockingExtension.GetFluidRelayServers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,6 +173,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <description>FluidRelayServers_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="FluidRelaySubscriptionMockingExtension.GetFluidRelayServers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

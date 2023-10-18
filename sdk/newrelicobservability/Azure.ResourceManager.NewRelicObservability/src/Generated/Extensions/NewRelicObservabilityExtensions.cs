@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.NewRelicObservability
     {
         private static NewRelicObservabilityArmClientMockingExtension GetNewRelicObservabilityArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new NewRelicObservabilityArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new NewRelicObservabilityArmClientMockingExtension(client0));
         }
 
         private static NewRelicObservabilityResourceGroupMockingExtension GetNewRelicObservabilityResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new NewRelicObservabilityResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new NewRelicObservabilityResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static NewRelicObservabilitySubscriptionMockingExtension GetNewRelicObservabilitySubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new NewRelicObservabilitySubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new NewRelicObservabilitySubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="NewRelicMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NewRelicMonitorResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilityArmClientMockingExtension.GetNewRelicMonitorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary>
         /// Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NewRelicObservabilityTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicObservabilityTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilityArmClientMockingExtension.GetNewRelicObservabilityTagRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -68,7 +67,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             return GetNewRelicObservabilityArmClientMockingExtension(client).GetNewRelicObservabilityTagRuleResource(id);
         }
 
-        /// <summary> Gets a collection of NewRelicMonitorResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NewRelicMonitorResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilityResourceGroupMockingExtension.GetNewRelicMonitorResources()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NewRelicMonitorResources and their operations over a NewRelicMonitorResource. </returns>
         public static NewRelicMonitorResourceCollection GetNewRelicMonitorResources(this ResourceGroupResource resourceGroupResource)
@@ -88,12 +93,16 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Monitors_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilityResourceGroupMockingExtension.GetNewRelicMonitorResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NewRelicMonitorResource>> GetNewRelicMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
@@ -112,12 +121,16 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Monitors_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilityResourceGroupMockingExtension.GetNewRelicMonitorResource(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<NewRelicMonitorResource> GetNewRelicMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
@@ -136,6 +149,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicAccounts(string,AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -160,6 +177,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicAccounts(string,AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -184,6 +205,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicMonitorResources(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,6 +230,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicMonitorResources(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,6 +255,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Organizations_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicOrganizations(string,AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -250,6 +283,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Organizations_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicOrganizations(string,AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -274,6 +311,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Plans_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicPlans(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="accountId"> Account Id. </param>
@@ -297,6 +338,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <description>Plans_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="NewRelicObservabilitySubscriptionMockingExtension.GetNewRelicPlans(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="accountId"> Account Id. </param>

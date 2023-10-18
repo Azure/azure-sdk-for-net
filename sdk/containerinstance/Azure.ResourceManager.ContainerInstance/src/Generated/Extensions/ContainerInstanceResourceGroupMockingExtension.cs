@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> An object representing collection of ContainerGroupResources and their operations over a ContainerGroupResource. </returns>
         public virtual ContainerGroupCollection GetContainerGroups()
         {
-            return GetCachedClient(Client => new ContainerGroupCollection(Client, Id));
+            return GetCachedClient(client => new ContainerGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerGroupResource>> GetContainerGroupAsync(string containerGroupName, CancellationToken cancellationToken = default)
         {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerGroupResource> GetContainerGroup(string containerGroupName, CancellationToken cancellationToken = default)
         {

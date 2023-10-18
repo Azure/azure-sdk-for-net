@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <returns> An object representing collection of SpatialAnchorsAccountResources and their operations over a SpatialAnchorsAccountResource. </returns>
         public virtual SpatialAnchorsAccountCollection GetSpatialAnchorsAccounts()
         {
-            return GetCachedClient(Client => new SpatialAnchorsAccountCollection(Client, Id));
+            return GetCachedClient(client => new SpatialAnchorsAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SpatialAnchorsAccountResource>> GetSpatialAnchorsAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SpatialAnchorsAccountResource> GetSpatialAnchorsAccount(string accountName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <returns> An object representing collection of RemoteRenderingAccountResources and their operations over a RemoteRenderingAccountResource. </returns>
         public virtual RemoteRenderingAccountCollection GetRemoteRenderingAccounts()
         {
-            return GetCachedClient(Client => new RemoteRenderingAccountCollection(Client, Id));
+            return GetCachedClient(client => new RemoteRenderingAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RemoteRenderingAccountResource>> GetRemoteRenderingAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RemoteRenderingAccountResource> GetRemoteRenderingAccount(string accountName, CancellationToken cancellationToken = default)
         {

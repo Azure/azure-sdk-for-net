@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.ExtendedLocations
     {
         private static ExtendedLocationsArmClientMockingExtension GetExtendedLocationsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new ExtendedLocationsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new ExtendedLocationsArmClientMockingExtension(client0));
         }
 
         private static ExtendedLocationsResourceGroupMockingExtension GetExtendedLocationsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ExtendedLocationsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ExtendedLocationsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static ExtendedLocationsSubscriptionMockingExtension GetExtendedLocationsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ExtendedLocationsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ExtendedLocationsSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="CustomLocationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CustomLocationResource.CreateResourceIdentifier" /> to create a <see cref="CustomLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsArmClientMockingExtension.GetCustomLocationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -55,7 +50,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             return GetExtendedLocationsArmClientMockingExtension(client).GetCustomLocationResource(id);
         }
 
-        /// <summary> Gets a collection of CustomLocationResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of CustomLocationResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
@@ -75,12 +76,16 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <description>CustomLocations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -99,12 +104,16 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <description>CustomLocations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocation(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -123,6 +132,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <description>CustomLocations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsSubscriptionMockingExtension.GetCustomLocations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,6 +157,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <description>CustomLocations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ExtendedLocationsSubscriptionMockingExtension.GetCustomLocations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

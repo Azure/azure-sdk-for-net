@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DataFactory
     public static partial class DataFactoryExtensions
     {
         private static DataFactoryArmClientMockingExtension GetDataFactoryArmClientMockingExtension(ArmClient client)
+<<<<<<< HEAD
         {
             return client.GetCachedClient(client =>
             {
@@ -42,11 +43,29 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return new DataFactorySubscriptionMockingExtension(client, resource.Id);
             });
+=======
+        {
+            return client.GetCachedClient(client0 => new DataFactoryArmClientMockingExtension(client0));
+        }
+
+        private static DataFactoryResourceGroupMockingExtension GetDataFactoryResourceGroupMockingExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new DataFactoryResourceGroupMockingExtension(client, resource.Id));
+        }
+
+        private static DataFactorySubscriptionMockingExtension GetDataFactorySubscriptionMockingExtension(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new DataFactorySubscriptionMockingExtension(client, resource.Id));
+>>>>>>> azuresdk/auto-update-autorest-3.0.0-alpha.20231016.12
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryIntegrationRuntimeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -71,6 +94,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryLinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryLinkedServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -83,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryDatasetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryDatasetResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDatasetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryDatasetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -95,6 +126,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryPipelineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -107,6 +142,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryTriggerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -119,6 +158,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryDataFlowResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryDataFlowResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDataFlowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryDataFlowResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -131,6 +174,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryManagedVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryManagedVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryManagedVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -143,6 +190,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryPrivateEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -155,6 +206,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryManagedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryManagedIdentityCredentialResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -167,6 +222,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -179,6 +238,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryGlobalParameterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -191,6 +254,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryChangeDataCaptureResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryChangeDataCaptureResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryChangeDataCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryArmClientMockingExtension.GetDataFactoryChangeDataCaptureResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -200,7 +267,13 @@ namespace Azure.ResourceManager.DataFactory
             return GetDataFactoryArmClientMockingExtension(client).GetDataFactoryChangeDataCaptureResource(id);
         }
 
-        /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataFactoryResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryResourceGroupMockingExtension.GetDataFactories()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
         public static DataFactoryCollection GetDataFactories(this ResourceGroupResource resourceGroupResource)
@@ -220,13 +293,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryResourceGroupMockingExtension.GetDataFactoryAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataFactoryResource>> GetDataFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -245,13 +322,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactoryResourceGroupMockingExtension.GetDataFactory(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataFactoryResource> GetDataFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -270,6 +351,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.GetDataFactories(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,6 +376,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.GetDataFactories(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,6 +401,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_ConfigureFactoryRepo</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.ConfigureFactoryRepoInformation(AzureLocation,FactoryRepoContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
@@ -335,6 +428,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>Factories_ConfigureFactoryRepo</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.ConfigureFactoryRepoInformation(AzureLocation,FactoryRepoContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
@@ -358,6 +455,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>ExposureControl_GetFeatureValue</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.GetFeatureValueExposureControl(AzureLocation,ExposureControlContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
@@ -381,6 +482,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <description>ExposureControl_GetFeatureValue</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataFactorySubscriptionMockingExtension.GetFeatureValueExposureControl(AzureLocation,ExposureControlContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>

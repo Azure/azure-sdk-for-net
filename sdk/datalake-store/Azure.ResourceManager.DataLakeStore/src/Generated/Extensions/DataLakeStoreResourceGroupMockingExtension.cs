@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <returns> An object representing collection of DataLakeStoreAccountResources and their operations over a DataLakeStoreAccountResource. </returns>
         public virtual DataLakeStoreAccountCollection GetDataLakeStoreAccounts()
         {
-            return GetCachedClient(Client => new DataLakeStoreAccountCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeStoreAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeStoreAccountResource>> GetDataLakeStoreAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeStoreAccountResource> GetDataLakeStoreAccount(string accountName, CancellationToken cancellationToken = default)
         {

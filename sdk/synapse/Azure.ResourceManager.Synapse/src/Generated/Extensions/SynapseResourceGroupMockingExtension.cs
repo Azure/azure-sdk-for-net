@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
         public virtual SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs()
         {
-            return GetCachedClient(Client => new SynapsePrivateLinkHubCollection(Client, Id));
+            return GetCachedClient(client => new SynapsePrivateLinkHubCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
         public virtual SynapseWorkspaceCollection GetSynapseWorkspaces()
         {
-            return GetCachedClient(Client => new SynapseWorkspaceCollection(Client, Id));
+            return GetCachedClient(client => new SynapseWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseWorkspaceResource> GetSynapseWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {

@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.RedisEnterprise
     {
         private static RedisEnterpriseArmClientMockingExtension GetRedisEnterpriseArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new RedisEnterpriseArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new RedisEnterpriseArmClientMockingExtension(client0));
         }
 
         private static RedisEnterpriseResourceGroupMockingExtension GetRedisEnterpriseResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new RedisEnterpriseResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new RedisEnterpriseResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static RedisEnterpriseSubscriptionMockingExtension GetRedisEnterpriseSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new RedisEnterpriseSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new RedisEnterpriseSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="RedisEnterpriseClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterpriseClusterResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseArmClientMockingExtension.GetRedisEnterpriseClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary>
         /// Gets an object representing a <see cref="RedisEnterpriseDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterpriseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseArmClientMockingExtension.GetRedisEnterpriseDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -71,6 +70,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary>
         /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseArmClientMockingExtension.GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -80,7 +83,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetRedisEnterpriseArmClientMockingExtension(client).GetRedisEnterprisePrivateEndpointConnectionResource(id);
         }
 
-        /// <summary> Gets a collection of RedisEnterpriseClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of RedisEnterpriseClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseResourceGroupMockingExtension.GetRedisEnterpriseClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
         public static RedisEnterpriseClusterCollection GetRedisEnterpriseClusters(this ResourceGroupResource resourceGroupResource)
@@ -100,12 +109,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseResourceGroupMockingExtension.GetRedisEnterpriseClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
@@ -124,12 +137,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseResourceGroupMockingExtension.GetRedisEnterpriseCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
@@ -148,6 +165,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>OperationsStatus_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseOperationsStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -172,6 +193,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>OperationsStatus_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseOperationsStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -196,6 +221,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>RedisEnterprise_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +246,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>RedisEnterprise_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,6 +271,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -260,6 +297,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="RedisEnterpriseSubscriptionMockingExtension.GetRedisEnterpriseSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>

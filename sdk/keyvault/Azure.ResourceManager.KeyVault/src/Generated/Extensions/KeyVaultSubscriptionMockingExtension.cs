@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> An object representing collection of DeletedKeyVaultResources and their operations over a DeletedKeyVaultResource. </returns>
         public virtual DeletedKeyVaultCollection GetDeletedKeyVaults()
         {
-            return GetCachedClient(Client => new DeletedKeyVaultCollection(Client, Id));
+            return GetCachedClient(client => new DeletedKeyVaultCollection(client, Id));
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedKeyVaultResource>> GetDeletedKeyVaultAsync(AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeletedKeyVaultResource> GetDeletedKeyVault(AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> An object representing collection of DeletedManagedHsmResources and their operations over a DeletedManagedHsmResource. </returns>
         public virtual DeletedManagedHsmCollection GetDeletedManagedHsms()
         {
-            return GetCachedClient(Client => new DeletedManagedHsmCollection(Client, Id));
+            return GetCachedClient(client => new DeletedManagedHsmCollection(client, Id));
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedManagedHsmResource>> GetDeletedManagedHsmAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeletedManagedHsmResource> GetDeletedManagedHsm(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {

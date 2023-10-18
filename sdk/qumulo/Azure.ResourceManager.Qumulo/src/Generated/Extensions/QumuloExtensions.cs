@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.Qumulo
     {
         private static QumuloArmClientMockingExtension GetQumuloArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new QumuloArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new QumuloArmClientMockingExtension(client0));
         }
 
         private static QumuloResourceGroupMockingExtension GetQumuloResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new QumuloResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new QumuloResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static QumuloSubscriptionMockingExtension GetQumuloSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new QumuloSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new QumuloSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="QumuloFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="QumuloFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="QumuloFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloArmClientMockingExtension.GetQumuloFileSystemResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -55,7 +50,13 @@ namespace Azure.ResourceManager.Qumulo
             return GetQumuloArmClientMockingExtension(client).GetQumuloFileSystemResource(id);
         }
 
-        /// <summary> Gets a collection of QumuloFileSystemResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of QumuloFileSystemResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloResourceGroupMockingExtension.GetQumuloFileSystemResources()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
         public static QumuloFileSystemResourceCollection GetQumuloFileSystemResources(this ResourceGroupResource resourceGroupResource)
@@ -75,12 +76,16 @@ namespace Azure.ResourceManager.Qumulo
         /// <description>FileSystems_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloResourceGroupMockingExtension.GetQumuloFileSystemResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
@@ -99,12 +104,16 @@ namespace Azure.ResourceManager.Qumulo
         /// <description>FileSystems_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloResourceGroupMockingExtension.GetQumuloFileSystemResource(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<QumuloFileSystemResource> GetQumuloFileSystemResource(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
@@ -123,6 +132,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <description>FileSystems_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloSubscriptionMockingExtension.GetQumuloFileSystemResources(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,6 +157,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <description>FileSystems_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="QumuloSubscriptionMockingExtension.GetQumuloFileSystemResources(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

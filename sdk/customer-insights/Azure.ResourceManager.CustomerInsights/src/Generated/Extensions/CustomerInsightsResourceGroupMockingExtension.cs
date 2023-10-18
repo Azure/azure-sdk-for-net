@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// <returns> An object representing collection of HubResources and their operations over a HubResource. </returns>
         public virtual HubCollection GetHubs()
         {
-            return GetCachedClient(Client => new HubCollection(Client, Id));
+            return GetCachedClient(client => new HubCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// </summary>
         /// <param name="hubName"> The name of the hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubResource>> GetHubAsync(string hubName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// </summary>
         /// <param name="hubName"> The name of the hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubResource> GetHub(string hubName, CancellationToken cancellationToken = default)
         {

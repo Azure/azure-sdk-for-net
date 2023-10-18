@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Blueprint
     {
         private static BlueprintArmClientMockingExtension GetBlueprintArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new BlueprintArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new BlueprintArmClientMockingExtension(client0));
         }
 
-        /// <summary> Gets a collection of BlueprintResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of BlueprintResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprints(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of BlueprintResources and their operations over a BlueprintResource. </returns>
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             return GetBlueprintArmClientMockingExtension(client).GetBlueprints(scope);
         }
+
         /// <summary>
         /// Get a blueprint definition.
         /// <list type="bullet">
@@ -46,18 +50,23 @@ namespace Azure.ResourceManager.Blueprint
         /// <description>Blueprints_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprintAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BlueprintResource>> GetBlueprintAsync(this ArmClient client, ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
             return await GetBlueprintArmClientMockingExtension(client).GetBlueprintAsync(scope, blueprintName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Get a blueprint definition.
         /// <list type="bullet">
@@ -70,20 +79,30 @@ namespace Azure.ResourceManager.Blueprint
         /// <description>Blueprints_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprint(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BlueprintResource> GetBlueprint(this ArmClient client, ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
             return GetBlueprintArmClientMockingExtension(client).GetBlueprint(scope, blueprintName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AssignmentResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of AssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of AssignmentResources and their operations over a AssignmentResource. </returns>
@@ -91,6 +110,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             return GetBlueprintArmClientMockingExtension(client).GetAssignments(scope);
         }
+
         /// <summary>
         /// Get a blueprint assignment.
         /// <list type="bullet">
@@ -103,18 +123,23 @@ namespace Azure.ResourceManager.Blueprint
         /// <description>Assignments_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AssignmentResource>> GetAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {
             return await GetBlueprintArmClientMockingExtension(client).GetAssignmentAsync(scope, assignmentName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Get a blueprint assignment.
         /// <list type="bullet">
@@ -127,13 +152,17 @@ namespace Azure.ResourceManager.Blueprint
         /// <description>Assignments_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assignmentName"> Name of the blueprint assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AssignmentResource> GetAssignment(this ArmClient client, ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {
@@ -143,6 +172,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing a <see cref="BlueprintResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlueprintResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprintResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -155,6 +188,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing a <see cref="BlueprintArtifactResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlueprintArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprintArtifactResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -167,6 +204,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing a <see cref="BlueprintVersionArtifactResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlueprintVersionArtifactResource.CreateResourceIdentifier" /> to create a <see cref="BlueprintVersionArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetBlueprintVersionArtifactResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -179,6 +220,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing a <see cref="PublishedBlueprintResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PublishedBlueprintResource.CreateResourceIdentifier" /> to create a <see cref="PublishedBlueprintResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetPublishedBlueprintResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -191,6 +236,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing an <see cref="AssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -203,6 +252,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary>
         /// Gets an object representing an <see cref="AssignmentOperationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AssignmentOperationResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="BlueprintArmClientMockingExtension.GetAssignmentOperationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>

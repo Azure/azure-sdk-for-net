@@ -22,37 +22,31 @@ namespace Azure.ResourceManager.EventGrid
     {
         private static EventGridArmClientMockingExtension GetEventGridArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new EventGridArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new EventGridArmClientMockingExtension(client0));
         }
 
         private static EventGridResourceGroupMockingExtension GetEventGridResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new EventGridResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new EventGridResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static EventGridSubscriptionMockingExtension GetEventGridSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new EventGridSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new EventGridSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static EventGridTenantMockingExtension GetEventGridTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new EventGridTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new EventGridTenantMockingExtension(client, resource.Id));
         }
 
-        /// <summary> Gets a collection of EventSubscriptionResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of EventSubscriptionResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventSubscriptions(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
@@ -60,6 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             return GetEventGridArmClientMockingExtension(client).GetEventSubscriptions(scope);
         }
+
         /// <summary>
         /// Get properties of an event subscription.
         /// <list type="bullet">
@@ -72,18 +67,23 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventSubscriptionAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             return await GetEventGridArmClientMockingExtension(client).GetEventSubscriptionAsync(scope, eventSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Get properties of an event subscription.
         /// <list type="bullet">
@@ -96,20 +96,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventSubscription(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<EventSubscriptionResource> GetEventSubscription(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             return GetEventGridArmClientMockingExtension(client).GetEventSubscription(scope, eventSubscriptionName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary>
+        /// Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetExtensionTopic(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
@@ -121,6 +131,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="CaCertificateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CaCertificateResource.CreateResourceIdentifier" /> to create a <see cref="CaCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetCaCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -133,6 +147,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerNamespaceChannelResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerNamespaceChannelResource.CreateResourceIdentifier" /> to create a <see cref="PartnerNamespaceChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerNamespaceChannelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -145,6 +163,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridNamespaceClientGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridNamespaceClientGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridNamespaceClientGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -157,6 +179,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridNamespaceClientResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridNamespaceClientResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridNamespaceClientResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -169,6 +195,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridDomainResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridDomainResource.CreateResourceIdentifier" /> to create an <see cref="EventGridDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -181,6 +211,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="DomainTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DomainTopicResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetDomainTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -193,6 +227,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="DomainTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DomainTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetDomainTopicEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -205,6 +243,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="TopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="TopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetTopicEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -217,6 +259,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="DomainEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DomainEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetDomainEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -229,6 +275,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="EventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -241,6 +291,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="SystemTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SystemTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="SystemTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetSystemTopicEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -253,6 +307,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="PartnerTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerTopicEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -265,6 +323,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="NamespaceTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetNamespaceTopicEventSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -277,6 +339,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridNamespaceResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -289,6 +355,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="NamespaceTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NamespaceTopicResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetNamespaceTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -301,6 +371,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -313,6 +387,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerDestinationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerDestinationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerDestinationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -325,6 +403,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="PartnerNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -337,6 +419,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -349,6 +435,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerTopicResource.CreateResourceIdentifier" /> to create a <see cref="PartnerTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -361,6 +451,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridNamespacePermissionBindingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridNamespacePermissionBindingResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespacePermissionBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridNamespacePermissionBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -373,6 +467,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridTopicPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridTopicPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -385,6 +483,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridDomainPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridDomainPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="EventGridDomainPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -397,6 +499,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridPartnerNamespacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -409,6 +515,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridTopicPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridTopicPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridTopicPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -421,6 +531,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridDomainPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridDomainPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="EventGridDomainPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridDomainPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -433,6 +547,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="PartnerNamespacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerNamespacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PartnerNamespacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetPartnerNamespacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -445,6 +563,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="SystemTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SystemTopicResource.CreateResourceIdentifier" /> to create a <see cref="SystemTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetSystemTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -457,6 +579,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="EventGridTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetEventGridTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -469,6 +595,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing an <see cref="ExtensionTopicResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExtensionTopicResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetExtensionTopicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -481,6 +611,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="TopicSpaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TopicSpaceResource.CreateResourceIdentifier" /> to create a <see cref="TopicSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetTopicSpaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -493,6 +627,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="TopicTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TopicTypeResource.CreateResourceIdentifier" /> to create a <see cref="TopicTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetTopicTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -505,6 +643,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Gets an object representing a <see cref="VerifiedPartnerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VerifiedPartnerResource.CreateResourceIdentifier" /> to create a <see cref="VerifiedPartnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridArmClientMockingExtension.GetVerifiedPartnerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -514,7 +656,13 @@ namespace Azure.ResourceManager.EventGrid
             return GetEventGridArmClientMockingExtension(client).GetVerifiedPartnerResource(id);
         }
 
-        /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of EventGridDomainResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridDomains()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
         public static EventGridDomainCollection GetEventGridDomains(this ResourceGroupResource resourceGroupResource)
@@ -534,12 +682,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Domains_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
@@ -558,19 +710,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Domains_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridDomain(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<EventGridDomainResource> GetEventGridDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetEventGridDomain(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of EventGridNamespaceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridNamespaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
         public static EventGridNamespaceCollection GetEventGridNamespaces(this ResourceGroupResource resourceGroupResource)
@@ -590,12 +752,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Namespaces_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EventGridNamespaceResource>> GetEventGridNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
@@ -614,19 +780,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Namespaces_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridNamespace(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<EventGridNamespaceResource> GetEventGridNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetEventGridNamespace(namespaceName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerConfiguration()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
         public static PartnerConfigurationResource GetPartnerConfiguration(this ResourceGroupResource resourceGroupResource)
@@ -634,7 +810,13 @@ namespace Azure.ResourceManager.EventGrid
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetPartnerConfiguration();
         }
 
-        /// <summary> Gets a collection of PartnerDestinationResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of PartnerDestinationResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerDestinations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerDestinationResources and their operations over a PartnerDestinationResource. </returns>
         public static PartnerDestinationCollection GetPartnerDestinations(this ResourceGroupResource resourceGroupResource)
@@ -654,12 +836,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerDestinations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerDestinationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PartnerDestinationResource>> GetPartnerDestinationAsync(this ResourceGroupResource resourceGroupResource, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
@@ -678,19 +864,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerDestinations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerDestination(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PartnerDestinationResource> GetPartnerDestination(this ResourceGroupResource resourceGroupResource, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetPartnerDestination(partnerDestinationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of PartnerNamespaceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerNamespaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
         public static PartnerNamespaceCollection GetPartnerNamespaces(this ResourceGroupResource resourceGroupResource)
@@ -710,12 +906,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerNamespaces_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PartnerNamespaceResource>> GetPartnerNamespaceAsync(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
@@ -734,19 +934,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerNamespaces_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerNamespace(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PartnerNamespaceResource> GetPartnerNamespace(this ResourceGroupResource resourceGroupResource, string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetPartnerNamespace(partnerNamespaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerRegistrationResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of PartnerRegistrationResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerRegistrations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
         public static PartnerRegistrationCollection GetPartnerRegistrations(this ResourceGroupResource resourceGroupResource)
@@ -766,12 +976,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerRegistrations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerRegistrationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PartnerRegistrationResource>> GetPartnerRegistrationAsync(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
@@ -790,19 +1004,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerRegistrations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerRegistration(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PartnerRegistrationResource> GetPartnerRegistration(this ResourceGroupResource resourceGroupResource, string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetPartnerRegistration(partnerRegistrationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerTopicResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of PartnerTopicResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerTopics()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
         public static PartnerTopicCollection GetPartnerTopics(this ResourceGroupResource resourceGroupResource)
@@ -822,12 +1046,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerTopics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerTopicAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PartnerTopicResource>> GetPartnerTopicAsync(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
         {
@@ -846,19 +1074,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerTopics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetPartnerTopic(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PartnerTopicResource> GetPartnerTopic(this ResourceGroupResource resourceGroupResource, string partnerTopicName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetPartnerTopic(partnerTopicName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of SystemTopicResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetSystemTopics()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
         public static SystemTopicCollection GetSystemTopics(this ResourceGroupResource resourceGroupResource)
@@ -878,12 +1116,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>SystemTopics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetSystemTopicAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SystemTopicResource>> GetSystemTopicAsync(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
         {
@@ -902,19 +1144,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>SystemTopics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetSystemTopic(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SystemTopicResource> GetSystemTopic(this ResourceGroupResource resourceGroupResource, string systemTopicName, CancellationToken cancellationToken = default)
         {
             return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetSystemTopic(systemTopicName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of EventGridTopicResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridTopics()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
         public static EventGridTopicCollection GetEventGridTopics(this ResourceGroupResource resourceGroupResource)
@@ -934,12 +1186,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Topics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridTopicAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
         {
@@ -958,12 +1214,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Topics_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridResourceGroupMockingExtension.GetEventGridTopic(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<EventGridTopicResource> GetEventGridTopic(this ResourceGroupResource resourceGroupResource, string topicName, CancellationToken cancellationToken = default)
         {
@@ -982,6 +1242,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Domains_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridDomains(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1005,6 +1269,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Domains_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridDomains(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1028,6 +1296,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Namespaces_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridNamespaces(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1051,6 +1323,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Namespaces_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridNamespaces(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1074,6 +1350,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerConfigurations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerConfigurations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1097,6 +1377,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerConfigurations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerConfigurations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1120,6 +1404,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerDestinations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerDestinations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1143,6 +1431,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerDestinations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerDestinations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1166,6 +1458,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerNamespaces_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerNamespaces(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1189,6 +1485,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerNamespaces_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerNamespaces(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1212,6 +1512,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerRegistrations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerRegistrations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1235,6 +1539,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerRegistrations_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerRegistrations(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1258,6 +1566,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerTopics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1281,6 +1593,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>PartnerTopics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetPartnerTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1304,6 +1620,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>SystemTopics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetSystemTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1327,6 +1647,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>SystemTopics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetSystemTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1350,6 +1674,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Topics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1373,6 +1701,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>Topics_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridSubscriptionMockingExtension.GetEventGridTopics(string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
@@ -1384,7 +1716,13 @@ namespace Azure.ResourceManager.EventGrid
             return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetEventGridTopics(filter, top, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of TopicTypeResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetTopicTypes()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
         public static TopicTypeCollection GetTopicTypes(this TenantResource tenantResource)
@@ -1404,12 +1742,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>TopicTypes_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetTopicTypeAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TopicTypeResource>> GetTopicTypeAsync(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
         {
@@ -1428,19 +1770,29 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>TopicTypes_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetTopicType(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<TopicTypeResource> GetTopicType(this TenantResource tenantResource, string topicTypeName, CancellationToken cancellationToken = default)
         {
             return GetEventGridTenantMockingExtension(tenantResource).GetTopicType(topicTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of VerifiedPartnerResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetVerifiedPartners()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VerifiedPartnerResources and their operations over a VerifiedPartnerResource. </returns>
         public static VerifiedPartnerCollection GetVerifiedPartners(this TenantResource tenantResource)
@@ -1460,12 +1812,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>VerifiedPartners_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetVerifiedPartnerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VerifiedPartnerResource>> GetVerifiedPartnerAsync(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
@@ -1484,12 +1840,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>VerifiedPartners_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="EventGridTenantMockingExtension.GetVerifiedPartner(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<VerifiedPartnerResource> GetVerifiedPartner(this TenantResource tenantResource, string verifiedPartnerName, CancellationToken cancellationToken = default)
         {

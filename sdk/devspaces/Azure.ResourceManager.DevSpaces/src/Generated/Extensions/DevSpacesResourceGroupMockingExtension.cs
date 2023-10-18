@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public virtual ControllerCollection GetControllers()
         {
-            return GetCachedClient(Client => new ControllerCollection(Client, Id));
+            return GetCachedClient(client => new ControllerCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ControllerResource>> GetControllerAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ControllerResource> GetController(string name, CancellationToken cancellationToken = default)
         {

@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.VoiceServices
     {
         private static VoiceServicesArmClientMockingExtension GetVoiceServicesArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new VoiceServicesArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new VoiceServicesArmClientMockingExtension(client0));
         }
 
         private static VoiceServicesResourceGroupMockingExtension GetVoiceServicesResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new VoiceServicesResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new VoiceServicesResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static VoiceServicesSubscriptionMockingExtension GetVoiceServicesSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new VoiceServicesSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new VoiceServicesSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="VoiceServicesCommunicationsGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesCommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesArmClientMockingExtension.GetVoiceServicesCommunicationsGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <summary>
         /// Gets an object representing a <see cref="VoiceServicesTestLineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VoiceServicesTestLineResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesTestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesArmClientMockingExtension.GetVoiceServicesTestLineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -68,7 +67,13 @@ namespace Azure.ResourceManager.VoiceServices
             return GetVoiceServicesArmClientMockingExtension(client).GetVoiceServicesTestLineResource(id);
         }
 
-        /// <summary> Gets a collection of VoiceServicesCommunicationsGatewayResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of VoiceServicesCommunicationsGatewayResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGateways()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
         public static VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
@@ -88,12 +93,16 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>CommunicationsGateways_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="communicationsGatewayName"> Unique identifier for this deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
@@ -112,12 +121,16 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>CommunicationsGateways_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGateway(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="communicationsGatewayName"> Unique identifier for this deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
@@ -136,6 +149,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,6 +174,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,6 +199,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>NameAvailability_CheckLocal</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -201,6 +226,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <description>NameAvailability_CheckLocal</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>

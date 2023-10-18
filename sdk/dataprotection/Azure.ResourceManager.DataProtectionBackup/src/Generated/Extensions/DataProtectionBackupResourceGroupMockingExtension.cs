@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
         public virtual DataProtectionBackupVaultCollection GetDataProtectionBackupVaults()
         {
-            return GetCachedClient(Client => new DataProtectionBackupVaultCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupVaultCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the backup vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
         public virtual ResourceGuardCollection GetResourceGuards()
         {
-            return GetCachedClient(Client => new ResourceGuardCollection(Client, Id));
+            return GetCachedClient(client => new ResourceGuardCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </summary>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </summary>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceGuardResource> GetResourceGuard(string resourceGuardsName, CancellationToken cancellationToken = default)
         {

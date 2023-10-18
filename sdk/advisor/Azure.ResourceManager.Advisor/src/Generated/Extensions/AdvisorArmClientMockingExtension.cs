@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary> Gets a collection of ResourceRecommendationBaseResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ResourceRecommendationBaseResources and their operations over a ResourceRecommendationBaseResource. </returns>
         public virtual ResourceRecommendationBaseCollection GetResourceRecommendationBases(ResourceIdentifier scope)
         {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceRecommendationBaseResource> GetResourceRecommendationBase(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {

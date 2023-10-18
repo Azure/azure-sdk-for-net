@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkDeviceSkuResources and their operations over a NetworkDeviceSkuResource. </returns>
         public virtual NetworkDeviceSkuCollection GetNetworkDeviceSkus()
         {
-            return GetCachedClient(Client => new NetworkDeviceSkuCollection(Client, Id));
+            return GetCachedClient(client => new NetworkDeviceSkuCollection(client, Id));
         }
 
         /// <summary>
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkDeviceSkuResource>> GetNetworkDeviceSkuAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkDeviceSkuResource> GetNetworkDeviceSku(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricSkuResources and their operations over a NetworkFabricSkuResource. </returns>
         public virtual NetworkFabricSkuCollection GetNetworkFabricSkus()
         {
-            return GetCachedClient(Client => new NetworkFabricSkuCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricSkuCollection(client, Id));
         }
 
         /// <summary>
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricSkuResource>> GetNetworkFabricSkuAsync(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricSkuResource> GetNetworkFabricSku(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {

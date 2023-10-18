@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.ResourceGraph
     {
         private static ResourceGraphTenantMockingExtension GetResourceGraphTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGraphTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ResourceGraphTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
@@ -39,6 +36,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>Resources</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceGraphTenantMockingExtension.GetResources(ResourceQueryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -61,6 +62,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>Resources</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceGraphTenantMockingExtension.GetResources(ResourceQueryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -83,6 +88,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>ResourcesHistory</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceGraphTenantMockingExtension.GetResourceHistory(ResourcesHistoryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -105,6 +114,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>ResourcesHistory</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceGraphTenantMockingExtension.GetResourceHistory(ResourcesHistoryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>

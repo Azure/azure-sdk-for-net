@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.ServiceLinker
     {
         private static ServiceLinkerArmClientMockingExtension GetServiceLinkerArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new ServiceLinkerArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new ServiceLinkerArmClientMockingExtension(client0));
         }
 
         private static ServiceLinkerArmMockingExtension GetServiceLinkerArmMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ServiceLinkerArmMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ServiceLinkerArmMockingExtension(client, resource.Id));
         }
 
-        /// <summary> Gets a collection of LinkerResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of LinkerResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmClientMockingExtension.GetLinkerResources(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             return GetServiceLinkerArmClientMockingExtension(client).GetLinkerResources(scope);
         }
+
         /// <summary>
         /// Returns Linker resource for a given name.
         /// <list type="bullet">
@@ -54,18 +55,23 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <description>Linker_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmClientMockingExtension.GetLinkerResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LinkerResource>> GetLinkerResourceAsync(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
             return await GetServiceLinkerArmClientMockingExtension(client).GetLinkerResourceAsync(scope, linkerName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Returns Linker resource for a given name.
         /// <list type="bullet">
@@ -78,13 +84,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <description>Linker_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmClientMockingExtension.GetLinkerResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<LinkerResource> GetLinkerResource(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
@@ -94,6 +104,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary>
         /// Gets an object representing a <see cref="LinkerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmClientMockingExtension.GetLinkerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -103,7 +117,13 @@ namespace Azure.ResourceManager.ServiceLinker
             return GetServiceLinkerArmClientMockingExtension(client).GetLinkerResource(id);
         }
 
-        /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of LinkerResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmMockingExtension.GetLinkerResources()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmResource armResource)
@@ -123,12 +143,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <description>Linker_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmMockingExtension.GetLinkerResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LinkerResource>> GetLinkerResourceAsync(this ArmResource armResource, string linkerName, CancellationToken cancellationToken = default)
         {
@@ -147,12 +171,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <description>Linker_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ServiceLinkerArmMockingExtension.GetLinkerResource(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<LinkerResource> GetLinkerResource(this ArmResource armResource, string linkerName, CancellationToken cancellationToken = default)
         {

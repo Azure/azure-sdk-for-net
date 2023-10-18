@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <returns> An object representing collection of AvailableGroundStationResources and their operations over a AvailableGroundStationResource. </returns>
         public virtual AvailableGroundStationCollection GetAvailableGroundStations()
         {
-            return GetCachedClient(Client => new AvailableGroundStationCollection(Client, Id));
+            return GetCachedClient(client => new AvailableGroundStationCollection(client, Id));
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvailableGroundStationResource>> GetAvailableGroundStationAsync(string groundStationName, CancellationToken cancellationToken = default)
         {
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvailableGroundStationResource> GetAvailableGroundStation(string groundStationName, CancellationToken cancellationToken = default)
         {

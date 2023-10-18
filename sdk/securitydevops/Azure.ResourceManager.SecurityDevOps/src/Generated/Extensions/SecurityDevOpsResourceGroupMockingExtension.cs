@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
         public virtual AzureDevOpsConnectorCollection GetAzureDevOpsConnectors()
         {
-            return GetCachedClient(Client => new AzureDevOpsConnectorCollection(Client, Id));
+            return GetCachedClient(client => new AzureDevOpsConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// </summary>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// </summary>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
         public virtual GitHubConnectorCollection GetGitHubConnectors()
         {
-            return GetCachedClient(Client => new GitHubConnectorCollection(Client, Id));
+            return GetCachedClient(client => new GitHubConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GitHubConnectorResource> GetGitHubConnector(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {

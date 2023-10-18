@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> An object representing collection of IotHubDescriptionResources and their operations over a IotHubDescriptionResource. </returns>
         public virtual IotHubDescriptionCollection GetIotHubDescriptions()
         {
-            return GetCachedClient(Client => new IotHubDescriptionCollection(Client, Id));
+            return GetCachedClient(client => new IotHubDescriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubDescriptionResource>> GetIotHubDescriptionAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotHubDescriptionResource> GetIotHubDescription(string resourceName, CancellationToken cancellationToken = default)
         {

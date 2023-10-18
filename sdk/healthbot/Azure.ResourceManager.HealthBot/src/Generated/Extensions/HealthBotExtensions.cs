@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.HealthBot
     {
         private static HealthBotArmClientMockingExtension GetHealthBotArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new HealthBotArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new HealthBotArmClientMockingExtension(client0));
         }
 
         private static HealthBotResourceGroupMockingExtension GetHealthBotResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new HealthBotResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new HealthBotResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static HealthBotSubscriptionMockingExtension GetHealthBotSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new HealthBotSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new HealthBotSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="HealthBotResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthBotResource.CreateResourceIdentifier" /> to create a <see cref="HealthBotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotArmClientMockingExtension.GetHealthBotResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -55,7 +50,13 @@ namespace Azure.ResourceManager.HealthBot
             return GetHealthBotArmClientMockingExtension(client).GetHealthBotResource(id);
         }
 
-        /// <summary> Gets a collection of HealthBotResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of HealthBotResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotResourceGroupMockingExtension.GetHealthBots()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
         public static HealthBotCollection GetHealthBots(this ResourceGroupResource resourceGroupResource)
@@ -75,12 +76,16 @@ namespace Azure.ResourceManager.HealthBot
         /// <description>Bots_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotResourceGroupMockingExtension.GetHealthBotAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<HealthBotResource>> GetHealthBotAsync(this ResourceGroupResource resourceGroupResource, string botName, CancellationToken cancellationToken = default)
         {
@@ -99,12 +104,16 @@ namespace Azure.ResourceManager.HealthBot
         /// <description>Bots_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotResourceGroupMockingExtension.GetHealthBot(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<HealthBotResource> GetHealthBot(this ResourceGroupResource resourceGroupResource, string botName, CancellationToken cancellationToken = default)
         {
@@ -123,6 +132,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <description>Bots_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotSubscriptionMockingExtension.GetHealthBots(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,6 +157,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <description>Bots_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HealthBotSubscriptionMockingExtension.GetHealthBots(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

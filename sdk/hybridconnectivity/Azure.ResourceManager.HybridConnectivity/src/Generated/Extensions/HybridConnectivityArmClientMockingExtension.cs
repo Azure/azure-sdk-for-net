@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         }
 
         /// <summary> Gets a collection of EndpointResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public virtual EndpointResourceCollection GetEndpointResources(ResourceIdentifier scope)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>

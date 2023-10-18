@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
         public virtual ConfluentOrganizationCollection GetConfluentOrganizations()
         {
-            return GetCachedClient(Client => new ConfluentOrganizationCollection(Client, Id));
+            return GetCachedClient(client => new ConfluentOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConfluentOrganizationResource>> GetConfluentOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConfluentOrganizationResource> GetConfluentOrganization(string organizationName, CancellationToken cancellationToken = default)
         {

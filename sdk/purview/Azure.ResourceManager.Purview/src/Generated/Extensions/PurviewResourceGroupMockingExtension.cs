@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <returns> An object representing collection of PurviewAccountResources and their operations over a PurviewAccountResource. </returns>
         public virtual PurviewAccountCollection GetPurviewAccounts()
         {
-            return GetCachedClient(Client => new PurviewAccountCollection(Client, Id));
+            return GetCachedClient(client => new PurviewAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PurviewAccountResource>> GetPurviewAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PurviewAccountResource> GetPurviewAccount(string accountName, CancellationToken cancellationToken = default)
         {

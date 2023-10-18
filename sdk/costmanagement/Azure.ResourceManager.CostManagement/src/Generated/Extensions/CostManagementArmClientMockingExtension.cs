@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary> Gets a collection of CostManagementExportResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
         public virtual CostManagementExportCollection GetCostManagementExports(ResourceIdentifier scope)
         {
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CostManagementExportResource> GetCostManagementExport(ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary> Gets a collection of CostManagementViewsResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
         public virtual CostManagementViewsCollection GetAllCostManagementViews(ResourceIdentifier scope)
         {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CostManagementViewsResource> GetCostManagementViews(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary> Gets a collection of CostManagementAlertResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
         public virtual CostManagementAlertCollection GetCostManagementAlerts(ResourceIdentifier scope)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary> Gets a collection of ScheduledActionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
         public virtual ScheduledActionCollection GetScheduledActions(ResourceIdentifier scope)
         {
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScheduledActionResource> GetScheduledAction(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {

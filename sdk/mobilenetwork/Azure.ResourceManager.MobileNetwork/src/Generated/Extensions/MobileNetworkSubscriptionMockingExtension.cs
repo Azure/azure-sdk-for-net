@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
         public virtual SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions()
         {
-            return GetCachedClient(Client => new SubscriptionPacketCoreControlPlaneVersionCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionPacketCoreControlPlaneVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(string versionName, CancellationToken cancellationToken = default)
         {

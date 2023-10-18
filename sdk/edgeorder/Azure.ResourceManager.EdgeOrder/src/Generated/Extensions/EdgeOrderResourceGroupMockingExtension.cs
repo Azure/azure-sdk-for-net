@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An object representing collection of EdgeOrderAddressResources and their operations over a EdgeOrderAddressResource. </returns>
         public virtual EdgeOrderAddressCollection GetEdgeOrderAddresses()
         {
-            return GetCachedClient(Client => new EdgeOrderAddressCollection(Client, Id));
+            return GetCachedClient(client => new EdgeOrderAddressCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeOrderAddressResource>> GetEdgeOrderAddressAsync(string addressName, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EdgeOrderAddressResource> GetEdgeOrderAddress(string addressName, CancellationToken cancellationToken = default)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An object representing collection of EdgeOrderResources and their operations over a EdgeOrderResource. </returns>
         public virtual EdgeOrderCollection GetEdgeOrders()
         {
-            return GetCachedClient(Client => new EdgeOrderCollection(Client, Id));
+            return GetCachedClient(client => new EdgeOrderCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeOrderResource>> GetEdgeOrderAsync(AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EdgeOrderResource> GetEdgeOrder(AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An object representing collection of EdgeOrderItemResources and their operations over a EdgeOrderItemResource. </returns>
         public virtual EdgeOrderItemCollection GetEdgeOrderItems()
         {
-            return GetCachedClient(Client => new EdgeOrderItemCollection(Client, Id));
+            return GetCachedClient(client => new EdgeOrderItemCollection(client, Id));
         }
 
         /// <summary>
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeOrderItemResource>> GetEdgeOrderItemAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EdgeOrderItemResource> GetEdgeOrderItem(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {

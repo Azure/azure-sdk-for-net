@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
         public virtual PrivateStoreCollection GetPrivateStores()
         {
-            return GetCachedClient(Client => new PrivateStoreCollection(Client, Id));
+            return GetCachedClient(client => new PrivateStoreCollection(client, Id));
         }
 
         /// <summary>

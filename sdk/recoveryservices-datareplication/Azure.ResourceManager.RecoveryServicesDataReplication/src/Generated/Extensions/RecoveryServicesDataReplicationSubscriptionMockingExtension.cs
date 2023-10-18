@@ -13,12 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
-namespace Azure.ResourceManager.RecoveryServicesDataReplication
+namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class RecoveryServicesDataReplicationSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _dataReplicationFabricFabricClientDiagnostics;
         private FabricRestOperations _dataReplicationFabricFabricRestClient;
@@ -27,15 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private ClientDiagnostics _dataReplicationVaultVaultClientDiagnostics;
         private VaultRestOperations _dataReplicationVaultVaultRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesDataReplicationSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected RecoveryServicesDataReplicationSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesDataReplicationSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RecoveryServicesDataReplicationSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "RecoveryServicesDataReplicationSubscriptionMockingExtension.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "RecoveryServicesDataReplicationSubscriptionMockingExtension.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataReplicationNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("RecoveryServicesDataReplicationSubscriptionMockingExtension.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataReplicationNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("RecoveryServicesDataReplicationSubscriptionMockingExtension.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "RecoveryServicesDataReplicationSubscriptionMockingExtension.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "RecoveryServicesDataReplicationSubscriptionMockingExtension.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

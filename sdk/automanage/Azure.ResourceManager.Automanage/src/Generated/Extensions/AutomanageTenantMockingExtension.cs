@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
         public virtual AutomanageBestPracticeCollection GetAutomanageBestPractices()
         {
-            return GetCachedClient(Client => new AutomanageBestPracticeCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageBestPracticeCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(string bestPracticeName, CancellationToken cancellationToken = default)
         {

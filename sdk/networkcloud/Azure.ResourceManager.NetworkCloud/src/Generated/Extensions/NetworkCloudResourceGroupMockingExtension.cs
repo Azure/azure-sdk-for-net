@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public virtual NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines()
         {
-            return GetCachedClient(Client => new NetworkCloudBareMetalMachineCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudBareMetalMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
         public virtual NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks()
         {
-            return GetCachedClient(Client => new NetworkCloudCloudServicesNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudCloudServicesNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
         public virtual NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers()
         {
-            return GetCachedClient(Client => new NetworkCloudClusterManagerCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudClusterManagerCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(string clusterManagerName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
         public virtual NetworkCloudClusterCollection GetNetworkCloudClusters()
         {
-            return GetCachedClient(Client => new NetworkCloudClusterCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudClusterResource> GetNetworkCloudCluster(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
         public virtual NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters()
         {
-            return GetCachedClient(Client => new NetworkCloudKubernetesClusterCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudKubernetesClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
         public virtual NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks()
         {
-            return GetCachedClient(Client => new NetworkCloudL2NetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudL2NetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(string l2NetworkName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(string l2NetworkName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
         public virtual NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks()
         {
-            return GetCachedClient(Client => new NetworkCloudL3NetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudL3NetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="l3NetworkName"> The name of the L3 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(string l3NetworkName, CancellationToken cancellationToken = default)
         {
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="l3NetworkName"> The name of the L3 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(string l3NetworkName, CancellationToken cancellationToken = default)
         {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
         public virtual NetworkCloudRackCollection GetNetworkCloudRacks()
         {
-            return GetCachedClient(Client => new NetworkCloudRackCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudRackCollection(client, Id));
         }
 
         /// <summary>
@@ -429,8 +429,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(string rackName, CancellationToken cancellationToken = default)
         {
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudRackResource> GetNetworkCloudRack(string rackName, CancellationToken cancellationToken = default)
         {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
         public virtual NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances()
         {
-            return GetCachedClient(Client => new NetworkCloudStorageApplianceCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudStorageApplianceCollection(client, Id));
         }
 
         /// <summary>
@@ -482,8 +482,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="storageApplianceName"> The name of the storage appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(string storageApplianceName, CancellationToken cancellationToken = default)
         {
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="storageApplianceName"> The name of the storage appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(string storageApplianceName, CancellationToken cancellationToken = default)
         {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
         public virtual NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks()
         {
-            return GetCachedClient(Client => new NetworkCloudTrunkedNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudTrunkedNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -535,8 +535,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
         public virtual NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines()
         {
-            return GetCachedClient(Client => new NetworkCloudVirtualMachineCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -588,8 +588,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -611,8 +611,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
         public virtual NetworkCloudVolumeCollection GetNetworkCloudVolumes()
         {
-            return GetCachedClient(Client => new NetworkCloudVolumeCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudVolumeCollection(client, Id));
         }
 
         /// <summary>
@@ -641,8 +641,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
@@ -664,8 +664,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(string volumeName, CancellationToken cancellationToken = default)
         {

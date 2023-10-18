@@ -95,13 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryAlertResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryAlertResources and their operations over a SiteRecoveryAlertResource. </returns>
         public virtual SiteRecoveryAlertCollection GetSiteRecoveryAlerts(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryAlertCollection(Client, Id, resourceName);
         }
 
@@ -121,8 +119,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="alertSettingName"> The name of the email notification configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryAlertResource>> GetSiteRecoveryAlertAsync(string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
         {
@@ -145,8 +143,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="alertSettingName"> The name of the email notification configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryAlertResource> GetSiteRecoveryAlert(string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
         {
@@ -155,13 +153,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>
         /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of ReplicationEligibilityResultResources and their operations over a ReplicationEligibilityResultResource. </returns>
         public virtual ReplicationEligibilityResultCollection GetReplicationEligibilityResults(string virtualMachineName)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
-
             return new ReplicationEligibilityResultCollection(Client, Id, virtualMachineName);
         }
 
@@ -180,8 +176,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> Virtual Machine name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ReplicationEligibilityResultResource>> GetReplicationEligibilityResultAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -203,8 +199,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> Virtual Machine name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ReplicationEligibilityResultResource> GetReplicationEligibilityResult(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -213,13 +209,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryEventResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryEventResources and their operations over a SiteRecoveryEventResource. </returns>
         public virtual SiteRecoveryEventCollection GetSiteRecoveryEvents(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryEventCollection(Client, Id, resourceName);
         }
 
@@ -239,8 +233,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryEventResource>> GetSiteRecoveryEventAsync(string resourceName, string eventName, CancellationToken cancellationToken = default)
         {
@@ -263,8 +257,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryEventResource> GetSiteRecoveryEvent(string resourceName, string eventName, CancellationToken cancellationToken = default)
         {
@@ -273,13 +267,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryFabricResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryFabricResources and their operations over a SiteRecoveryFabricResource. </returns>
         public virtual SiteRecoveryFabricCollection GetSiteRecoveryFabrics(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryFabricCollection(Client, Id, resourceName);
         }
 
@@ -300,8 +292,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="fabricName"> Fabric name. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryFabricResource>> GetSiteRecoveryFabricAsync(string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -325,8 +317,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="fabricName"> Fabric name. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryFabricResource> GetSiteRecoveryFabric(string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -335,13 +327,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryJobResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryJobResources and their operations over a SiteRecoveryJobResource. </returns>
         public virtual SiteRecoveryJobCollection GetSiteRecoveryJobs(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryJobCollection(Client, Id, resourceName);
         }
 
@@ -361,8 +351,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Job identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryJobResource>> GetSiteRecoveryJobAsync(string resourceName, string jobName, CancellationToken cancellationToken = default)
         {
@@ -385,8 +375,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Job identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryJobResource> GetSiteRecoveryJob(string resourceName, string jobName, CancellationToken cancellationToken = default)
         {
@@ -395,13 +385,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryPolicyResources and their operations over a SiteRecoveryPolicyResource. </returns>
         public virtual SiteRecoveryPolicyCollection GetSiteRecoveryPolicies(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryPolicyCollection(Client, Id, resourceName);
         }
 
@@ -421,8 +409,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryPolicyResource>> GetSiteRecoveryPolicyAsync(string resourceName, string policyName, CancellationToken cancellationToken = default)
         {
@@ -445,8 +433,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryPolicyResource> GetSiteRecoveryPolicy(string resourceName, string policyName, CancellationToken cancellationToken = default)
         {
@@ -455,13 +443,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of ReplicationProtectionIntentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of ReplicationProtectionIntentResources and their operations over a ReplicationProtectionIntentResource. </returns>
         public virtual ReplicationProtectionIntentCollection GetReplicationProtectionIntents(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new ReplicationProtectionIntentCollection(Client, Id, resourceName);
         }
 
@@ -481,8 +467,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="intentObjectName"> Replication protection intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ReplicationProtectionIntentResource>> GetReplicationProtectionIntentAsync(string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -505,8 +491,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="intentObjectName"> Replication protection intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ReplicationProtectionIntentResource> GetReplicationProtectionIntent(string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -515,13 +501,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryRecoveryPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryRecoveryPlanResources and their operations over a SiteRecoveryRecoveryPlanResource. </returns>
         public virtual SiteRecoveryRecoveryPlanCollection GetSiteRecoveryRecoveryPlans(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryRecoveryPlanCollection(Client, Id, resourceName);
         }
 
@@ -541,8 +525,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryRecoveryPlanResource>> GetSiteRecoveryRecoveryPlanAsync(string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
@@ -565,8 +549,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryRecoveryPlanResource> GetSiteRecoveryRecoveryPlan(string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
@@ -575,13 +559,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         /// <summary> Gets a collection of SiteRecoveryVaultSettingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of SiteRecoveryVaultSettingResources and their operations over a SiteRecoveryVaultSettingResource. </returns>
         public virtual SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new SiteRecoveryVaultSettingCollection(Client, Id, resourceName);
         }
 
@@ -601,8 +583,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetSiteRecoveryVaultSettingAsync(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
@@ -625,8 +607,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryVaultSettingResource> GetSiteRecoveryVaultSetting(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {

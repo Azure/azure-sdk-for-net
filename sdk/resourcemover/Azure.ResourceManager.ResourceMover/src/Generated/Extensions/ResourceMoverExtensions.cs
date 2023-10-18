@@ -22,39 +22,31 @@ namespace Azure.ResourceManager.ResourceMover
     {
         private static ResourceMoverArmClientMockingExtension GetResourceMoverArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new ResourceMoverArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new ResourceMoverArmClientMockingExtension(client0));
         }
 
         private static ResourceMoverResourceGroupMockingExtension GetResourceMoverResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceMoverResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ResourceMoverResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static ResourceMoverSubscriptionMockingExtension GetResourceMoverSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceMoverSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ResourceMoverSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static ResourceMoverTenantMockingExtension GetResourceMoverTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceMoverTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ResourceMoverTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="MoverResourceSetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverArmClientMockingExtension.GetMoverResourceSetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -67,6 +59,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <summary>
         /// Gets an object representing a <see cref="MoverResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverArmClientMockingExtension.GetMoverResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -76,7 +72,13 @@ namespace Azure.ResourceManager.ResourceMover
             return GetResourceMoverArmClientMockingExtension(client).GetMoverResource(id);
         }
 
-        /// <summary> Gets a collection of MoverResourceSetResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of MoverResourceSetResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSets()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
         public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
@@ -96,12 +98,16 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>MoveCollections_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSetAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
@@ -120,12 +126,16 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>MoveCollections_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSet(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
@@ -144,6 +154,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverSubscriptionMockingExtension.GetMoverResourceSets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +179,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverSubscriptionMockingExtension.GetMoverResourceSets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +203,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>OperationsDiscovery_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverTenantMockingExtension.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,6 +227,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <description>OperationsDiscovery_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ResourceMoverTenantMockingExtension.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

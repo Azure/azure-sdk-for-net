@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
         public virtual ServiceAlertCollection GetServiceAlerts()
         {
-            return GetCachedClient(Client => new ServiceAlertCollection(Client, Id));
+            return GetCachedClient(client => new ServiceAlertCollection(client, Id));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <returns> An object representing collection of SmartGroupResources and their operations over a SmartGroupResource. </returns>
         public virtual SmartGroupCollection GetSmartGroups()
         {
-            return GetCachedClient(Client => new SmartGroupCollection(Client, Id));
+            return GetCachedClient(client => new SmartGroupCollection(client, Id));
         }
 
         /// <summary>

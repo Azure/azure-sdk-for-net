@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
         public virtual GraphServicesAccountResourceCollection GetGraphServicesAccountResources()
         {
-            return GetCachedClient(Client => new GraphServicesAccountResourceCollection(Client, Id));
+            return GetCachedClient(client => new GraphServicesAccountResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GraphServicesAccountResource> GetGraphServicesAccountResource(string resourceName, CancellationToken cancellationToken = default)
         {

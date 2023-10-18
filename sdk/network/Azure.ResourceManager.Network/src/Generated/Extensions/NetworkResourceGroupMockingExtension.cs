@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public virtual ApplicationGatewayCollection GetApplicationGateways()
         {
-            return GetCachedClient(Client => new ApplicationGatewayCollection(Client, Id));
+            return GetCachedClient(client => new ApplicationGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApplicationGatewayResource> GetApplicationGateway(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
         public virtual ApplicationSecurityGroupCollection GetApplicationSecurityGroups()
         {
-            return GetCachedClient(Client => new ApplicationSecurityGroupCollection(Client, Id));
+            return GetCachedClient(client => new ApplicationSecurityGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApplicationSecurityGroupResource> GetApplicationSecurityGroup(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
         public virtual AzureFirewallCollection GetAzureFirewalls()
         {
-            return GetCachedClient(Client => new AzureFirewallCollection(Client, Id));
+            return GetCachedClient(client => new AzureFirewallCollection(client, Id));
         }
 
         /// <summary>
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureFirewallResource>> GetAzureFirewallAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureFirewallResource> GetAzureFirewall(string azureFirewallName, CancellationToken cancellationToken = default)
         {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
         public virtual BastionHostCollection GetBastionHosts()
         {
-            return GetCachedClient(Client => new BastionHostCollection(Client, Id));
+            return GetCachedClient(client => new BastionHostCollection(client, Id));
         }
 
         /// <summary>
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BastionHostResource>> GetBastionHostAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BastionHostResource> GetBastionHost(string bastionHostName, CancellationToken cancellationToken = default)
         {
@@ -271,13 +271,11 @@ namespace Azure.ResourceManager.Network.Mocking
 
         /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
         public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return new CloudServiceSwapCollection(Client, Id, resourceName);
         }
 
@@ -296,8 +294,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -319,8 +317,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="resourceName"> The name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CloudServiceSwapResource> GetCloudServiceSwap(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -331,7 +329,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
-            return GetCachedClient(Client => new CustomIPPrefixCollection(Client, Id));
+            return GetCachedClient(client => new CustomIPPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -350,8 +348,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -374,8 +372,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -386,7 +384,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
         public virtual DdosCustomPolicyCollection GetDdosCustomPolicies()
         {
-            return GetCachedClient(Client => new DdosCustomPolicyCollection(Client, Id));
+            return GetCachedClient(client => new DdosCustomPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -404,8 +402,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DdosCustomPolicyResource>> GetDdosCustomPolicyAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
@@ -427,8 +425,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DdosCustomPolicyResource> GetDdosCustomPolicy(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
@@ -439,7 +437,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
         public virtual DdosProtectionPlanCollection GetDdosProtectionPlans()
         {
-            return GetCachedClient(Client => new DdosProtectionPlanCollection(Client, Id));
+            return GetCachedClient(client => new DdosProtectionPlanCollection(client, Id));
         }
 
         /// <summary>
@@ -457,8 +455,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DdosProtectionPlanResource>> GetDdosProtectionPlanAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -480,8 +478,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DdosProtectionPlanResource> GetDdosProtectionPlan(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
@@ -492,7 +490,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
         public virtual DscpConfigurationCollection GetDscpConfigurations()
         {
-            return GetCachedClient(Client => new DscpConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new DscpConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -510,8 +508,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -533,8 +531,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DscpConfigurationResource> GetDscpConfiguration(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -545,7 +543,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
         public virtual ExpressRouteCircuitCollection GetExpressRouteCircuits()
         {
-            return GetCachedClient(Client => new ExpressRouteCircuitCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteCircuitCollection(client, Id));
         }
 
         /// <summary>
@@ -563,8 +561,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitResource>> GetExpressRouteCircuitAsync(string circuitName, CancellationToken cancellationToken = default)
         {
@@ -586,8 +584,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitResource> GetExpressRouteCircuit(string circuitName, CancellationToken cancellationToken = default)
         {
@@ -598,7 +596,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public virtual ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections()
         {
-            return GetCachedClient(Client => new ExpressRouteCrossConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteCrossConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -616,8 +614,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCrossConnectionResource>> GetExpressRouteCrossConnectionAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
@@ -639,8 +637,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnection(string crossConnectionName, CancellationToken cancellationToken = default)
         {
@@ -651,7 +649,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
         public virtual ExpressRoutePortCollection GetExpressRoutePorts()
         {
-            return GetCachedClient(Client => new ExpressRoutePortCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRoutePortCollection(client, Id));
         }
 
         /// <summary>
@@ -669,8 +667,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRoutePortResource>> GetExpressRoutePortAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
@@ -692,8 +690,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortResource> GetExpressRoutePort(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
@@ -704,7 +702,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
         public virtual FirewallPolicyCollection GetFirewallPolicies()
         {
-            return GetCachedClient(Client => new FirewallPolicyCollection(Client, Id));
+            return GetCachedClient(client => new FirewallPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -723,8 +721,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -747,8 +745,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FirewallPolicyResource> GetFirewallPolicy(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -759,7 +757,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
         public virtual IPAllocationCollection GetIPAllocations()
         {
-            return GetCachedClient(Client => new IPAllocationCollection(Client, Id));
+            return GetCachedClient(client => new IPAllocationCollection(client, Id));
         }
 
         /// <summary>
@@ -778,8 +776,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IPAllocationResource>> GetIPAllocationAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -802,8 +800,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IPAllocationResource> GetIPAllocation(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -814,7 +812,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
         public virtual IPGroupCollection GetIPGroups()
         {
-            return GetCachedClient(Client => new IPGroupCollection(Client, Id));
+            return GetCachedClient(client => new IPGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -833,8 +831,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IPGroupResource>> GetIPGroupAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -857,8 +855,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IPGroupResource> GetIPGroup(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -869,7 +867,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
         public virtual LoadBalancerCollection GetLoadBalancers()
         {
-            return GetCachedClient(Client => new LoadBalancerCollection(Client, Id));
+            return GetCachedClient(client => new LoadBalancerCollection(client, Id));
         }
 
         /// <summary>
@@ -888,8 +886,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -912,8 +910,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LoadBalancerResource> GetLoadBalancer(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -924,7 +922,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
         public virtual NatGatewayCollection GetNatGateways()
         {
-            return GetCachedClient(Client => new NatGatewayCollection(Client, Id));
+            return GetCachedClient(client => new NatGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -943,8 +941,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NatGatewayResource>> GetNatGatewayAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -967,8 +965,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NatGatewayResource> GetNatGateway(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -979,7 +977,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public virtual NetworkInterfaceCollection GetNetworkInterfaces()
         {
-            return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
+            return GetCachedClient(client => new NetworkInterfaceCollection(client, Id));
         }
 
         /// <summary>
@@ -998,8 +996,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1022,8 +1020,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1034,7 +1032,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
         public virtual NetworkManagerCollection GetNetworkManagers()
         {
-            return GetCachedClient(Client => new NetworkManagerCollection(Client, Id));
+            return GetCachedClient(client => new NetworkManagerCollection(client, Id));
         }
 
         /// <summary>
@@ -1052,8 +1050,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(string networkManagerName, CancellationToken cancellationToken = default)
         {
@@ -1075,8 +1073,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkManagerResource> GetNetworkManager(string networkManagerName, CancellationToken cancellationToken = default)
         {
@@ -1087,7 +1085,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
         public virtual NetworkProfileCollection GetNetworkProfiles()
         {
-            return GetCachedClient(Client => new NetworkProfileCollection(Client, Id));
+            return GetCachedClient(client => new NetworkProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -1106,8 +1104,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1130,8 +1128,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkProfileResource> GetNetworkProfile(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1142,7 +1140,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
         public virtual NetworkSecurityGroupCollection GetNetworkSecurityGroups()
         {
-            return GetCachedClient(Client => new NetworkSecurityGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkSecurityGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -1161,8 +1159,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1185,8 +1183,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1197,7 +1195,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
         public virtual NetworkVirtualApplianceCollection GetNetworkVirtualAppliances()
         {
-            return GetCachedClient(Client => new NetworkVirtualApplianceCollection(Client, Id));
+            return GetCachedClient(client => new NetworkVirtualApplianceCollection(client, Id));
         }
 
         /// <summary>
@@ -1216,8 +1214,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1240,8 +1238,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1252,7 +1250,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
         public virtual NetworkWatcherCollection GetNetworkWatchers()
         {
-            return GetCachedClient(Client => new NetworkWatcherCollection(Client, Id));
+            return GetCachedClient(client => new NetworkWatcherCollection(client, Id));
         }
 
         /// <summary>
@@ -1270,8 +1268,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkWatcherResource>> GetNetworkWatcherAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
@@ -1293,8 +1291,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkWatcherResource> GetNetworkWatcher(string networkWatcherName, CancellationToken cancellationToken = default)
         {
@@ -1305,7 +1303,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
         public virtual PrivateEndpointCollection GetPrivateEndpoints()
         {
-            return GetCachedClient(Client => new PrivateEndpointCollection(Client, Id));
+            return GetCachedClient(client => new PrivateEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -1324,8 +1322,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1348,8 +1346,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PrivateEndpointResource> GetPrivateEndpoint(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1360,7 +1358,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
         public virtual PrivateLinkServiceCollection GetPrivateLinkServices()
         {
-            return GetCachedClient(Client => new PrivateLinkServiceCollection(Client, Id));
+            return GetCachedClient(client => new PrivateLinkServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -1379,8 +1377,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1403,8 +1401,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PrivateLinkServiceResource> GetPrivateLinkService(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1415,7 +1413,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
         public virtual PublicIPAddressCollection GetPublicIPAddresses()
         {
-            return GetCachedClient(Client => new PublicIPAddressCollection(Client, Id));
+            return GetCachedClient(client => new PublicIPAddressCollection(client, Id));
         }
 
         /// <summary>
@@ -1434,8 +1432,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1458,8 +1456,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1470,7 +1468,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
         public virtual PublicIPPrefixCollection GetPublicIPPrefixes()
         {
-            return GetCachedClient(Client => new PublicIPPrefixCollection(Client, Id));
+            return GetCachedClient(client => new PublicIPPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -1489,8 +1487,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1513,8 +1511,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1525,7 +1523,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
         public virtual RouteFilterCollection GetRouteFilters()
         {
-            return GetCachedClient(Client => new RouteFilterCollection(Client, Id));
+            return GetCachedClient(client => new RouteFilterCollection(client, Id));
         }
 
         /// <summary>
@@ -1544,8 +1542,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RouteFilterResource>> GetRouteFilterAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1568,8 +1566,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RouteFilterResource> GetRouteFilter(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1580,7 +1578,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
         public virtual RouteTableCollection GetRouteTables()
         {
-            return GetCachedClient(Client => new RouteTableCollection(Client, Id));
+            return GetCachedClient(client => new RouteTableCollection(client, Id));
         }
 
         /// <summary>
@@ -1599,8 +1597,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RouteTableResource>> GetRouteTableAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1623,8 +1621,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RouteTableResource> GetRouteTable(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1635,7 +1633,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
         public virtual SecurityPartnerProviderCollection GetSecurityPartnerProviders()
         {
-            return GetCachedClient(Client => new SecurityPartnerProviderCollection(Client, Id));
+            return GetCachedClient(client => new SecurityPartnerProviderCollection(client, Id));
         }
 
         /// <summary>
@@ -1653,8 +1651,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityPartnerProviderResource>> GetSecurityPartnerProviderAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
@@ -1676,8 +1674,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityPartnerProviderResource> GetSecurityPartnerProvider(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
@@ -1688,7 +1686,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
         public virtual ServiceEndpointPolicyCollection GetServiceEndpointPolicies()
         {
-            return GetCachedClient(Client => new ServiceEndpointPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ServiceEndpointPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -1707,8 +1705,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1731,8 +1729,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1743,7 +1741,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
-            return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -1762,8 +1760,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1786,8 +1784,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1798,7 +1796,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
         public virtual VirtualNetworkGatewayCollection GetVirtualNetworkGateways()
         {
-            return GetCachedClient(Client => new VirtualNetworkGatewayCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -1816,8 +1814,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkGatewayResource>> GetVirtualNetworkGatewayAsync(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
@@ -1839,8 +1837,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkGatewayResource> GetVirtualNetworkGateway(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
@@ -1851,7 +1849,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public virtual VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections()
         {
-            return GetCachedClient(Client => new VirtualNetworkGatewayConnectionCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkGatewayConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -1869,8 +1867,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkGatewayConnectionResource>> GetVirtualNetworkGatewayConnectionAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
@@ -1892,8 +1890,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkGatewayConnectionResource> GetVirtualNetworkGatewayConnection(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
@@ -1904,7 +1902,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
         public virtual LocalNetworkGatewayCollection GetLocalNetworkGateways()
         {
-            return GetCachedClient(Client => new LocalNetworkGatewayCollection(Client, Id));
+            return GetCachedClient(client => new LocalNetworkGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -1922,8 +1920,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalNetworkGatewayResource>> GetLocalNetworkGatewayAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
@@ -1945,8 +1943,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LocalNetworkGatewayResource> GetLocalNetworkGateway(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
@@ -1957,7 +1955,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
         public virtual VirtualNetworkTapCollection GetVirtualNetworkTaps()
         {
-            return GetCachedClient(Client => new VirtualNetworkTapCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkTapCollection(client, Id));
         }
 
         /// <summary>
@@ -1975,8 +1973,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkTapResource>> GetVirtualNetworkTapAsync(string tapName, CancellationToken cancellationToken = default)
         {
@@ -1998,8 +1996,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkTapResource> GetVirtualNetworkTap(string tapName, CancellationToken cancellationToken = default)
         {
@@ -2010,7 +2008,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
         public virtual VirtualRouterCollection GetVirtualRouters()
         {
-            return GetCachedClient(Client => new VirtualRouterCollection(Client, Id));
+            return GetCachedClient(client => new VirtualRouterCollection(client, Id));
         }
 
         /// <summary>
@@ -2029,8 +2027,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -2053,8 +2051,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualRouterResource> GetVirtualRouter(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -2065,7 +2063,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
         public virtual VirtualWanCollection GetVirtualWans()
         {
-            return GetCachedClient(Client => new VirtualWanCollection(Client, Id));
+            return GetCachedClient(client => new VirtualWanCollection(client, Id));
         }
 
         /// <summary>
@@ -2083,8 +2081,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
@@ -2106,8 +2104,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWanName, CancellationToken cancellationToken = default)
         {
@@ -2118,7 +2116,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
         public virtual VpnSiteCollection GetVpnSites()
         {
-            return GetCachedClient(Client => new VpnSiteCollection(Client, Id));
+            return GetCachedClient(client => new VpnSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -2136,8 +2134,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnSiteResource>> GetVpnSiteAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -2159,8 +2157,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnSiteResource> GetVpnSite(string vpnSiteName, CancellationToken cancellationToken = default)
         {
@@ -2171,7 +2169,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
         public virtual VpnServerConfigurationCollection GetVpnServerConfigurations()
         {
-            return GetCachedClient(Client => new VpnServerConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new VpnServerConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -2189,8 +2187,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnServerConfigurationResource>> GetVpnServerConfigurationAsync(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -2212,8 +2210,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnServerConfigurationResource> GetVpnServerConfiguration(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -2224,7 +2222,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
         public virtual VirtualHubCollection GetVirtualHubs()
         {
-            return GetCachedClient(Client => new VirtualHubCollection(Client, Id));
+            return GetCachedClient(client => new VirtualHubCollection(client, Id));
         }
 
         /// <summary>
@@ -2242,8 +2240,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualHubResource>> GetVirtualHubAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
@@ -2265,8 +2263,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualHubResource> GetVirtualHub(string virtualHubName, CancellationToken cancellationToken = default)
         {
@@ -2277,7 +2275,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
         public virtual VpnGatewayCollection GetVpnGateways()
         {
-            return GetCachedClient(Client => new VpnGatewayCollection(Client, Id));
+            return GetCachedClient(client => new VpnGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -2295,8 +2293,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnGatewayResource>> GetVpnGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -2318,8 +2316,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnGatewayResource> GetVpnGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -2330,7 +2328,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
         public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
         {
-            return GetCachedClient(Client => new P2SVpnGatewayCollection(Client, Id));
+            return GetCachedClient(client => new P2SVpnGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -2348,8 +2346,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -2371,8 +2369,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<P2SVpnGatewayResource> GetP2SVpnGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -2383,7 +2381,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
         public virtual ExpressRouteGatewayCollection GetExpressRouteGateways()
         {
-            return GetCachedClient(Client => new ExpressRouteGatewayCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -2401,8 +2399,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
@@ -2424,8 +2422,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteGatewayResource> GetExpressRouteGateway(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
@@ -2436,7 +2434,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public virtual WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies()
         {
-            return GetCachedClient(Client => new WebApplicationFirewallPolicyCollection(Client, Id));
+            return GetCachedClient(client => new WebApplicationFirewallPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -2454,8 +2452,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -2477,8 +2475,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         }
 
         /// <summary> Gets a collection of PolicyRemediationResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of PolicyRemediationResources and their operations over a PolicyRemediationResource. </returns>
         public virtual PolicyRemediationCollection GetPolicyRemediations(ResourceIdentifier scope)
         {
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PolicyRemediationResource> GetPolicyRemediation(ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         }
 
         /// <summary> Gets a collection of PolicyAttestationResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of PolicyAttestationResources and their operations over a PolicyAttestationResource. </returns>
         public virtual PolicyAttestationCollection GetPolicyAttestations(ResourceIdentifier scope)
         {
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PolicyAttestationResource> GetPolicyAttestation(ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {

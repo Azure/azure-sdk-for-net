@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> An object representing collection of LogAnalyticsQueryPackResources and their operations over a LogAnalyticsQueryPackResource. </returns>
         public virtual LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks()
         {
-            return GetCachedClient(Client => new LogAnalyticsQueryPackCollection(Client, Id));
+            return GetCachedClient(client => new LogAnalyticsQueryPackCollection(client, Id));
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(string queryPackName, CancellationToken cancellationToken = default)
         {
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(string queryPackName, CancellationToken cancellationToken = default)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
         public virtual OperationalInsightsClusterCollection GetOperationalInsightsClusters()
         {
-            return GetCachedClient(Client => new OperationalInsightsClusterCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
         public virtual OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces()
         {
-            return GetCachedClient(Client => new OperationalInsightsWorkspaceCollection(Client, Id));
+            return GetCachedClient(client => new OperationalInsightsWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {

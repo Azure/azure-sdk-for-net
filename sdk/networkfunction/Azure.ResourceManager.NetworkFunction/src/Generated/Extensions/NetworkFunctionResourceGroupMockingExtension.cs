@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public virtual AzureTrafficCollectorCollection GetAzureTrafficCollectors()
         {
-            return GetCachedClient(Client => new AzureTrafficCollectorCollection(Client, Id));
+            return GetCachedClient(client => new AzureTrafficCollectorCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// </summary>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// </summary>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureTrafficCollectorResource> GetAzureTrafficCollector(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {

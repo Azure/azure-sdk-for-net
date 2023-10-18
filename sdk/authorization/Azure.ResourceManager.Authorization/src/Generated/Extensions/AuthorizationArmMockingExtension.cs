@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
         public virtual DenyAssignmentCollection GetDenyAssignments()
         {
-            return GetCachedClient(Client => new DenyAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new DenyAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DenyAssignmentResource> GetDenyAssignment(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
         public virtual RoleAssignmentCollection GetRoleAssignments()
         {
-            return GetCachedClient(Client => new RoleAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new RoleAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
         public virtual AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions()
         {
-            return GetCachedClient(Client => new AuthorizationRoleDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new AuthorizationRoleDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
         public virtual RoleAssignmentScheduleCollection GetRoleAssignmentSchedules()
         {
-            return GetCachedClient(Client => new RoleAssignmentScheduleCollection(Client, Id));
+            return GetCachedClient(client => new RoleAssignmentScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
         public virtual RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances()
         {
-            return GetCachedClient(Client => new RoleAssignmentScheduleInstanceCollection(Client, Id));
+            return GetCachedClient(client => new RoleAssignmentScheduleInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
         public virtual RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests()
         {
-            return GetCachedClient(Client => new RoleAssignmentScheduleRequestCollection(Client, Id));
+            return GetCachedClient(client => new RoleAssignmentScheduleRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
         {
@@ -344,8 +344,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
         {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
         public virtual RoleEligibilityScheduleCollection GetRoleEligibilitySchedules()
         {
-            return GetCachedClient(Client => new RoleEligibilityScheduleCollection(Client, Id));
+            return GetCachedClient(client => new RoleEligibilityScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -374,8 +374,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
         {
@@ -397,8 +397,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
         {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
         public virtual RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances()
         {
-            return GetCachedClient(Client => new RoleEligibilityScheduleInstanceCollection(Client, Id));
+            return GetCachedClient(client => new RoleEligibilityScheduleInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -427,8 +427,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
         public virtual RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests()
         {
-            return GetCachedClient(Client => new RoleEligibilityScheduleRequestCollection(Client, Id));
+            return GetCachedClient(client => new RoleEligibilityScheduleRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -480,8 +480,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
@@ -503,8 +503,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
         public virtual RoleManagementPolicyCollection GetRoleManagementPolicies()
         {
-            return GetCachedClient(Client => new RoleManagementPolicyCollection(Client, Id));
+            return GetCachedClient(client => new RoleManagementPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
@@ -556,8 +556,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleManagementPolicyResource> GetRoleManagementPolicy(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
         public virtual RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments()
         {
-            return GetCachedClient(Client => new RoleManagementPolicyAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new RoleManagementPolicyAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -586,8 +586,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -609,8 +609,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
         public virtual SecurityCenterPricingCollection GetSecurityCenterPricings()
         {
-            return GetCachedClient(Client => new SecurityCenterPricingCollection(Client, Id));
+            return GetCachedClient(client => new SecurityCenterPricingCollection(client, Id));
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(string pricingName, CancellationToken cancellationToken = default)
         {
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityCenterPricingResource> GetSecurityCenterPricing(string pricingName, CancellationToken cancellationToken = default)
         {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
         public virtual SecurityCenterLocationCollection GetSecurityCenterLocations()
         {
-            return GetCachedClient(Client => new SecurityCenterLocationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityCenterLocationCollection(client, Id));
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of AutoProvisioningSettingResources and their operations over a AutoProvisioningSettingResource. </returns>
         public virtual AutoProvisioningSettingCollection GetAutoProvisioningSettings()
         {
-            return GetCachedClient(Client => new AutoProvisioningSettingCollection(Client, Id));
+            return GetCachedClient(client => new AutoProvisioningSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutoProvisioningSettingResource>> GetAutoProvisioningSettingAsync(string settingName, CancellationToken cancellationToken = default)
         {
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutoProvisioningSettingResource> GetAutoProvisioningSetting(string settingName, CancellationToken cancellationToken = default)
         {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityContactResources and their operations over a SecurityContactResource. </returns>
         public virtual SecurityContactCollection GetSecurityContacts()
         {
-            return GetCachedClient(Client => new SecurityContactCollection(Client, Id));
+            return GetCachedClient(client => new SecurityContactCollection(client, Id));
         }
 
         /// <summary>
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityContactResource>> GetSecurityContactAsync(string securityContactName, CancellationToken cancellationToken = default)
         {
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="securityContactName"> Name of the security contact object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityContactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityContactResource> GetSecurityContact(string securityContactName, CancellationToken cancellationToken = default)
         {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityWorkspaceSettingResources and their operations over a SecurityWorkspaceSettingResource. </returns>
         public virtual SecurityWorkspaceSettingCollection GetSecurityWorkspaceSettings()
         {
-            return GetCachedClient(Client => new SecurityWorkspaceSettingCollection(Client, Id));
+            return GetCachedClient(client => new SecurityWorkspaceSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityWorkspaceSettingResource>> GetSecurityWorkspaceSettingAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityWorkspaceSettingResource> GetSecurityWorkspaceSetting(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of RegulatoryComplianceStandardResources and their operations over a RegulatoryComplianceStandardResource. </returns>
         public virtual RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards()
         {
-            return GetCachedClient(Client => new RegulatoryComplianceStandardCollection(Client, Id));
+            return GetCachedClient(client => new RegulatoryComplianceStandardCollection(client, Id));
         }
 
         /// <summary>
@@ -400,8 +400,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="regulatoryComplianceStandardName"> Name of the regulatory compliance standard object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceStandardName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RegulatoryComplianceStandardResource> GetRegulatoryComplianceStandard(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityAlertsSuppressionRuleResources and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
         public virtual SecurityAlertsSuppressionRuleCollection GetSecurityAlertsSuppressionRules()
         {
-            return GetCachedClient(Client => new SecurityAlertsSuppressionRuleCollection(Client, Id));
+            return GetCachedClient(client => new SecurityAlertsSuppressionRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -453,8 +453,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityAlertsSuppressionRuleResource>> GetSecurityAlertsSuppressionRuleAsync(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
@@ -476,8 +476,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertsSuppressionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityAlertsSuppressionRuleResource> GetSecurityAlertsSuppressionRule(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SubscriptionAssessmentMetadataResources and their operations over a SubscriptionAssessmentMetadataResource. </returns>
         public virtual SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata()
         {
-            return GetCachedClient(Client => new SubscriptionAssessmentMetadataCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionAssessmentMetadataCollection(client, Id));
         }
 
         /// <summary>
@@ -506,8 +506,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
@@ -529,8 +529,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
         public virtual SecureScoreCollection GetSecureScores()
         {
-            return GetCachedClient(Client => new SecureScoreCollection(Client, Id));
+            return GetCachedClient(client => new SecureScoreCollection(client, Id));
         }
 
         /// <summary>
@@ -559,8 +559,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecureScoreResource>> GetSecureScoreAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
@@ -582,8 +582,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecureScoreResource> GetSecureScore(string secureScoreName, CancellationToken cancellationToken = default)
         {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityCloudConnectorResources and their operations over a SecurityCloudConnectorResource. </returns>
         public virtual SecurityCloudConnectorCollection GetSecurityCloudConnectors()
         {
-            return GetCachedClient(Client => new SecurityCloudConnectorCollection(Client, Id));
+            return GetCachedClient(client => new SecurityCloudConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -612,8 +612,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
@@ -635,8 +635,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(string connectorName, CancellationToken cancellationToken = default)
         {
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
         public virtual SecuritySettingCollection GetSecuritySettings()
         {
-            return GetCachedClient(Client => new SecuritySettingCollection(Client, Id));
+            return GetCachedClient(client => new SecuritySettingCollection(client, Id));
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of IngestionSettingResources and their operations over a IngestionSettingResource. </returns>
         public virtual IngestionSettingCollection GetIngestionSettings()
         {
-            return GetCachedClient(Client => new IngestionSettingCollection(Client, Id));
+            return GetCachedClient(client => new IngestionSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -714,8 +714,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IngestionSettingResource>> GetIngestionSettingAsync(string ingestionSettingName, CancellationToken cancellationToken = default)
         {
@@ -737,8 +737,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="ingestionSettingName"> Name of the ingestion setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ingestionSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ingestionSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IngestionSettingResource> GetIngestionSetting(string ingestionSettingName, CancellationToken cancellationToken = default)
         {
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SubscriptionSecurityApplicationResources and their operations over a SubscriptionSecurityApplicationResource. </returns>
         public virtual SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications()
         {
-            return GetCachedClient(Client => new SubscriptionSecurityApplicationCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionSecurityApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -767,8 +767,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
         {
@@ -790,8 +790,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(string applicationId, CancellationToken cancellationToken = default)
         {

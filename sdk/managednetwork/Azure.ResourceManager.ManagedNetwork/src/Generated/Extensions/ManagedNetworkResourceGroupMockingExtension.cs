@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
         public virtual ManagedNetworkCollection GetManagedNetworks()
         {
-            return GetCachedClient(Client => new ManagedNetworkCollection(Client, Id));
+            return GetCachedClient(client => new ManagedNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// </summary>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// </summary>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedNetworkResource> GetManagedNetwork(string managedNetworkName, CancellationToken cancellationToken = default)
         {

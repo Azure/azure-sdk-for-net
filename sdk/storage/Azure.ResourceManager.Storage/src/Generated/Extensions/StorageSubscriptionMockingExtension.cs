@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public virtual DeletedAccountCollection GetDeletedAccounts()
         {
-            return GetCachedClient(Client => new DeletedAccountCollection(Client, Id));
+            return GetCachedClient(client => new DeletedAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeletedAccountResource> GetDeletedAccount(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {

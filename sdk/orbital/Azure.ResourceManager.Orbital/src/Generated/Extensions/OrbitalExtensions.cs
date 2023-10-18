@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.Orbital
     {
         private static OrbitalArmClientMockingExtension GetOrbitalArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new OrbitalArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new OrbitalArmClientMockingExtension(client0));
         }
 
         private static OrbitalResourceGroupMockingExtension GetOrbitalResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new OrbitalResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new OrbitalResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static OrbitalSubscriptionMockingExtension GetOrbitalSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new OrbitalSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new OrbitalSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing an <see cref="OrbitalSpacecraftResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OrbitalSpacecraftResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalSpacecraftResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalSpacecraftResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -58,6 +53,10 @@ namespace Azure.ResourceManager.Orbital
         /// <summary>
         /// Gets an object representing an <see cref="OrbitalContactResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OrbitalContactResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalContactResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -70,6 +69,10 @@ namespace Azure.ResourceManager.Orbital
         /// <summary>
         /// Gets an object representing an <see cref="OrbitalContactProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OrbitalContactProfileResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalContactProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -82,6 +85,10 @@ namespace Azure.ResourceManager.Orbital
         /// <summary>
         /// Gets an object representing an <see cref="AvailableGroundStationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvailableGroundStationResource.CreateResourceIdentifier" /> to create an <see cref="AvailableGroundStationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetAvailableGroundStationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -91,7 +98,13 @@ namespace Azure.ResourceManager.Orbital
             return GetOrbitalArmClientMockingExtension(client).GetAvailableGroundStationResource(id);
         }
 
-        /// <summary> Gets a collection of OrbitalSpacecraftResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of OrbitalSpacecraftResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecrafts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
         public static OrbitalSpacecraftCollection GetOrbitalSpacecrafts(this ResourceGroupResource resourceGroupResource)
@@ -111,12 +124,16 @@ namespace Azure.ResourceManager.Orbital
         /// <description>Spacecrafts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecraftAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
@@ -135,19 +152,29 @@ namespace Azure.ResourceManager.Orbital
         /// <description>Spacecrafts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecraft(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<OrbitalSpacecraftResource> GetOrbitalSpacecraft(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
             return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecraft(spacecraftName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfiles()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
         public static OrbitalContactProfileCollection GetOrbitalContactProfiles(this ResourceGroupResource resourceGroupResource)
@@ -167,12 +194,16 @@ namespace Azure.ResourceManager.Orbital
         /// <description>ContactProfiles_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="contactProfileName"> Contact Profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
@@ -191,19 +222,29 @@ namespace Azure.ResourceManager.Orbital
         /// <description>ContactProfiles_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfile(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="contactProfileName"> Contact Profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<OrbitalContactProfileResource> GetOrbitalContactProfile(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
             return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfile(contactProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AvailableGroundStationResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of AvailableGroundStationResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvailableGroundStationResources and their operations over a AvailableGroundStationResource. </returns>
         public static AvailableGroundStationCollection GetAvailableGroundStations(this SubscriptionResource subscriptionResource)
@@ -223,12 +264,16 @@ namespace Azure.ResourceManager.Orbital
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="groundStationName"> Ground Station name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AvailableGroundStationResource>> GetAvailableGroundStationAsync(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
@@ -247,12 +292,16 @@ namespace Azure.ResourceManager.Orbital
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStation(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="groundStationName"> Ground Station name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AvailableGroundStationResource> GetAvailableGroundStation(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
@@ -271,6 +320,10 @@ namespace Azure.ResourceManager.Orbital
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -293,6 +346,10 @@ namespace Azure.ResourceManager.Orbital
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -315,6 +372,10 @@ namespace Azure.ResourceManager.Orbital
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -337,6 +398,10 @@ namespace Azure.ResourceManager.Orbital
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>

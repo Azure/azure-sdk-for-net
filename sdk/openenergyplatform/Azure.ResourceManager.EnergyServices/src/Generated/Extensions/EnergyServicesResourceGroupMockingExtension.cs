@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <returns> An object representing collection of EnergyServiceResources and their operations over a EnergyServiceResource. </returns>
         public virtual EnergyServiceCollection GetEnergyServices()
         {
-            return GetCachedClient(Client => new EnergyServiceCollection(Client, Id));
+            return GetCachedClient(client => new EnergyServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// </summary>
         /// <param name="resourceName"> The resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EnergyServiceResource>> GetEnergyServiceAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// </summary>
         /// <param name="resourceName"> The resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EnergyServiceResource> GetEnergyService(string resourceName, CancellationToken cancellationToken = default)
         {

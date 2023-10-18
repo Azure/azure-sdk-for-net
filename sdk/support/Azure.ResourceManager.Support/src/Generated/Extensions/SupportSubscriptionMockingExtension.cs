@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
         public virtual SupportTicketCollection GetSupportTickets()
         {
-            return GetCachedClient(Client => new SupportTicketCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketResource>> GetSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketResource> GetSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
         {

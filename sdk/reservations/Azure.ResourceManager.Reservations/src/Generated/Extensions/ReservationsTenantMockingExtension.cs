@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
         public virtual ReservationOrderCollection GetReservationOrders()
         {
-            return GetCachedClient(Client => new ReservationOrderCollection(Client, Id));
+            return GetCachedClient(client => new ReservationOrderCollection(client, Id));
         }
 
         /// <summary>

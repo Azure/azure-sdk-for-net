@@ -46,13 +46,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         /// <summary> Gets a collection of TargetTypeResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of TargetTypeResources and their operations over a TargetTypeResource. </returns>
         public virtual TargetTypeCollection GetTargetTypes(string locationName)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return new TargetTypeCollection(Client, Id, locationName);
         }
 
@@ -72,8 +70,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="locationName"> String that represents a Location resource name. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TargetTypeResource>> GetTargetTypeAsync(string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
@@ -96,8 +94,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="locationName"> String that represents a Location resource name. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TargetTypeResource> GetTargetType(string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {

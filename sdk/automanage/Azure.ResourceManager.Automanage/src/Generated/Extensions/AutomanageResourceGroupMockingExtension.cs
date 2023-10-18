@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
         public virtual AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles()
         {
-            return GetCachedClient(Client => new AutomanageConfigurationProfileCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageConfigurationProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </summary>
         /// <param name="configurationProfileName"> The configuration profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(string configurationProfileName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </summary>
         /// <param name="configurationProfileName"> The configuration profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(string configurationProfileName, CancellationToken cancellationToken = default)
         {

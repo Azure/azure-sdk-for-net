@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <returns> An object representing collection of StreamingJobResources and their operations over a StreamingJobResource. </returns>
         public virtual StreamingJobCollection GetStreamingJobs()
         {
-            return GetCachedClient(Client => new StreamingJobCollection(Client, Id));
+            return GetCachedClient(client => new StreamingJobCollection(client, Id));
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingJobResource>> GetStreamingJobAsync(string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingJobResource> GetStreamingJob(string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
         public virtual StreamAnalyticsClusterCollection GetStreamAnalyticsClusters()
         {
-            return GetCachedClient(Client => new StreamAnalyticsClusterCollection(Client, Id));
+            return GetCachedClient(client => new StreamAnalyticsClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(string clusterName, CancellationToken cancellationToken = default)
         {

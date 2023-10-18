@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
         public virtual LoadTestingResourceCollection GetLoadTestingResources()
         {
-            return GetCachedClient(Client => new LoadTestingResourceCollection(Client, Id));
+            return GetCachedClient(client => new LoadTestingResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LoadTestingResource> GetLoadTestingResource(string loadTestName, CancellationToken cancellationToken = default)
         {

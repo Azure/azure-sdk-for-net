@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
         public virtual HybridComputeMachineCollection GetHybridComputeMachines()
         {
-            return GetCachedClient(Client => new HybridComputeMachineCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputeMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="machineName"> The name of the hybrid machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="machineName"> The name of the hybrid machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> An object representing collection of HybridComputePrivateLinkScopeResources and their operations over a HybridComputePrivateLinkScopeResource. </returns>
         public virtual HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes()
         {
-            return GetCachedClient(Client => new HybridComputePrivateLinkScopeCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputePrivateLinkScopeCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputePrivateLinkScopeResource>> GetHybridComputePrivateLinkScopeAsync(string scopeName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(string scopeName, CancellationToken cancellationToken = default)
         {

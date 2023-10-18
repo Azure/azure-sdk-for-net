@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
         public virtual LogicWorkflowCollection GetLogicWorkflows()
         {
-            return GetCachedClient(Client => new LogicWorkflowCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowCollection(client, Id));
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowResource>> GetLogicWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
         {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowResource> GetLogicWorkflow(string workflowName, CancellationToken cancellationToken = default)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <returns> An object representing collection of IntegrationAccountResources and their operations over a IntegrationAccountResource. </returns>
         public virtual IntegrationAccountCollection GetIntegrationAccounts()
         {
-            return GetCachedClient(Client => new IntegrationAccountCollection(Client, Id));
+            return GetCachedClient(client => new IntegrationAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="integrationAccountName"> The integration account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IntegrationAccountResource>> GetIntegrationAccountAsync(string integrationAccountName, CancellationToken cancellationToken = default)
         {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="integrationAccountName"> The integration account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IntegrationAccountResource> GetIntegrationAccount(string integrationAccountName, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <returns> An object representing collection of IntegrationServiceEnvironmentResources and their operations over a IntegrationServiceEnvironmentResource. </returns>
         public virtual IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments()
         {
-            return GetCachedClient(Client => new IntegrationServiceEnvironmentCollection(Client, Id));
+            return GetCachedClient(client => new IntegrationServiceEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IntegrationServiceEnvironmentResource>> GetIntegrationServiceEnvironmentAsync(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironment(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {

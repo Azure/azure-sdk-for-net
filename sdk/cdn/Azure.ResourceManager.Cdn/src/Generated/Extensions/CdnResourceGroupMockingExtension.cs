@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public virtual ProfileCollection GetProfiles()
         {
-            return GetCachedClient(Client => new ProfileCollection(Client, Id));
+            return GetCachedClient(client => new ProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProfileResource>> GetProfileAsync(string profileName, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProfileResource> GetProfile(string profileName, CancellationToken cancellationToken = default)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public virtual CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies()
         {
-            return GetCachedClient(Client => new CdnWebApplicationFirewallPolicyCollection(Client, Id));
+            return GetCachedClient(client => new CdnWebApplicationFirewallPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {

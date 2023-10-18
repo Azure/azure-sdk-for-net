@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
         public virtual TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews()
         {
-            return GetCachedClient(Client => new TenantsCostManagementViewsCollection(Client, Id));
+            return GetCachedClient(client => new TenantsCostManagementViewsCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(string viewName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(string viewName, CancellationToken cancellationToken = default)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
         public virtual TenantScheduledActionCollection GetTenantScheduledActions()
         {
-            return GetCachedClient(Client => new TenantScheduledActionCollection(Client, Id));
+            return GetCachedClient(client => new TenantScheduledActionCollection(client, Id));
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantScheduledActionResource> GetTenantScheduledAction(string name, CancellationToken cancellationToken = default)
         {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An object representing collection of PolicyMetadataResources and their operations over a PolicyMetadataResource. </returns>
         public virtual PolicyMetadataCollection GetAllPolicyMetadata()
         {
-            return GetCachedClient(Client => new PolicyMetadataCollection(Client, Id));
+            return GetCachedClient(client => new PolicyMetadataCollection(client, Id));
         }
 
         /// <summary>

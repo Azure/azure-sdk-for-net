@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
         public virtual HealthBotCollection GetHealthBots()
         {
-            return GetCachedClient(Client => new HealthBotCollection(Client, Id));
+            return GetCachedClient(client => new HealthBotCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthBotResource>> GetHealthBotAsync(string botName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthBotResource> GetHealthBot(string botName, CancellationToken cancellationToken = default)
         {

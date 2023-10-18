@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         private static DataLakeStoreArmClientMockingExtension GetDataLakeStoreArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new DataLakeStoreArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new DataLakeStoreArmClientMockingExtension(client0));
         }
 
         private static DataLakeStoreResourceGroupMockingExtension GetDataLakeStoreResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataLakeStoreResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataLakeStoreResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static DataLakeStoreSubscriptionMockingExtension GetDataLakeStoreSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataLakeStoreSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataLakeStoreSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -71,6 +70,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreVirtualNetworkRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -83,6 +86,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeStoreTrustedIdProviderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataLakeStoreTrustedIdProviderResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreTrustedIdProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreArmClientMockingExtension.GetDataLakeStoreTrustedIdProviderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -92,7 +99,13 @@ namespace Azure.ResourceManager.DataLakeStore
             return GetDataLakeStoreArmClientMockingExtension(client).GetDataLakeStoreTrustedIdProviderResource(id);
         }
 
-        /// <summary> Gets a collection of DataLakeStoreAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataLakeStoreAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataLakeStoreAccountResources and their operations over a DataLakeStoreAccountResource. </returns>
         public static DataLakeStoreAccountCollection GetDataLakeStoreAccounts(this ResourceGroupResource resourceGroupResource)
@@ -112,12 +125,16 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeStoreAccountResource>> GetDataLakeStoreAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -136,12 +153,16 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreResourceGroupMockingExtension.GetDataLakeStoreAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataLakeStoreAccountResource> GetDataLakeStoreAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -160,6 +181,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -182,6 +207,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -204,6 +233,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.CheckDataLakeStoreAccountNameAvailability(AzureLocation,DataLakeStoreAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -227,6 +260,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.CheckDataLakeStoreAccountNameAvailability(AzureLocation,DataLakeStoreAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -250,6 +287,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetCapability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetCapabilityByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -271,6 +312,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetCapability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetCapabilityByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -292,6 +337,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetUsage</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -314,6 +363,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <description>Locations_GetUsage</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataLakeStoreSubscriptionMockingExtension.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>

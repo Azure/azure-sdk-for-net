@@ -341,9 +341,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("NetAppSubscriptionMockingExtension.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -373,9 +376,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("NetAppSubscriptionMockingExtension.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -406,9 +412,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("NetAppSubscriptionMockingExtension.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -442,9 +451,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("NetAppSubscriptionMockingExtension.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {

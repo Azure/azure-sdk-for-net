@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
         public virtual AppServiceCertificateOrderCollection GetAppServiceCertificateOrders()
         {
-            return GetCachedClient(Client => new AppServiceCertificateOrderCollection(Client, Id));
+            return GetCachedClient(client => new AppServiceCertificateOrderCollection(client, Id));
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(string certificateOrderName, CancellationToken cancellationToken = default)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
         public virtual AppServiceDomainCollection GetAppServiceDomains()
         {
-            return GetCachedClient(Client => new AppServiceDomainCollection(Client, Id));
+            return GetCachedClient(client => new AppServiceDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServiceDomainResource> GetAppServiceDomain(string domainName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
         public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
-            return GetCachedClient(Client => new AppServiceEnvironmentCollection(Client, Id));
+            return GetCachedClient(client => new AppServiceEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(string name, CancellationToken cancellationToken = default)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
         public virtual AppServicePlanCollection GetAppServicePlans()
         {
-            return GetCachedClient(Client => new AppServicePlanCollection(Client, Id));
+            return GetCachedClient(client => new AppServicePlanCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServicePlanResource> GetAppServicePlan(string name, CancellationToken cancellationToken = default)
         {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
         public virtual AppCertificateCollection GetAppCertificates()
         {
-            return GetCachedClient(Client => new AppCertificateCollection(Client, Id));
+            return GetCachedClient(client => new AppCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppCertificateResource>> GetAppCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppCertificateResource> GetAppCertificate(string name, CancellationToken cancellationToken = default)
         {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public virtual KubeEnvironmentCollection GetKubeEnvironments()
         {
-            return GetCachedClient(Client => new KubeEnvironmentCollection(Client, Id));
+            return GetCachedClient(client => new KubeEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -359,8 +359,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KubeEnvironmentResource> GetKubeEnvironment(string name, CancellationToken cancellationToken = default)
         {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
         public virtual StaticSiteCollection GetStaticSites()
         {
-            return GetCachedClient(Client => new StaticSiteCollection(Client, Id));
+            return GetCachedClient(client => new StaticSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -389,8 +389,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteResource>> GetStaticSiteAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -412,8 +412,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StaticSiteResource> GetStaticSite(string name, CancellationToken cancellationToken = default)
         {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
         public virtual WebSiteCollection GetWebSites()
         {
-            return GetCachedClient(Client => new WebSiteCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -442,8 +442,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteResource>> GetWebSiteAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -465,8 +465,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteResource> GetWebSite(string name, CancellationToken cancellationToken = default)
         {

@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
         public virtual AzureWebCategoryCollection GetAzureWebCategories()
         {
-            return GetCachedClient(Client => new AzureWebCategoryCollection(Client, Id));
+            return GetCachedClient(client => new AzureWebCategoryCollection(client, Id));
         }
 
         /// <summary>
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureWebCategoryResource>> GetAzureWebCategoryAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureWebCategoryResource> GetAzureWebCategory(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRouteProviderPortResources and their operations over a ExpressRouteProviderPortResource. </returns>
         public virtual ExpressRouteProviderPortCollection GetExpressRouteProviderPorts()
         {
-            return GetCachedClient(Client => new ExpressRouteProviderPortCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteProviderPortCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteProviderPortResource>> GetExpressRouteProviderPortAsync(string providerport, CancellationToken cancellationToken = default)
         {
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteProviderPortResource> GetExpressRouteProviderPort(string providerport, CancellationToken cancellationToken = default)
         {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
         {
-            return GetCachedClient(Client => new ExpressRoutePortsLocationCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRoutePortsLocationCollection(client, Id));
         }
 
         /// <summary>
@@ -429,8 +429,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRoutePortsLocationResource>> GetExpressRoutePortsLocationAsync(string locationName, CancellationToken cancellationToken = default)
         {
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortsLocationResource> GetExpressRoutePortsLocation(string locationName, CancellationToken cancellationToken = default)
         {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of SubscriptionNetworkManagerConnectionResources and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
         public virtual SubscriptionNetworkManagerConnectionCollection GetSubscriptionNetworkManagerConnections()
         {
-            return GetCachedClient(Client => new SubscriptionNetworkManagerConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionNetworkManagerConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -482,8 +482,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionNetworkManagerConnectionResource>> GetSubscriptionNetworkManagerConnectionAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionNetworkManagerConnectionResource> GetSubscriptionNetworkManagerConnection(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
         {
-            return GetCachedClient(Client => new NetworkVirtualApplianceSkuCollection(Client, Id));
+            return GetCachedClient(client => new NetworkVirtualApplianceSkuCollection(client, Id));
         }
 
         /// <summary>
@@ -535,8 +535,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> GetNetworkVirtualApplianceSkuAsync(string skuName, CancellationToken cancellationToken = default)
         {
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(string skuName, CancellationToken cancellationToken = default)
         {

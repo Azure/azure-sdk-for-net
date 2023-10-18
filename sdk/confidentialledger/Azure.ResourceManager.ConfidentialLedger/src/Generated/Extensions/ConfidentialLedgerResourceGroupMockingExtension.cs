@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <returns> An object representing collection of ConfidentialLedgerResources and their operations over a ConfidentialLedgerResource. </returns>
         public virtual ConfidentialLedgerCollection GetConfidentialLedgers()
         {
-            return GetCachedClient(Client => new ConfidentialLedgerCollection(Client, Id));
+            return GetCachedClient(client => new ConfidentialLedgerCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </summary>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConfidentialLedgerResource>> GetConfidentialLedgerAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </summary>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConfidentialLedgerResource> GetConfidentialLedger(string ledgerName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <returns> An object representing collection of ManagedCcfResources and their operations over a ManagedCcfResource. </returns>
         public virtual ManagedCcfCollection GetManagedCcfs()
         {
-            return GetCachedClient(Client => new ManagedCcfCollection(Client, Id));
+            return GetCachedClient(client => new ManagedCcfCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </summary>
         /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedCcfResource>> GetManagedCcfAsync(string appName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </summary>
         /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedCcfResource> GetManagedCcf(string appName, CancellationToken cancellationToken = default)
         {

@@ -23,45 +23,36 @@ namespace Azure.ResourceManager.PolicyInsights
     {
         private static PolicyInsightsArmClientMockingExtension GetPolicyInsightsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new PolicyInsightsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new PolicyInsightsArmClientMockingExtension(client0));
         }
 
         private static PolicyInsightsManagementGroupMockingExtension GetPolicyInsightsManagementGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new PolicyInsightsManagementGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new PolicyInsightsManagementGroupMockingExtension(client, resource.Id));
         }
 
         private static PolicyInsightsResourceGroupMockingExtension GetPolicyInsightsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new PolicyInsightsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new PolicyInsightsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static PolicyInsightsSubscriptionMockingExtension GetPolicyInsightsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new PolicyInsightsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new PolicyInsightsSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static PolicyInsightsTenantMockingExtension GetPolicyInsightsTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new PolicyInsightsTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new PolicyInsightsTenantMockingExtension(client, resource.Id));
         }
 
-        /// <summary> Gets a collection of PolicyRemediationResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of PolicyRemediationResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyRemediations(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of PolicyRemediationResources and their operations over a PolicyRemediationResource. </returns>
@@ -69,6 +60,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             return GetPolicyInsightsArmClientMockingExtension(client).GetPolicyRemediations(scope);
         }
+
         /// <summary>
         /// Gets an existing remediation at resource scope.
         /// <list type="bullet">
@@ -81,18 +73,23 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>Remediations_GetAtResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyRemediationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
             return await GetPolicyInsightsArmClientMockingExtension(client).GetPolicyRemediationAsync(scope, remediationName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Gets an existing remediation at resource scope.
         /// <list type="bullet">
@@ -105,20 +102,30 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>Remediations_GetAtResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyRemediation(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PolicyRemediationResource> GetPolicyRemediation(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
             return GetPolicyInsightsArmClientMockingExtension(client).GetPolicyRemediation(scope, remediationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PolicyAttestationResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of PolicyAttestationResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyAttestations(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of PolicyAttestationResources and their operations over a PolicyAttestationResource. </returns>
@@ -126,6 +133,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             return GetPolicyInsightsArmClientMockingExtension(client).GetPolicyAttestations(scope);
         }
+
         /// <summary>
         /// Gets an existing attestation at resource scope.
         /// <list type="bullet">
@@ -138,18 +146,23 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>Attestations_GetAtResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyAttestationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
             return await GetPolicyInsightsArmClientMockingExtension(client).GetPolicyAttestationAsync(scope, attestationName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Gets an existing attestation at resource scope.
         /// <list type="bullet">
@@ -162,13 +175,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>Attestations_GetAtResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyAttestation(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PolicyAttestationResource> GetPolicyAttestation(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
@@ -187,6 +204,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyTrackedResourceQueryResults(ResourceIdentifier,PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -210,6 +231,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyTrackedResourceQueryResults(ResourceIdentifier,PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -233,6 +258,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyEventQueryResults(ResourceIdentifier,PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -256,6 +285,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyEventQueryResults(ResourceIdentifier,PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -279,6 +312,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyStateQueryResults(ResourceIdentifier,PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -302,6 +339,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyStateQueryResults(ResourceIdentifier,PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -325,6 +366,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.SummarizePolicyStates(ResourceIdentifier,PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -348,6 +393,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.SummarizePolicyStates(ResourceIdentifier,PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -362,6 +411,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary>
         /// Gets an object representing a <see cref="PolicyRemediationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PolicyRemediationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyRemediationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyRemediationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -374,6 +427,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary>
         /// Gets an object representing a <see cref="PolicyMetadataResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PolicyMetadataResource.CreateResourceIdentifier" /> to create a <see cref="PolicyMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -386,6 +443,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary>
         /// Gets an object representing a <see cref="PolicyAttestationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PolicyAttestationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyAttestationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsArmClientMockingExtension.GetPolicyAttestationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -407,6 +468,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -430,6 +495,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -453,6 +522,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -476,6 +549,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -499,6 +576,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -522,6 +603,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -545,6 +630,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -568,6 +657,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForManagementGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -591,6 +684,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtManagementGroupScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -613,6 +710,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtManagementGroupScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsManagementGroupMockingExtension.CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -635,6 +736,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -658,6 +763,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -681,6 +790,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -704,6 +817,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -727,6 +844,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -750,6 +871,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -773,6 +898,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -796,6 +925,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForResourceGroup</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -819,6 +952,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_TriggerResourceGroupEvaluation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.TriggerPolicyStateEvaluation(WaitUntil,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -840,6 +977,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_TriggerResourceGroupEvaluation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.TriggerPolicyStateEvaluation(WaitUntil,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -861,6 +1002,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtResourceGroupScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.CheckPolicyRestrictions(CheckPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -883,6 +1028,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtResourceGroupScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsResourceGroupMockingExtension.CheckPolicyRestrictions(CheckPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -905,6 +1054,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -928,6 +1081,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -951,6 +1108,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -974,6 +1135,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyEventQueryResults(PolicyEventType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -997,6 +1162,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -1020,6 +1189,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_ListQueryResultsForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.GetPolicyStateQueryResults(PolicyStateType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -1043,6 +1216,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -1066,6 +1243,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_SummarizeForSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.SummarizePolicyStates(PolicyStateSummaryType,PolicyQuerySettings,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -1089,6 +1270,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.TriggerPolicyStateEvaluation(WaitUntil,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1110,6 +1295,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.TriggerPolicyStateEvaluation(WaitUntil,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1131,6 +1320,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.CheckPolicyRestrictions(CheckPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -1153,6 +1346,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsSubscriptionMockingExtension.CheckPolicyRestrictions(CheckPolicyRestrictionsContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -1163,7 +1360,13 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetPolicyInsightsSubscriptionMockingExtension(subscriptionResource).CheckPolicyRestrictions(content, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PolicyMetadataResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of PolicyMetadataResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsTenantMockingExtension.GetAllPolicyMetadata()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PolicyMetadataResources and their operations over a PolicyMetadataResource. </returns>
         public static PolicyMetadataCollection GetAllPolicyMetadata(this TenantResource tenantResource)
@@ -1183,6 +1386,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsTenantMockingExtension.GetPolicyMetadataAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
@@ -1206,6 +1413,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="PolicyInsightsTenantMockingExtension.GetPolicyMetadata(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>

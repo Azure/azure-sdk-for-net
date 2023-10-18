@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
         public virtual CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts()
         {
-            return GetCachedClient(Client => new CognitiveServicesDeletedAccountCollection(Client, Id));
+            return GetCachedClient(client => new CognitiveServicesDeletedAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
         public virtual OrbitalSpacecraftCollection GetOrbitalSpacecrafts()
         {
-            return GetCachedClient(Client => new OrbitalSpacecraftCollection(Client, Id));
+            return GetCachedClient(client => new OrbitalSpacecraftCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(string spacecraftName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OrbitalSpacecraftResource> GetOrbitalSpacecraft(string spacecraftName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
         public virtual OrbitalContactProfileCollection GetOrbitalContactProfiles()
         {
-            return GetCachedClient(Client => new OrbitalContactProfileCollection(Client, Id));
+            return GetCachedClient(client => new OrbitalContactProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="contactProfileName"> Contact Profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(string contactProfileName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// </summary>
         /// <param name="contactProfileName"> Contact Profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OrbitalContactProfileResource> GetOrbitalContactProfile(string contactProfileName, CancellationToken cancellationToken = default)
         {

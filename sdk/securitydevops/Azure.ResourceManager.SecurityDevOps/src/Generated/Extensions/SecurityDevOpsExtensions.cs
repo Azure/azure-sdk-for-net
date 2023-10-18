@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         private static SecurityDevOpsArmClientMockingExtension GetSecurityDevOpsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new SecurityDevOpsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new SecurityDevOpsArmClientMockingExtension(client0));
         }
 
         private static SecurityDevOpsResourceGroupMockingExtension GetSecurityDevOpsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SecurityDevOpsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new SecurityDevOpsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static SecurityDevOpsSubscriptionMockingExtension GetSecurityDevOpsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SecurityDevOpsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new SecurityDevOpsSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsConnectorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureDevOpsConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetAzureDevOpsConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -58,6 +53,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsRepoResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureDevOpsRepoResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsRepoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetAzureDevOpsRepoResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -70,6 +69,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsOrgResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureDevOpsOrgResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsOrgResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetAzureDevOpsOrgResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -82,6 +85,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureDevOpsProjectResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetAzureDevOpsProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -94,6 +101,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing a <see cref="GitHubConnectorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GitHubConnectorResource.CreateResourceIdentifier" /> to create a <see cref="GitHubConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetGitHubConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -106,6 +117,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing a <see cref="GitHubRepoResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GitHubRepoResource.CreateResourceIdentifier" /> to create a <see cref="GitHubRepoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetGitHubRepoResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -118,6 +133,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <summary>
         /// Gets an object representing a <see cref="GitHubOwnerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GitHubOwnerResource.CreateResourceIdentifier" /> to create a <see cref="GitHubOwnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsArmClientMockingExtension.GetGitHubOwnerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -127,7 +146,13 @@ namespace Azure.ResourceManager.SecurityDevOps
             return GetSecurityDevOpsArmClientMockingExtension(client).GetGitHubOwnerResource(id);
         }
 
-        /// <summary> Gets a collection of AzureDevOpsConnectorResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of AzureDevOpsConnectorResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetAzureDevOpsConnectors()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
         public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
@@ -147,12 +172,16 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>AzureDevOpsConnector_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetAzureDevOpsConnectorAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
@@ -171,19 +200,29 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>AzureDevOpsConnector_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetAzureDevOpsConnector(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
             return GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetAzureDevOpsConnector(azureDevOpsConnectorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GitHubConnectorResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of GitHubConnectorResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetGitHubConnectors()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
         public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
@@ -203,12 +242,16 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>GitHubConnector_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetGitHubConnectorAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
@@ -227,12 +270,16 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>GitHubConnector_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsResourceGroupMockingExtension.GetGitHubConnector(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<GitHubConnectorResource> GetGitHubConnector(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
@@ -251,6 +298,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsSubscriptionMockingExtension.GetAzureDevOpsConnectors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +323,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsSubscriptionMockingExtension.GetAzureDevOpsConnectors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,6 +348,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>GitHubConnector_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsSubscriptionMockingExtension.GetGitHubConnectors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,6 +373,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <description>GitHubConnector_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="SecurityDevOpsSubscriptionMockingExtension.GetGitHubConnectors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

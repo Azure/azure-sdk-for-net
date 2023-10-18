@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.DigitalTwins
     {
         private static DigitalTwinsArmClientMockingExtension GetDigitalTwinsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new DigitalTwinsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new DigitalTwinsArmClientMockingExtension(client0));
         }
 
         private static DigitalTwinsResourceGroupMockingExtension GetDigitalTwinsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DigitalTwinsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DigitalTwinsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static DigitalTwinsSubscriptionMockingExtension GetDigitalTwinsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DigitalTwinsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DigitalTwinsSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="DigitalTwinsDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DigitalTwinsDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsArmClientMockingExtension.GetDigitalTwinsDescriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary>
         /// Gets an object representing a <see cref="DigitalTwinsEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DigitalTwinsEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsArmClientMockingExtension.GetDigitalTwinsEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -71,6 +70,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary>
         /// Gets an object representing a <see cref="DigitalTwinsPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DigitalTwinsPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsArmClientMockingExtension.GetDigitalTwinsPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -83,6 +86,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary>
         /// Gets an object representing a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DigitalTwinsPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsArmClientMockingExtension.GetDigitalTwinsPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -95,6 +102,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary>
         /// Gets an object representing a <see cref="TimeSeriesDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TimeSeriesDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="TimeSeriesDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsArmClientMockingExtension.GetTimeSeriesDatabaseConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -104,7 +115,13 @@ namespace Azure.ResourceManager.DigitalTwins
             return GetDigitalTwinsArmClientMockingExtension(client).GetTimeSeriesDatabaseConnectionResource(id);
         }
 
-        /// <summary> Gets a collection of DigitalTwinsDescriptionResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DigitalTwinsDescriptionResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsResourceGroupMockingExtension.GetDigitalTwinsDescriptions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DigitalTwinsDescriptionResources and their operations over a DigitalTwinsDescriptionResource. </returns>
         public static DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions(this ResourceGroupResource resourceGroupResource)
@@ -124,12 +141,16 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsResourceGroupMockingExtension.GetDigitalTwinsDescriptionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DigitalTwinsDescriptionResource>> GetDigitalTwinsDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -148,12 +169,16 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsResourceGroupMockingExtension.GetDigitalTwinsDescription(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DigitalTwinsDescriptionResource> GetDigitalTwinsDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -172,6 +197,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsSubscriptionMockingExtension.GetDigitalTwinsDescriptions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,6 +222,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsSubscriptionMockingExtension.GetDigitalTwinsDescriptions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +247,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsSubscriptionMockingExtension.CheckDigitalTwinsNameAvailability(AzureLocation,DigitalTwinsNameContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
@@ -237,6 +274,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <description>DigitalTwins_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DigitalTwinsSubscriptionMockingExtension.CheckDigitalTwinsNameAvailability(AzureLocation,DigitalTwinsNameContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public virtual ReportResourceCollection GetReportResources()
         {
-            return GetCachedClient(Client => new ReportResourceCollection(Client, Id));
+            return GetCachedClient(client => new ReportResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ReportResource>> GetReportResourceAsync(string reportName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ReportResource> GetReportResource(string reportName, CancellationToken cancellationToken = default)
         {

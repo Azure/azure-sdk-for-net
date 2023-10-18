@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
         public virtual ApiManagementDeletedServiceCollection GetApiManagementDeletedServices()
         {
-            return GetCachedClient(Client => new ApiManagementDeletedServiceCollection(Client, Id));
+            return GetCachedClient(client => new ApiManagementDeletedServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <param name="location"> The location of the deleted API Management service. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <param name="location"> The location of the deleted API Management service. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {

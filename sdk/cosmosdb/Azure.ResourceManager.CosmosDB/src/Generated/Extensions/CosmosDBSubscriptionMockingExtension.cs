@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public virtual CosmosDBLocationCollection GetCosmosDBLocations()
         {
-            return GetCachedClient(Client => new CosmosDBLocationCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBLocationCollection(client, Id));
         }
 
         /// <summary>

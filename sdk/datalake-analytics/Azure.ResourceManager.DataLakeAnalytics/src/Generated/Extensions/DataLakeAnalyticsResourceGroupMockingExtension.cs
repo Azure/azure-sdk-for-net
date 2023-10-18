@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <returns> An object representing collection of DataLakeAnalyticsAccountResources and their operations over a DataLakeAnalyticsAccountResource. </returns>
         public virtual DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts()
         {
-            return GetCachedClient(Client => new DataLakeAnalyticsAccountCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeAnalyticsAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(string accountName, CancellationToken cancellationToken = default)
         {

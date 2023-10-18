@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
         public virtual EventGridDomainCollection GetEventGridDomains()
         {
-            return GetCachedClient(Client => new EventGridDomainCollection(Client, Id));
+            return GetCachedClient(client => new EventGridDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridDomainResource> GetEventGridDomain(string domainName, CancellationToken cancellationToken = default)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
         public virtual EventGridNamespaceCollection GetEventGridNamespaces()
         {
-            return GetCachedClient(Client => new EventGridNamespaceCollection(Client, Id));
+            return GetCachedClient(client => new EventGridNamespaceCollection(client, Id));
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridNamespaceResource>> GetEventGridNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="namespaceName"> Name of the namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridNamespaceResource> GetEventGridNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of PartnerDestinationResources and their operations over a PartnerDestinationResource. </returns>
         public virtual PartnerDestinationCollection GetPartnerDestinations()
         {
-            return GetCachedClient(Client => new PartnerDestinationCollection(Client, Id));
+            return GetCachedClient(client => new PartnerDestinationCollection(client, Id));
         }
 
         /// <summary>
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerDestinationResource>> GetPartnerDestinationAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerDestinationResource> GetPartnerDestination(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
         public virtual PartnerNamespaceCollection GetPartnerNamespaces()
         {
-            return GetCachedClient(Client => new PartnerNamespaceCollection(Client, Id));
+            return GetCachedClient(client => new PartnerNamespaceCollection(client, Id));
         }
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> GetPartnerNamespaceAsync(string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> GetPartnerNamespace(string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
         public virtual PartnerRegistrationCollection GetPartnerRegistrations()
         {
-            return GetCachedClient(Client => new PartnerRegistrationCollection(Client, Id));
+            return GetCachedClient(client => new PartnerRegistrationCollection(client, Id));
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerRegistrationResource>> GetPartnerRegistrationAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerRegistrationResource> GetPartnerRegistration(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
         public virtual PartnerTopicCollection GetPartnerTopics()
         {
-            return GetCachedClient(Client => new PartnerTopicCollection(Client, Id));
+            return GetCachedClient(client => new PartnerTopicCollection(client, Id));
         }
 
         /// <summary>
@@ -343,8 +343,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerTopicResource>> GetPartnerTopicAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerTopicResource> GetPartnerTopic(string partnerTopicName, CancellationToken cancellationToken = default)
         {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
         public virtual SystemTopicCollection GetSystemTopics()
         {
-            return GetCachedClient(Client => new SystemTopicCollection(Client, Id));
+            return GetCachedClient(client => new SystemTopicCollection(client, Id));
         }
 
         /// <summary>
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SystemTopicResource>> GetSystemTopicAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
@@ -419,8 +419,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SystemTopicResource> GetSystemTopic(string systemTopicName, CancellationToken cancellationToken = default)
         {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
         public virtual EventGridTopicCollection GetEventGridTopics()
         {
-            return GetCachedClient(Client => new EventGridTopicCollection(Client, Id));
+            return GetCachedClient(client => new EventGridTopicCollection(client, Id));
         }
 
         /// <summary>
@@ -449,8 +449,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -472,8 +472,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </summary>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridTopicResource> GetEventGridTopic(string topicName, CancellationToken cancellationToken = default)
         {

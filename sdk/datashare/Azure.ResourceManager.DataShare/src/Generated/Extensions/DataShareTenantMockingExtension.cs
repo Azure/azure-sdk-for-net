@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
         public virtual DataShareConsumerInvitationCollection GetDataShareConsumerInvitations()
         {
-            return GetCachedClient(Client => new DataShareConsumerInvitationCollection(Client, Id));
+            return GetCachedClient(client => new DataShareConsumerInvitationCollection(client, Id));
         }
 
         /// <summary>

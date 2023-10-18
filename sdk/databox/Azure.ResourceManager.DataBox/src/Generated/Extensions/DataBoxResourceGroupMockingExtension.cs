@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
         public virtual DataBoxJobCollection GetDataBoxJobs()
         {
-            return GetCachedClient(Client => new DataBoxJobCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxJobCollection(client, Id));
         }
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxJobResource>> GetDataBoxJobAsync(string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxJobResource> GetDataBoxJob(string jobName, string expand = null, CancellationToken cancellationToken = default)
         {

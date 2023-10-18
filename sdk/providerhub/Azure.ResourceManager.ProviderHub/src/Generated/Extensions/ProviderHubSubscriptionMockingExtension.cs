@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
         public virtual ProviderRegistrationCollection GetProviderRegistrations()
         {
-            return GetCachedClient(Client => new ProviderRegistrationCollection(Client, Id));
+            return GetCachedClient(client => new ProviderRegistrationCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProviderRegistrationResource> GetProviderRegistration(string providerNamespace, CancellationToken cancellationToken = default)
         {

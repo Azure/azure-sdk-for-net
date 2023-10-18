@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
         public virtual SubscriptionAliasCollection GetSubscriptionAliases()
         {
-            return GetCachedClient(Client => new SubscriptionAliasCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionAliasCollection(client, Id));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(string aliasName, CancellationToken cancellationToken = default)
         {
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionAliasResource> GetSubscriptionAlias(string aliasName, CancellationToken cancellationToken = default)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
         public virtual BillingAccountPolicyCollection GetBillingAccountPolicies()
         {
-            return GetCachedClient(Client => new BillingAccountPolicyCollection(Client, Id));
+            return GetCachedClient(client => new BillingAccountPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(string billingAccountId, CancellationToken cancellationToken = default)
         {
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BillingAccountPolicyResource> GetBillingAccountPolicy(string billingAccountId, CancellationToken cancellationToken = default)
         {

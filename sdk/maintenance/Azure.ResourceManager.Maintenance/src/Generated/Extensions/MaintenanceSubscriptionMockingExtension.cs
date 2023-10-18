@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
         public virtual MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations()
         {
-            return GetCachedClient(Client => new MaintenancePublicConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MaintenancePublicConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(string resourceName, CancellationToken cancellationToken = default)
         {

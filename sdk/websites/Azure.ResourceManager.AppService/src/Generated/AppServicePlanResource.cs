@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServicePlanHybridConnectionNamespaceRelayResources and their operations over a AppServicePlanHybridConnectionNamespaceRelayResource. </returns>
         public virtual AppServicePlanHybridConnectionNamespaceRelayCollection GetAppServicePlanHybridConnectionNamespaceRelays()
         {
-            return GetCachedClient(Client => new AppServicePlanHybridConnectionNamespaceRelayCollection(Client, Id));
+            return GetCachedClient(client => new AppServicePlanHybridConnectionNamespaceRelayCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetAppServicePlanHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> GetAppServicePlanHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServicePlanVirtualNetworkConnectionResources and their operations over a AppServicePlanVirtualNetworkConnectionResource. </returns>
         public virtual AppServicePlanVirtualNetworkConnectionCollection GetAppServicePlanVirtualNetworkConnections()
         {
-            return GetCachedClient(Client => new AppServicePlanVirtualNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AppServicePlanVirtualNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServicePlanVirtualNetworkConnectionResource>> GetAppServicePlanVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServicePlanVirtualNetworkConnectionResource> GetAppServicePlanVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
         {

@@ -22,39 +22,31 @@ namespace Azure.ResourceManager.DataShare
     {
         private static DataShareArmClientMockingExtension GetDataShareArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new DataShareArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new DataShareArmClientMockingExtension(client0));
         }
 
         private static DataShareResourceGroupMockingExtension GetDataShareResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataShareResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataShareResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static DataShareSubscriptionMockingExtension GetDataShareSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataShareSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataShareSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static DataShareTenantMockingExtension GetDataShareTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataShareTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DataShareTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="DataShareAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataShareAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -67,6 +59,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="DataShareConsumerInvitationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareConsumerInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareConsumerInvitationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -79,6 +75,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="ShareDataSetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ShareDataSetResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareDataSetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -91,6 +91,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="ShareDataSetMappingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ShareDataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareDataSetMappingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -103,6 +107,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="DataShareInvitationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareInvitationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="DataShareResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareResource.CreateResourceIdentifier" /> to create a <see cref="DataShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -127,6 +139,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="ProviderShareSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProviderShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ProviderShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetProviderShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -139,6 +155,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="ShareSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -151,6 +171,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="DataShareSynchronizationSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareSynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="DataShareSynchronizationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareSynchronizationSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -163,6 +187,10 @@ namespace Azure.ResourceManager.DataShare
         /// <summary>
         /// Gets an object representing a <see cref="DataShareTriggerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataShareTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataShareTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareTriggerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -172,7 +200,13 @@ namespace Azure.ResourceManager.DataShare
             return GetDataShareArmClientMockingExtension(client).GetDataShareTriggerResource(id);
         }
 
-        /// <summary> Gets a collection of DataShareAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataShareAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
         public static DataShareAccountCollection GetDataShareAccounts(this ResourceGroupResource resourceGroupResource)
@@ -192,12 +226,16 @@ namespace Azure.ResourceManager.DataShare
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataShareAccountResource>> GetDataShareAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -216,12 +254,16 @@ namespace Azure.ResourceManager.DataShare
         /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataShareAccountResource> GetDataShareAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -240,6 +282,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareSubscriptionMockingExtension.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -262,6 +308,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareSubscriptionMockingExtension.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -272,7 +322,13 @@ namespace Azure.ResourceManager.DataShare
             return GetDataShareSubscriptionMockingExtension(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataShareConsumerInvitationResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataShareConsumerInvitationResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
         public static DataShareConsumerInvitationCollection GetDataShareConsumerInvitations(this TenantResource tenantResource)
@@ -292,6 +348,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitationAsync(AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -315,6 +375,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitation(AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -338,6 +402,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>ConsumerInvitations_RejectInvitation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -361,6 +429,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>ConsumerInvitations_RejectInvitation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -384,6 +456,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>EmailRegistrations_ActivateEmail</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
@@ -407,6 +483,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>EmailRegistrations_ActivateEmail</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
@@ -430,6 +510,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>EmailRegistrations_RegisterEmail</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>
@@ -451,6 +535,10 @@ namespace Azure.ResourceManager.DataShare
         /// <description>EmailRegistrations_RegisterEmail</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>

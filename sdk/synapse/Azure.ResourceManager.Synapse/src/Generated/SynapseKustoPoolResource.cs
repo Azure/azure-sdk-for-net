@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseAttachedDatabaseConfigurationResources and their operations over a SynapseAttachedDatabaseConfigurationResource. </returns>
         public virtual SynapseAttachedDatabaseConfigurationCollection GetSynapseAttachedDatabaseConfigurations()
         {
-            return GetCachedClient(Client => new SynapseAttachedDatabaseConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new SynapseAttachedDatabaseConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseAttachedDatabaseConfigurationResource>> GetSynapseAttachedDatabaseConfigurationAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseAttachedDatabaseConfigurationResource> GetSynapseAttachedDatabaseConfiguration(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseDatabaseResources and their operations over a SynapseDatabaseResource. </returns>
         public virtual SynapseDatabaseCollection GetSynapseDatabases()
         {
-            return GetCachedClient(Client => new SynapseDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new SynapseDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseDatabaseResource>> GetSynapseDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseDatabaseResource> GetSynapseDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseClusterPrincipalAssignmentResources and their operations over a SynapseClusterPrincipalAssignmentResource. </returns>
         public virtual SynapseClusterPrincipalAssignmentCollection GetSynapseClusterPrincipalAssignments()
         {
-            return GetCachedClient(Client => new SynapseClusterPrincipalAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new SynapseClusterPrincipalAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseClusterPrincipalAssignmentResource>> GetSynapseClusterPrincipalAssignmentAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseClusterPrincipalAssignmentResource> GetSynapseClusterPrincipalAssignment(string principalAssignmentName, CancellationToken cancellationToken = default)
         {

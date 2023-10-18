@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
         public virtual NginxDeploymentCollection GetNginxDeployments()
         {
-            return GetCachedClient(Client => new NginxDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new NginxDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// </summary>
         /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// </summary>
         /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NginxDeploymentResource> GetNginxDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {

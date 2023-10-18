@@ -21,37 +21,31 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     {
         private static ManagedServiceIdentitiesArmClientMockingExtension GetManagedServiceIdentitiesArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new ManagedServiceIdentitiesArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new ManagedServiceIdentitiesArmClientMockingExtension(client0));
         }
 
         private static ManagedServiceIdentitiesArmMockingExtension GetManagedServiceIdentitiesArmMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ManagedServiceIdentitiesArmMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ManagedServiceIdentitiesArmMockingExtension(client, resource.Id));
         }
 
         private static ManagedServiceIdentitiesResourceGroupMockingExtension GetManagedServiceIdentitiesResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ManagedServiceIdentitiesResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ManagedServiceIdentitiesResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static ManagedServiceIdentitiesSubscriptionMockingExtension GetManagedServiceIdentitiesSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ManagedServiceIdentitiesSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new ManagedServiceIdentitiesSubscriptionMockingExtension(client, resource.Id));
         }
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary>
+        /// Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesArmClientMockingExtension.GetSystemAssignedIdentity(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
@@ -63,6 +57,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <summary>
         /// Gets an object representing a <see cref="SystemAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SystemAssignedIdentityResource.CreateResourceIdentifier" /> to create a <see cref="SystemAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesArmClientMockingExtension.GetSystemAssignedIdentityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -75,6 +73,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <summary>
         /// Gets an object representing an <see cref="UserAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="UserAssignedIdentityResource.CreateResourceIdentifier" /> to create an <see cref="UserAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesArmClientMockingExtension.GetUserAssignedIdentityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -87,6 +89,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <summary>
         /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesArmClientMockingExtension.GetFederatedIdentityCredentialResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -96,7 +102,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return GetManagedServiceIdentitiesArmClientMockingExtension(client).GetFederatedIdentityCredentialResource(id);
         }
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <summary>
+        /// Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesArmMockingExtension.GetSystemAssignedIdentity()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
@@ -104,7 +116,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return GetManagedServiceIdentitiesArmMockingExtension(armResource).GetSystemAssignedIdentity();
         }
 
-        /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesResourceGroupMockingExtension.GetUserAssignedIdentities()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
@@ -124,12 +142,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesResourceGroupMockingExtension.GetUserAssignedIdentityAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -148,12 +170,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesResourceGroupMockingExtension.GetUserAssignedIdentity(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -172,6 +198,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesSubscriptionMockingExtension.GetUserAssignedIdentities(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,6 +223,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ManagedServiceIdentitiesSubscriptionMockingExtension.GetUserAssignedIdentities(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

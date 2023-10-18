@@ -21,39 +21,31 @@ namespace Azure.ResourceManager.MobileNetwork
     {
         private static MobileNetworkArmClientMockingExtension GetMobileNetworkArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new MobileNetworkArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new MobileNetworkArmClientMockingExtension(client0));
         }
 
         private static MobileNetworkResourceGroupMockingExtension GetMobileNetworkResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MobileNetworkResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MobileNetworkResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static MobileNetworkSubscriptionMockingExtension GetMobileNetworkSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MobileNetworkSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MobileNetworkSubscriptionMockingExtension(client, resource.Id));
         }
 
         private static MobileNetworkTenantMockingExtension GetMobileNetworkTenantMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MobileNetworkTenantMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MobileNetworkTenantMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="MobileAttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileAttachedDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileAttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileAttachedDataNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -66,6 +58,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileDataNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -78,6 +74,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkDiagnosticsPackageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkDiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkDiagnosticsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkDiagnosticsPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -102,6 +106,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkPacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkPacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkPacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkPacketCaptureResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -114,6 +122,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreControlPlaneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetPacketCoreControlPlaneResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -126,6 +138,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="TenantPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetTenantPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -138,6 +154,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetSubscriptionPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -150,6 +170,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreDataPlaneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetPacketCoreDataPlaneResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -162,6 +186,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -174,6 +202,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkSimResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkSimResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -186,6 +218,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkSimGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkSimGroupResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -198,6 +234,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkSimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkSimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -210,6 +250,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkSiteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkSiteResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -222,6 +266,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkSliceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkSliceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSliceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSliceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -231,7 +279,13 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSliceResource(id);
         }
 
-        /// <summary> Gets a collection of MobileNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of MobileNetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
@@ -251,12 +305,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>MobileNetworks_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
@@ -275,19 +333,29 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>MobileNetworks_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetwork(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
             return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetwork(mobileNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlanes()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
@@ -307,12 +375,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlaneAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
@@ -331,19 +403,29 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlane(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
             return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlane(packetCoreControlPlaneName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroups()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
         public static MobileNetworkSimGroupCollection GetMobileNetworkSimGroups(this ResourceGroupResource resourceGroupResource)
@@ -363,12 +445,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>SimGroups_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
@@ -387,19 +473,29 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>SimGroups_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroup(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
             return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkSimGroup(simGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
         public static SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions(this SubscriptionResource subscriptionResource)
@@ -419,12 +515,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
@@ -443,12 +543,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
@@ -467,6 +571,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -488,6 +596,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -509,6 +621,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -530,6 +646,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -551,6 +671,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -572,6 +696,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -581,7 +709,13 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworkSimGroups(cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
         public static TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions(this TenantResource tenantResource)
@@ -601,12 +735,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
@@ -625,12 +763,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {

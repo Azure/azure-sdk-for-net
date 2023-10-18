@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
         public virtual FirmwareWorkspaceCollection GetFirmwareWorkspaces()
         {
-            return GetCachedClient(Client => new FirmwareWorkspaceCollection(Client, Id));
+            return GetCachedClient(client => new FirmwareWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FirmwareWorkspaceResource> GetFirmwareWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {

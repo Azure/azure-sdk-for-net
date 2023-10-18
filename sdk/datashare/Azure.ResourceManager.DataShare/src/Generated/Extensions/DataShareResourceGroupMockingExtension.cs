@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
         public virtual DataShareAccountCollection GetDataShareAccounts()
         {
-            return GetCachedClient(Client => new DataShareAccountCollection(Client, Id));
+            return GetCachedClient(client => new DataShareAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the share account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareAccountResource>> GetDataShareAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// </summary>
         /// <param name="accountName"> The name of the share account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareAccountResource> GetDataShareAccount(string accountName, CancellationToken cancellationToken = default)
         {

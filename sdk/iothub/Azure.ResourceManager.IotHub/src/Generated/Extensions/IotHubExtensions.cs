@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.IotHub
     {
         private static IotHubArmClientMockingExtension GetIotHubArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new IotHubArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new IotHubArmClientMockingExtension(client0));
         }
 
         private static IotHubResourceGroupMockingExtension GetIotHubResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new IotHubResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new IotHubResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static IotHubSubscriptionMockingExtension GetIotHubSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new IotHubSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new IotHubSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing an <see cref="IotHubDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotHubDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubArmClientMockingExtension.GetIotHubDescriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.IotHub
         /// <summary>
         /// Gets an object representing an <see cref="EventHubConsumerGroupInfoResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventHubConsumerGroupInfoResource.CreateResourceIdentifier" /> to create an <see cref="EventHubConsumerGroupInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubArmClientMockingExtension.GetEventHubConsumerGroupInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -71,6 +70,10 @@ namespace Azure.ResourceManager.IotHub
         /// <summary>
         /// Gets an object representing an <see cref="IotHubCertificateDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotHubCertificateDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubCertificateDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubArmClientMockingExtension.GetIotHubCertificateDescriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -83,6 +86,10 @@ namespace Azure.ResourceManager.IotHub
         /// <summary>
         /// Gets an object representing an <see cref="IotHubPrivateEndpointGroupInformationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotHubPrivateEndpointGroupInformationResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointGroupInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubArmClientMockingExtension.GetIotHubPrivateEndpointGroupInformationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -95,6 +102,10 @@ namespace Azure.ResourceManager.IotHub
         /// <summary>
         /// Gets an object representing an <see cref="IotHubPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotHubPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubArmClientMockingExtension.GetIotHubPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -104,7 +115,13 @@ namespace Azure.ResourceManager.IotHub
             return GetIotHubArmClientMockingExtension(client).GetIotHubPrivateEndpointConnectionResource(id);
         }
 
-        /// <summary> Gets a collection of IotHubDescriptionResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of IotHubDescriptionResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubResourceGroupMockingExtension.GetIotHubDescriptions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IotHubDescriptionResources and their operations over a IotHubDescriptionResource. </returns>
         public static IotHubDescriptionCollection GetIotHubDescriptions(this ResourceGroupResource resourceGroupResource)
@@ -124,12 +141,16 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubResourceGroupMockingExtension.GetIotHubDescriptionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<IotHubDescriptionResource>> GetIotHubDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -148,12 +169,16 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubResourceGroupMockingExtension.GetIotHubDescription(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<IotHubDescriptionResource> GetIotHubDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -172,6 +197,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.GetIotHubDescriptions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,6 +222,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.GetIotHubDescriptions(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +247,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.CheckIotHubNameAvailability(IotHubNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
@@ -236,6 +273,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>IotHubResource_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.CheckIotHubNameAvailability(IotHubNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
@@ -258,6 +299,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.GetIotHubUserSubscriptionQuota(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -279,6 +324,10 @@ namespace Azure.ResourceManager.IotHub
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="IotHubSubscriptionMockingExtension.GetIotHubUserSubscriptionQuota(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

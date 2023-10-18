@@ -1307,5 +1307,29 @@ namespace Azure.ResourceManager.Network.Mocking
             WebApplicationFirewallPolicyResource.ValidateResourceId(id);
             return new WebApplicationFirewallPolicyResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkResource" /> object. </returns>
+        public virtual VirtualMachineScaleSetNetworkResource GetVirtualMachineScaleSetNetworkResource(ResourceIdentifier id)
+        {
+            VirtualMachineScaleSetNetworkResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetNetworkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmNetworkResource" /> object. </returns>
+        public virtual VirtualMachineScaleSetVmNetworkResource GetVirtualMachineScaleSetVmNetworkResource(ResourceIdentifier id)
+        {
+            VirtualMachineScaleSetVmNetworkResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetVmNetworkResource(Client, id);
+        }
     }
 }

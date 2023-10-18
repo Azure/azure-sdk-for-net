@@ -11,24 +11,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiCenter;
 
-namespace Azure.ResourceManager.ApiCenter
+namespace Azure.ResourceManager.ApiCenter.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class ApiCenterSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
         private ServicesRestOperations _apiCenterServiceServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected ApiCenterSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiCenterSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "ApiCenterSubscriptionMockingExtension.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "ApiCenterSubscriptionMockingExtension.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
     }
 }

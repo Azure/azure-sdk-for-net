@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> An object representing collection of DataBoxEdgeDeviceResources and their operations over a DataBoxEdgeDeviceResource. </returns>
         public virtual DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices()
         {
-            return GetCachedClient(Client => new DataBoxEdgeDeviceCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeDeviceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// </summary>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(string deviceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// </summary>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(string deviceName, CancellationToken cancellationToken = default)
         {

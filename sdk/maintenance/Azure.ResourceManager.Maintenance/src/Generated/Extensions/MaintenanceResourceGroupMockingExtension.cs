@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> An object representing collection of MaintenanceConfigurationResources and their operations over a MaintenanceConfigurationResource. </returns>
         public virtual MaintenanceConfigurationCollection GetMaintenanceConfigurations()
         {
-            return GetCachedClient(Client => new MaintenanceConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MaintenanceConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MaintenanceConfigurationResource>> GetMaintenanceConfigurationAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MaintenanceConfigurationResource> GetMaintenanceConfiguration(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <returns> An object representing collection of MaintenanceApplyUpdateResources and their operations over a MaintenanceApplyUpdateResource. </returns>
         public virtual MaintenanceApplyUpdateCollection GetMaintenanceApplyUpdates()
         {
-            return GetCachedClient(Client => new MaintenanceApplyUpdateCollection(Client, Id));
+            return GetCachedClient(client => new MaintenanceApplyUpdateCollection(client, Id));
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="applyUpdateName"> applyUpdate Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetMaintenanceApplyUpdateAsync(string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="applyUpdateName"> applyUpdate Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdate(string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {

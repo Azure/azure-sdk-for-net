@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
         public virtual TrafficControllerCollection GetTrafficControllers()
         {
-            return GetCachedClient(Client => new TrafficControllerCollection(Client, Id));
+            return GetCachedClient(client => new TrafficControllerCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// </summary>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(string trafficControllerName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// </summary>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TrafficControllerResource> GetTrafficController(string trafficControllerName, CancellationToken cancellationToken = default)
         {

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         }
 
         /// <summary> Gets a collection of ScopeAssignmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
         public virtual ScopeAssignmentCollection GetScopeAssignments(ResourceIdentifier scope)
         {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScopeAssignmentResource> GetScopeAssignment(ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {

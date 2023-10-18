@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
         public virtual BackupResourceConfigCollection GetBackupResourceConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceConfigCollection(Client, Id));
+            return GetCachedClient(client => new BackupResourceConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupResourceConfigResource>> GetBackupResourceConfigAsync(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupResourceConfigResource> GetBackupResourceConfig(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
         public virtual BackupProtectionIntentCollection GetBackupProtectionIntents()
         {
-            return GetCachedClient(Client => new BackupProtectionIntentCollection(Client, Id));
+            return GetCachedClient(client => new BackupProtectionIntentCollection(client, Id));
         }
 
         /// <summary>
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectionIntentResource>> GetBackupProtectionIntentAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupProtectionIntentResource> GetBackupProtectionIntent(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
         public virtual BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceVaultConfigCollection(Client, Id));
+            return GetCachedClient(client => new BackupResourceVaultConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupResourceVaultConfigResource>> GetBackupResourceVaultConfigAsync(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupResourceVaultConfigResource> GetBackupResourceVaultConfig(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
         public virtual BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds()
         {
-            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedCollection(Client, Id));
+            return GetCachedClient(client => new BackupResourceEncryptionConfigExtendedCollection(client, Id));
         }
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetBackupResourceEncryptionConfigExtendedAsync(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupResourceEncryptionConfigExtendedResource> GetBackupResourceEncryptionConfigExtended(string vaultName, CancellationToken cancellationToken = default)
         {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
         public virtual BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new BackupPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new BackupPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupPrivateEndpointConnectionResource>> GetBackupPrivateEndpointConnectionAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupPrivateEndpointConnectionResource> GetBackupPrivateEndpointConnection(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -356,13 +356,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         /// <summary> Gets a collection of BackupProtectionPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BackupProtectionPolicyResources and their operations over a BackupProtectionPolicyResource. </returns>
         public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return new BackupProtectionPolicyCollection(Client, Id, vaultName);
         }
 
@@ -383,8 +381,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectionPolicyResource>> GetBackupProtectionPolicyAsync(string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
@@ -408,8 +406,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupProtectionPolicyResource> GetBackupProtectionPolicy(string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
@@ -418,13 +416,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
         public virtual BackupJobCollection GetBackupJobs(string vaultName)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return new BackupJobCollection(Client, Id, vaultName);
         }
 
@@ -444,8 +440,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupJobResource>> GetBackupJobAsync(string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
@@ -468,8 +464,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupJobResource> GetBackupJob(string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
@@ -478,13 +474,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         /// <summary> Gets a collection of BackupEngineResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
         public virtual BackupEngineCollection GetBackupEngines(string vaultName)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return new BackupEngineCollection(Client, Id, vaultName);
         }
 
@@ -506,8 +500,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupEngineResource>> GetBackupEngineAsync(string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
@@ -532,8 +526,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupEngineResource> GetBackupEngine(string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
@@ -544,7 +538,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
         public virtual BackupProtectionContainerCollection GetBackupProtectionContainers()
         {
-            return GetCachedClient(Client => new BackupProtectionContainerCollection(Client, Id));
+            return GetCachedClient(client => new BackupProtectionContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -564,8 +558,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectionContainerResource>> GetBackupProtectionContainerAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
@@ -589,8 +583,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupProtectionContainerResource> GetBackupProtectionContainer(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
@@ -599,13 +593,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         /// <summary> Gets a collection of ResourceGuardProxyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of ResourceGuardProxyResources and their operations over a ResourceGuardProxyResource. </returns>
         public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return new ResourceGuardProxyCollection(Client, Id, vaultName);
         }
 
@@ -625,8 +617,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGuardProxyResource>> GetResourceGuardProxyAsync(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
@@ -649,8 +641,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceGuardProxyResource> GetResourceGuardProxy(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {

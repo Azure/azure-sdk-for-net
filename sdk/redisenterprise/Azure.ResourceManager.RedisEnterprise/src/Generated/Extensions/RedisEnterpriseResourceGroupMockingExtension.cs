@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
         public virtual RedisEnterpriseClusterCollection GetRedisEnterpriseClusters()
         {
-            return GetCachedClient(Client => new RedisEnterpriseClusterCollection(Client, Id));
+            return GetCachedClient(client => new RedisEnterpriseClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(string clusterName, CancellationToken cancellationToken = default)
         {

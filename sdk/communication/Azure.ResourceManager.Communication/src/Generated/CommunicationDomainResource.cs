@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of SenderUsernameResources and their operations over a SenderUsernameResource. </returns>
         public virtual SenderUsernameResourceCollection GetSenderUsernameResources()
         {
-            return GetCachedClient(Client => new SenderUsernameResourceCollection(Client, Id));
+            return GetCachedClient(client => new SenderUsernameResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SenderUsernameResource>> GetSenderUsernameResourceAsync(string senderUsername, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="senderUsername"> The valid sender Username. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SenderUsernameResource> GetSenderUsernameResource(string senderUsername, CancellationToken cancellationToken = default)
         {

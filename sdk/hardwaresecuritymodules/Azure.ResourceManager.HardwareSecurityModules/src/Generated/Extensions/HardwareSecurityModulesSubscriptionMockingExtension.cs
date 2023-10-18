@@ -11,26 +11,27 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HardwareSecurityModules;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class HardwareSecurityModulesSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _cloudHsmClusterClientDiagnostics;
         private CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
         private ClientDiagnostics _dedicatedHsmClientDiagnostics;
         private DedicatedHsmRestOperations _dedicatedHsmRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected HardwareSecurityModulesSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HardwareSecurityModulesSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "HardwareSecurityModulesSubscriptionMockingExtension.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "HardwareSecurityModulesSubscriptionMockingExtension.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "HardwareSecurityModulesSubscriptionMockingExtension.GetDedicatedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "HardwareSecurityModulesSubscriptionMockingExtension.GetDedicatedHsms", "value", "nextLink", cancellationToken);
         }
     }
 }

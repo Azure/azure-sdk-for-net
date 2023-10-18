@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <returns> An object representing collection of HDInsightClusterPoolResources and their operations over a HDInsightClusterPoolResource. </returns>
         public virtual HDInsightClusterPoolCollection GetHDInsightClusterPools()
         {
-            return GetCachedClient(Client => new HDInsightClusterPoolCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightClusterPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </summary>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightClusterPoolResource>> GetHDInsightClusterPoolAsync(string clusterPoolName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// </summary>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightClusterPoolResource> GetHDInsightClusterPool(string clusterPoolName, CancellationToken cancellationToken = default)
         {

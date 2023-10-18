@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereCertificateResources and their operations over a SphereCertificateResource. </returns>
         public virtual SphereCertificateCollection GetSphereCertificates()
         {
-            return GetCachedClient(Client => new SphereCertificateCollection(Client, Id));
+            return GetCachedClient(client => new SphereCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereCertificateResource>> GetSphereCertificateAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="serialNumber"> Serial number of the certificate. Use '.default' to get current active certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereCertificateResource> GetSphereCertificate(string serialNumber, CancellationToken cancellationToken = default)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereImageResources and their operations over a SphereImageResource. </returns>
         public virtual SphereImageCollection GetSphereImages()
         {
-            return GetCachedClient(Client => new SphereImageCollection(Client, Id));
+            return GetCachedClient(client => new SphereImageCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="imageName"> Image name. Use .default for image creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereImageResource>> GetSphereImageAsync(string imageName, CancellationToken cancellationToken = default)
         {
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="imageName"> Image name. Use .default for image creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereImageResource> GetSphereImage(string imageName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereProductResources and their operations over a SphereProductResource. </returns>
         public virtual SphereProductCollection GetSphereProducts()
         {
-            return GetCachedClient(Client => new SphereProductCollection(Client, Id));
+            return GetCachedClient(client => new SphereProductCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="productName"> Name of product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereProductResource>> GetSphereProductAsync(string productName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="productName"> Name of product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereProductResource> GetSphereProduct(string productName, CancellationToken cancellationToken = default)
         {

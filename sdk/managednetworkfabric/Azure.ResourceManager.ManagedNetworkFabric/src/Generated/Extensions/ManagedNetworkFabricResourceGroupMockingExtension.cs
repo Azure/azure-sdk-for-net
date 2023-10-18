@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
         public virtual NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists()
         {
-            return GetCachedClient(Client => new NetworkFabricAccessControlListCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricAccessControlListCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(string accessControlListName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(string accessControlListName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
         public virtual NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways()
         {
-            return GetCachedClient(Client => new NetworkFabricInternetGatewayCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricInternetGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(string internetGatewayName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(string internetGatewayName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
         public virtual NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules()
         {
-            return GetCachedClient(Client => new NetworkFabricInternetGatewayRuleCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricInternetGatewayRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
         public virtual NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities()
         {
-            return GetCachedClient(Client => new NetworkFabricIPCommunityCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricIPCommunityCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(string ipCommunityName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(string ipCommunityName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
         public virtual NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities()
         {
-            return GetCachedClient(Client => new NetworkFabricIPExtendedCommunityCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricIPExtendedCommunityCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
         public virtual NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes()
         {
-            return GetCachedClient(Client => new NetworkFabricIPPrefixCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricIPPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(string ipPrefixName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
         public virtual NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains()
         {
-            return GetCachedClient(Client => new NetworkFabricL2IsolationDomainCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricL2IsolationDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
         public virtual NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains()
         {
-            return GetCachedClient(Client => new NetworkFabricL3IsolationDomainCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricL3IsolationDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -429,8 +429,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
         public virtual NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups()
         {
-            return GetCachedClient(Client => new NetworkFabricNeighborGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricNeighborGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -482,8 +482,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(string neighborGroupName, CancellationToken cancellationToken = default)
         {
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(string neighborGroupName, CancellationToken cancellationToken = default)
         {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkDeviceResources and their operations over a NetworkDeviceResource. </returns>
         public virtual NetworkDeviceCollection GetNetworkDevices()
         {
-            return GetCachedClient(Client => new NetworkDeviceCollection(Client, Id));
+            return GetCachedClient(client => new NetworkDeviceCollection(client, Id));
         }
 
         /// <summary>
@@ -535,8 +535,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkDeviceResource>> GetNetworkDeviceAsync(string networkDeviceName, CancellationToken cancellationToken = default)
         {
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkDeviceResource> GetNetworkDevice(string networkDeviceName, CancellationToken cancellationToken = default)
         {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricControllerResources and their operations over a NetworkFabricControllerResource. </returns>
         public virtual NetworkFabricControllerCollection GetNetworkFabricControllers()
         {
-            return GetCachedClient(Client => new NetworkFabricControllerCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricControllerCollection(client, Id));
         }
 
         /// <summary>
@@ -588,8 +588,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricControllerResource>> GetNetworkFabricControllerAsync(string networkFabricControllerName, CancellationToken cancellationToken = default)
         {
@@ -611,8 +611,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricControllerResource> GetNetworkFabricController(string networkFabricControllerName, CancellationToken cancellationToken = default)
         {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricResources and their operations over a NetworkFabricResource. </returns>
         public virtual NetworkFabricCollection GetNetworkFabrics()
         {
-            return GetCachedClient(Client => new NetworkFabricCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricCollection(client, Id));
         }
 
         /// <summary>
@@ -641,8 +641,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricResource>> GetNetworkFabricAsync(string networkFabricName, CancellationToken cancellationToken = default)
         {
@@ -664,8 +664,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricResource> GetNetworkFabric(string networkFabricName, CancellationToken cancellationToken = default)
         {
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkPacketBrokerResources and their operations over a NetworkPacketBrokerResource. </returns>
         public virtual NetworkPacketBrokerCollection GetNetworkPacketBrokers()
         {
-            return GetCachedClient(Client => new NetworkPacketBrokerCollection(Client, Id));
+            return GetCachedClient(client => new NetworkPacketBrokerCollection(client, Id));
         }
 
         /// <summary>
@@ -694,8 +694,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkPacketBrokerResource>> GetNetworkPacketBrokerAsync(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
@@ -717,8 +717,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkPacketBrokerResource> GetNetworkPacketBroker(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkRackResources and their operations over a NetworkRackResource. </returns>
         public virtual NetworkRackCollection GetNetworkRacks()
         {
-            return GetCachedClient(Client => new NetworkRackCollection(Client, Id));
+            return GetCachedClient(client => new NetworkRackCollection(client, Id));
         }
 
         /// <summary>
@@ -747,8 +747,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkRackName"> Name of the Network Rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkRackResource>> GetNetworkRackAsync(string networkRackName, CancellationToken cancellationToken = default)
         {
@@ -770,8 +770,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkRackName"> Name of the Network Rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkRackResource> GetNetworkRack(string networkRackName, CancellationToken cancellationToken = default)
         {
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkTapRuleResources and their operations over a NetworkTapRuleResource. </returns>
         public virtual NetworkTapRuleCollection GetNetworkTapRules()
         {
-            return GetCachedClient(Client => new NetworkTapRuleCollection(Client, Id));
+            return GetCachedClient(client => new NetworkTapRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -800,8 +800,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkTapRuleResource>> GetNetworkTapRuleAsync(string networkTapRuleName, CancellationToken cancellationToken = default)
         {
@@ -823,8 +823,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkTapRuleResource> GetNetworkTapRule(string networkTapRuleName, CancellationToken cancellationToken = default)
         {
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkTapResources and their operations over a NetworkTapResource. </returns>
         public virtual NetworkTapCollection GetNetworkTaps()
         {
-            return GetCachedClient(Client => new NetworkTapCollection(Client, Id));
+            return GetCachedClient(client => new NetworkTapCollection(client, Id));
         }
 
         /// <summary>
@@ -853,8 +853,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkTapResource>> GetNetworkTapAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
@@ -876,8 +876,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkTapResource> GetNetworkTap(string networkTapName, CancellationToken cancellationToken = default)
         {
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
         public virtual NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies()
         {
-            return GetCachedClient(Client => new NetworkFabricRoutePolicyCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricRoutePolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -906,8 +906,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
@@ -929,8 +929,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(string routePolicyName, CancellationToken cancellationToken = default)
         {

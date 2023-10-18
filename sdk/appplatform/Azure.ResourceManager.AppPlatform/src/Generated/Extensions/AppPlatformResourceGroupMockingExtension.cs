@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
         public virtual AppPlatformServiceCollection GetAppPlatformServices()
         {
-            return GetCachedClient(Client => new AppPlatformServiceCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </summary>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformServiceResource>> GetAppPlatformServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// </summary>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformServiceResource> GetAppPlatformService(string serviceName, CancellationToken cancellationToken = default)
         {

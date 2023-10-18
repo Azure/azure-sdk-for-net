@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
         public virtual BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases()
         {
-            return GetCachedClient(Client => new BillingBenefitsSavingsPlanOrderAliasCollection(Client, Id));
+            return GetCachedClient(client => new BillingBenefitsSavingsPlanOrderAliasCollection(client, Id));
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
         public virtual BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders()
         {
-            return GetCachedClient(Client => new BillingBenefitsSavingsPlanOrderCollection(Client, Id));
+            return GetCachedClient(client => new BillingBenefitsSavingsPlanOrderCollection(client, Id));
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
         public virtual BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases()
         {
-            return GetCachedClient(Client => new BillingBenefitsReservationOrderAliasCollection(Client, Id));
+            return GetCachedClient(client => new BillingBenefitsReservationOrderAliasCollection(client, Id));
         }
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmServerResources and their operations over a ScVmmServerResource. </returns>
         public virtual ScVmmServerCollection GetScVmmServers()
         {
-            return GetCachedClient(Client => new ScVmmServerCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmServerCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmServerResource>> GetScVmmServerAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmServerResource> GetScVmmServer(string vmmServerName, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmCloudResources and their operations over a ScVmmCloudResource. </returns>
         public virtual ScVmmCloudCollection GetScVmmClouds()
         {
-            return GetCachedClient(Client => new ScVmmCloudCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmCloudCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="cloudName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmCloudResource>> GetScVmmCloudAsync(string cloudName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="cloudName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmCloudResource> GetScVmmCloud(string cloudName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmVirtualNetworkResources and their operations over a ScVmmVirtualNetworkResource. </returns>
         public virtual ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks()
         {
-            return GetCachedClient(Client => new ScVmmVirtualNetworkCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmVirtualNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmVirtualMachineResources and their operations over a ScVmmVirtualMachineResource. </returns>
         public virtual ScVmmVirtualMachineCollection GetScVmmVirtualMachines()
         {
-            return GetCachedClient(Client => new ScVmmVirtualMachineCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmVirtualMachineResource>> GetScVmmVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmVirtualMachineResource> GetScVmmVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public virtual ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates()
         {
-            return GetCachedClient(Client => new ScVmmVirtualMachineTemplateCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmVirtualMachineTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <returns> An object representing collection of ScVmmAvailabilitySetResources and their operations over a ScVmmAvailabilitySetResource. </returns>
         public virtual ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets()
         {
-            return GetCachedClient(Client => new ScVmmAvailabilitySetCollection(Client, Id));
+            return GetCachedClient(client => new ScVmmAvailabilitySetCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="availabilitySetName"> Name of the AvailabilitySet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// </summary>
         /// <param name="availabilitySetName"> Name of the AvailabilitySet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(string availabilitySetName, CancellationToken cancellationToken = default)
         {

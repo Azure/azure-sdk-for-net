@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public virtual ArmDeploymentCollection GetArmDeployments()
         {
-            return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new ArmDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of ArmApplicationResources and their operations over a ArmApplicationResource. </returns>
         public virtual ArmApplicationCollection GetArmApplications()
         {
-            return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
+            return GetCachedClient(client => new ArmApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArmApplicationResource>> GetArmApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArmApplicationResource> GetArmApplication(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
         public virtual ArmApplicationDefinitionCollection GetArmApplicationDefinitions()
         {
-            return GetCachedClient(Client => new ArmApplicationDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new ArmApplicationDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArmApplicationDefinitionResource>> GetArmApplicationDefinitionAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArmApplicationDefinitionResource> GetArmApplicationDefinition(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of JitRequestResources and their operations over a JitRequestResource. </returns>
         public virtual JitRequestCollection GetJitRequests()
         {
-            return GetCachedClient(Client => new JitRequestCollection(Client, Id));
+            return GetCachedClient(client => new JitRequestCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<JitRequestResource>> GetJitRequestAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<JitRequestResource> GetJitRequest(string jitRequestName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
         public virtual ArmDeploymentScriptCollection GetArmDeploymentScripts()
         {
-            return GetCachedClient(Client => new ArmDeploymentScriptCollection(Client, Id));
+            return GetCachedClient(client => new ArmDeploymentScriptCollection(client, Id));
         }
 
         /// <summary>
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArmDeploymentScriptResource>> GetArmDeploymentScriptAsync(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArmDeploymentScriptResource> GetArmDeploymentScript(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
         public virtual TemplateSpecCollection GetTemplateSpecs()
         {
-            return GetCachedClient(Client => new TemplateSpecCollection(Client, Id));
+            return GetCachedClient(client => new TemplateSpecCollection(client, Id));
         }
 
         /// <summary>
@@ -325,8 +325,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TemplateSpecResource>> GetTemplateSpecAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TemplateSpecResource> GetTemplateSpec(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {

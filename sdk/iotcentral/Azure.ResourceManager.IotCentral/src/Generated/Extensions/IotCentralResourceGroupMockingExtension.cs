@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <returns> An object representing collection of IotCentralAppResources and their operations over a IotCentralAppResource. </returns>
         public virtual IotCentralAppCollection GetIotCentralApps()
         {
-            return GetCachedClient(Client => new IotCentralAppCollection(Client, Id));
+            return GetCachedClient(client => new IotCentralAppCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// </summary>
         /// <param name="resourceName"> The ARM resource name of the IoT Central application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotCentralAppResource>> GetIotCentralAppAsync(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// </summary>
         /// <param name="resourceName"> The ARM resource name of the IoT Central application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotCentralAppResource> GetIotCentralApp(string resourceName, CancellationToken cancellationToken = default)
         {

@@ -21,31 +21,26 @@ namespace Azure.ResourceManager.DevTestLabs
     {
         private static DevTestLabsArmClientMockingExtension GetDevTestLabsArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new DevTestLabsArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new DevTestLabsArmClientMockingExtension(client0));
         }
 
         private static DevTestLabsResourceGroupMockingExtension GetDevTestLabsResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DevTestLabsResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DevTestLabsResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static DevTestLabsSubscriptionMockingExtension GetDevTestLabsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DevTestLabsSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DevTestLabsSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -58,6 +53,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabGlobalScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -70,6 +69,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -82,6 +85,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -94,6 +101,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabVmScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabVmScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -106,6 +117,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabArtifactSourceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabArtifactSourceResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabArtifactSourceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -118,6 +133,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabArmTemplateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabArmTemplateResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArmTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabArmTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -130,6 +149,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabArtifactResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabArtifactResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -142,6 +165,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabCostResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabCostResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabCostResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -154,6 +181,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabCustomImageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -166,6 +197,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabFormulaResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabFormulaResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabFormulaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabFormulaResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -178,6 +213,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabNotificationChannelResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabNotificationChannelResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabNotificationChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabNotificationChannelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -190,6 +229,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -202,6 +245,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabServiceRunnerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabServiceRunnerResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceRunnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabServiceRunnerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -214,6 +261,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabUserResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabUserResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabUserResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -226,6 +277,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabDiskResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabDiskResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabDiskResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -238,6 +293,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -250,6 +309,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabSecretResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabSecretResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabSecretResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -262,6 +325,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabServiceFabricResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabServiceFabricResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabServiceFabricResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -274,6 +341,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabVmResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabVmResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabVmResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -286,6 +357,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevTestLabVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsArmClientMockingExtension.GetDevTestLabVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -295,7 +370,13 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabVirtualNetworkResource(id);
         }
 
-        /// <summary> Gets a collection of DevTestLabResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DevTestLabResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLabs()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
         public static DevTestLabCollection GetDevTestLabs(this ResourceGroupResource resourceGroupResource)
@@ -315,13 +396,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>Labs_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLabAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -340,20 +425,30 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>Labs_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLab(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLab(name, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLabGlobalSchedules()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
         public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
@@ -373,13 +468,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>GlobalSchedules_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLabGlobalScheduleAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -398,13 +497,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>GlobalSchedules_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsResourceGroupMockingExtension.GetDevTestLabGlobalSchedule(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -423,6 +526,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>Labs_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsSubscriptionMockingExtension.GetDevTestLabs(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
@@ -448,6 +555,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>Labs_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsSubscriptionMockingExtension.GetDevTestLabs(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
@@ -473,6 +584,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>GlobalSchedules_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsSubscriptionMockingExtension.GetDevTestLabGlobalSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
@@ -498,6 +613,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <description>GlobalSchedules_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevTestLabsSubscriptionMockingExtension.GetDevTestLabGlobalSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>

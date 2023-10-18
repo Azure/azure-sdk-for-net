@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <returns> An object representing collection of PartnerResponseResources and their operations over a PartnerResponseResource. </returns>
         public virtual PartnerResponseCollection GetPartnerResponses()
         {
-            return GetCachedClient(Client => new PartnerResponseCollection(Client, Id));
+            return GetCachedClient(client => new PartnerResponseCollection(client, Id));
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerResponseResource>> GetPartnerResponseAsync(string partnerId, CancellationToken cancellationToken = default)
         {
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PartnerResponseResource> GetPartnerResponse(string partnerId, CancellationToken cancellationToken = default)
         {

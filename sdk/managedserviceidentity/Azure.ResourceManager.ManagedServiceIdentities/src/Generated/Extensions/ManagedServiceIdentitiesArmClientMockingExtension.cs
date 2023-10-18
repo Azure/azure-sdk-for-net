@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         }
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentity(ResourceIdentifier scope)
         {

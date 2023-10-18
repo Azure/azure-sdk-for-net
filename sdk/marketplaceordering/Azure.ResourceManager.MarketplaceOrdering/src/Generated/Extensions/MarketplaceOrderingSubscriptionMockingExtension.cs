@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
         public virtual MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms()
         {
-            return GetCachedClient(Client => new MarketplaceAgreementTermCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceAgreementTermCollection(client, Id));
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceAgreementTermResource>> GetMarketplaceAgreementTermAsync(AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceAgreementTermResource> GetMarketplaceAgreementTerm(AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
         public virtual MarketplaceAgreementCollection GetMarketplaceAgreements()
         {
-            return GetCachedClient(Client => new MarketplaceAgreementCollection(Client, Id));
+            return GetCachedClient(client => new MarketplaceAgreementCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MarketplaceAgreementResource>> GetMarketplaceAgreementAsync(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <param name="offerId"> Offer identifier string of image being deployed. </param>
         /// <param name="planId"> Plan identifier string of image being deployed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MarketplaceAgreementResource> GetMarketplaceAgreement(string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {

@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.HybridConnectivity
     {
         private static HybridConnectivityArmClientMockingExtension GetHybridConnectivityArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new HybridConnectivityArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new HybridConnectivityArmClientMockingExtension(client0));
         }
 
-        /// <summary> Gets a collection of EndpointResources in the ArmClient. </summary>
+        /// <summary>
+        /// Gets a collection of EndpointResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResources(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResources(scope);
         }
+
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <list type="bullet">
@@ -46,6 +50,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <description>Endpoints_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -57,6 +65,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             return await GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <list type="bullet">
@@ -69,6 +78,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <description>Endpoints_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -84,6 +97,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary>
         /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>

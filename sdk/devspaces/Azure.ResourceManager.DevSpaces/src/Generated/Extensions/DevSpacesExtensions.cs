@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.DevSpaces
     {
         private static DevSpacesArmClientMockingExtension GetDevSpacesArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new DevSpacesArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new DevSpacesArmClientMockingExtension(client0));
         }
 
         private static DevSpacesResourceGroupMockingExtension GetDevSpacesResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DevSpacesResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DevSpacesResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static DevSpacesSubscriptionMockingExtension GetDevSpacesSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new DevSpacesSubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new DevSpacesSubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="ControllerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesArmClientMockingExtension.GetControllerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -56,7 +51,13 @@ namespace Azure.ResourceManager.DevSpaces
             return GetDevSpacesArmClientMockingExtension(client).GetControllerResource(id);
         }
 
-        /// <summary> Gets a collection of ControllerResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ControllerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetControllers()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
@@ -76,12 +77,16 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>Controllers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetControllerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ControllerResource>> GetControllerAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -100,12 +105,16 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>Controllers_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetController(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ControllerResource> GetController(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -124,6 +133,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
@@ -147,6 +160,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the container host. </param>
@@ -170,6 +187,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>Controllers_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesSubscriptionMockingExtension.GetControllers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +212,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <description>Controllers_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="DevSpacesSubscriptionMockingExtension.GetControllers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

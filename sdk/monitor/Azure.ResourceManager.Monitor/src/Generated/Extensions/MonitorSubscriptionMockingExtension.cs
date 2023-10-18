@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
         public virtual LogProfileCollection GetLogProfiles()
         {
-            return GetCachedClient(Client => new LogProfileCollection(Client, Id));
+            return GetCachedClient(client => new LogProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogProfileResource>> GetLogProfileAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogProfileResource> GetLogProfile(string logProfileName, CancellationToken cancellationToken = default)
         {

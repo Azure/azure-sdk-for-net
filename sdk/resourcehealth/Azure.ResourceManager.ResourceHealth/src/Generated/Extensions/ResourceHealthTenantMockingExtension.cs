@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
         public virtual ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities()
         {
-            return GetCachedClient(Client => new ResourceHealthMetadataEntityCollection(Client, Id));
+            return GetCachedClient(client => new ResourceHealthMetadataEntityCollection(client, Id));
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceHealthMetadataEntityResource>> GetResourceHealthMetadataEntityAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceHealthMetadataEntityResource> GetResourceHealthMetadataEntity(string name, CancellationToken cancellationToken = default)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
         public virtual TenantResourceHealthEventCollection GetTenantResourceHealthEvents()
         {
-            return GetCachedClient(Client => new TenantResourceHealthEventCollection(Client, Id));
+            return GetCachedClient(client => new TenantResourceHealthEventCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantResourceHealthEventResource> GetTenantResourceHealthEvent(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
         public virtual ServiceEmergingIssueCollection GetServiceEmergingIssues()
         {
-            return GetCachedClient(Client => new ServiceEmergingIssueCollection(Client, Id));
+            return GetCachedClient(client => new ServiceEmergingIssueCollection(client, Id));
         }
 
         /// <summary>

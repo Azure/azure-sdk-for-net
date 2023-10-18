@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "DatadogSubscriptionMockingExtension.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "DatadogSubscriptionMockingExtension.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,11 +90,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-<<<<<<< HEAD:sdk/datadog/Azure.ResourceManager.Datadog/src/Generated/Extensions/DatadogSubscriptionMockingExtension.cs
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "DatadogSubscriptionMockingExtension.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
-=======
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
->>>>>>> origin/main:sdk/datadog/Azure.ResourceManager.Datadog/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "DatadogSubscriptionMockingExtension.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public virtual DeviceProvisioningServiceCollection GetDeviceProvisioningServices()
         {
-            return GetCachedClient(Client => new DeviceProvisioningServiceCollection(Client, Id));
+            return GetCachedClient(client => new DeviceProvisioningServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, CancellationToken cancellationToken = default)
         {

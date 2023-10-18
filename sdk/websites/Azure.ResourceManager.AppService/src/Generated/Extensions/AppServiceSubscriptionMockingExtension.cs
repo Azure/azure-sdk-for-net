@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
         public virtual TopLevelDomainCollection GetTopLevelDomains()
         {
-            return GetCachedClient(Client => new TopLevelDomainCollection(Client, Id));
+            return GetCachedClient(client => new TopLevelDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TopLevelDomainResource> GetTopLevelDomain(string name, CancellationToken cancellationToken = default)
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of DeletedSiteResources and their operations over a DeletedSiteResource. </returns>
         public virtual DeletedSiteCollection GetDeletedSites()
         {
-            return GetCachedClient(Client => new DeletedSiteCollection(Client, Id));
+            return GetCachedClient(client => new DeletedSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeletedSiteResource>> GetDeletedSiteAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeletedSiteResource> GetDeletedSite(string deletedSiteId, CancellationToken cancellationToken = default)
         {

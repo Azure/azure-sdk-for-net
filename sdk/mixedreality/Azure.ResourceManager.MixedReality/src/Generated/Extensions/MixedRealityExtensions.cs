@@ -22,31 +22,26 @@ namespace Azure.ResourceManager.MixedReality
     {
         private static MixedRealityArmClientMockingExtension GetMixedRealityArmClientMockingExtension(ArmClient client)
         {
-            return client.GetCachedClient(client =>
-            {
-                return new MixedRealityArmClientMockingExtension(client);
-            });
+            return client.GetCachedClient(client0 => new MixedRealityArmClientMockingExtension(client0));
         }
 
         private static MixedRealityResourceGroupMockingExtension GetMixedRealityResourceGroupMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MixedRealityResourceGroupMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MixedRealityResourceGroupMockingExtension(client, resource.Id));
         }
 
         private static MixedRealitySubscriptionMockingExtension GetMixedRealitySubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new MixedRealitySubscriptionMockingExtension(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MixedRealitySubscriptionMockingExtension(client, resource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="SpatialAnchorsAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SpatialAnchorsAccountResource.CreateResourceIdentifier" /> to create a <see cref="SpatialAnchorsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityArmClientMockingExtension.GetSpatialAnchorsAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -59,6 +54,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <summary>
         /// Gets an object representing a <see cref="RemoteRenderingAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RemoteRenderingAccountResource.CreateResourceIdentifier" /> to create a <see cref="RemoteRenderingAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityArmClientMockingExtension.GetRemoteRenderingAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -68,7 +67,13 @@ namespace Azure.ResourceManager.MixedReality
             return GetMixedRealityArmClientMockingExtension(client).GetRemoteRenderingAccountResource(id);
         }
 
-        /// <summary> Gets a collection of SpatialAnchorsAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of SpatialAnchorsAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetSpatialAnchorsAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SpatialAnchorsAccountResources and their operations over a SpatialAnchorsAccountResource. </returns>
         public static SpatialAnchorsAccountCollection GetSpatialAnchorsAccounts(this ResourceGroupResource resourceGroupResource)
@@ -88,12 +93,16 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>SpatialAnchorsAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetSpatialAnchorsAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SpatialAnchorsAccountResource>> GetSpatialAnchorsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -112,19 +121,29 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>SpatialAnchorsAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetSpatialAnchorsAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SpatialAnchorsAccountResource> GetSpatialAnchorsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             return GetMixedRealityResourceGroupMockingExtension(resourceGroupResource).GetSpatialAnchorsAccount(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RemoteRenderingAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of RemoteRenderingAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetRemoteRenderingAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RemoteRenderingAccountResources and their operations over a RemoteRenderingAccountResource. </returns>
         public static RemoteRenderingAccountCollection GetRemoteRenderingAccounts(this ResourceGroupResource resourceGroupResource)
@@ -144,12 +163,16 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>RemoteRenderingAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetRemoteRenderingAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RemoteRenderingAccountResource>> GetRemoteRenderingAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -168,12 +191,16 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>RemoteRenderingAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealityResourceGroupMockingExtension.GetRemoteRenderingAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<RemoteRenderingAccountResource> GetRemoteRenderingAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -192,6 +219,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>CheckNameAvailabilityLocal</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.CheckMixedRealityNameAvailability(AzureLocation,MixedRealityNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -215,6 +246,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>CheckNameAvailabilityLocal</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.CheckMixedRealityNameAvailability(AzureLocation,MixedRealityNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -238,6 +273,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.GetSpatialAnchorsAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,6 +298,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.GetSpatialAnchorsAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -280,6 +323,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.GetRemoteRenderingAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,6 +348,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MixedRealitySubscriptionMockingExtension.GetRemoteRenderingAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <returns> An object representing collection of FluidRelayServerResources and their operations over a FluidRelayServerResource. </returns>
         public virtual FluidRelayServerCollection GetFluidRelayServers()
         {
-            return GetCachedClient(Client => new FluidRelayServerCollection(Client, Id));
+            return GetCachedClient(client => new FluidRelayServerCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FluidRelayServerResource>> GetFluidRelayServerAsync(string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FluidRelayServerResource> GetFluidRelayServer(string fluidRelayServerName, CancellationToken cancellationToken = default)
         {

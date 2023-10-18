@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
         public virtual AppServiceSourceControlCollection GetAppServiceSourceControls()
         {
-            return GetCachedClient(Client => new AppServiceSourceControlCollection(Client, Id));
+            return GetCachedClient(client => new AppServiceSourceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServiceSourceControlResource> GetAppServiceSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
         {

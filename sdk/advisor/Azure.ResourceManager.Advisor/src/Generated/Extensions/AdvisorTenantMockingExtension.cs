@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
         public virtual MetadataEntityCollection GetMetadataEntities()
         {
-            return GetCachedClient(Client => new MetadataEntityCollection(Client, Id));
+            return GetCachedClient(client => new MetadataEntityCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MetadataEntityResource> GetMetadataEntity(string name, CancellationToken cancellationToken = default)
         {

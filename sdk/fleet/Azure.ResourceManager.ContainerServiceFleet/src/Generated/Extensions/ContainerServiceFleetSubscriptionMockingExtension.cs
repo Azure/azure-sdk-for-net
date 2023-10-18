@@ -11,24 +11,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerServiceFleet;
 
-namespace Azure.ResourceManager.ContainerServiceFleet
+namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class ContainerServiceFleetSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _containerServiceFleetFleetsClientDiagnostics;
         private FleetsRestOperations _containerServiceFleetFleetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected ContainerServiceFleetSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceFleetSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetSubscriptionMockingExtension.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), ContainerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetSubscriptionMockingExtension.GetContainerServiceFleets", "value", "nextLink", cancellationToken);
         }
     }
 }

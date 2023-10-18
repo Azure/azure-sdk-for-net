@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
         public virtual QumuloFileSystemResourceCollection GetQumuloFileSystemResources()
         {
-            return GetCachedClient(Client => new QumuloFileSystemResourceCollection(Client, Id));
+            return GetCachedClient(client => new QumuloFileSystemResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<QumuloFileSystemResource> GetQumuloFileSystemResource(string fileSystemName, CancellationToken cancellationToken = default)
         {
