@@ -1313,7 +1313,7 @@ namespace Azure.Storage.Files.DataLake
                     umask: options?.AccessOptions?.Umask,
                     owner: options?.AccessOptions?.Owner,
                     group: options?.AccessOptions?.Group,
-                    SetAccessControlListrolList: options?.AccessOptions?.AccessControlList,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
                     leaseId: options?.LeaseId,
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
