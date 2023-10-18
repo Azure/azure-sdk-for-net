@@ -39,5 +39,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// The root squash to set for the share.  Only valid for NFS shares.
         /// </summary>
         public ShareRootSquash? RootSquash { get; set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2023-08-03 and above.
+        /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
+        /// If not specified, the default is true.
+        /// </summary>
+        public bool? EnableSnapshotVirtualDirectoryAccess { get; set; }
     }
 }
