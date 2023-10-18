@@ -501,6 +501,46 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [RecordedTest]
         public async Task GetPermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1499,6 +1539,53 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetPropertiesAsync(options),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetPropertiesAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs
+            };
+
+            try
+            {
+                await share.CreateAsync(options);
+
+                ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+                {
+                    EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                    AccessTier = ShareAccessTier.TransactionOptimized
+                };
+
+                // Act
+                await share.SetPropertiesAsync(setPropertiesOptions);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync();
+            }
         }
 
         [RecordedTest]
