@@ -882,13 +882,14 @@ namespace Azure.Storage.Files.Shares
             ShareClient share = GetShareClient(shareName);
 
             Response<ShareInfo> response = share.CreateInternal(
-                options?.Metadata,
-                options?.QuotaInGB,
-                options?.AccessTier,
-                options?.Protocols,
-                options?.RootSquash,
+                metadata: options?.Metadata,
+                quotaInGB: options?.QuotaInGB,
+                accessTier: options?.AccessTier,
+                enabledProtocols: options?.Protocols,
+                rootSquash: options?.RootSquash,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 async: false,
-                cancellationToken,
+                cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
                 .EnsureCompleted();
 
@@ -930,13 +931,14 @@ namespace Azure.Storage.Files.Shares
             ShareClient share = GetShareClient(shareName);
 
             Response<ShareInfo> response = await share.CreateInternal(
-                options?.Metadata,
-                options?.QuotaInGB,
-                options?.AccessTier,
-                options?.Protocols,
-                options?.RootSquash,
+                metadata: options?.Metadata,
+                quotaInGB: options?.QuotaInGB,
+                accessTier: options?.AccessTier,
+                enabledProtocols: options?.Protocols,
+                rootSquash: options?.RootSquash,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 async: true,
-                cancellationToken,
+                cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
                 .ConfigureAwait(false);
 
@@ -988,8 +990,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: false,
-                cancellationToken,
+                cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
                 .EnsureCompleted();
 
@@ -1041,8 +1044,9 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: true,
-                cancellationToken,
+                cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
                 .ConfigureAwait(false);
 

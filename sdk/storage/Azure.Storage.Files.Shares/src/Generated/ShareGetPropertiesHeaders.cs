@@ -54,5 +54,7 @@ namespace Azure.Storage.Files.Shares
         public string EnabledProtocols => _response.Headers.TryGetValue("x-ms-enabled-protocols", out string value) ? value : null;
         /// <summary> Valid for NFS shares only. </summary>
         public ShareRootSquash? RootSquash => _response.Headers.TryGetValue("x-ms-root-squash", out string value) ? value.ToShareRootSquash() : null;
+        /// <summary> Version 2023-08-03 and newer. Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled. This header is only returned for shares, not for snapshots. </summary>
+        public bool? EnabledSnapshotVirtualDirectoryAccess => _response.Headers.TryGetValue("x-ms-enable-snapshot-virtual-directory-access", out bool? value) ? value : null;
     }
 }
