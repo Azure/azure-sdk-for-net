@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2023-10-15)
+## 1.4.0 (2023-10-19)
 - Updated to support ANF api-version 2023-05-01
 ### Features Added
 - Added `QueryNetworkSiblingSetNetAppResource` and `UpdateNetworkSiblingSetNetAppResource` to allow clients to query and update the Networking features for a Networking siblingset related to a ANF Volume
