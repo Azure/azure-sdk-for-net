@@ -400,105 +400,105 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary>
-        ///     Begin a chat completions request and get an object that can stream response data as it becomes
-        ///     available.
-        /// </summary>
-        /// <param name="deploymentOrModelName">
-        ///     <inheritdoc
-        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
-        ///         path="/param[@name='deploymentOrModelName']"/>
-        /// </param>
-        /// <param name="chatCompletionsOptions">
-        ///     the chat completions options for this chat completions request.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
-        /// </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
-            string deploymentOrModelName,
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+        ///// <summary>
+        /////     Begin a chat completions request and get an object that can stream response data as it becomes
+        /////     available.
+        ///// </summary>
+        ///// <param name="deploymentOrModelName">
+        /////     <inheritdoc
+        /////         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
+        /////         path="/param[@name='deploymentOrModelName']"/>
+        ///// </param>
+        ///// <param name="chatCompletionsOptions">
+        /////     the chat completions options for this chat completions request.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        /////     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        ///// </param>
+        ///// <exception cref="ArgumentNullException">
+        /////     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        ///// </exception>
+        ///// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        ///// <returns> The response returned from the service. </returns>
+        //public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
+        //    string deploymentOrModelName,
+        //    ChatCompletionsOptions chatCompletionsOptions,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
+        //    Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
-            scope.Start();
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
+        //    scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
-            chatCompletionsOptions.InternalShouldStreamResponse = true;
+        //    chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+        //    chatCompletionsOptions.InternalShouldStreamResponse = true;
 
-            string operationPath = GetOperationPath(chatCompletionsOptions);
+        //    string operationPath = GetOperationPath(chatCompletionsOptions);
 
-            RequestContent content = chatCompletionsOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+        //    RequestContent content = chatCompletionsOptions.ToRequestContent();
+        //    RequestContext context = FromCancellationToken(cancellationToken);
 
-            try
-            {
-                // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
-                message.BufferResponse = false;
-                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        //    try
+        //    {
+        //        // Response value object takes IDisposable ownership of message
+        //        HttpMessage message = CreatePostRequestMessage(
+        //            deploymentOrModelName,
+        //            operationPath,
+        //            content,
+        //            context);
+        //        message.BufferResponse = false;
+        //        Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+        //        return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
-        /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
-            string deploymentOrModelName,
-            ChatCompletionsOptions chatCompletionsOptions,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+        ///// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
+        //public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
+        //    string deploymentOrModelName,
+        //    ChatCompletionsOptions chatCompletionsOptions,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
+        //    Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
-            scope.Start();
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
+        //    scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
-            chatCompletionsOptions.InternalShouldStreamResponse = true;
+        //    chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+        //    chatCompletionsOptions.InternalShouldStreamResponse = true;
 
-            string operationPath = GetOperationPath(chatCompletionsOptions);
+        //    string operationPath = GetOperationPath(chatCompletionsOptions);
 
-            RequestContent content = chatCompletionsOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+        //    RequestContent content = chatCompletionsOptions.ToRequestContent();
+        //    RequestContext context = FromCancellationToken(cancellationToken);
 
-            try
-            {
-                // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
-                message.BufferResponse = false;
-                Response baseResponse = await _pipeline.ProcessMessageAsync(
-                    message,
-                    context,
-                    cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        //    try
+        //    {
+        //        // Response value object takes IDisposable ownership of message
+        //        HttpMessage message = CreatePostRequestMessage(
+        //            deploymentOrModelName,
+        //            operationPath,
+        //            content,
+        //            context);
+        //        message.BufferResponse = false;
+        //        Response baseResponse = await _pipeline.ProcessMessageAsync(
+        //            message,
+        //            context,
+        //            cancellationToken).ConfigureAwait(false);
+        //        return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         ///     Begin a chat completions request and get an object that can stream response data as it becomes
