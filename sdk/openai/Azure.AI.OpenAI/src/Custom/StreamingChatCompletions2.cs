@@ -27,7 +27,13 @@ namespace Azure.AI.OpenAI
         public async IAsyncEnumerable<StreamingChatCompletionsUpdate> EnumerateChatUpdates(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            while (true)
+            // Open clarification points:
+            //  - Is it acceptable (or even desirable) that we won't pump the content stream until enumeration is requested?
+            //      - What should happen if the stream is held too long and it times out?
+            //  - Should enumeration be repeatable, e.g. via locally caching a collection of the updates?
+            //      - What if the initial enumeration was cancelled?
+            //  - Should enumeration be concurrency-protected, i.e. possible and correct on two threads concurrently?
+            while (!cancellationToken.IsCancellationRequested)
             {
                 SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
                 if (sseEvent == null)
@@ -54,6 +60,7 @@ namespace Azure.AI.OpenAI
                     yield return streamingChatCompletionsUpdate;
                 }
             }
+            _baseResponse?.ContentStream?.Dispose();
         }
 
         public void Dispose()

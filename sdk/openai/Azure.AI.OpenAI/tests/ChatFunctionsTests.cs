@@ -135,6 +135,55 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
     }
 
+    [RecordedTest]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    public async Task StreamingFunctionCallWorks2(OpenAIClientServiceTarget serviceTarget)
+    {
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
+
+        var requestOptions = new ChatCompletionsOptions()
+        {
+            Functions = { s_futureTemperatureFunction, s_wordOfTheDayFunction },
+            Messages =
+            {
+                new ChatMessage(ChatRole.System, "You are a helpful assistant."),
+                new ChatMessage(ChatRole.User, "What should I wear in Honolulu next Thursday?"),
+            },
+            MaxTokens = 512,
+        };
+
+        Response<StreamingChatCompletions2> response
+            = await client.GetChatCompletionsStreamingAsync2(deploymentOrModelName, requestOptions);
+        Assert.That(response, Is.Not.Null);
+
+        using StreamingChatCompletions2 streamingChatCompletions = response.Value;
+
+        ChatRole? streamedRole = default;
+        string functionName = null;
+        StringBuilder argumentsBuilder = new();
+
+        await foreach (StreamingChatCompletionsUpdate chatUpdate in streamingChatCompletions.EnumerateChatUpdates())
+        {
+            if (chatUpdate.Role.HasValue)
+            {
+                Assert.That(streamedRole, Is.Null, "role should only appear once");
+                streamedRole = chatUpdate.Role.Value;
+            }
+            if (!string.IsNullOrEmpty(chatUpdate.FunctionName))
+            {
+                Assert.That(functionName, Is.Null, "function_name should only appear once");
+                functionName = chatUpdate.FunctionName;
+            }
+            argumentsBuilder.Append(chatUpdate.FunctionArgumentsUpdate);
+        }
+
+        Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
+        Assert.That(functionName, Is.EqualTo(s_futureTemperatureFunction.Name));
+        Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
+    }
+
     private static readonly FunctionDefinition s_futureTemperatureFunction = new()
     {
         Name = "get_future_temperature",
@@ -155,6 +204,25 @@ public class ChatFunctionsTests : OpenAITestBase
                     Type = "string",
                     Description = "the day, month, and year for which to retrieve weather information"
                 }
+            }
+        },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+    };
+
+    private static readonly FunctionDefinition s_wordOfTheDayFunction = new()
+    {
+        Name = "get_word_of_the_day",
+        Description = "requests a featured word for a given day of the week",
+        Parameters = BinaryData.FromObjectAsJson(new
+        {
+            Type = "object",
+            Properties = new
+            {
+                DayOfWeek = new
+                {
+                    Type = "string",
+                    Description = "the name of a day of the week, like Wednesday",
+                },
             }
         },
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })

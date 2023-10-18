@@ -114,6 +114,8 @@ namespace Azure.AI.OpenAI
     {
         public AzureChatExtensionsMessageContext() { }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResults RequestContentFilterResults { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterResults ResponseContentFilterResults { get { throw null; } }
     }
     public partial class AzureChatExtensionsOptions
     {
@@ -479,7 +481,9 @@ namespace Azure.AI.OpenAI
         public virtual Azure.Response<Azure.AI.OpenAI.ChatCompletions> GetChatCompletions(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ChatCompletions>> GetChatCompletionsAsync(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions> GetChatCompletionsStreaming(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions2> GetChatCompletionsStreaming2(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions>> GetChatCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions2>> GetChatCompletionsStreamingAsync2(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentOrModelName, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -527,6 +531,27 @@ namespace Azure.AI.OpenAI
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.StreamingChatChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StreamingChatCompletions2 : System.IDisposable
+    {
+        internal StreamingChatCompletions2() { }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.StreamingChatCompletionsUpdate> EnumerateChatUpdates([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StreamingChatCompletionsUpdate
+    {
+        internal StreamingChatCompletionsUpdate() { }
+        public string AuthorName { get { throw null; } }
+        public Azure.AI.OpenAI.AzureChatExtensionsMessageContext AzureExtensionsContext { get { throw null; } }
+        public int? ChoiceIndex { get { throw null; } }
+        public string ContentUpdate { get { throw null; } }
+        public System.DateTimeOffset Created { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
+        public string FunctionArgumentsUpdate { get { throw null; } }
+        public string FunctionName { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.OpenAI.ChatRole? Role { get { throw null; } }
     }
     public partial class StreamingChoice
     {
