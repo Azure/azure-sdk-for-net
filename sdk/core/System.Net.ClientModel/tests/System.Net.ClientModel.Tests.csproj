@@ -4,7 +4,7 @@
 		<Description>Tests of System.Net.ClientModel types and public contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
-		<Nullable>enabled</Nullable>
+		<Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
