@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,6 +16,11 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
@@ -44,12 +50,22 @@ namespace Azure.Communication
             {
                 return null;
             }
+            Optional<Chat.CommunicationIdentifierModelKind> kind = default;
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new Chat.CommunicationIdentifierModelKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("rawId"u8))
                 {
                     rawId = property.Value.GetString();
@@ -83,7 +99,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }
