@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVirtualMachineConsoleResources and their operations over a NetworkCloudVirtualMachineConsoleResource. </returns>
         public virtual NetworkCloudVirtualMachineConsoleCollection GetNetworkCloudVirtualMachineConsoles()
         {
-            return GetCachedClient(Client => new NetworkCloudVirtualMachineConsoleCollection(Client, Id));
+            return GetCachedClient(client => new NetworkCloudVirtualMachineConsoleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVirtualMachineConsoleResource>> GetNetworkCloudVirtualMachineConsoleAsync(string consoleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVirtualMachineConsoleResource> GetNetworkCloudVirtualMachineConsole(string consoleName, CancellationToken cancellationToken = default)
         {

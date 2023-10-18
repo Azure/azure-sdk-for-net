@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -18,198 +19,172 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class to add extension methods to Azure.ResourceManager.ProviderHub. </summary>
     public static partial class ProviderHubExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ProviderHubArmClientMockingExtension GetProviderHubArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new ProviderHubArmClientMockingExtension(client0));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ProviderHubSubscriptionMockingExtension GetProviderHubSubscriptionMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new ProviderHubSubscriptionMockingExtension(client, resource.Id));
         }
-        #region CustomRolloutResource
+
         /// <summary>
         /// Gets an object representing a <see cref="CustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CustomRolloutResource.CreateResourceIdentifier" /> to create a <see cref="CustomRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetCustomRolloutResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomRolloutResource" /> object. </returns>
         public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CustomRolloutResource.ValidateResourceId(id);
-                return new CustomRolloutResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetCustomRolloutResource(id);
         }
-        #endregion
 
-        #region DefaultRolloutResource
         /// <summary>
         /// Gets an object representing a <see cref="DefaultRolloutResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DefaultRolloutResource.CreateResourceIdentifier" /> to create a <see cref="DefaultRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetDefaultRolloutResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DefaultRolloutResource" /> object. </returns>
         public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DefaultRolloutResource.ValidateResourceId(id);
-                return new DefaultRolloutResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetDefaultRolloutResource(id);
         }
-        #endregion
 
-        #region NotificationRegistrationResource
         /// <summary>
         /// Gets an object representing a <see cref="NotificationRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="NotificationRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetNotificationRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NotificationRegistrationResource" /> object. </returns>
         public static NotificationRegistrationResource GetNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NotificationRegistrationResource.ValidateResourceId(id);
-                return new NotificationRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNotificationRegistrationResource(id);
         }
-        #endregion
 
-        #region ProviderRegistrationResource
         /// <summary>
         /// Gets an object representing a <see cref="ProviderRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProviderRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetProviderRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProviderRegistrationResource" /> object. </returns>
         public static ProviderRegistrationResource GetProviderRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProviderRegistrationResource.ValidateResourceId(id);
-                return new ProviderRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetProviderRegistrationResource(id);
         }
-        #endregion
 
-        #region ResourceTypeRegistrationResource
         /// <summary>
         /// Gets an object representing a <see cref="ResourceTypeRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ResourceTypeRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetResourceTypeRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceTypeRegistrationResource" /> object. </returns>
         public static ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceTypeRegistrationResource.ValidateResourceId(id);
-                return new ResourceTypeRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetResourceTypeRegistrationResource(id);
         }
-        #endregion
 
-        #region ResourceTypeSkuResource
         /// <summary>
         /// Gets an object representing a <see cref="ResourceTypeSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetResourceTypeSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
         public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceTypeSkuResource.ValidateResourceId(id);
-                return new ResourceTypeSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetResourceTypeSkuResource(id);
         }
-        #endregion
 
-        #region NestedResourceTypeFirstSkuResource
         /// <summary>
         /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NestedResourceTypeFirstSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeFirstSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetNestedResourceTypeFirstSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource" /> object. </returns>
         public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeFirstSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeFirstSkuResource(id);
         }
-        #endregion
 
-        #region NestedResourceTypeSecondSkuResource
         /// <summary>
         /// Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NestedResourceTypeSecondSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeSecondSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetNestedResourceTypeSecondSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource" /> object. </returns>
         public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeSecondSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeSecondSkuResource(id);
         }
-        #endregion
 
-        #region NestedResourceTypeThirdSkuResource
         /// <summary>
         /// Gets an object representing a <see cref="NestedResourceTypeThirdSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NestedResourceTypeThirdSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeThirdSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubArmClientMockingExtension.GetNestedResourceTypeThirdSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource" /> object. </returns>
         public static NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeThirdSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeThirdSkuResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of ProviderRegistrationResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of ProviderRegistrationResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubSubscriptionMockingExtension.GetProviderRegistrations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
         public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProviderRegistrations();
+            return GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistrations();
         }
 
         /// <summary>
@@ -224,16 +199,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// <description>ProviderRegistrations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubSubscriptionMockingExtension.GetProviderRegistrationAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetProviderRegistrations().GetAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
+            return await GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistrationAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,16 +227,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// <description>ProviderRegistrations_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="ProviderHubSubscriptionMockingExtension.GetProviderRegistration(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ProviderRegistrationResource> GetProviderRegistration(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetProviderRegistrations().Get(providerNamespace, cancellationToken);
+            return GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistration(providerNamespace, cancellationToken);
         }
     }
 }
