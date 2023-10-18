@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkResourceListResult. </summary>
         internal HardwareSecurityModulesPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<HardwareSecurityModulesPrivateLinkResource>();
+            Value = new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<HardwareSecurityModulesPrivateLinkResource> value)
+        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<HardwareSecurityModulesPrivateLinkResource> Value { get; }
+        public IReadOnlyList<HardwareSecurityModulesPrivateLinkData> Value { get; }
     }
 }

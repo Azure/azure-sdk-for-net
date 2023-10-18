@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> The name of the connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectorResourceFormatResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectorResourceFormatConnectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectorResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectorResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> The name of the connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual NullableResponse<ConnectorResourceFormatResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectorResourceFormatConnectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectorResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectorResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ConnectorResourceFormatResource> IEnumerable<ConnectorResourceFormatResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

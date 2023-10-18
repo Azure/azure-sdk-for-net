@@ -134,6 +134,18 @@ namespace Azure.Communication.CallAutomation
                     return SendDtmfCompleted.Deserialize(eventData);
                 case nameof(SendDtmfFailed):
                     return SendDtmfFailed.Deserialize(eventData);
+                case nameof(CancelAddParticipantFailed):
+                    return CancelAddParticipantFailed.Deserialize(eventData);
+                case nameof(AddParticipantCancelled):
+                    return AddParticipantCancelled.Deserialize(eventData);
+                case nameof(TranscriptionStarted):
+                    return TranscriptionStarted.Deserialize(eventData);
+                case nameof(TranscriptionStopped):
+                    return TranscriptionStopped.Deserialize(eventData);
+                case nameof(TranscriptionResumed):
+                    return TranscriptionResumed.Deserialize(eventData);
+                case nameof(TranscriptionFailed):
+                    return TranscriptionFailed.Deserialize(eventData);
                 #region Dialog
                 case nameof(DialogCompleted):
                     return DialogCompleted.Deserialize(eventData);

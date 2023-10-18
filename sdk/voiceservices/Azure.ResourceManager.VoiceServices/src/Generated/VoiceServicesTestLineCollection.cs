@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.VoiceServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VoiceServicesTestLineResource>> GetIfExistsAsync(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _voiceServicesTestLineTestLinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual NullableResponse<VoiceServicesTestLineResource> GetIfExists(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _voiceServicesTestLineTestLinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<VoiceServicesTestLineResource> IEnumerable<VoiceServicesTestLineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

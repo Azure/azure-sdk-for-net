@@ -18,23 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userStorageKey = default;
-            Optional<string> userStorageResourceId = default;
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
             Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
+            Optional<string> userStorageArmId = default;
+            Optional<string> userStorageKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userStorageKey"u8))
-                {
-                    userStorageKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userStorageResourceId"u8))
-                {
-                    userStorageResourceId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("appInsightsInstrumentationKey"u8))
                 {
                     appInsightsInstrumentationKey = property.Value.GetString();
@@ -58,8 +48,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("userStorageArmId"u8))
+                {
+                    userStorageArmId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userStorageKey"u8))
+                {
+                    userStorageKey = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value);
+            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value);
         }
     }
 }

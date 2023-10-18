@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkPacketBrokerResource>> GetIfExistsAsync(string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkPacketBrokerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkPacketBrokerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkPacketBrokerResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkPacketBrokerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public virtual NullableResponse<NetworkPacketBrokerResource> GetIfExists(string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkPacketBrokerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkPacketBrokerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkPacketBrokerResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkPacketBrokerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkPacketBrokerResource> IEnumerable<NetworkPacketBrokerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
