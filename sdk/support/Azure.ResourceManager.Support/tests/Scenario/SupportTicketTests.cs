@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Create()
         {
-            var supportTicketName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var supportTicketName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}";
             await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketData());
             var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
             Assert.IsNotNull(supportTicket);

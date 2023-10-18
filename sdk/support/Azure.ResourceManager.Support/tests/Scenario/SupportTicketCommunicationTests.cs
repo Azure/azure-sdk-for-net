@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task CheckCommunicationNameAvailability()
         {
-            var communicationName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var communicationName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}";
             var content = new SupportNameAvailabilityContent(communicationName, SupportResourceType.MicrosoftSupportCommunications);
             var result = await _subscriptionSupportTicketResource.CheckCommunicationNameAvailabilityAsync(content);
             Assert.IsNotNull(result);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Create()
         {
-            var communicationName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var communicationName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}";
             var resource = SupportTicketCommunicationResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketName, communicationName);
             var communicationData = new SupportTicketCommunicationData(resource, communicationName, resource.ResourceType, new ResourceManager.Models.SystemData(), SupportTicketCommunicationType.Web, SupportTicketCommunicationDirection.Outbound, "dotnet sdk test", "dotnet sdk test", "dotnet sdk test", DateTimeOffset.UtcNow);
             await _supportTicketCommunicationCollection.CreateOrUpdateAsync(WaitUntil.Completed, communicationName, communicationData);

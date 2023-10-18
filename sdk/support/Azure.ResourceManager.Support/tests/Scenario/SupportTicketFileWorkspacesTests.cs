@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Create()
         {
-            var workspaceName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var workspaceName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}";
             await _subscriptionFileWorkspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName);
             var supportTicketFileWorkspace = await _subscriptionFileWorkspaceCollection.GetAsync(workspaceName);
             ValidateSupportTicketFileWorkspaceData(supportTicketFileWorkspace.Value.Data, workspaceName);
