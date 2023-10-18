@@ -211,13 +211,17 @@ Response<StreamingChatCompletions> response = await client.GetChatCompletionsStr
     chatCompletionsOptions);
 using StreamingChatCompletions streamingChatCompletions = response.Value;
 
-await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in streamingChatCompletions.EnumerateChatUpdates())
 {
-    await foreach (ChatMessage message in choice.GetMessageStreaming())
+    if (chatUpdate.Role.HasValue)
     {
-        Console.Write(message.Content);
+        Console.Write($"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ");
     }
-    Console.WriteLine();
+    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+    {
+        Console.Write(chatUpdate.ContentUpdate);
+    }
 }
 ```
 

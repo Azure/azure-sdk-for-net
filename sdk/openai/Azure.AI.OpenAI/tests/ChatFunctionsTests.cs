@@ -154,11 +154,11 @@ public class ChatFunctionsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
-        Response<StreamingChatCompletions2> response
-            = await client.GetChatCompletionsStreamingAsync2(deploymentOrModelName, requestOptions);
+        Response<StreamingChatCompletions> response
+            = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
         Assert.That(response, Is.Not.Null);
 
-        using StreamingChatCompletions2 streamingChatCompletions = response.Value;
+        using StreamingChatCompletions streamingChatCompletions = response.Value;
 
         ChatRole? streamedRole = default;
         string functionName = null;

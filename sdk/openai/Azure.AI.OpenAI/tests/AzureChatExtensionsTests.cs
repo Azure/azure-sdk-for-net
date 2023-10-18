@@ -186,13 +186,13 @@ public class AzureChatExtensionsTests : OpenAITestBase
             },
         };
 
-        Response<StreamingChatCompletions2> response = await client.GetChatCompletionsStreamingAsync2(
+        Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
             deploymentOrModelName,
             requestOptions);
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.Not.Null);
 
-        using StreamingChatCompletions2 streamingChatCompletions = response.Value;
+        using StreamingChatCompletions streamingChatCompletions = response.Value;
 
         ChatRole? streamedRole = null;
         IEnumerable<ChatMessage> azureContextMessages = null;

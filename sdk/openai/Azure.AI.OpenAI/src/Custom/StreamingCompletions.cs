@@ -17,169 +17,63 @@ namespace Azure.AI.OpenAI
     {
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
-        private readonly IList<Completions> _baseCompletions;
-        private readonly object _baseCompletionsLock = new();
-        private readonly IList<StreamingChoice> _streamingChoices;
-        private readonly object _streamingChoicesLock = new();
-        private readonly AsyncAutoResetEvent _updateAvailableEvent;
-        private bool _streamingTaskComplete;
+        private List<Completions> _cachedCompletions;
         private bool _disposedValue;
-        private Exception _pumpException;
-
-        /// <summary>
-        /// Gets the earliest Completion creation timestamp associated with this streamed response.
-        /// </summary>
-        public DateTimeOffset Created => GetLocked(() => _baseCompletions.Last().Created);
-
-        /// <summary>
-        /// Gets the unique identifier associated with this streaming Completions response.
-        /// </summary>
-        public string Id => GetLocked(() => _baseCompletions.Last().Id);
-
-        /// <summary>
-        /// Content filtering results for zero or more prompts in the request. In a streaming request,
-        /// results for different prompts may arrive at different times or in different orders.
-        /// </summary>
-        public IReadOnlyList<PromptFilterResult> PromptFilterResults
-            => GetLocked(() =>
-            {
-                return _baseCompletions.Where(singleBaseCompletion => singleBaseCompletion.PromptFilterResults != null)
-                    .SelectMany(singleBaseCompletion => singleBaseCompletion.PromptFilterResults)
-                    .OrderBy(singleBaseCompletion => singleBaseCompletion.PromptIndex)
-                    .ToList();
-            });
 
         internal StreamingCompletions(Response response)
         {
             _baseResponse = response;
             _baseResponseReader = new SseReader(response.ContentStream);
-            _updateAvailableEvent = new AsyncAutoResetEvent();
-            _baseCompletions = new List<Completions>();
-            _streamingChoices = new List<StreamingChoice>();
-            _streamingTaskComplete = false;
-            _ = Task.Run(async () =>
-            {
-                try
-                {
-                    while (true)
-                    {
-                        SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
-                        if (sseEvent == null)
-                        {
-                            _baseResponse.ContentStream?.Dispose();
-                            break;
-                        }
-
-                        ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
-                        if (!name.Span.SequenceEqual("data".AsSpan()))
-                            throw new InvalidDataException();
-
-                        ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
-                        if (value.Span.SequenceEqual("[DONE]".AsSpan()))
-                        {
-                            _baseResponse.ContentStream?.Dispose();
-                            break;
-                        }
-
-                        JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-                        Completions completionsFromSse = Completions.DeserializeCompletions(sseMessageJson.RootElement);
-
-                        lock (_baseCompletionsLock)
-                        {
-                            _baseCompletions.Add(completionsFromSse);
-                        }
-
-                        foreach (Choice choiceFromSse in completionsFromSse.Choices)
-                        {
-                            lock (_streamingChoicesLock)
-                            {
-                                StreamingChoice existingStreamingChoice = _streamingChoices
-                                    .FirstOrDefault(choice => choice.Index == choiceFromSse.Index);
-                                if (existingStreamingChoice == null)
-                                {
-                                    StreamingChoice newStreamingChoice = new(choiceFromSse);
-                                    _streamingChoices.Add(newStreamingChoice);
-                                    _updateAvailableEvent.Set();
-                                }
-                                else
-                                {
-                                    existingStreamingChoice.UpdateFromEventStreamChoice(choiceFromSse);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception pumpException)
-                {
-                    _pumpException = pumpException;
-                }
-                finally
-                {
-                    lock (_streamingChoicesLock)
-                    {
-                        // If anything went wrong and a StreamingChoice didn't naturally determine it was complete
-                        // based on a non-null finish reason, ensure that nothing's left incomplete (and potentially
-                        // hanging!) now.
-                        foreach (StreamingChoice streamingChoice in _streamingChoices)
-                        {
-                            streamingChoice.EnsureFinishStreaming(_pumpException);
-                        }
-                    }
-                    _streamingTaskComplete = true;
-                    _updateAvailableEvent.Set();
-                }
-            });
+            _cachedCompletions = new();
         }
 
-        public async IAsyncEnumerable<StreamingChoice> GetChoicesStreaming(
+        internal StreamingCompletions(IEnumerable<Completions> completions)
+        {
+            _cachedCompletions.AddRange(completions);
+        }
+
+        public async IAsyncEnumerable<Completions> EnumerateCompletions(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            bool isFinalIndex = false;
-            for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
+            if (_cachedCompletions.Any())
             {
-                bool doneWaiting = false;
-                while (!doneWaiting)
+                foreach (Completions completions in _cachedCompletions)
                 {
-                    lock (_streamingChoicesLock)
-                    {
-                        doneWaiting = _streamingTaskComplete || i < _streamingChoices.Count;
-                        isFinalIndex = _streamingTaskComplete && i >= _streamingChoices.Count - 1;
-                    }
-
-                    if (!doneWaiting)
-                    {
-                        await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
-                    }
+                    yield return completions;
                 }
-
-                if (_pumpException != null)
-                {
-                    throw _pumpException;
-                }
-
-                StreamingChoice newChoice = null;
-                lock (_streamingChoicesLock)
-                {
-                    if (i < _streamingChoices.Count)
-                    {
-                        newChoice = _streamingChoices[i];
-                    }
-                }
-
-                if (newChoice != null)
-                {
-                    yield return newChoice;
-                }
+                yield break;
             }
-        }
 
-        internal StreamingCompletions(
-            Completions baseCompletions = null,
-            IList<StreamingChoice> streamingChoices = null)
-        {
-            _baseCompletions.Add(baseCompletions);
-            _streamingChoices = streamingChoices;
-            _streamingTaskComplete = true;
+            // Open clarification points:
+            //  - Is it acceptable (or even desirable) that we won't pump the content stream until enumeration is requested?
+            //      - What should happen if the stream is held too long and it times out?
+            //  - Should enumeration be concurrency-protected, i.e. possible and correct on two threads concurrently?
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                if (sseEvent == null)
+                {
+                    _baseResponse.ContentStream?.Dispose();
+                    break;
+                }
+
+                ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
+                if (!name.Span.SequenceEqual("data".AsSpan()))
+                    throw new InvalidDataException();
+
+                ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
+                if (value.Span.SequenceEqual("[DONE]".AsSpan()))
+                {
+                    _baseResponse.ContentStream?.Dispose();
+                    break;
+                }
+
+                JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
+                Completions sseCompletions = Completions.DeserializeCompletions(sseMessageJson.RootElement);
+                _cachedCompletions.Add(sseCompletions);
+                yield return sseCompletions;
+            }
+            _baseResponse?.ContentStream?.Dispose();
         }
 
         public void Dispose()
@@ -198,14 +92,6 @@ namespace Azure.AI.OpenAI
                 }
 
                 _disposedValue = true;
-            }
-        }
-
-        private T GetLocked<T>(Func<T> func)
-        {
-            lock (_baseCompletionsLock)
-            {
-                return func.Invoke();
             }
         }
     }

@@ -31,49 +31,51 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary>
-        /// Initializes a new instance of StreamingChoice for tests and mocking.
-        /// </summary>
-        /// <param name="originalBaseChoice"> An underlying Choice for this streaming representation </param>
-        /// <returns> A new instance of StreamingChoice </returns>
-        public static StreamingChoice StreamingChoice(Choice originalBaseChoice = null)
-        {
-            return new StreamingChoice(originalBaseChoice);
-        }
-
-        /// <summary>
         /// Initializes a new instance of StreamingCompletions for tests and mocking.
         /// </summary>
-        /// <param name="baseCompletions"> The non-streaming completions to base this streaming representation on </param>
-        /// <param name="streamingChoices"> The streaming choices associated with this streaming completions </param>
-        /// <returns> A new instance of StreamingCompletions </returns>
-        public static StreamingCompletions StreamingCompletions(
-            Completions baseCompletions = null,
-            List<StreamingChoice> streamingChoices = null)
+        /// <param name="completions"> A static set of Completions instances to use for tests and mocking. </param>
+        /// <returns> A new instance of StreamingCompletions. </returns>
+        public static StreamingCompletions StreamingCompletions(IEnumerable<Completions> completions)
         {
-            return new StreamingCompletions(baseCompletions, streamingChoices);
+            return new StreamingCompletions(completions);
         }
 
-        /// <summary>
-        /// Initializes a new instance of StreamingChatChoice for tests and mocking.
-        /// </summary>
-        /// <param name="originalBaseChoice"> An underlying ChatChoice for this streaming representation </param>
-        /// <returns> A new instance of StreamingChatChoice </returns>
-        public static StreamingChatChoice StreamingChatChoice(ChatChoice originalBaseChoice = null)
+        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
+            string id,
+            DateTimeOffset created,
+            int? choiceIndex = null,
+            ChatRole? role = null,
+            string authorName = null,
+            string contentUpdate = null,
+            CompletionsFinishReason? finishReason = null,
+            string functionName = null,
+            string functionArgumentsUpdate = null,
+            AzureChatExtensionsMessageContext azureExtensionsContext = null)
         {
-            return new StreamingChatChoice(originalBaseChoice);
+            return new StreamingChatCompletionsUpdate(
+                id,
+                created,
+                choiceIndex,
+                role,
+                authorName,
+                contentUpdate,
+                finishReason,
+                functionName,
+                functionArgumentsUpdate,
+                azureExtensionsContext);
         }
 
         /// <summary>
         /// Initializes a new instance of StreamingChatCompletions for tests and mocking.
         /// </summary>
-        /// <param name="baseChatCompletions"> The non-streaming completions to base this streaming representation on </param>
-        /// <param name="streamingChatChoices"> The streaming choices associated with this streaming chat completions </param>
+        /// <param name="updates">
+        /// A static collection of StreamingChatCompletionUpdates to use for tests and mocking.
+        /// </param>
         /// <returns> A new instance of StreamingChatCompletions </returns>
         public static StreamingChatCompletions StreamingChatCompletions(
-            ChatCompletions baseChatCompletions = null,
-            List<StreamingChatChoice> streamingChatChoices = null)
+            IEnumerable<StreamingChatCompletionsUpdate> updates)
         {
-            return new StreamingChatCompletions(baseChatCompletions, streamingChatChoices);
+            return new StreamingChatCompletions(updates);
         }
 
         /// <summary> Initializes a new instance of AudioTranscription. </summary>

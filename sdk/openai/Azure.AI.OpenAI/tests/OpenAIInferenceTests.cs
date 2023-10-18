@@ -293,11 +293,11 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<StreamingChatCompletions2> streamingResponse
-                = await client.GetChatCompletionsStreamingAsync2(deploymentOrModelName, requestOptions);
+            Response<StreamingChatCompletions> streamingResponse
+                = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
             Assert.That(streamingResponse, Is.Not.Null);
-            using StreamingChatCompletions2 streamingChatCompletions = streamingResponse.Value;
-            Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions2>());
+            using StreamingChatCompletions streamingChatCompletions = streamingResponse.Value;
+            Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions>());
 
             StringBuilder contentBuilder = new StringBuilder();
             bool gotRole = false;
@@ -440,9 +440,6 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task StreamingCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            // Temporary test note: at the time of authoring, content filter results aren't included for completions
-            // with the latest 2023-07-01-preview service API version. We'll manually configure one version behind
-            // pending the latest version having these results enabled.
             OpenAIClient client = GetTestClient(serviceTarget);
 
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
@@ -467,50 +464,67 @@ namespace Azure.AI.OpenAI.Tests
             // implement IDisposable or otherwise ensure that an `IDisposable` underlying `.Value` is disposed.
             using StreamingCompletions responseValue = response.Value;
 
-            int originallyEnumeratedChoices = 0;
-            var originallyEnumeratedTextParts = new List<List<string>>();
+            Dictionary<int, PromptFilterResult> promptFilterResultsByPromptIndex = new();
+            Dictionary<int, CompletionsFinishReason> finishReasonsByChoiceIndex = new();
+            Dictionary<int, StringBuilder> textBuildersByChoiceIndex = new();
 
-            await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
+            await foreach (Completions streamingCompletions in responseValue.EnumerateCompletions())
             {
-                List<string> textPartsForChoice = new();
-                StringBuilder choiceTextBuilder = new();
-                await foreach (string choiceTextPart in choice.GetTextStreaming())
+                if (streamingCompletions.PromptFilterResults is not null)
                 {
-                    choiceTextBuilder.Append(choiceTextPart);
-                    textPartsForChoice.Add(choiceTextPart);
+                    foreach (PromptFilterResult promptFilterResult in streamingCompletions.PromptFilterResults)
+                    {
+                        // When providing multiple prompts, the filter results may arrive across separate messages and
+                        // the payload array index may differ from the in-data index property
+                        AssertExpectedContentFilterResults(promptFilterResult.ContentFilterResults, serviceTarget);
+                        promptFilterResultsByPromptIndex[promptFilterResult.PromptIndex] = promptFilterResult;
+                    }
                 }
-                Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
-                Assert.That(choice.LogProbabilityModel, Is.Not.Null);
-                AssertExpectedContentFilterResults(choice.ContentFilterResults, serviceTarget);
-                originallyEnumeratedChoices++;
-                originallyEnumeratedTextParts.Add(textPartsForChoice);
+                foreach (Choice choice in streamingCompletions.Choices)
+                {
+                    if (choice.FinishReason.HasValue)
+                    {
+                        // Each choice should only receive a single finish reason and, in this case, it should be
+                        // 'stop'
+                        Assert.That(!finishReasonsByChoiceIndex.ContainsKey(choice.Index));
+                        Assert.That(choice.FinishReason.Value == CompletionsFinishReason.Stopped);
+                        finishReasonsByChoiceIndex[choice.Index] = choice.FinishReason.Value;
+                    }
+
+                    // The 'Text' property of streamed Completions will only contain the incremental update for a
+                    // choice; these should be appended to each other to form the complete text
+                    if (!textBuildersByChoiceIndex.ContainsKey(choice.Index))
+                    {
+                        textBuildersByChoiceIndex[choice.Index] = new();
+                    }
+                    textBuildersByChoiceIndex[choice.Index].Append(choice.Text);
+
+                    Assert.That(choice.LogProbabilityModel, Is.Not.Null);
+
+                    if (!string.IsNullOrEmpty(choice.Text))
+                    {
+                        // Content filter results are only populated when content (text) is present
+                        AssertExpectedContentFilterResults(choice.ContentFilterResults, serviceTarget);
+                    }
+                }
             }
 
-            // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
-            // choice has arrived.
-            Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
-            Assert.That(responseValue.Id, Is.Not.Null.Or.Empty);
-            Assert.That(responseValue.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
-            Assert.That(responseValue.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+            int expectedPromptCount = requestOptions.Prompts.Count;
+            int expectedChoiceCount = expectedPromptCount * (requestOptions.ChoicesPerPrompt ?? 1);
 
-            AssertExpectedPromptFilterResults(
-                responseValue.PromptFilterResults,
-                serviceTarget,
-                expectedCount: requestOptions.Prompts.Count * (requestOptions.ChoicesPerPrompt ?? 1));
-
-            // Validate stability of enumeration (non-cancelled case)
-            IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
-                responseValue.GetChoicesStreaming());
-            Assert.AreEqual(originallyEnumeratedChoices, secondPassChoices.Count);
-            for (int i = 0; i < secondPassChoices.Count; i++)
+            if (serviceTarget == OpenAIClientServiceTarget.Azure)
             {
-                IReadOnlyList<string> secondPassTextParts = await GetBlockingListFromIAsyncEnumerable(
-                    secondPassChoices[i].GetTextStreaming());
-                Assert.AreEqual(originallyEnumeratedTextParts[i].Count, secondPassTextParts.Count);
-                for (int j = 0; j < originallyEnumeratedTextParts[i].Count; j++)
+                for (int i = 0; i < expectedPromptCount; i++)
                 {
-                    Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
+                    Assert.That(promptFilterResultsByPromptIndex.ContainsKey(i));
                 }
+            }
+
+            for (int i = 0; i < expectedChoiceCount; i++)
+            {
+                Assert.That(finishReasonsByChoiceIndex.ContainsKey(i));
+                Assert.That(textBuildersByChoiceIndex.ContainsKey(i));
+                Assert.That(textBuildersByChoiceIndex[i].ToString(), Is.Not.Null.Or.Empty);
             }
         }
 
