@@ -80,9 +80,10 @@ namespace Azure.Communication.Chat
         /// <param name="message"> Chat message. </param>
         /// <param name="topic"> Topic of the message content. </param>
         /// <param name="communicationUserIdentifier"> Communication user identifier.</param>
-        /// <param name="participants"> List of chat participants </param>
+        /// <param name="participants"> List of chat participants. </param>
+        /// <param name="attachments"> List of chat attachments. </param>
         /// <returns>A new <see cref="ChatMessageContent"/> instance for mocking.</returns>
-        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
+        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IReadOnlyList<ChatAttachment> attachments) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
