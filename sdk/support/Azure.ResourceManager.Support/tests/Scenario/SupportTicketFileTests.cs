@@ -57,14 +57,25 @@ namespace Azure.ResourceManager.Support.Tests
         }
 
         [RecordedTest]
-        public async Task Create()
+        public async Task CreateAndUpload()
         {
+            //  Create file
             var fileName = $"dotnet_{DateTime.Now.Ticks.ToString()}.txt";
             var resource = SupportTicketFileResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName, fileName);
-            var fileData = new FileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 2621440, 2796204, 2);
+            var fileData = new FileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 4, 4, 1);
             await _supportTicketFileCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, fileData);
             var supportTicketFile = await _supportTicketFileCollection.GetAsync(fileName);
             ValidateSupportTicketFileData(supportTicketFile.Value.Data, fileName);
+
+            //  Upload content
+            var fileSize = supportTicketFile.Value.Data.FileSize;
+            var uploadFile = new UploadFile() { ChunkIndex = 0, Content = "VGVzdA==" };
+            await supportTicketFile.Value.UploadAsync(uploadFile);
+            supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
+            Assert.IsNotNull(supportTicketFile);
+            Assert.IsNotEmpty(supportTicketFile.Value.Data.Id);
+            Assert.AreEqual(supportTicketFile.Value.Data.Name, _existSupportTicketFileName);
+            Assert.Greater(supportTicketFile.Value.Data.FileSize, fileSize);
         }
 
         private void ValidateSupportTicketFileData(FileDetailData supportTicketFile, string fileName)
