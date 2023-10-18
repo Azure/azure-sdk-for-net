@@ -244,7 +244,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
+        /// A value that specifies whether <see cref="SearchResult{T}.Captions"/> should be returned as part of the search response.
         /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>
         public QueryCaptionType? QueryCaption { get; set; }
