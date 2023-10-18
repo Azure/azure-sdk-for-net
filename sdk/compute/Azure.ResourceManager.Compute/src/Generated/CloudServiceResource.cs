@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CloudServiceRoleInstanceResources and their operations over a CloudServiceRoleInstanceResource. </returns>
         public virtual CloudServiceRoleInstanceCollection GetCloudServiceRoleInstances()
         {
-            return GetCachedClient(Client => new CloudServiceRoleInstanceCollection(Client, Id));
+            return GetCachedClient(client => new CloudServiceRoleInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetCloudServiceRoleInstanceAsync(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CloudServiceRoleInstanceResource> GetCloudServiceRoleInstance(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CloudServiceRoleResources and their operations over a CloudServiceRoleResource. </returns>
         public virtual CloudServiceRoleCollection GetCloudServiceRoles()
         {
-            return GetCachedClient(Client => new CloudServiceRoleCollection(Client, Id));
+            return GetCachedClient(client => new CloudServiceRoleCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudServiceRoleResource>> GetCloudServiceRoleAsync(string roleName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CloudServiceRoleResource> GetCloudServiceRole(string roleName, CancellationToken cancellationToken = default)
         {
