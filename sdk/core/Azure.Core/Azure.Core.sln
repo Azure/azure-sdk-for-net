@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel.Tests.Clients", "..\System.Net.ClientModel\tests\clients\System.Net.ClientModel.Tests.Clients.csproj", "{F7C567CE-4A30-4674-8874-3D1D9058B7F0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.ClientModel.Tests.Perf.Internal", "..\System.Net.ClientModel\tests\perf.internal\System.Net.ClientModel.Tests.Perf.Internal.csproj", "{0935301F-D99D-499D-A0B2-CF48287597D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{F7C567CE-4A30-4674-8874-3D1D9058B7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C567CE-4A30-4674-8874-3D1D9058B7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C567CE-4A30-4674-8874-3D1D9058B7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0935301F-D99D-499D-A0B2-CF48287597D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0935301F-D99D-499D-A0B2-CF48287597D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0935301F-D99D-499D-A0B2-CF48287597D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0935301F-D99D-499D-A0B2-CF48287597D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-		<Description>Tests of System.Net.ClientModel types and public contracts.</Description>
+    <Description>Tests of System.Net.ClientModel types and public contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
-		<Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
@@ -18,10 +18,11 @@
     <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
     <ProjectReference Include="clients\System.Net.ClientModel.Tests.Clients.csproj" />
   </ItemGroup>
-	
-	<ItemGroup>
-		<Compile Remove="clients/**" />
-		<Compile Remove="internal/**" />
-	</ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="clients/**" />
+    <Compile Remove="internal/**" />
+    <Compile Remove="perf.internal/**" />
+  </ItemGroup>
 
 </Project>

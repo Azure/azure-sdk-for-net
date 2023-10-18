@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-		<Description>Tests of System.Net.ClientModel internal types and internal contracts.</Description>
+    <Description>Tests of System.Net.ClientModel internal types and internal contracts.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
-		<Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
