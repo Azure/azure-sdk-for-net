@@ -3,7 +3,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Azure.Identity.BrokeredAuthentication;
+using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 

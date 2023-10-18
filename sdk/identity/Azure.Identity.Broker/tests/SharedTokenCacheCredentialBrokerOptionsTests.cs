@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
-namespace Azure.Identity.BrokeredAuthentication.Tests
+namespace Azure.Identity.Broker.Tests
 {
     public class SharedTokenCacheCredentialBrokerOptionsTests
     {
