@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Tests;
-using System.IO;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     [ShareClientTestFixture]
-    public class ShareFileStartTransferUploadTests : StartTransferUploadTestBase<
+    public class ShareFileStartTransferDownloadTests : StartTransferDownloadTestBase<
         ShareServiceClient,
         ShareClient,
         ShareFileClient,
@@ -22,37 +25,36 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private const string _fileResourcePrefix = "test-file-";
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
 
-        public ShareFileStartTransferUploadTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+        public ShareFileStartTransferDownloadTests(
+            bool async,
+            ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
         }
-
-        protected override async Task<bool> ExistsAsync(ShareFileClient objectClient)
-            => await objectClient.ExistsAsync();
 
         protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await ClientBuilder.GetTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetObjectClientAsync(
             ShareClient container,
-            long? resourceLength = null,
-            bool createResource = false,
-            string objectName = null,
+            long? objectLength,
+            string objectName,
+            bool createObject = false,
             ShareClientOptions options = null,
-            Stream contents = default)
+            Stream contents = null)
         {
             objectName ??= GetNewObjectName();
-            if (createResource)
+            if (createObject)
             {
-                if (!resourceLength.HasValue)
+                if (!objectLength.HasValue)
                 {
-                    throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(resourceLength)}.");
+                    throw new InvalidOperationException($"Cannot create share file without size specified.");
                 }
                 ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
-                await fileClient.CreateAsync(resourceLength.Value);
+                await fileClient.CreateAsync(objectLength.Value);
 
-                if (contents != default)
+                if (contents != default && contents.Length > 0)
                 {
                     await fileClient.UploadAsync(contents);
                 }
