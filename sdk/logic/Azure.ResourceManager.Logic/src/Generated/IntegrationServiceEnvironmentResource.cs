@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationServiceEnvironmentManagedApiResources and their operations over a IntegrationServiceEnvironmentManagedApiResource. </returns>
         public virtual IntegrationServiceEnvironmentManagedApiCollection GetIntegrationServiceEnvironmentManagedApis()
         {
-            return GetCachedClient(Client => new IntegrationServiceEnvironmentManagedApiCollection(Client, Id));
+            return GetCachedClient(client => new IntegrationServiceEnvironmentManagedApiCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="apiName"> The api name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> GetIntegrationServiceEnvironmentManagedApiAsync(string apiName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="apiName"> The api name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> GetIntegrationServiceEnvironmentManagedApi(string apiName, CancellationToken cancellationToken = default)
         {
