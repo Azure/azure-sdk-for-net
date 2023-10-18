@@ -1091,6 +1091,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsRouterJobReceivedEventData() { }
         public string ClassificationPolicyId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.AcsRouterJobStatus? JobStatus { get { throw null; } }
         public int? Priority { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> RequestedWorkerSelectors { get { throw null; } }
