@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             Optional<ElasticSanVolumeCreateOption> createSource = default;
-            Optional<string> sourceId = default;
+            Optional<ResourceIdentifier> sourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"u8))
@@ -49,7 +49,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (property.NameEquals("sourceId"u8))
                 {
-                    sourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

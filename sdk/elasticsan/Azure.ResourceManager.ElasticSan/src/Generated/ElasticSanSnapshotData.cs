@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Data used when creating a volume snapshot. </summary>
         internal SnapshotCreationData CreationData { get; set; }
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
-        public string CreationDataSourceId
+        public ResourceIdentifier CreationDataSourceId
         {
             get => CreationData is null ? default : CreationData.SourceId;
             set => CreationData = new SnapshotCreationData(value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            string sourceId = default;
+            ResourceIdentifier sourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceId"u8))
                 {
-                    sourceId = property.Value.GetString();
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

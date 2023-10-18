@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 CreationData = new ElasticSanVolumeDataSourceInfo()
                 {
                     CreateSource = ElasticSanVolumeCreateOption.None,
-                    SourceId = "ARM Id of Resource",
+                    SourceId = new ResourceIdentifier("ARM Id of Resource"),
                 },
-                ManagedByResourceId = "mtkeip",
+                ManagedByResourceId = new ResourceIdentifier("mtkeip"),
             };
             ArmOperation<ElasticSanVolumeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data);
             ElasticSanVolumeResource result = lro.Value;

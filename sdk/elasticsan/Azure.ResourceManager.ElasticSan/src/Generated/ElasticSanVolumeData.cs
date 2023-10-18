@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Parent resource information. </summary>
         internal ManagedByInfo ManagedBy { get; set; }
         /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public string ManagedByResourceId
+        public ResourceIdentifier ManagedByResourceId
         {
             get => ManagedBy is null ? default : ManagedBy.ResourceId;
             set

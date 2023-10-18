@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="managedByResourceId"> Parent resource information. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? volumeId = null, ElasticSanVolumeDataSourceInfo creationData = null, long sizeGiB = default, IscsiTargetInfo storageTarget = null, string managedByResourceId = null, ElasticSanProvisioningState? provisioningState = null)
+        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? volumeId = null, ElasticSanVolumeDataSourceInfo creationData = null, long sizeGiB = default, IscsiTargetInfo storageTarget = null, ResourceIdentifier managedByResourceId = null, ElasticSanProvisioningState? provisioningState = null)
         {
             return new ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, managedByResourceId != null ? new ManagedByInfo(managedByResourceId) : null, provisioningState);
         }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
         /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanSnapshotData"/> instance for mocking. </returns>
-        public static ElasticSanSnapshotData ElasticSanSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string creationDataSourceId = null, ElasticSanProvisioningState? provisioningState = null, long? sourceVolumeSizeGiB = null, string volumeName = null)
+        public static ElasticSanSnapshotData ElasticSanSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier creationDataSourceId = null, ElasticSanProvisioningState? provisioningState = null, long? sourceVolumeSizeGiB = null, string volumeName = null)
         {
             return new ElasticSanSnapshotData(id, name, resourceType, systemData, creationDataSourceId != null ? new SnapshotCreationData(creationDataSourceId) : null, provisioningState, sourceVolumeSizeGiB, volumeName);
         }

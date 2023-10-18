@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Parent resource information. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Initializes a new instance of ManagedByInfo. </summary>
         /// <param name="resourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
-        internal ManagedByInfo(string resourceId)
+        internal ManagedByInfo(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
         /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

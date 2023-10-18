@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of SnapshotCreationData. </summary>
         /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public SnapshotCreationData(string sourceId)
+        public SnapshotCreationData(ResourceIdentifier sourceId)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
-        public string SourceId { get; set; }
+        public ResourceIdentifier SourceId { get; set; }
     }
 }

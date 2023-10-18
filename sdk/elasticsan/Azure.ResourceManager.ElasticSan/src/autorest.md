@@ -76,4 +76,14 @@ rename-mapping:
   SourceCreationData: ElasticSanVolumeDataSourceInfo
   VirtualNetworkRule: ElasticSanVirtualNetworkRule
 
+directive:
+- from: elasticsan.json
+  where: $.definitions.SourceCreationData.properties.sourceId
+  transform: $["x-ms-format"] = "arm-id";
+- from: elasticsan.json
+  where: $.definitions.SnapshotCreationData.properties.sourceId
+  transform: $["x-ms-format"] = "arm-id";
+- from: elasticsan.json
+  where: $.definitions.ManagedByInfo.properties.resourceId
+  transform: $["x-ms-format"] = "arm-id";
 ```
