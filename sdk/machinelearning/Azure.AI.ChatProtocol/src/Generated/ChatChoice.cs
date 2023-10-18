@@ -32,8 +32,16 @@ namespace Azure.AI.ChatProtocol
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
         /// <param name="message"> The chat message for a given chat completion. </param>
-        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
-        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="sessionState">
+        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
+        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
+        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
+        /// conversations or user preferences.
+        /// </param>
+        /// <param name="context">
+        /// Context allows the chat app to receive extra parameters from the client, such as temperature, functions, or
+        /// customer_info. These parameters are specific to the chat app and not understood by the generic clients.
+        /// </param>
         /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> context, FinishReason finishReason)
         {
@@ -49,7 +57,10 @@ namespace Azure.AI.ChatProtocol
         /// <summary> The chat message for a given chat completion. </summary>
         public ChatMessage Message { get; }
         /// <summary>
-        /// Backend-specific information for the tracking of a session.
+        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
+        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
+        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
+        /// conversations or user preferences.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -80,7 +91,8 @@ namespace Azure.AI.ChatProtocol
         /// </summary>
         public BinaryData SessionState { get; }
         /// <summary>
-        /// Backend-specific context or arguments.
+        /// Context allows the chat app to receive extra parameters from the client, such as temperature, functions, or
+        /// customer_info. These parameters are specific to the chat app and not understood by the generic clients.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

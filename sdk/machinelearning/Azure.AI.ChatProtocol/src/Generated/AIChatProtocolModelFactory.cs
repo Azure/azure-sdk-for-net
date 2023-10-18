@@ -14,30 +14,6 @@ namespace Azure.AI.ChatProtocol
     /// <summary> Model factory for models. </summary>
     public static partial class AIChatProtocolModelFactory
     {
-        /// <summary> Initializes a new instance of ChatCompletion. </summary>
-        /// <param name="choices"> The collection of generated completions. </param>
-        /// <returns> A new <see cref="ChatProtocol.ChatCompletion"/> instance for mocking. </returns>
-        public static ChatCompletion ChatCompletion(IEnumerable<ChatChoice> choices = null)
-        {
-            choices ??= new List<ChatChoice>();
-
-            return new ChatCompletion(choices?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
-        /// <param name="message"> The chat message for a given chat completion. </param>
-        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
-        /// <param name="context"> Backend-specific context or arguments. </param>
-        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
-        /// <returns> A new <see cref="ChatProtocol.ChatChoice"/> instance for mocking. </returns>
-        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason finishReason = default)
-        {
-            context ??= new Dictionary<string, BinaryData>();
-
-            return new ChatChoice(index, message, sessionState, context, finishReason);
-        }
-
         /// <summary> Initializes a new instance of ChatCompletionChunk. </summary>
         /// <param name="choices"> The collection of choice deltas received in this chunk. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatCompletionChunk"/> instance for mocking. </returns>
@@ -51,8 +27,16 @@ namespace Azure.AI.ChatProtocol
         /// <summary> Initializes a new instance of ChoiceDelta. </summary>
         /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
         /// <param name="delta"> The partial message received for this choice. </param>
-        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
-        /// <param name="context"> Backend-specific context or arguments. </param>
+        /// <param name="sessionState">
+        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
+        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
+        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
+        /// conversations or user preferences.
+        /// </param>
+        /// <param name="context">
+        /// Context allows the chat app to receive extra parameters from the client, such as temperature, functions, or
+        /// customer_info. These parameters are specific to the chat app and not understood by the generic clients.
+        /// </param>
         /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
         /// <returns> A new <see cref="ChatProtocol.ChoiceDelta"/> instance for mocking. </returns>
         public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason? finishReason = null)
@@ -65,11 +49,48 @@ namespace Azure.AI.ChatProtocol
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
         /// <param name="content"> An incremental part of the text associated with the message. </param>
         /// <param name="role"> The role associated with the message. </param>
-        /// <param name="sessionState"> Backend-specific information for the tracking of a session. </param>
+        /// <param name="sessionState">
+        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
+        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
+        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
+        /// conversations or user preferences.
+        /// </param>
         /// <returns> A new <see cref="ChatProtocol.ChatMessageDelta"/> instance for mocking. </returns>
         public static ChatMessageDelta ChatMessageDelta(string content = null, ChatRole? role = null, BinaryData sessionState = null)
         {
             return new ChatMessageDelta(content, role, sessionState);
+        }
+
+        /// <summary> Initializes a new instance of ChatCompletion. </summary>
+        /// <param name="choices"> The collection of generated completions. </param>
+        /// <returns> A new <see cref="ChatProtocol.ChatCompletion"/> instance for mocking. </returns>
+        public static ChatCompletion ChatCompletion(IEnumerable<ChatChoice> choices = null)
+        {
+            choices ??= new List<ChatChoice>();
+
+            return new ChatCompletion(choices?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <param name="index"> The index of the of the chat choice, relative to the other choices in the same completion. </param>
+        /// <param name="message"> The chat message for a given chat completion. </param>
+        /// <param name="sessionState">
+        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
+        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
+        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
+        /// conversations or user preferences.
+        /// </param>
+        /// <param name="context">
+        /// Context allows the chat app to receive extra parameters from the client, such as temperature, functions, or
+        /// customer_info. These parameters are specific to the chat app and not understood by the generic clients.
+        /// </param>
+        /// <param name="finishReason"> The reason this chat completion completed its generation. </param>
+        /// <returns> A new <see cref="ChatProtocol.ChatChoice"/> instance for mocking. </returns>
+        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> context = null, FinishReason finishReason = default)
+        {
+            context ??= new Dictionary<string, BinaryData>();
+
+            return new ChatChoice(index, message, sessionState, context, finishReason);
         }
     }
 }
