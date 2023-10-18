@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Support.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Tests
@@ -62,8 +63,8 @@ namespace Azure.ResourceManager.Support.Tests
             var resource = SupportTicketFileResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName, fileName);
             var fileData = new FileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 2621440, 2796204, 2);
             await _supportTicketFileCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, fileData);
-            var supportTicketFileWorkspace = await _supportTicketFileCollection.GetAsync(fileName);
-            ValidateSupportTicketFileData(supportTicketFileWorkspace.Value.Data, fileName);
+            var supportTicketFile = await _supportTicketFileCollection.GetAsync(fileName);
+            ValidateSupportTicketFileData(supportTicketFile.Value.Data, fileName);
         }
 
         private void ValidateSupportTicketFileData(FileDetailData supportTicketFile, string fileName)
