@@ -46,8 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
         /// <param name="enabledProtocols"></param>
         /// <param name="rootSquash"></param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess)
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -67,7 +66,6 @@ namespace Azure.Storage.Files.Shares.Models
             LeaseDuration = leaseDuration;
             EnabledProtocols = enabledProtocols;
             RootSquash = rootSquash;
-            EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess;
         }
 
         /// <summary> Gets the last modified. </summary>
@@ -106,7 +104,5 @@ namespace Azure.Storage.Files.Shares.Models
         public string EnabledProtocols { get; }
         /// <summary> Gets the root squash. </summary>
         public ShareRootSquash? RootSquash { get; }
-        /// <summary> Gets the enable snapshot virtual directory access. </summary>
-        public bool? EnableSnapshotVirtualDirectoryAccess { get; }
     }
 }
