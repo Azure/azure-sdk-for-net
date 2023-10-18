@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,6 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public AcsRouterJobStatus? Status { get; }
 
         /// <summary> Router Job Received Job Status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.AcsRouterJobStatus? JobStatus
         {
             get
