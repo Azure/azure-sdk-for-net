@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
@@ -37,7 +37,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
@@ -63,14 +63,14 @@ RequestContent content = RequestContent.Create(new
             key = new
             {
                 query = "<query>",
-                callingOptions = new Dictionary<string, object>()
+                callingOptions = new Dictionary<string, object>
                 {
                     ["verbose"] = true,
                     ["log"] = true,
                     ["show-all-intents"] = true,
                     ["timezoneOffset"] = 123.45F,
                     ["spellCheck"] = true,
-                    ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>",
+                    ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>"
                 },
                 targetProjectKind = "Luis",
                 apiVersion = "<apiVersion>",
@@ -93,7 +93,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
@@ -121,7 +121,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
@@ -147,14 +147,14 @@ RequestContent content = RequestContent.Create(new
             key = new
             {
                 query = "<query>",
-                callingOptions = new Dictionary<string, object>()
+                callingOptions = new Dictionary<string, object>
                 {
                     ["verbose"] = true,
                     ["log"] = true,
                     ["show-all-intents"] = true,
                     ["timezoneOffset"] = 123.45F,
                     ["spellCheck"] = true,
-                    ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>",
+                    ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>"
                 },
                 targetProjectKind = "Luis",
                 apiVersion = "<apiVersion>",
@@ -273,15 +273,15 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
-        conversations = new List<object>()
+        conversations = new object[]
         {
             new
             {
-                conversationItems = new List<object>()
+                conversationItems = new object[]
                 {
                     new
                     {
@@ -296,7 +296,7 @@ RequestContent content = RequestContent.Create(new
             }
         },
     },
-    tasks = new List<object>()
+    tasks = new object[]
     {
         new
         {
@@ -319,16 +319,16 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     displayName = "<displayName>",
     analysisInput = new
     {
-        conversations = new List<object>()
+        conversations = new object[]
         {
             new
             {
-                conversationItems = new List<object>()
+                conversationItems = new object[]
                 {
                     new
                     {
@@ -347,13 +347,13 @@ RequestContent content = RequestContent.Create(new
             }
         },
     },
-    tasks = new List<object>()
+    tasks = new object[]
     {
         new
         {
             parameters = new
             {
-                summaryAspects = new List<object>()
+                summaryAspects = new object[]
                 {
                     "issue"
                 },
@@ -400,15 +400,15 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     analysisInput = new
     {
-        conversations = new List<object>()
+        conversations = new object[]
         {
             new
             {
-                conversationItems = new List<object>()
+                conversationItems = new object[]
                 {
                     new
                     {
@@ -423,7 +423,7 @@ RequestContent content = RequestContent.Create(new
             }
         },
     },
-    tasks = new List<object>()
+    tasks = new object[]
     {
         new
         {
@@ -446,16 +446,16 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     displayName = "<displayName>",
     analysisInput = new
     {
-        conversations = new List<object>()
+        conversations = new object[]
         {
             new
             {
-                conversationItems = new List<object>()
+                conversationItems = new object[]
                 {
                     new
                     {
@@ -474,13 +474,13 @@ RequestContent content = RequestContent.Create(new
             }
         },
     },
-    tasks = new List<object>()
+    tasks = new object[]
     {
         new
         {
             parameters = new
             {
-                summaryAspects = new List<object>()
+                summaryAspects = new object[]
                 {
                     "issue"
                 },

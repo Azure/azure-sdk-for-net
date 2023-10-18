@@ -18,15 +18,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        internal RecordingStateResult(string recordingId, RecordingState? recordingState)
+        /// <param name="recordingType"></param>
+        internal RecordingStateResult(string recordingId, RecordingState? recordingState, RecordingType? recordingType)
         {
             RecordingId = recordingId;
             RecordingState = recordingState;
+            RecordingType = recordingType;
         }
 
         /// <summary> Gets the recording id. </summary>
         public string RecordingId { get; }
         /// <summary> Gets the recording state. </summary>
         public RecordingState? RecordingState { get; }
+        /// <summary> Gets the recording type. </summary>
+        public RecordingType? RecordingType { get; }
     }
 }

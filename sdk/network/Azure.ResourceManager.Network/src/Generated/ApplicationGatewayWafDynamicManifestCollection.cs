@@ -230,6 +230,70 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ApplicationGatewayWafDynamicManifestResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ApplicationGatewayWafDynamicManifestResource> GetIfExists(CancellationToken cancellationToken = default)
+        {
+            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApplicationGatewayWafDynamicManifestResource> IEnumerable<ApplicationGatewayWafDynamicManifestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

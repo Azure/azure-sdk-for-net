@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExcludedResourceTypes = new ChangeTrackingList<string>();
             LabelSelectors = new ChangeTrackingList<string>();
             NamespaceMappings = new ChangeTrackingDictionary<string, string>();
+            RestoreHookReferences = new ChangeTrackingList<NamespacedName>();
             ObjectType = "KubernetesClusterRestoreCriteria";
         }
 
@@ -45,5 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public KubernetesClusterRestoreExistingResourcePolicy? ConflictPolicy { get; set; }
         /// <summary> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </summary>
         public IDictionary<string, string> NamespaceMappings { get; }
+        /// <summary> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </summary>
+        public IList<NamespacedName> RestoreHookReferences { get; }
     }
 }

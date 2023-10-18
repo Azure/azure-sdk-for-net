@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceTypeSkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceTypeSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual NullableResponse<ResourceTypeSkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceTypeSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceTypeSkuResource> IEnumerable<ResourceTypeSkuResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

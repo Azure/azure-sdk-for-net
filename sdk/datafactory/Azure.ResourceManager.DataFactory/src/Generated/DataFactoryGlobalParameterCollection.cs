@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/globalParameters/{globalParameterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalParameters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalParameterName"> The global parameter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryGlobalParameterResource>> GetIfExistsAsync(string globalParameterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+
+            using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryGlobalParameterGlobalParametersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryGlobalParameterResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/globalParameters/{globalParameterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalParameters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalParameterName"> The global parameter name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryGlobalParameterResource> GetIfExists(string globalParameterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+
+            using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryGlobalParameterGlobalParametersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryGlobalParameterResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataFactoryGlobalParameterResource> IEnumerable<DataFactoryGlobalParameterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

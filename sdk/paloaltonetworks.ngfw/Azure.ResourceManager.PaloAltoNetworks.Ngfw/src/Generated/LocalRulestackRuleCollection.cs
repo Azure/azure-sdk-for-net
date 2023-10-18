@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual async Task<NullableResponse<LocalRulestackRuleResource>> GetIfExistsAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _localRulestackRuleLocalRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual NullableResponse<LocalRulestackRuleResource> GetIfExists(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _localRulestackRuleLocalRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LocalRulestackRuleResource> IEnumerable<LocalRulestackRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

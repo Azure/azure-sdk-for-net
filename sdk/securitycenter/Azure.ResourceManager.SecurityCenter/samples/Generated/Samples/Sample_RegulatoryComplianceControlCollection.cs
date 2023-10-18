@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -114,6 +115,48 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             bool result = await collection.ExistsAsync(regulatoryComplianceControlName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get selected regulatory compliance control details and state
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetSelectedRegulatoryComplianceControlDetailsAndState()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2019-01-01-preview/examples/RegulatoryCompliance/getRegulatoryComplianceControl_example.json
+            // this example is just showing the usage of "RegulatoryComplianceControls_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RegulatoryComplianceStandardResource created on azure
+            // for more information of creating RegulatoryComplianceStandardResource, please refer to the document of RegulatoryComplianceStandardResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string regulatoryComplianceStandardName = "PCI-DSS-3.2";
+            ResourceIdentifier regulatoryComplianceStandardResourceId = RegulatoryComplianceStandardResource.CreateResourceIdentifier(subscriptionId, regulatoryComplianceStandardName);
+            RegulatoryComplianceStandardResource regulatoryComplianceStandard = client.GetRegulatoryComplianceStandardResource(regulatoryComplianceStandardResourceId);
+
+            // get the collection of this RegulatoryComplianceControlResource
+            RegulatoryComplianceControlCollection collection = regulatoryComplianceStandard.GetRegulatoryComplianceControls();
+
+            // invoke the operation
+            string regulatoryComplianceControlName = "1.1";
+            NullableResponse<RegulatoryComplianceControlResource> response = await collection.GetIfExistsAsync(regulatoryComplianceControlName);
+            RegulatoryComplianceControlResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RegulatoryComplianceControlData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

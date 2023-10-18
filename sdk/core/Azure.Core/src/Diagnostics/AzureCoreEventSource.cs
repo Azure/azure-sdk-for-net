@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Azure.Core.Diagnostics
@@ -231,6 +232,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] attempt number {1} took {2:00.0}s")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
         public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);

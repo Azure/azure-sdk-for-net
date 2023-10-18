@@ -193,5 +193,79 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotId"> The ID of the snapshot to read. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteConfigSnapshotResource>> GetIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteConfigSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotId"> The ID of the snapshot to read. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        public virtual NullableResponse<SiteConfigSnapshotResource> GetIfExists(string snapshotId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteConfigSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

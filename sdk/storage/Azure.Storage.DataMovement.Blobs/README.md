@@ -191,7 +191,7 @@ Upload a block blob.
 
 ```C# Snippet:SimpleBlobUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromPath(sourceLocalPath),
+    sourceResource: files.FromFile(sourceLocalPath),
     destinationResource: blobs.FromClient(destinationBlob));
 await dataTransfer.WaitForCompletionAsync();
 ```
@@ -200,7 +200,7 @@ Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromPath(sourcePath),
+    sourceResource: files.FromDirectory(sourcePath),
     destinationResource: blobs.FromClient(
         blobContainerClient,
         new BlobStorageResourceContainerOptions()
@@ -224,7 +224,7 @@ BlobsStorageResourceProvider blobs = new();
 LocalFilesStorageResourceProvider files = new();
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromClient(sourceBlobClient),
-    destinationResource: files.FromPath(downloadPath));
+    destinationResource: files.FromFile(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -238,7 +238,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         {
             BlobDirectoryPrefix = optionalSourcePrefix
         }),
-    destinationResource: files.FromPath(downloadPath));
+    destinationResource: files.FromDirectory(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 

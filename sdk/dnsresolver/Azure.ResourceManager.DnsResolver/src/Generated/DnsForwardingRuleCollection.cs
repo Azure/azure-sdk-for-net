@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ForwardingRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsForwardingRuleResource>> GetIfExistsAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+
+            using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsForwardingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ForwardingRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
+        public virtual NullableResponse<DnsForwardingRuleResource> GetIfExists(string forwardingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+
+            using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsForwardingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DnsForwardingRuleResource> IEnumerable<DnsForwardingRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

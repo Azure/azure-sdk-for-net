@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Value of Parameters. </summary>
+        /// <summary> Gets or sets the value. </summary>
         public MachineLearningWorkspaceDiagnoseProperties Value { get; set; }
     }
 }

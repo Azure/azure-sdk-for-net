@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Azure.Messaging.EventGrid.Models;
+using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -3766,6 +3767,172 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("{incoming-call-contextValue}", incomingCallEvent.IncomingCallContext);
             Assert.AreEqual("correlationId", incomingCallEvent.CorrelationId);
         }
+
+        [Test]
+        public void ConsumeCloudEventAcsRouterJobClassificationFailedEvent()
+        {
+            string requestContent = @"{
+                ""id"": ""e80026e7-e298-46ba-bc42-dab0eda92581"",
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+                ""subject"": ""job/{job-id}/channel/{channel-id}/classificationpolicy/{classificationpolicy-id}"",
+                  ""data"": {
+                    ""errors"": [
+                      {
+                        ""code"": ""Failure"",
+                        ""message"": ""Classification failed due to <reason>"",
+                        ""target"": null,
+                        ""innererror"": {
+                                        ""code"": ""InnerFailure"",
+                                        ""message"": ""Classification failed due to <reason>"",
+                                        ""target"": null},
+                        ""details"": null
+                      }
+                    ],
+                    ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",
+                    ""channelReference"": ""test-abc"",
+                    ""channelId"": ""FooVoiceChannelId"",
+                    ""classificationPolicyId"": ""test-policy"",
+                    ""labels"": {
+                      ""Locale"": ""en-us"",
+                      ""Segment"": ""Enterprise"",
+                      ""Token"": ""FooToken""
+                    },
+                    ""tags"": {
+                      ""Locale"": ""en-us"",
+                      ""Segment"": ""Enterprise"",
+                      ""Token"": ""FooToken""
+                    }
+                  },
+                  ""type"": ""Microsoft.Communication.RouterJobClassificationFailed"",
+                  ""specversion"": ""1.0"",
+                  ""time"": ""2022-02-17T00:55:25.1736293Z""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            events[0].TryGetSystemEventData(out object eventData);
+            var routerJobClassificationFailedEvent = eventData as AcsRouterJobClassificationFailedEventData;
+            Assert.IsNotNull(routerJobClassificationFailedEvent);
+            var errors = routerJobClassificationFailedEvent.Errors;
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual("Failure", errors[0].Code);
+            Assert.AreEqual("Classification failed due to <reason>", errors[0].Message);
+            StringAssert.Contains("Inner Errors:", errors[0].ToString());
+        }
+
+        [Test]
+        public void ConsumeCloudEventAcsRouterJobQueuedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""b6d8687a-5a1a-42ae-b8b5-ff7ec338c872"",
+              ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+              ""subject"": ""job/{job-id}/channel/{channel-id}/queue/{queue-id}"",
+              ""data"": {
+                ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",
+                ""channelReference"": ""test-abc"",
+                ""channelId"": ""FooVoiceChannelId"",
+                ""queueId"": ""625fec06-ab81-4e60-b780-f364ed96ade1"",
+                ""priority"": 1,
+                ""labels"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""tags"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""requestedWorkerSelectors"": [
+                  {
+                    ""key"": ""string"",
+                    ""labelOperator"": ""equal"",
+                    ""value"": 5,
+                    ""ttlSeconds"": 1000
+                  }
+                ],
+                ""attachedWorkerSelectors"": [
+                  {
+                    ""key"": ""string"",
+                    ""labelOperator"": ""equal"",
+                    ""value"": 5,
+                    ""ttlSeconds"": 1000,
+                    ""state"": ""active""
+                  }
+                ]
+              },
+              ""type"": ""Microsoft.Communication.RouterJobQueued"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2022-02-17T00:55:25.1736293Z""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            events[0].TryGetSystemEventData(out object eventData);
+            var routerJobQueuedEventData = eventData as AcsRouterJobQueuedEventData;
+            Assert.IsNotNull(routerJobQueuedEventData);
+            var selectors = routerJobQueuedEventData.AttachedWorkerSelectors;
+            Assert.AreEqual(1, selectors.Count);
+            Assert.AreEqual(TimeSpan.FromSeconds(1000), selectors[0].TimeToLive);
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterLabelOperator.Equal, selectors[0].LabelOperator);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator.Equal, selectors[0].Operator);
+
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterWorkerSelectorState.Active, selectors[0].State);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState.Active, selectors[0].SelectorState);
+        }
+
+        [Test]
+        public void ConsumeCloudEventAcsRouterJobReceivedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""acdf8fa5-8ab4-4a65-874a-c1d2a4a97f2e"",
+              ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+              ""subject"": ""job/{job-id}/channel/{channel-id}"",
+              ""data"": {
+                ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",
+                ""channelReference"": ""test-abc"",
+                ""jobStatus"": ""PendingClassification"",
+                ""channelId"": ""FooVoiceChannelId"",
+                ""classificationPolicyId"": ""test-policy"",
+                ""queueId"": ""queue-id"",
+                ""priority"": 0,
+                ""labels"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""tags"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""requestedWorkerSelectors"": [
+                  {
+                    ""key"": ""string"",
+                    ""labelOperator"": ""equal"",
+                    ""value"": 5,
+                    ""ttlSeconds"": 36
+                  }
+                ],
+                ""scheduledOn"": ""3/28/2007 7:13:50 PM +00:00"",
+                ""unavailableForMatching"": false
+              },
+              ""type"": ""Microsoft.Communication.RouterJobReceived"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2022-02-17T00:55:25.1736293Z""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            events[0].TryGetSystemEventData(out object eventData);
+            var routerJobReceivedEventData = eventData as AcsRouterJobReceivedEventData;
+            Assert.IsNotNull(routerJobReceivedEventData);
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterJobStatus.PendingClassification, routerJobReceivedEventData.JobStatus);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus.PendingClassification, routerJobReceivedEventData.Status);
+        }
         #endregion
 
         #region Health Data Services events
@@ -4118,6 +4285,45 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("SampleSerialNumber", dataBoxEvent.SerialNumber);
             Assert.AreEqual(DataBoxStageName.OrderCompleted, dataBoxEvent.StageName);
             Assert.AreEqual(DateTimeOffset.Parse("2022-10-12T19:38:08.0218897Z"), dataBoxEvent.StageTime);
+        }
+        #endregion
+        #region Resource Notifications
+
+        [Test] public void ConsumeCloudEventHealthResourcesAvailiabilityStatusChangedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""1fb6fa94-d965-4306-abeq-4810f0774e97"",
+              ""source"": ""/subscriptions/{subscription-id}"",
+              ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}"",
+              ""data"": {
+                ""resourceInfo"": {
+                  ""id"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}"",
+                  ""name"": ""{event-id}"",
+                  ""type"": ""Microsoft.ResourceHealth/availabilityStatuses"",
+                  ""properties"": {
+                    ""targetResourceId"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}"",
+                    ""targetResourceType"": ""Microsoft.Compute/virtualMachines"",
+                    ""occurredTime"": ""2023-07-24T19:20:37.9245071Z"",
+                    ""previousAvailabilityState"": ""Unavailable"",
+                    ""availabilityState"": ""Available""
+                  }
+                },
+                ""operationalInfo"": {
+                  ""resourceEventTime"": ""2023-07-24T19:20:37.9245071Z""
+                },
+                ""apiVersion"": ""2023-12-01""
+              },
+              ""type"": ""Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2023-07-24T19:20:37.9245071Z""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var availabilityStatusChangedEventData = eventData as ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData;
+            Assert.IsNotNull(availabilityStatusChangedEventData);
+            Assert.AreEqual("{event-id}", availabilityStatusChangedEventData.ResourceDetails.Name);
         }
         #endregion
         #endregion

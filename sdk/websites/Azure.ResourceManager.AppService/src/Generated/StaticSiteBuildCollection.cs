@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The stage site identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StaticSiteBuildResource>> GetIfExistsAsync(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _staticSiteBuildStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StaticSiteBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The stage site identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        public virtual NullableResponse<StaticSiteBuildResource> GetIfExists(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _staticSiteBuildStaticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StaticSiteBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StaticSiteBuildResource> IEnumerable<StaticSiteBuildResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

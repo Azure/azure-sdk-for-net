@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppRevisionResource>> GetIfExistsAsync(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppRevisionContainerAppsRevisionsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisions_GetRevision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppRevisionResource> GetIfExists(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppRevisionContainerAppsRevisionsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ContainerAppRevisionResource> IEnumerable<ContainerAppRevisionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

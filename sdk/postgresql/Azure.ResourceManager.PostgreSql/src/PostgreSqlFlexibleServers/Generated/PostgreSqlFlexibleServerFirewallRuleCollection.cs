@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostgreSqlFlexibleServerFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+
+            using var scope = _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("PostgreSqlFlexibleServerFirewallRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerFirewallRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        public virtual NullableResponse<PostgreSqlFlexibleServerFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+
+            using var scope = _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("PostgreSqlFlexibleServerFirewallRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerFirewallRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PostgreSqlFlexibleServerFirewallRuleResource> IEnumerable<PostgreSqlFlexibleServerFirewallRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

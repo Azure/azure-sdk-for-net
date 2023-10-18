@@ -1,14 +1,16 @@
 # Release History
 
-## 4.19.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 4.20.0 (2023-10-18)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
 
 ## 4.18.0 (2023-09-12)
 

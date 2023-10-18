@@ -244,6 +244,80 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual async Task<NullableResponse<AuthorizationProviderOperationsMetadataResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationProviderOperationsMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual NullableResponse<AuthorizationProviderOperationsMetadataResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationProviderOperationsMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AuthorizationProviderOperationsMetadataResource> IEnumerable<AuthorizationProviderOperationsMetadataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

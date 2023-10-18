@@ -13,13 +13,13 @@ using Azure.Identity;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
-namespace Azure.Security.ConfidentialLedger.Certificate.Samples
+namespace Azure.Security.ConfidentialLedger.Samples
 {
-    public class Samples_ConfidentialLedgerCertificateClient
+    public partial class Samples_ConfidentialLedgerCertificateClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLedgerIdentity()
+        public void Example_GetLedgerIdentity_ShortVersion()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
@@ -31,7 +31,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_Async()
+        public async Task Example_GetLedgerIdentity_ShortVersion_Async()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
