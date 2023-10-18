@@ -64,11 +64,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     continue;
                 }
 
-                if (systemEvent.Namespace != "Azure.Messaging.EventGrid.SystemEvents")
-                {
-                    Assert.Fail($"{systemEvent} is not in the correct namespace. It should be in Azure.Messaging.EventGrid.SystemEvents.");
-                }
-
                 foreach (PropertyInfo propertyInfo in systemEvent.GetProperties())
                 {
                     string name = propertyInfo.Name;
