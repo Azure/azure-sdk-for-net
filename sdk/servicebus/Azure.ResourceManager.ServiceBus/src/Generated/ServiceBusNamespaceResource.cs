@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusPrivateEndpointConnectionResources and their operations over a ServiceBusPrivateEndpointConnectionResource. </returns>
         public virtual ServiceBusPrivateEndpointConnectionCollection GetServiceBusPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ServiceBusPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusPrivateEndpointConnectionResource>> GetServiceBusPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusPrivateEndpointConnectionResource> GetServiceBusPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusDisasterRecoveryResources and their operations over a ServiceBusDisasterRecoveryResource. </returns>
         public virtual ServiceBusDisasterRecoveryCollection GetServiceBusDisasterRecoveries()
         {
-            return GetCachedClient(Client => new ServiceBusDisasterRecoveryCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusDisasterRecoveryCollection(client, Id));
         }
 
         /// <summary>
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusDisasterRecoveryResource>> GetServiceBusDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            return await GetServiceBusDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
+            return await GetServiceBusDisasterRecoveries().GetAsync(@alias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -204,19 +204,19 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusDisasterRecoveryResource> GetServiceBusDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
         {
-            return GetServiceBusDisasterRecoveries().Get(alias, cancellationToken);
+            return GetServiceBusDisasterRecoveries().Get(@alias, cancellationToken);
         }
 
         /// <summary> Gets a collection of MigrationConfigurationResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of MigrationConfigurationResources and their operations over a MigrationConfigurationResource. </returns>
         public virtual MigrationConfigurationCollection GetMigrationConfigurations()
         {
-            return GetCachedClient(Client => new MigrationConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MigrationConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusNamespaceAuthorizationRuleResources and their operations over a ServiceBusNamespaceAuthorizationRuleResource. </returns>
         public virtual ServiceBusNamespaceAuthorizationRuleCollection GetServiceBusNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new ServiceBusNamespaceAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusNamespaceAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusNamespaceAuthorizationRuleResource>> GetServiceBusNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusNamespaceAuthorizationRuleResource> GetServiceBusNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusQueueResources and their operations over a ServiceBusQueueResource. </returns>
         public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
-            return GetCachedClient(Client => new ServiceBusQueueCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusQueueCollection(client, Id));
         }
 
         /// <summary>
@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusQueueResource>> GetServiceBusQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
@@ -359,8 +359,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusQueueResource> GetServiceBusQueue(string queueName, CancellationToken cancellationToken = default)
         {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusTopicResources and their operations over a ServiceBusTopicResource. </returns>
         public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {
-            return GetCachedClient(Client => new ServiceBusTopicCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusTopicCollection(client, Id));
         }
 
         /// <summary>
@@ -389,8 +389,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusTopicResource>> GetServiceBusTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -412,8 +412,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusTopicResource> GetServiceBusTopic(string topicName, CancellationToken cancellationToken = default)
         {

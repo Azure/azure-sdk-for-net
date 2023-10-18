@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseTableResources and their operations over a SqlDatabaseTableResource. </returns>
         public virtual SqlDatabaseTableCollection GetSqlDatabaseTables()
         {
-            return GetCachedClient(Client => new SqlDatabaseTableCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseTableCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlDatabaseTableResource>> GetSqlDatabaseTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlDatabaseTableResource> GetSqlDatabaseTable(string tableName, CancellationToken cancellationToken = default)
         {

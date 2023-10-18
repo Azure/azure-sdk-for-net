@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An object representing collection of ServiceFabricManagedApplicationTypeVersionResources and their operations over a ServiceFabricManagedApplicationTypeVersionResource. </returns>
         public virtual ServiceFabricManagedApplicationTypeVersionCollection GetServiceFabricManagedApplicationTypeVersions()
         {
-            return GetCachedClient(Client => new ServiceFabricManagedApplicationTypeVersionCollection(Client, Id));
+            return GetCachedClient(client => new ServiceFabricManagedApplicationTypeVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="version"> The application type version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeVersionResource>> GetServiceFabricManagedApplicationTypeVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="version"> The application type version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceFabricManagedApplicationTypeVersionResource> GetServiceFabricManagedApplicationTypeVersion(string version, CancellationToken cancellationToken = default)
         {
