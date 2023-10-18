@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of ExtensionResources and their operations over a ExtensionResource. </returns>
         public virtual ExtensionCollection GetExtensions()
         {
-            return GetCachedClient(Client => new ExtensionCollection(Client, Id));
+            return GetCachedClient(client => new ExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="extensionId"> Id of extension resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExtensionResource>> GetExtensionAsync(string extensionId, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="extensionId"> Id of extension resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExtensionResource> GetExtension(string extensionId, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of AgFoodPlatformPrivateEndpointConnectionResources and their operations over a AgFoodPlatformPrivateEndpointConnectionResource. </returns>
         public virtual AgFoodPlatformPrivateEndpointConnectionCollection GetAgFoodPlatformPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AgFoodPlatformPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AgFoodPlatformPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AgFoodPlatformPrivateEndpointConnectionResource>> GetAgFoodPlatformPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AgFoodPlatformPrivateEndpointConnectionResource> GetAgFoodPlatformPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of AgFoodPlatformPrivateLinkResources and their operations over a AgFoodPlatformPrivateLinkResource. </returns>
         public virtual AgFoodPlatformPrivateLinkResourceCollection GetAgFoodPlatformPrivateLinkResources()
         {
-            return GetCachedClient(Client => new AgFoodPlatformPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new AgFoodPlatformPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="subResourceName"> Sub resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AgFoodPlatformPrivateLinkResource>> GetAgFoodPlatformPrivateLinkResourceAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </summary>
         /// <param name="subResourceName"> Sub resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AgFoodPlatformPrivateLinkResource> GetAgFoodPlatformPrivateLinkResource(string subResourceName, CancellationToken cancellationToken = default)
         {

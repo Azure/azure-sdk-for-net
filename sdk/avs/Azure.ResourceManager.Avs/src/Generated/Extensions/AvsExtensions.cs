@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Avs.Mocking;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,480 +20,401 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A class to add extension methods to Azure.ResourceManager.Avs. </summary>
     public static partial class AvsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AvsArmClientMockingExtension GetAvsArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new AvsArmClientMockingExtension(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AvsResourceGroupMockingExtension GetAvsResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new AvsResourceGroupMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AvsSubscriptionMockingExtension GetAvsSubscriptionMockingExtension(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new AvsSubscriptionMockingExtension(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region AvsPrivateCloudResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsPrivateCloudResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsPrivateCloudResource" /> object. </returns>
         public static AvsPrivateCloudResource GetAvsPrivateCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudResource.ValidateResourceId(id);
-                return new AvsPrivateCloudResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudResource(id);
         }
-        #endregion
 
-        #region AvsPrivateCloudClusterResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudClusterResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsPrivateCloudClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource" /> object. </returns>
         public static AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudClusterResource.ValidateResourceId(id);
-                return new AvsPrivateCloudClusterResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudClusterResource(id);
         }
-        #endregion
 
-        #region AvsPrivateCloudDatastoreResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudDatastoreResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsPrivateCloudDatastoreResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource" /> object. </returns>
         public static AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudDatastoreResource.ValidateResourceId(id);
-                return new AvsPrivateCloudDatastoreResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudDatastoreResource(id);
         }
-        #endregion
 
-        #region HcxEnterpriseSiteResource
         /// <summary>
         /// Gets an object representing a <see cref="HcxEnterpriseSiteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HcxEnterpriseSiteResource.CreateResourceIdentifier" /> to create a <see cref="HcxEnterpriseSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetHcxEnterpriseSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HcxEnterpriseSiteResource" /> object. </returns>
         public static HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HcxEnterpriseSiteResource.ValidateResourceId(id);
-                return new HcxEnterpriseSiteResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetHcxEnterpriseSiteResource(id);
         }
-        #endregion
 
-        #region ExpressRouteAuthorizationResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetExpressRouteAuthorizationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource" /> object. </returns>
         public static ExpressRouteAuthorizationResource GetExpressRouteAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteAuthorizationResource.ValidateResourceId(id);
-                return new ExpressRouteAuthorizationResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetExpressRouteAuthorizationResource(id);
         }
-        #endregion
 
-        #region GlobalReachConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="GlobalReachConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GlobalReachConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GlobalReachConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetGlobalReachConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GlobalReachConnectionResource" /> object. </returns>
         public static GlobalReachConnectionResource GetGlobalReachConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GlobalReachConnectionResource.ValidateResourceId(id);
-                return new GlobalReachConnectionResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetGlobalReachConnectionResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkResource" /> object. </returns>
         public static WorkloadNetworkResource GetWorkloadNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkResource.ValidateResourceId(id);
-                return new WorkloadNetworkResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkSegmentResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkSegmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkSegmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkSegmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource" /> object. </returns>
         public static WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkSegmentResource.ValidateResourceId(id);
-                return new WorkloadNetworkSegmentResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkSegmentResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkDhcpResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkDhcpResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkDhcpResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDhcpResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkDhcpResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource" /> object. </returns>
         public static WorkloadNetworkDhcpResource GetWorkloadNetworkDhcpResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDhcpResource.ValidateResourceId(id);
-                return new WorkloadNetworkDhcpResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDhcpResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource" /> object. </returns>
         public static WorkloadNetworkGatewayResource GetWorkloadNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkGatewayResource.ValidateResourceId(id);
-                return new WorkloadNetworkGatewayResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkGatewayResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkPortMirroringProfileResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkPortMirroringProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkPortMirroringProfileResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPortMirroringProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkPortMirroringProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource" /> object. </returns>
         public static WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkPortMirroringProfileResource.ValidateResourceId(id);
-                return new WorkloadNetworkPortMirroringProfileResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkPortMirroringProfileResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkVmGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVmGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkVmGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource" /> object. </returns>
         public static WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkVmGroupResource.ValidateResourceId(id);
-                return new WorkloadNetworkVmGroupResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkVmGroupResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkVirtualMachineResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource" /> object. </returns>
         public static WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkVirtualMachineResource.ValidateResourceId(id);
-                return new WorkloadNetworkVirtualMachineResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkVirtualMachineResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkDnsServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkDnsServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkDnsServiceResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkDnsServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource" /> object. </returns>
         public static WorkloadNetworkDnsServiceResource GetWorkloadNetworkDnsServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDnsServiceResource.ValidateResourceId(id);
-                return new WorkloadNetworkDnsServiceResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDnsServiceResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkDnsZoneResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkDnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkDnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkDnsZoneResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource" /> object. </returns>
         public static WorkloadNetworkDnsZoneResource GetWorkloadNetworkDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDnsZoneResource.ValidateResourceId(id);
-                return new WorkloadNetworkDnsZoneResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDnsZoneResource(id);
         }
-        #endregion
 
-        #region WorkloadNetworkPublicIPResource
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkPublicIPResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkloadNetworkPublicIPResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPublicIPResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetWorkloadNetworkPublicIPResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource" /> object. </returns>
         public static WorkloadNetworkPublicIPResource GetWorkloadNetworkPublicIPResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkPublicIPResource.ValidateResourceId(id);
-                return new WorkloadNetworkPublicIPResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkPublicIPResource(id);
         }
-        #endregion
 
-        #region AvsCloudLinkResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsCloudLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsCloudLinkResource.CreateResourceIdentifier" /> to create an <see cref="AvsCloudLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsCloudLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsCloudLinkResource" /> object. </returns>
         public static AvsCloudLinkResource GetAvsCloudLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsCloudLinkResource.ValidateResourceId(id);
-                return new AvsCloudLinkResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsCloudLinkResource(id);
         }
-        #endregion
 
-        #region AvsPrivateCloudAddonResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudAddonResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudAddonResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsPrivateCloudAddonResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource" /> object. </returns>
         public static AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudAddonResource.ValidateResourceId(id);
-                return new AvsPrivateCloudAddonResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudAddonResource(id);
         }
-        #endregion
 
-        #region AvsPrivateCloudClusterVirtualMachineResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudClusterVirtualMachineResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetAvsPrivateCloudClusterVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> object. </returns>
         public static AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudClusterVirtualMachineResource.ValidateResourceId(id);
-                return new AvsPrivateCloudClusterVirtualMachineResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudClusterVirtualMachineResource(id);
         }
-        #endregion
 
-        #region PlacementPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="PlacementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PlacementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PlacementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetPlacementPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PlacementPolicyResource" /> object. </returns>
         public static PlacementPolicyResource GetPlacementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PlacementPolicyResource.ValidateResourceId(id);
-                return new PlacementPolicyResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetPlacementPolicyResource(id);
         }
-        #endregion
 
-        #region ScriptPackageResource
         /// <summary>
         /// Gets an object representing a <see cref="ScriptPackageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScriptPackageResource.CreateResourceIdentifier" /> to create a <see cref="ScriptPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetScriptPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScriptPackageResource" /> object. </returns>
         public static ScriptPackageResource GetScriptPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptPackageResource.ValidateResourceId(id);
-                return new ScriptPackageResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptPackageResource(id);
         }
-        #endregion
 
-        #region ScriptCmdletResource
         /// <summary>
         /// Gets an object representing a <see cref="ScriptCmdletResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScriptCmdletResource.CreateResourceIdentifier" /> to create a <see cref="ScriptCmdletResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetScriptCmdletResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScriptCmdletResource" /> object. </returns>
         public static ScriptCmdletResource GetScriptCmdletResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptCmdletResource.ValidateResourceId(id);
-                return new ScriptCmdletResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptCmdletResource(id);
         }
-        #endregion
 
-        #region ScriptExecutionResource
         /// <summary>
         /// Gets an object representing a <see cref="ScriptExecutionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScriptExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ScriptExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsArmClientMockingExtension.GetScriptExecutionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScriptExecutionResource" /> object. </returns>
         public static ScriptExecutionResource GetScriptExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptExecutionResource.ValidateResourceId(id);
-                return new ScriptExecutionResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptExecutionResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsResourceGroupMockingExtension.GetAvsPrivateClouds()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
         public static AvsPrivateCloudCollection GetAvsPrivateClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvsPrivateClouds();
+            return GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateClouds();
         }
 
         /// <summary>
@@ -507,16 +429,20 @@ namespace Azure.ResourceManager.Avs
         /// <description>PrivateClouds_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsResourceGroupMockingExtension.GetAvsPrivateCloudAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAvsPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateCloudAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -531,16 +457,20 @@ namespace Azure.ResourceManager.Avs
         /// <description>PrivateClouds_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsResourceGroupMockingExtension.GetAvsPrivateCloud(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AvsPrivateCloudResource> GetAvsPrivateCloud(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
+            return GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateCloud(privateCloudName, cancellationToken);
         }
 
         /// <summary>
@@ -555,6 +485,10 @@ namespace Azure.ResourceManager.Avs
         /// <description>Locations_CheckTrialAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.CheckAvsTrialAvailability(AzureLocation,AvsSku,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
@@ -562,7 +496,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -577,6 +511,10 @@ namespace Azure.ResourceManager.Avs
         /// <description>Locations_CheckTrialAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.CheckAvsTrialAvailability(AzureLocation,AvsSku,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
@@ -584,7 +522,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
         }
 
         /// <summary>
@@ -599,13 +537,17 @@ namespace Azure.ResourceManager.Avs
         /// <description>Locations_CheckQuotaAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.CheckAvsQuotaAvailability(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -620,13 +562,17 @@ namespace Azure.ResourceManager.Avs
         /// <description>Locations_CheckQuotaAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.CheckAvsQuotaAvailability(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -641,13 +587,17 @@ namespace Azure.ResourceManager.Avs
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.GetAvsPrivateClouds(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -662,13 +612,17 @@ namespace Azure.ResourceManager.Avs
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="AvsSubscriptionMockingExtension.GetAvsPrivateClouds(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
         }
     }
 }
