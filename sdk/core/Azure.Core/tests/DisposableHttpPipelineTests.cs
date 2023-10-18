@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
             public override Request CreateRequest() { throw new NotImplementedException(); }
 
             public bool DisposeCalled;
-            public void Dispose() => DisposeCalled = true;
+            public override void Dispose() => DisposeCalled = true;
         }
 
         private class MockPolicy : HttpPipelineTransportPolicy

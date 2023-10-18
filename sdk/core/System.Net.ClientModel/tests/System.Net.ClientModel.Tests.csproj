@@ -1,20 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsTestProject>true</IsTestProject>
-		<Nullable>enabled</Nullable>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<IsTestProject>true</IsTestProject>
+		<!-- TODO: Reenable this -->
+		<!--<Nullable>enable</Nullable>-->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="xunit.runner.visualstudio" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
+		<ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+	</ItemGroup>
 
 </Project>

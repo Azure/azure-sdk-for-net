@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Net.ClientModel.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -134,7 +135,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            /// <inheritdoc cref="RequestContent.TryComputeLength(out long)"/>
+            /// <inheritdoc cref="PipelineContent.TryComputeLength(out long)"/>
             public bool TryComputeLength(out long length)
             {
                 length = 0;
@@ -145,7 +146,7 @@ namespace Azure.Core.Serialization
                 return true;
             }
 
-            /// <inheritdoc cref="RequestContent.WriteTo(Stream, CancellationToken)"/>
+            /// <inheritdoc cref="PipelineContent.WriteTo(Stream, CancellationToken)"/>
             public void CopyTo(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)
@@ -155,7 +156,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            /// <inheritdoc cref="RequestContent.WriteToAsync(Stream, CancellationToken)"/>
+            /// <inheritdoc cref="PipelineContent.WriteToAsync(Stream, CancellationToken)"/>
             public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)
