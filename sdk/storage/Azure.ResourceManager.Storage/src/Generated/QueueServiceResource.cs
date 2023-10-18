@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageQueueResources and their operations over a StorageQueueResource. </returns>
         public virtual StorageQueueCollection GetStorageQueues()
         {
-            return GetCachedClient(Client => new StorageQueueCollection(Client, Id));
+            return GetCachedClient(client => new StorageQueueCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageQueueResource>> GetStorageQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageQueueResource> GetStorageQueue(string queueName, CancellationToken cancellationToken = default)
         {
