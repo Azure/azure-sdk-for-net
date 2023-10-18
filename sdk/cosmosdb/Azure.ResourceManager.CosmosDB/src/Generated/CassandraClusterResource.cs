@@ -441,11 +441,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraClusterBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CassandraClusterBackupResource> GetBackupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CassandraClusterBackupResourceInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CassandraClusterBackupResourceInfo> GetBackupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CassandraClusterBackupResource.DeserializeCassandraClusterBackupResource, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -462,11 +462,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraClusterBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CassandraClusterBackupResource> GetBackups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CassandraClusterBackupResourceInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CassandraClusterBackupResourceInfo> GetBackups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CassandraClusterBackupResource.DeserializeCassandraClusterBackupResource, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo, _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetBackups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual async Task<Response<CassandraClusterBackupResource>> GetBackupAsync(string backupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraClusterBackupResourceInfo>> GetBackupAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<CassandraClusterBackupResource> GetBackup(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraClusterBackupResourceInfo> GetBackup(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 

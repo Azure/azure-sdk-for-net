@@ -230,7 +230,7 @@ IPAddress = "10.52.221.4",
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CassandraClusterBackupResource item in cassandraCluster.GetBackupsAsync())
+            await foreach (CassandraClusterBackupResourceInfo item in cassandraCluster.GetBackupsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -261,7 +261,7 @@ IPAddress = "10.52.221.4",
 
             // invoke the operation
             string backupId = "1611250348";
-            CassandraClusterBackupResource result = await cassandraCluster.GetBackupAsync(backupId);
+            CassandraClusterBackupResourceInfo result = await cassandraCluster.GetBackupAsync(backupId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -1,5 +1,11 @@
 # Release History
 
+## Upcoming Release
+
+- Added support for Priority Based Execution.
+- Added support for cross account container copy.
+- Added new property CustomerManagedKeyStatus to account.
+
 ## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added

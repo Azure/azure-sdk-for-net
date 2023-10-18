@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterBackupResource
+    public partial class CassandraClusterBackupResourceInfo
     {
-        internal static CassandraClusterBackupResource DeserializeCassandraClusterBackupResource(JsonElement element)
+        internal static CassandraClusterBackupResourceInfo DeserializeCassandraClusterBackupResourceInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterBackupResource(backupId.Value, Optional.ToNullable(backupState), Optional.ToNullable(backupStartTimestamp), Optional.ToNullable(backupStopTimestamp), Optional.ToNullable(backupExpiryTimestamp));
+            return new CassandraClusterBackupResourceInfo(backupId.Value, Optional.ToNullable(backupState), Optional.ToNullable(backupStartTimestamp), Optional.ToNullable(backupStopTimestamp), Optional.ToNullable(backupExpiryTimestamp));
         }
     }
 }

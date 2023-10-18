@@ -1448,16 +1448,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraCommandOutput(commandOutput);
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterBackupResource. </summary>
+        /// <summary> Initializes a new instance of CassandraClusterBackupResourceInfo. </summary>
         /// <param name="backupId"> The unique identifier of backup. </param>
         /// <param name="backupState"> The current state of the backup. </param>
         /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>
         /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
         /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterBackupResource"/> instance for mocking. </returns>
-        public static CassandraClusterBackupResource CassandraClusterBackupResource(string backupId = null, BackupState? backupState = null, DateTimeOffset? backupStartTimestamp = null, DateTimeOffset? backupStopTimestamp = null, DateTimeOffset? backupExpiryTimestamp = null)
+        /// <returns> A new <see cref="Models.CassandraClusterBackupResourceInfo"/> instance for mocking. </returns>
+        public static CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = null, BackupState? backupState = null, DateTimeOffset? backupStartTimestamp = null, DateTimeOffset? backupStopTimestamp = null, DateTimeOffset? backupExpiryTimestamp = null)
         {
-            return new CassandraClusterBackupResource(backupId, backupState, backupStartTimestamp, backupStopTimestamp, backupExpiryTimestamp);
+            return new CassandraClusterBackupResourceInfo(backupId, backupState, backupStartTimestamp, backupStopTimestamp, backupExpiryTimestamp);
         }
 
         /// <summary> Initializes a new instance of CassandraDataCenterData. </summary>
