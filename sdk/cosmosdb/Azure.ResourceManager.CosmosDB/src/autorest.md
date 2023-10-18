@@ -305,7 +305,7 @@ rename-mapping:
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
-  BackupResource: CassandraClusterBackupResource
+  BackupResource: CassandraClusterBackupResourceInfo
   CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
   CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
