@@ -24,8 +24,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TheSameValuesAreEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887,  lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
             Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
@@ -42,8 +42,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentOffsetsAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 999, lastReplicationSegment: "3", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 888, lastReplicationSegment: "3", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 999, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 888, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -60,8 +60,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentEnqueueTimesAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("1974-12-09T21:30:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("1974-12-09T21:30:00Z"), lastReceivedTime: now);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -78,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentSequenceNumbersAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 333, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 444, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 333, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 444, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -96,8 +96,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentLastReceiveTimesAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now.AddHours(1));
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now.AddHours(1));
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -114,8 +114,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentLastReplicationSegmentsAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "1", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastReplicationSegment: "5", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 887, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
             var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 333, lastOffset: 888, lastReplicationSegment: "1", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 555, lastOffset: 777, lastReplicationSegment: "7", lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 333, lastOffset: 888, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
+            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 555, lastOffset: 777, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
@@ -148,15 +148,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var offset = 123;
             var sequence = 778;
-            var replicationSegment = "4";
             var enqueued = DateTimeOffset.Now.AddHours(1);
             var received = DateTimeOffset.Now.AddHours(7);
-            var properties = new LastEnqueuedEventProperties(sequence, offset, replicationSegment, enqueued, received);
+            var properties = new LastEnqueuedEventProperties(sequence, offset, enqueued, received);
             var toStringValue = properties.ToString();
 
             Assert.That(toStringValue, Contains.Substring($"[{ offset }]"), "The offset should be represented.");
             Assert.That(toStringValue, Contains.Substring($"[{ sequence }]"), "The sequence number should be represented.");
-            Assert.That(toStringValue, Contains.Substring($"[{ replicationSegment }]"), "The replication segment should be represented.");
             Assert.That(toStringValue, Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
             Assert.That(toStringValue, Contains.Substring($"[{ received }]"), "The received time should be represented.");
         }

@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
                              IReadOnlyDictionary<string, object> systemProperties = null,
                              long sequenceNumber = long.MinValue,
                              long offset = long.MinValue,
-                             string replicationSegment = null,
+                             long replicationSegment = -1,
                              DateTimeOffset enqueuedTime = default,
                              string partitionKey = null) : base(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey)
         {

@@ -26,12 +26,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         public long? Offset { get; }
 
         /// <summary>
-        ///   The replication segment of the last observed event to be enqueued in the partition.
-        /// </summary>
-        ///
-        public string ReplicationSegment { get; }
-
-        /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
         /// </summary>
         ///
@@ -52,31 +46,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public LastEnqueuedEventProperties(long? lastSequenceNumber,
                                            long? lastOffset,
-                                           DateTimeOffset? lastEnqueuedTime,
-                                           DateTimeOffset? lastReceivedTime)
-        {
-            SequenceNumber = lastSequenceNumber;
-            Offset = lastOffset;
-            EnqueuedTime = lastEnqueuedTime;
-            LastReceivedTime = lastReceivedTime;
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
-        /// </summary>
-        ///
-        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="lastReplicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
-        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
-        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
-        ///
-        public LastEnqueuedEventProperties(long? lastSequenceNumber,
-                                           long? lastOffset,
-                                           string lastReplicationSegment,
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {
@@ -95,7 +66,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal LastEnqueuedEventProperties(EventData sourceEvent) :
             this(sourceEvent?.LastPartitionSequenceNumber,
                  sourceEvent?.LastPartitionOffset,
-                 sourceEvent?.ReplicationSegment,
                  sourceEvent?.LastPartitionEnqueuedTime,
                  sourceEvent?.LastPartitionPropertiesRetrievalTime)
         {
@@ -113,7 +83,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         {
             return (Offset == other.Offset)
                 && (SequenceNumber == other.SequenceNumber)
-                && (ReplicationSegment == other.ReplicationSegment)
                 && (EnqueuedTime == other.EnqueuedTime)
                 && (LastReceivedTime == other.LastReceivedTime);
         }
@@ -146,7 +115,6 @@ namespace Azure.Messaging.EventHubs.Consumer
             var hashCode = new HashCodeBuilder();
             hashCode.Add(Offset);
             hashCode.Add(SequenceNumber);
-            hashCode.Add(ReplicationSegment);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(LastReceivedTime);
 
@@ -160,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Replication Segment: [{ReplicationSegment}] | Offset: [{ Offset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
+        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ Offset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
 
         /// <summary>
         ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are equal to each other.

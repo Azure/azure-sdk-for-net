@@ -910,8 +910,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, replicationSegment: "-1"),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, replicationSegment: "-1")
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, replicationSegment: -1),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, replicationSegment: -1)
             };
 
             var capturedEventArgs = new List<ProcessEventArgs>();
@@ -1455,7 +1455,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var offset = 456;
             var sequenceNumber = 789;
-            var replicationSegment = "-1";
+            var replicationSegment = -1;
             var checkpointStartingPosition = new CheckpointPosition(sequenceNumber, replicationSegment, offset);
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1543,7 +1543,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var offset = 456;
             var sequenceNumber = 789;
-            var replicationSegment = "-1";
+            var replicationSegment = -1;
             var checkpointStartingPosition = new CheckpointPosition(sequenceNumber, replicationSegment, offset);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1583,7 +1583,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new NotImplementedException("This didn't work.");
             var partitionId = "3";
-            var checkpointStartingPosition = new CheckpointPosition(789, "-1", 456);
+            var checkpointStartingPosition = new CheckpointPosition(789, -1, 456);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);

@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment, checkpointStartingPosition.Offset.ToString());
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment.ToString(), checkpointStartingPosition.Offset.ToString());
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -381,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 { BlobMetadataKey.Offset, checkpointStartingPosition.Offset.ToString() },
                 { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber).ToString(CultureInfo.InvariantCulture) },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier },
-                { BlobMetadataKey.ReplicationSegment,  checkpointStartingPosition.ReplicationSegment ?? "-1" }
+                { BlobMetadataKey.ReplicationSegment, checkpointStartingPosition.ReplicationSegment.ToString() }
             };
 
             try
@@ -402,17 +402,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment, checkpointStartingPosition.Offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment.ToString(), checkpointStartingPosition.Offset.ToString(), ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment, checkpointStartingPosition.Offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment.ToString(), checkpointStartingPosition.Offset.ToString(), ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment, checkpointStartingPosition.Offset.ToString());
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.ReplicationSegment.ToString(), checkpointStartingPosition.Offset.ToString());
             }
         }
 
@@ -440,13 +440,13 @@ namespace Azure.Messaging.EventHubs.Primitives
             var offset = default(long?);
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
-            var replicationSegment = default(string);
+            var replicationSegment = default(long?);
 
-            if (metadata.TryGetValue(BlobMetadataKey.ReplicationSegment, out var str))
+            if (metadata.TryGetValue(BlobMetadataKey.ReplicationSegment, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
             {
-                replicationSegment = str;
+                replicationSegment = result;
             }
-            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
                 startingPosition = EventPosition.FromSequenceNumber(result, replicationSegment, false);
@@ -913,7 +913,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             public long? Offset { get; set; }
             public long? SequenceNumber { get; set; }
-            public string ReplicationSegment { get; set; }
+            public long? ReplicationSegment { get; set; }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   The replication segment to associate with the checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.
         /// </summary>
         ///
-        public string ReplicationSegment { get; internal set; }
+        public long? ReplicationSegment { get; internal set; }
 
         /// <summary>
         ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="replicationSegment">The replication segment to associate with this checkpoint.</param>
         /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata.</param>
         ///
-        public CheckpointPosition(long sequenceNumber, string replicationSegment, long? offset = null)
+        public CheckpointPosition(long sequenceNumber, long? replicationSegment, long? offset = null)
         {
             Offset = offset;
             SequenceNumber = sequenceNumber;

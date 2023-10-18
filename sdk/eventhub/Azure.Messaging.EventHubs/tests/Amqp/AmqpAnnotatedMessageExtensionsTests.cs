@@ -296,7 +296,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sequenceNumber = 123L;
             var offset = 456L;
-            var replicationSegment = "1";
+            var replicationSegment = 1;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var sequenceNumber = 123L;
             var offset = 456L;
-            var replicationSegment = "1";
+            var replicationSegment = 1;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
@@ -366,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sequenceNumber = 123L;
             var offset = 456L;
-            var replicationSegment = "1";
+            var replicationSegment = 1;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
@@ -520,7 +520,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                       long? lastSequenceNumber,
                                                                                       long? offset,
                                                                                       long? lastOffset,
-                                                                                      string replicationSegment,
+                                                                                      int? replicationSegment,
                                                                                       string partitionKey,
                                                                                       DateTimeOffset? enqueueTime,
                                                                                       DateTimeOffset? lastEnqueueTime,
@@ -547,12 +547,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Optional properties for all messages read from the service.
 
-            if (!string.IsNullOrEmpty(replicationSegment))
+            if (replicationSegment.HasValue)
             {
                 message.MessageAnnotations.Add(AmqpProperty.ReplicationSegment.ToString(), replicationSegment);
             }
 
-            if (!string.IsNullOrEmpty(replicationSegment))
+            if (!string.IsNullOrEmpty(partitionKey))
             {
                 message.MessageAnnotations.Add(AmqpProperty.PartitionKey.ToString(), partitionKey);
             }

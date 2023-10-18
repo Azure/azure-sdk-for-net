@@ -460,7 +460,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetCheckpointSetsReplicationSegmentWhenPresent()
         {
             var expectedSequenceNumber = 13;
-            var expectedReplicationSegment = "1";
+            var expectedReplicationSegment = 1;
             var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequenceNumber, expectedReplicationSegment,  false);
             var partition = Guid.NewGuid().ToString();
 
@@ -475,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, "13"},
                                                {BlobMetadataKey.SequenceNumber, expectedSequenceNumber.ToString()},
-                                               {BlobMetadataKey.ReplicationSegment, expectedReplicationSegment}
+                                               {BlobMetadataKey.ReplicationSegment, expectedReplicationSegment.ToString()}
                                            })
             };
             var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
@@ -637,7 +637,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task UpdateCheckpointLogsStartAndCompleteWhenTheBlobDoesNotExist()
         {
             var sequenceNumber = 1234;
-            var replicationSegment = "0";
+            var replicationSegment = 0;
             var offset = 5678;
 
             var checkpoint = new EventProcessorCheckpoint
@@ -668,8 +668,8 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(sequenceNumber, replicationSegment, offset), CancellationToken.None);
-            mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment, offset.ToString()));
-            mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment, offset.ToString()));
+            mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString()));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString()));
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void UpdateCheckpointLogsErrorsWhenTheBlobExists()
         {
             var sequenceNumber = 456;
-            var replicationSegment = "0";
+            var replicationSegment = 0;
             var offset = 789;
 
             var checkpoint = new EventProcessorCheckpoint
@@ -707,7 +707,7 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(sequenceNumber, replicationSegment, offset), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-            mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment, offset.ToString(), expectedException.Message));
+            mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString(), expectedException.Message));
         }
 
         /// <summary>

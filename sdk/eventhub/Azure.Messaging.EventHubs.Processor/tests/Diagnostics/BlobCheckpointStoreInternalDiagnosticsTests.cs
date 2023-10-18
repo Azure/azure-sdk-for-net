@@ -296,11 +296,11 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 0;
-            var expectedReplicationSegment = "-1";
+            var expectedReplicationSegment = -1;
             var expectedOffset = 0;
             await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedReplicationSegment, expectedOffset), CancellationToken.None);
-            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment, expectedOffset.ToString()));
-            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment, expectedOffset.ToString()));
+            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment.ToString(), expectedOffset.ToString()));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment.ToString(), expectedOffset.ToString()));
         }
 
         /// <summary>
@@ -324,10 +324,10 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 456;
-            var expectedReplicationSegment = "-1";
+            var expectedReplicationSegment = -1;
             var expectedOffset = 123;
             Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedReplicationSegment, expectedOffset), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment, expectedOffset.ToString(), expectedException.Message));
+            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment.ToString(), expectedOffset.ToString(), expectedException.Message));
         }
 
         /// <summary>
@@ -350,10 +350,10 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 6;
-            var expectedReplicationSegment = "-1";
+            var expectedReplicationSegment = -1;
             var expectedOffset = 4;
             Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedReplicationSegment, expectedOffset), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment, expectedOffset.ToString(), expectedException.Message));
+            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment.ToString(), expectedOffset.ToString(), expectedException.Message));
         }
 
         /// <summary>
@@ -371,10 +371,10 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 999;
-            var expectedReplicationSegment = "0";
+            var expectedReplicationSegment = 0;
             var expectedOffset = 999;
             Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedReplicationSegment, expectedOffset), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment, expectedOffset.ToString(), ex.Message));
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), expectedReplicationSegment.ToString(), expectedOffset.ToString(), ex.Message));
         }
 
         /// <summary>

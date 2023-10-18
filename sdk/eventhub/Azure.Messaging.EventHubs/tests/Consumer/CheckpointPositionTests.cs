@@ -23,8 +23,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void TheSamePositionAreEqual()
         {
-            var first = new CheckpointPosition(121, "1", 141);
-            var second = new CheckpointPosition(121, "1", 141);
+            var first = new CheckpointPosition(121, 1, 141);
+            var second = new CheckpointPosition(121, 1, 141);
 
             Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
@@ -40,8 +40,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void DifferentPositionsAreNotEqual()
         {
-            var first = new CheckpointPosition(10, "1", 141);
-            var second = new CheckpointPosition(121, "4", 400);
+            var first = new CheckpointPosition(10, 1, 141);
+            var second = new CheckpointPosition(121, 4, 400);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -57,8 +57,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
-            var first = new CheckpointPosition(10, "1", 141);
-            var second = new CheckpointPosition(121, "4", 400);
+            var first = new CheckpointPosition(10, 1, 141);
+            var second = new CheckpointPosition(121, 4, 400);
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var offset = 123;
             var sequence = 4566;
-            var replicationSegment = "11";
+            var replicationSegment = 11;
             var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset, replicationSegment: replicationSegment);
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var offset = 400;
             var sequence = 121;
-            var replicationSegment = "1";
+            var replicationSegment = 1;
 
             var checkpoint = new CheckpointPosition(sequence, replicationSegment, offset);
 
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var offset = 400;
             var sequence = 121;
-            var replicationSegment = "1";
+            var replicationSegment = 1;
             var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset, replicationSegment: replicationSegment);
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);

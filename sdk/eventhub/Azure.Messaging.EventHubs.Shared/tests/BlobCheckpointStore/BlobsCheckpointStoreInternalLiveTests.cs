@@ -736,7 +736,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventBody: Array.Empty<byte>(),
                     offset: 10,
                     sequenceNumber: 20,
-                    replicationSegment: "-1");
+                    replicationSegment: -1);
 
                 // There should be no blobs or checkpoints before the first call.
 
@@ -806,7 +806,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     eventBody: Array.Empty<byte>(),
                     offset: 10,
                     sequenceNumber: 20,
-                    replicationSegment: "-1");
+                    replicationSegment: -1);
 
                 // Calling update should create the checkpoint.
 

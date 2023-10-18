@@ -302,7 +302,7 @@ namespace Azure.Messaging.EventHubs
         ///   is "-1".
         /// </value>
         ///
-        public string ReplicationSegment => _amqpMessage.GetReplicationSegment("-1");
+        public long ReplicationSegment => _amqpMessage.GetReplicationSegment(-1);
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -566,7 +566,7 @@ namespace Azure.Messaging.EventHubs
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
                            long? offset = null,
-                           string replicationSegment = "-1",
+                           long? replicationSegment = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
@@ -623,7 +623,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, long, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -656,7 +656,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, long, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -670,7 +670,7 @@ namespace Azure.Messaging.EventHubs
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
-                            string replicationSegment = "-1",
+                            long replicationSegment = -1,
                             DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
@@ -689,7 +689,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, string, DateTimeOffset)" /> factory method.
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, long, DateTimeOffset)" /> factory method.
         ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that

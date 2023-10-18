@@ -15,11 +15,11 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///
     public struct EventPosition : IEquatable<EventPosition>
     {
-        /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
-        private const string StartOfStreamOffset = "-1";
+        /// <summary>The token that represents the beginning event in a partition.</summary>
+        private const string StartingSequenceNumber = "-1";
 
-        /// <summary>The token that represents the last event in the stream of a partition.</summary>
-        private const string EndOfStreamOffset = "@latest";
+        /// <summary>The token that represents the last event in a partition.</summary>
+        private const string LatestSequenceNumber = "@latest";
 
         /// <summary>
         ///   Corresponds to the location of the first event present in the partition.  Use this
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = FromOffset(StartOfStreamOffset, false);
+        public static EventPosition Earliest { get; } = FromSequenceNumber(StartingSequenceNumber, null, false);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = FromOffset(EndOfStreamOffset, false);
+        public static EventPosition Latest { get; } = FromSequenceNumber(LatestSequenceNumber, null, false);
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
-        internal long? SequenceNumber { get; set; }
+        internal string SequenceNumber { get; set; }
 
         /// <summary>
         ///   The replication segment of the event identified by this position. Needs to be accompanied by a sequence number when
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
         ///
-        internal string ReplicationSegment { get; set; }
+        internal long? ReplicationSegment { get; set; }
 
         /// <summary>
         ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
@@ -105,14 +105,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromSequenceNumber(long sequenceNumber,
-                                                       bool isInclusive = true)
-        {
-            return new EventPosition
-            {
-                SequenceNumber = sequenceNumber,
-                IsInclusive = isInclusive
-            };
-        }
+                                                       bool isInclusive = true) => FromSequenceNumber(sequenceNumber.ToString(CultureInfo.InvariantCulture), null, isInclusive);
 
         /// <summary>
         ///   Corresponds to an event with the specified sequence number and replication segment in the partition for use with geo replication enable Event Hubs namespaces.  By default, the event with this <paramref name="sequenceNumber"/>
@@ -121,22 +114,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
-        /// <param name="replicationSegment">The replication segment associated</param>
+        /// <param name="replicationSegment">The replication segment associated with the event when it was enqueued in the partition.</param>
         /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be read.</param>
         ///
         /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromSequenceNumber(long sequenceNumber,
-                                                         string replicationSegment,
-                                                         bool isInclusive = true)
-        {
-            return new EventPosition
-            {
-                ReplicationSegment = replicationSegment,
-                SequenceNumber = sequenceNumber,
-                IsInclusive = isInclusive
-            };
-        }
+                                                       long? replicationSegment,
+                                                       bool isInclusive = true) => FromSequenceNumber(sequenceNumber.ToString(CultureInfo.InvariantCulture), replicationSegment, isInclusive);
 
         /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued on or after
@@ -216,11 +201,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override string ToString() =>
             this switch
             {
-                _ when (Offset == StartOfStreamOffset) => nameof(Earliest),
-                _ when (Offset == EndOfStreamOffset) => nameof(Latest),
+                _ when (SequenceNumber == StartingSequenceNumber) => nameof(Earliest),
+                _ when (SequenceNumber == LatestSequenceNumber) => nameof(Latest),
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
-                _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
-                _ when (!string.IsNullOrEmpty(ReplicationSegment)) => $"Replication Segment: [{ReplicationSegment}] |",
+                _ when (!string.IsNullOrEmpty(SequenceNumber) && ReplicationSegment.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Replication Segment: [{ReplicationSegment}] | Inclusive: [{ IsInclusive }]",
+                _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{SequenceNumber}] | Inclusive: [{IsInclusive}]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()
             };
@@ -242,6 +227,29 @@ namespace Azure.Messaging.EventHubs.Consumer
             return new EventPosition
             {
                 Offset = offset,
+                IsInclusive = isInclusive
+            };
+        }
+
+        /// <summary>
+        ///   Corresponds to the event in the partition at the provided offset.
+        /// </summary>
+        /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
+        /// <param name="replicationSegment">The replication segment associated with the event when it was enqueued in the partition.</param>
+        /// <param name="isInclusive">If true, the event at the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be received.</param>
+        ///
+        /// <returns>The position of the specified event.</returns>
+        ///
+        private static EventPosition FromSequenceNumber(string sequenceNumber,
+                                                        long? replicationSegment,
+                                                        bool isInclusive)
+        {
+            Argument.AssertNotNullOrWhiteSpace(nameof(sequenceNumber), sequenceNumber);
+
+            return new EventPosition
+            {
+                SequenceNumber = sequenceNumber,
+                ReplicationSegment = replicationSegment,
                 IsInclusive = isInclusive
             };
         }

@@ -249,10 +249,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
-                (string)responseData[AmqpManagement.ResponseMap.PartitionBeginReplicationSegment],
+                ((int)responseData[AmqpManagement.ResponseMap.PartitionBeginReplicationSegment]).ToString(),
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
                 long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset], NumberStyles.Integer, CultureInfo.InvariantCulture),
-                (string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment],
+                ((int)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment]).ToString(),
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero));
         }
 

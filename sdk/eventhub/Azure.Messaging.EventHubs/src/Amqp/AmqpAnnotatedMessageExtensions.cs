@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
                                                        long? offset = null,
-                                                       string replicationSegment = null,
+                                                       long? replicationSegment = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
@@ -216,13 +216,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The replication segment, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static string GetReplicationSegment(this AmqpAnnotatedMessage instance,
-                                     string defaultValue = "-1")
+        public static long GetReplicationSegment(this AmqpAnnotatedMessage instance,
+                                                 long defaultValue = -1)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationSegment.ToString(), out var value)))
             {
-                return ((int)value).ToString();
+                return (long)value;
             }
 
             return defaultValue;

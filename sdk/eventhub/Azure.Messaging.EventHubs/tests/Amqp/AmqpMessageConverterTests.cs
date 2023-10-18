@@ -1979,9 +1979,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var name = "SomeName";
             var partition = "55";
             var beginSequenceNumber = 555L;
-            var beginReplicationSegment = "1";
+            var beginReplicationSegment = 1;
             var lastSequenceNumber = 666L;
-            var lastReplicationSegment = "5";
+            var lastReplicationSegment = 5;
             var lastOffset = 777L;
             var lastEnqueueTime = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var isEmpty = false;

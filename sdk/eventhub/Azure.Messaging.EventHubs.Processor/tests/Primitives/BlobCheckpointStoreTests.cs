@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedProcessorId = "Id";
             var expectedOffset = 123;
             var expectedSequence = 999;
-            var expectedReplicationSegment = "-1";
+            var expectedReplicationSegment = -1;
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
 

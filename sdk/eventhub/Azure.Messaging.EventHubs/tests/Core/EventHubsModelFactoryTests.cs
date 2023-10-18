@@ -128,25 +128,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var lastSequence = long.MaxValue - 100;
             var lastOffset = long.MaxValue - 10;
-            var lastReplicationSegment = "4";
             var lastEnqueued = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
             var lastReceived = new DateTimeOffset(2012, 03, 04, 08, 0, 0, TimeSpan.Zero);
-            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastReplicationSegment, lastEnqueued, lastReceived);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastEnqueued, lastReceived);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
             Assert.That(properties.Offset, Is.EqualTo(lastOffset), "The offset should have been set.");
-            Assert.That(properties.ReplicationSegment, Is.EqualTo(lastReplicationSegment), "The replication segment should have been set.");
             Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
             Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
-
-            var propertiesOld = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastEnqueued, lastReceived);
-
-            Assert.That(propertiesOld, Is.Not.Null, "The properties should have been created.");
-            Assert.That(propertiesOld.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
-            Assert.That(propertiesOld.Offset, Is.EqualTo(lastOffset), "The offset should have been set.");
-            Assert.That(propertiesOld.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
-            Assert.That(propertiesOld.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
         }
 
         /// <summary>
@@ -162,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "fakeHub";
             var consumerGroup = "fakeConsumerGroup";
             var partition = "0";
-            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(465, 988, "4", fakeDate, fakeDate);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(465, 988, fakeDate, fakeDate);
             var context = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition, properties);
 
             Assert.That(context, Is.Not.Null, "The context should have been created.");
@@ -171,10 +161,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
             Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
             Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(properties), "The last enqueued event properties should have been set.");
-
-            var propertiesOld = EventHubsModelFactory.LastEnqueuedEventProperties(465, 988, fakeDate, fakeDate);
-            var contextOld = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition, propertiesOld);
-            Assert.That(contextOld.ReadLastEnqueuedEventProperties(), Is.EqualTo(propertiesOld), "The last enqueued event properties should have been set.");
         }
 
         /// <summary>
@@ -212,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
             var sequenceNumber = long.MaxValue - 512;
             var offset = long.MaxValue - 1024;
-            var replicationSegment = "4";
+            var replicationSegment = 4;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
             var partitionKey = "omghai!";
             var eventData = EventHubsModelFactory.EventData(body, properties, systemProperties, partitionKey, sequenceNumber, offset, replicationSegment, enqueueTime);

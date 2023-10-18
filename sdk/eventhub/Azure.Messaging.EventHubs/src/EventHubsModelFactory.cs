@@ -106,29 +106,11 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
                                                                               long? lastOffset,
                                                                               DateTimeOffset? lastEnqueuedTime,
                                                                               DateTimeOffset? lastReceivedTime) =>
             new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastReceivedTime);
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="Consumer.LastEnqueuedEventProperties"/> class.
-        /// </summary>
-        ///
-        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="replicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
-        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
-        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
-        ///
-        public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
-                                                                              long? lastOffset,
-                                                                              string replicationSegment,
-                                                                              DateTimeOffset? lastEnqueuedTime,
-                                                                              DateTimeOffset? lastReceivedTime) =>
-            new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, replicationSegment, lastEnqueuedTime, lastReceivedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Consumer.PartitionContext"/> class.
@@ -200,7 +182,7 @@ namespace Azure.Messaging.EventHubs
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
-                                          string replicationSegment = null,
+                                          long replicationSegment = -1,
                                           DateTimeOffset enqueuedTime = default) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey);
 
