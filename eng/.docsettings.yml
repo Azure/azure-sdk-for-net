@@ -25,7 +25,7 @@ language: net
 root_check_enabled: True
 
 required_readme_sections:
-  - ".+ client library for .NET"
+  - "Azure .+ client library for .NET"
   - "^Getting started$":
     - Install the [Pp]ackage
     - Prerequisites
