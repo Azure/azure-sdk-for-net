@@ -71,6 +71,7 @@
     "dotnetcli",
     "dtmf",
     "eastus",
+    "entra",
     "epsg",
     "expando",
     "fhir",
@@ -1226,6 +1227,12 @@
         "rpath",
         "runpath",
         "Cves"
+      ]
+    },
+    {
+      "filename": "**/sdk/monitor/**/*.cs",
+      "words": [
+        "resourceid"
       ]
     }
   ],

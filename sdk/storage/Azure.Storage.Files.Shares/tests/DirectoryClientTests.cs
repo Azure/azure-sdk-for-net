@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.PublicAudience);
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.DefaultAudience);
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.GetShareServiceAccountAudience(directoryClient.AccountName));
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.CreateShareServiceAccountAudience(directoryClient.AccountName));
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {

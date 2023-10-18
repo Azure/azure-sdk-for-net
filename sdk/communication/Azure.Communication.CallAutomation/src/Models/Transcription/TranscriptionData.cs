@@ -64,26 +64,20 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
 
         private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
         {
-            switch (resultStatus)
-            {
-                case "intermediate":
-                    return ResultStatus.Intermediate;
-                case "final":
-                    return ResultStatus.Final;
-                default:
-                    throw new NotSupportedException(resultStatus);
-            }
+            if ("Intermediate".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Intermediate;
+            else if ("Final".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Final;
+            else
+                throw new NotSupportedException(resultStatus);
         }
 
         private static TextFormat ConvertToTextFormatEnum(string format)
         {
-            switch (format)
-            {
-                case "display":
-                    return TextFormat.Display;
-                default:
-                    throw new NotSupportedException(format);
-            }
+            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+                return TextFormat.Display;
+            else
+                throw new NotSupportedException(format);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿# Troubleshoot Azure Identity authentication issues
+# Troubleshoot Azure Identity authentication issues
 
 This troubleshooting guide covers failure investigation techniques, common errors for the credential types in the Azure Identity library for .NET, and mitigation steps to resolve these errors.
 
@@ -67,7 +67,7 @@ Calls to service clients resulting in `RequestFailedException` with a `StatusCod
 
 ## Find relevant information in exception messages
 
-`AuthenticationFailedException` is thrown when unexpected errors occurred while a credential is authenticating. This can include errors received from requests to the Azure AD STS and often contains information helpful to diagnosis. Consider the following `AuthenticationFailedException` message.
+`AuthenticationFailedException` is thrown when unexpected errors occurred while a credential is authenticating. This can include errors received from requests to the Microsoft Entra STS and often contains information helpful to diagnosis. Consider the following `AuthenticationFailedException` message.
 
 ![AuthenticationFailedException Message Example](https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AuthFailedErrorMessageExample.png)
 
@@ -75,7 +75,7 @@ This error contains several pieces of information:
 
 - __Failing Credential Type__: The type of credential that failed to authenticate. This can be helpful when diagnosing issues with chained credential types such as `DefaultAzureCredential` or `ChainedTokenCredential`.
 
-- __STS Error Code and Message__: The error code and message returned from the Azure AD STS. This can give insight into the specific reason the request failed. For instance, in this specific case because the provided client secret is incorrect. More information on STS error codes can be found [here](https://learn.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes#aadsts-error-codes).
+- __STS Error Code and Message__: The error code and message returned from the Microsoft Entra STS. This can give insight into the specific reason the request failed. For instance, in this specific case because the provided client secret is incorrect. More information on STS error codes can be found [here](https://learn.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes#aadsts-error-codes).
 
 - __Correlation ID and Timestamp__: The correlation ID and call Timestamp used to identify the request in server-side logs. This information can be useful to support engineers when diagnosing unexpected STS failures.
 
@@ -138,7 +138,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 
 | Error Code | Description | Mitigation |
 |---|---|---|
-|AADSTS700027|Client assertion contains an invalid signature.|Ensure the specified certificate has been uploaded to the Azure AD application registration. Instructions for uploading certificates to the application registration can be found [here](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal#option-1-upload-a-certificate).|
+|AADSTS700027|Client assertion contains an invalid signature.|Ensure the specified certificate has been uploaded to the Microsoft Entra application registration. Instructions for uploading certificates to the application registration can be found [here](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal#option-1-upload-a-certificate).|
 |AADSTS700016|The specified application wasn't found in the specified tenant.| Ensure the specified `clientId` and `tenantId` are correct for your application registration. For multi-tenant apps, ensure the application has been added to the desired tenant by a tenant admin. To add a new application in the desired tenant, follow the instructions [here](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
 
 ## Troubleshoot `ClientAssertionCredential` authentication issues
@@ -165,7 +165,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 
 | Error Message |Description| Mitigation |
 |---|---|---|
-|`CredentialUnavailableException` raised with message. "WorkloadIdentityCredential authentication unavailable. The workload options are not fully configured."|The `WorkloadIdentityCredential` requires `ClientId`, `TenantId` and `TokenFilePath` to authenticate with Azure Active Directory.| <ul><li>If using `DefaultAzureCredential` then:</li><ul><li>Ensure client ID is specified via `WorkloadIdentityClientId` property on `DefaultAzureCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure tenant ID is specified via `AZURE_TENANT_ID` env variable.</li><li>Ensure token file path is specified via `AZURE_FEDERATED_TOKEN_FILE` env variable.</li><li>Ensure authority host is specified via `AZURE_AUTHORITY_HOST` env variable.</ul><li>If using `WorkloadIdentityCredential` then:</li><ul><li>Ensure tenant ID is specified via the `TenantId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_TENANT_ID` env variable.</li><li>Ensure client ID is specified via the `ClientId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure token file path is specified via the `TokenFilePath` property on the `WorkloadIdentityCredentialOptions` instance or `AZURE_FEDERATED_TOKEN_FILE` environment variable. </li></ul></li><li>Consult the [product troubleshooting guide](https://azure.github.io/azure-workload-identity/docs/troubleshooting.html) for other issues.</li></ul>
+|`CredentialUnavailableException` raised with message. "WorkloadIdentityCredential authentication unavailable. The workload options are not fully configured."|The `WorkloadIdentityCredential` requires `ClientId`, `TenantId` and `TokenFilePath` to authenticate with Microsoft Entra ID.| <ul><li>If using `DefaultAzureCredential` then:</li><ul><li>Ensure client ID is specified via `WorkloadIdentityClientId` property on `DefaultAzureCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure tenant ID is specified via `AZURE_TENANT_ID` env variable.</li><li>Ensure token file path is specified via `AZURE_FEDERATED_TOKEN_FILE` env variable.</li><li>Ensure authority host is specified via `AZURE_AUTHORITY_HOST` env variable.</ul><li>If using `WorkloadIdentityCredential` then:</li><ul><li>Ensure tenant ID is specified via the `TenantId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_TENANT_ID` env variable.</li><li>Ensure client ID is specified via the `ClientId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure token file path is specified via the `TokenFilePath` property on the `WorkloadIdentityCredentialOptions` instance or `AZURE_FEDERATED_TOKEN_FILE` environment variable. </li></ul></li><li>Consult the [product troubleshooting guide](https://azure.github.io/azure-workload-identity/docs/troubleshooting.html) for other issues.</li></ul>
 |The workload options are not fully configured.|The workload identity configuration wasn't provided in environment variables or through `WorkloadIdentityCredentialOptions`.|Ensure the appropriate environment variables are set **prior to application startup** or are specified in code.</p><ul><li>To configure the `WorkloadIdentityCredential` via the environment, ensure the variables `AZURE_AUTHORITY_HOST`, `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_FEDERATED_TOKEN_FILE` are set by the admission webhook.</li><li>To configure the `WorkloadIdentityCredential` in code, ensure `ClientId`, `TenantId`, and `TokenFilePath` are set on the `WorkloadIdentityCredentialOptions` passed to the `WorkloadIdentityCredential` constructor.</li><ul>|
 
 ## Troubleshoot `ManagedIdentityCredential` authentication issues
@@ -240,7 +240,7 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 |Failed To Read VS Code Credentials</p></p>OR</p>Authenticate via Azure Tools plugin in VS Code|No Azure account information was found in the VS Code configuration.|<ul><li>Ensure the [Azure Account plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is properly installed</li><li>Use **View > Command Palette** to execute the **Azure: Sign In** command. This command opens a browser window and displays a page that allows you to sign in to Azure.</li><li>If you already had the Azure Account extension installed and logged in to your account, try logging out and logging in again. Doing so will repopulate the cache and potentially mitigate the error you're getting.</li></ul>|
 |MSAL Interaction Required Error|The `VisualStudioCodeCredential` was able to read the cached credentials from the cache but the cached token is likely expired.|Log into the Azure Account extension via **View > Command Palette** to execute the **Azure: Sign In** command in the VS Code IDE.|
 |ADFS tenant not supported|ADFS tenants aren't currently supported by Visual Studio `Azure Service Authentication`.|Use credentials from a supported cloud when authenticating with Visual Studio. The supported clouds are:</p><ul><li>AZURE PUBLIC CLOUD - https://login.microsoftonline.com/</li><li>AZURE GERMANY - https://login.microsoftonline.de/</li><li>AZURE CHINA - https://login.chinacloudapi.cn/</li><li>AZURE GOVERNMENT - https://login.microsoftonline.us/</li></ul>|
-|AADSTS50020| User account '{EmailHidden}' from identity provider 'live.com' doesn't exist in tenant 'Microsoft Services' and cannot access the application '04f0c124-f2bc-4f59-8241-bf6df9866bbd'(VS with native MSA) in that tenant. The account needs to be added as an external user in the tenant first. Sign out and sign in again with a different Azure Active Directory user account.|Specify a `TenantId` value that corresponds to the resource to which you're authenticating in the `VisualStudioCredentialOptions` (or the `DefaultAzureCredentialOptions` if you're using `DefaultAzureCredential`).|
+|AADSTS50020| User account '{EmailHidden}' from identity provider 'live.com' doesn't exist in tenant 'Microsoft Services' and cannot access the application '04f0c124-f2bc-4f59-8241-bf6df9866bbd'(VS with native MSA) in that tenant. The account needs to be added as an external user in the tenant first. Sign out and sign in again with a different Microsoft Entra user account.|Specify a `TenantId` value that corresponds to the resource to which you're authenticating in the `VisualStudioCredentialOptions` (or the `DefaultAzureCredentialOptions` if you're using `DefaultAzureCredential`).|
 
 ## Troubleshoot `VisualStudioCredential` authentication issues
 
@@ -248,7 +248,7 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 
 | Error Message |Description| Mitigation |
 |---|---|---|
-|Failed To Read Credentials</p></p>OR</p>Authenticate via Azure Service Authentication|The `VisualStudioCredential` failed to retrieve a token from the Visual Studio authentication utility `Microsoft.Asal.TokenService.exe`.|<ul><li>In Visual Studio, select the **Tools** > **Options** menu to launch the **Options** dialog.</li><li>Navigate to the **Azure Service Authentication** options to sign in with your Azure Active Directory account.</li><li>If you already logged in to your account, try logging out and logging in again. Doing so will repopulate the cache and potentially mitigate the error you're getting.</li></ul>|
+|Failed To Read Credentials</p></p>OR</p>Authenticate via Azure Service Authentication|The `VisualStudioCredential` failed to retrieve a token from the Visual Studio authentication utility `Microsoft.Asal.TokenService.exe`.|<ul><li>In Visual Studio, select the **Tools** > **Options** menu to launch the **Options** dialog.</li><li>Navigate to the **Azure Service Authentication** options to sign in with your Microsoft Entra account.</li><li>If you already logged in to your account, try logging out and logging in again. Doing so will repopulate the cache and potentially mitigate the error you're getting.</li></ul>|
 |ADFS tenant not supported|ADFS tenants aren't currently supported by Visual Studio `Azure Service Authentication`.|Use credentials from a supported cloud when authenticating with Visual Studio. The supported clouds are:</p><ul><li>AZURE PUBLIC CLOUD - https://login.microsoftonline.com/</li><li>AZURE GERMANY - https://login.microsoftonline.de/</li><li>AZURE CHINA - https://login.chinacloudapi.cn/</li><li>AZURE GOVERNMENT - https://login.microsoftonline.us/</li></ul>|
 
 ## Troubleshoot `AzureCliCredential` authentication issues
@@ -342,9 +342,9 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 ## Troubleshoot WAM with MSA login issues
 
-When using `InteractiveBrowserCredential`, by default, only the Azure AD account is listed:
+When using `InteractiveBrowserCredential`, by default, only the Microsoft Entra account is listed:
 
-![MSA Azure AD only](./images/MSA1.png)
+![MSA Microsoft Entra ID only](./images/MSA1.png)
 
 If you choose "Use another account" and type in an MSA outlook.com account, it fails:
 

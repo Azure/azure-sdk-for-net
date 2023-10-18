@@ -67,15 +67,19 @@ namespace Azure.Storage.DataMovement
                 throw Errors.CollisionTransferIdCheckpointer(transferId);
             }
 
+            bool isContainer = source is StorageResourceContainer;
             JobPlanHeader header = new(
                 DataMovementConstants.JobPlanFile.SchemaVersion,
                 transferId,
                 DateTimeOffset.UtcNow,
                 GetOperationType(source, destination),
+                source.ProviderId,
+                destination.ProviderId,
+                isContainer,
                 false, /* enumerationComplete */
                 new DataTransferStatusInternal(),
-                source.Uri.AbsoluteUri,
-                destination.Uri.AbsoluteUri);
+                source.Uri.ToSanitizedString(),
+                destination.Uri.ToSanitizedString());
 
             using (Stream headerStream = new MemoryStream())
             {

@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateEntity("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -233,7 +233,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entity = new
                 {
@@ -410,7 +410,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -425,7 +425,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -440,7 +440,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entities = new object[]
             {
@@ -620,7 +620,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entities = new object[]
             {
@@ -800,7 +800,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.MoveEntitiesToCollection("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -815,7 +815,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -830,7 +830,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entityGuids = new object[]
             {
@@ -913,7 +913,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 entityGuids = new object[]
             {

@@ -23,7 +23,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultTransferId, header.TransferId);
             Assert.AreEqual(DefaultCreateTime, header.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, header.OperationType);
-            Assert.AreEqual(false, header.EnumerationComplete);
+            Assert.AreEqual(DefaultSourceProviderId, header.SourceProviderId);
+            Assert.AreEqual(DefaultDestinationProviderId, header.DestinationProviderId);
+            Assert.IsFalse(header.IsContainer);
+            Assert.IsFalse(header.EnumerationComplete);
             Assert.AreEqual(DefaultJobStatus, header.JobStatus);
             Assert.AreEqual(DefaultSourcePath, header.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, header.ParentDestinationPath);
@@ -41,7 +44,7 @@ namespace Azure.Storage.DataMovement.Tests
                 header.Serialize(headerStream);
 
                 BinaryReader reader = new(fileStream);
-                byte[] expected = reader.ReadBytes((int) fileStream.Length);
+                byte[] expected = reader.ReadBytes((int)fileStream.Length);
                 byte[] actual = headerStream.ToArray();
 
                 CollectionAssert.AreEqual(expected, actual);
@@ -77,7 +80,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultTransferId, deserialized.TransferId);
             Assert.AreEqual(DefaultCreateTime, deserialized.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, deserialized.OperationType);
-            Assert.AreEqual(false, deserialized.EnumerationComplete);
+            Assert.AreEqual(DefaultSourceProviderId, deserialized.SourceProviderId);
+            Assert.AreEqual(DefaultDestinationProviderId, deserialized.DestinationProviderId);
+            Assert.IsFalse(deserialized.IsContainer);
+            Assert.IsFalse(deserialized.EnumerationComplete);
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);

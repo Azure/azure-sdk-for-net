@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Communication.JobRouter",
+  "library-name": "Azure.Communication.JobRouter",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/Communication.JobRouter/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/Communication.JobRouter/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true,
+  "model-namespace": false
+}

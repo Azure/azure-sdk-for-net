@@ -371,7 +371,7 @@ namespace Azure.Storage.DataMovement
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
-                    if (provider.TypeId == (getSource ? properties.SourceTypeId : properties.DestinationTypeId))
+                    if (provider.ProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
                     {
                         resourceProvider = provider;
                         return true;
@@ -392,11 +392,11 @@ namespace Azure.Storage.DataMovement
 
             if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: true, out StorageResourceProvider sourceProvider))
             {
-                throw new Exception();
+                throw Errors.NoResourceProviderFound(true, dataTransferProperties.SourceProviderId);
             }
             if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: false, out StorageResourceProvider destinationProvider))
             {
-                throw new Exception();
+                throw Errors.NoResourceProviderFound(false, dataTransferProperties.DestinationProviderId);
             }
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
