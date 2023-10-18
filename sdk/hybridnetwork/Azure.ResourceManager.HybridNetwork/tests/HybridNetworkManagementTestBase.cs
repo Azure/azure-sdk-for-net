@@ -5,14 +5,13 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Text.Json;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Tests
 {
@@ -39,10 +38,9 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             AzureContainerRegistryScopedTokenCredential creds)
         {
             string templateFilePath = Path.Combine(TestAssetPath, fileName);
-            string configFilePath = Path.Combine(TestAssetPath, "empty.json");
             string acrName = creds.AcrServerUri.ToString().Replace("https://", "").TrimEnd('/');
 
-            if (File.Exists(templateFilePath) && File.Exists(configFilePath))
+            if (File.Exists(templateFilePath))
             {
                 // Create a process to run the oras commands
                 Process process = new Process();
@@ -64,12 +62,10 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             }
         }
 
-        protected JsonElement ReadJsonFile(string filePath)
+        protected JObject ReadJsonFile(string filePath)
         {
             var json = File.ReadAllText(Path.Combine(TestAssetPath, filePath));
-            JsonDocument document = JsonDocument.Parse(json);
-
-            return document.RootElement;
+            return JObject.Parse(json);
         }
 
         protected async Task<PublisherResource> CreatePublisherResource(
@@ -100,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 Properties = new ConfigurationGroupSchemaPropertiesFormat()
                 {
-                    SchemaDefinition = ReadJsonFile("CGSchema.json").GetRawText(),
+                    SchemaDefinition = ReadJsonFile("CGSchema.json").ToString(),
                 }
             };
             var lro = await publisher
@@ -211,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 DeployParametersMappingRuleProfile = new AzureCoreArmTemplateDeployMappingRuleProfile()
                 {
                     ApplicationEnablement = ApplicationEnablement.Unknown,
-                    TemplateParameters = ReadJsonFile("VnetArmTemplateMappings.json").GetRawText()
+                    TemplateParameters = ReadJsonFile("VnetArmTemplateMappings.json").ToString()
                 },
                 ArtifactProfile = new AzureCoreArmTemplateArtifactProfile()
                 {
@@ -235,7 +231,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 NetworkFunctionType = NetworkFunctionType.VirtualNetworkFunction,
                 NetworkFunctionTemplate = nfTemplate,
-                DeployParameters = ReadJsonFile("DeployParameters.json").GetRawText()
+                DeployParameters = ReadJsonFile("DeployParameters.json").ToString()
             };
 
             var nfdvData = new NetworkFunctionDefinitionVersionData(location)
@@ -271,7 +267,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 NfviDetailsType = "AzureCore"
             });
 
-            nsdvData.Properties.ConfigurationGroupSchemaReferences.Add("VnetValues", new Resources.Models.WritableSubResource() { Id = cgs.Id });
+            nsdvData.Properties.ConfigurationGroupSchemaReferences.Add("vnet_ConfigGroupSchema", new Resources.Models.WritableSubResource() { Id = cgs.Id });
 
             var vnetResourceElementTemplate = new NetworkFunctionDefinitionResourceElementTemplateDetails()
             {
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                         ArtifactVersion = "1.0.0",
                         ArtifactStoreReferenceId = artifactStore.Id,
                     },
-                    ParameterValues = ReadJsonFile("VnetArmTemplateMappings.json").GetRawText(),
+                    ParameterValues = ReadJsonFile("NfArmTemplateMappings.json").ToString(),
                     TemplateType = TemplateType.ArmTemplate
                 }
             };
@@ -299,45 +295,19 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             return lro.Value;
         }
 
-        protected async Task<NetworkFunctionResource> CreateNetworkFunctionResource(
-            ResourceGroupResource resourceGroup,
-            NetworkFunctionDefinitionVersionResource nfdv,
-            string networkFunctionName,
-            AzureLocation location)
-        {
-            var networkFunctionData = new NetworkFunctionData(location)
-            {
-                Properties = new NetworkFunctionPropertiesFormat()
-                {
-                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference()
-                    {
-                        Id = nfdv.Id,
-                    },
-                    NfviType = NfviType.AzureCore,
-                    NfviId = resourceGroup.Id,
-                    AllowSoftwareUpdate = false,
-                    DeploymentValues = ReadJsonFile("DeploymentValues.json").GetRawText(),
-                }
-            };
-
-            var lro = await resourceGroup
-                .GetNetworkFunctions()
-                .CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, networkFunctionData);
-
-            return lro.Value;
-        }
-
         protected async Task<SiteResource> CreateSiteResource(
             ResourceGroupResource resourceGroup,
             string siteName,
             AzureLocation location)
         {
-            var nfvis = new List<NFVIs>() { new AzureCoreNfviDetails() { Name = "exampleNFVI", Location = location } };
+            var nfvi = new AzureCoreNfviDetails() { Name = "exampleNFVI", Location = location };
 
             var siteData = new SiteData(location)
             {
-                Properties = new SitePropertiesFormat(nfvis)
+                Properties = new SitePropertiesFormat()
             };
+
+            siteData.Properties.Nfvis.Add(nfvi);
 
             var lro = await resourceGroup
                 .GetSites()
@@ -350,8 +320,12 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             ResourceGroupResource resourceGroup,
             ConfigurationGroupSchemaResource cgs,
             string cgvName,
+            ResourceIdentifier nfdvId,
             AzureLocation location)
         {
+            var deploymentValues = ReadJsonFile("DeploymentValues.json");
+            deploymentValues["nfdvId"] = nfdvId.ToString();
+
             var cgvData = new ConfigurationGroupValueData(location)
             {
                 Properties = new ConfigurationValueWithoutSecrets()
@@ -360,7 +334,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                     {
                         Id = cgs.Id
                     },
-                    ConfigurationValue = ReadJsonFile("DeploymentValues.json").GetRawText()
+                    ConfigurationValue = deploymentValues.ToString()
                 }
             };
 
@@ -374,7 +348,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
         protected async Task<SiteNetworkServiceResource> CreateSNSResource(
             ResourceGroupResource resourceGroup,
             SiteResource site,
-            NetworkFunctionDefinitionVersionResource nfdv,
+            NetworkServiceDesignVersionResource nsdv,
             ConfigurationGroupValueResource cgv,
             string snsName,
             AzureLocation location)
@@ -386,12 +360,14 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                     SiteReferenceId = site.Id,
                     NetworkServiceDesignVersionResourceReference = new OpenDeploymentResourceReference()
                     {
-                        Id = nfdv.Id
+                        Id = nsdv.Id
                     }
-                }
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                Sku = new HybridNetworkSku(HybridNetworkSkuName.Standard)
             };
 
-            snsData.Properties.DesiredStateConfigurationGroupValueReferences.Add("VnetValues", new Resources.Models.WritableSubResource() { Id = cgv.Id });
+            snsData.Properties.DesiredStateConfigurationGroupValueReferences.Add("vnet_ConfigGroupSchema", new Resources.Models.WritableSubResource() { Id = cgv.Id });
 
             var lro = await resourceGroup
                 .GetSiteNetworkServices()
