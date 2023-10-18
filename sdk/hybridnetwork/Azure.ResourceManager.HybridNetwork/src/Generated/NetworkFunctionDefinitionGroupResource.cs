@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkFunctionDefinitionGroups_Get</description>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>

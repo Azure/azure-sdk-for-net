@@ -80,7 +80,6 @@ ReleaseNamespace = "{deployParameters.namesapce}",
 ReleaseName = "{deployParameters.releaseName}",
 HelmPackageVersion = "2.1.3",
 Values = "",
-SecretValues = "",
 Options = new HelmMappingRuleProfileOptions()
 {
 InstallOptions = new HelmInstallOptions()
@@ -116,7 +115,6 @@ UpdateDependsOn =
 },
                     },
                     DeployParameters = "{\"type\":\"object\",\"properties\":{\"releaseName\":{\"type\":\"string\"},\"namespace\":{\"type\":\"string\"}}}",
-                    SecretDeployParameters = "{\"type\":\"object\",\"properties\":{\"adminPassword\":{\"type\":\"string\"},\"userPassword\":{\"type\":\"string\"}}}",
                 },
             };
             ArmOperation<NetworkFunctionDefinitionVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionDefinitionVersionName, data);

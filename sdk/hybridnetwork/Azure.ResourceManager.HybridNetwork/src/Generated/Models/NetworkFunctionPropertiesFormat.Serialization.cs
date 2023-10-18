@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,16 +35,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("allowSoftwareUpdate"u8);
                 writer.WriteBooleanValue(AllowSoftwareUpdate.Value);
             }
-            if (Optional.IsDefined(DeploymentValues))
-            {
-                writer.WritePropertyName("deploymentValues"u8);
-                writer.WriteStringValue(DeploymentValues);
-            }
-            if (Optional.IsDefined(SecretDeploymentValues))
-            {
-                writer.WritePropertyName("secretDeploymentValues"u8);
-                writer.WriteStringValue(SecretDeploymentValues);
-            }
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             if (Optional.IsCollectionDefined(RoleOverrideValues))
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
@@ -65,117 +56,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> networkFunctionDefinitionGroupName = default;
-            Optional<string> networkFunctionDefinitionVersion = default;
-            Optional<string> networkFunctionDefinitionOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> networkFunctionDefinitionVersionResourceReference = default;
-            Optional<NfviType> nfviType = default;
-            Optional<string> nfviId = default;
-            Optional<bool> allowSoftwareUpdate = default;
-            Optional<string> deploymentValues = default;
-            Optional<string> secretDeploymentValues = default;
-            Optional<IList<string>> roleOverrideValues = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("configurationType", out JsonElement discriminator))
             {
-                if (property.NameEquals("provisioningState"u8))
+                switch (discriminator.GetString())
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("publisherName"u8))
-                {
-                    publisherName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("publisherScope"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publisherScope = new PublisherScope(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionDefinitionGroupName"u8))
-                {
-                    networkFunctionDefinitionGroupName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionDefinitionVersion"u8))
-                {
-                    networkFunctionDefinitionVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionDefinitionOfferingLocation"u8))
-                {
-                    networkFunctionDefinitionOfferingLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionDefinitionVersionResourceReference"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("nfviType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nfviType = new NfviType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("nfviId"u8))
-                {
-                    nfviId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("allowSoftwareUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowSoftwareUpdate = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("deploymentValues"u8))
-                {
-                    deploymentValues = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secretDeploymentValues"u8))
-                {
-                    secretDeploymentValues = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("roleOverrideValues"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    roleOverrideValues = array;
-                    continue;
+                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element);
+                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element);
                 }
             }
-            return new NetworkFunctionPropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), deploymentValues.Value, secretDeploymentValues.Value, Optional.ToList(roleOverrideValues));
+            return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element);
         }
     }
 }

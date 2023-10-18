@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
             }
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
 

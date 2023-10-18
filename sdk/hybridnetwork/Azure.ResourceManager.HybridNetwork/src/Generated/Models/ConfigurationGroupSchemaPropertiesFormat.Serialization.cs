@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(SchemaDefinition))
             {
                 writer.WritePropertyName("schemaDefinition"u8);
                 writer.WriteStringValue(SchemaDefinition);
-            }
-            if (Optional.IsDefined(ConfigurationType))
-            {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             Optional<ProvisioningState> provisioningState = default;
             Optional<VersionState> versionState = default;
+            Optional<string> description = default;
             Optional<string> schemaDefinition = default;
-            Optional<ConfigurationType> configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -58,22 +58,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     versionState = new VersionState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("schemaDefinition"u8))
                 {
                     schemaDefinition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    configurationType = new ConfigurationType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ConfigurationGroupSchemaPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), schemaDefinition.Value, Optional.ToNullable(configurationType));
+            return new ConfigurationGroupSchemaPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, schemaDefinition.Value);
         }
     }
 }

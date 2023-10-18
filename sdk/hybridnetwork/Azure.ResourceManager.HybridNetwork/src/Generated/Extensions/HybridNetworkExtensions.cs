@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListBySubscription</description>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListBySubscription</description>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>

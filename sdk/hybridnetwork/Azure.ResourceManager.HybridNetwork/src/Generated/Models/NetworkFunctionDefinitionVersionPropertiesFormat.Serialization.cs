@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
             }
-            if (Optional.IsDefined(SecretDeployParameters))
-            {
-                writer.WritePropertyName("secretDeployParameters"u8);
-                writer.WriteStringValue(SecretDeployParameters);
-            }
             writer.WritePropertyName("networkFunctionType"u8);
             writer.WriteStringValue(NetworkFunctionType.ToString());
             writer.WriteEndObject();

@@ -30,11 +30,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
             }
-            if (Optional.IsDefined(SecretDeployParameters))
-            {
-                writer.WritePropertyName("secretDeployParameters"u8);
-                writer.WriteStringValue(SecretDeployParameters);
-            }
             writer.WritePropertyName("networkFunctionType"u8);
             writer.WriteStringValue(NetworkFunctionType.ToString());
             writer.WriteEndObject();
@@ -51,7 +46,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<VersionState> versionState = default;
             Optional<string> description = default;
             Optional<string> deployParameters = default;
-            Optional<string> secretDeployParameters = default;
             NetworkFunctionType networkFunctionType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,18 +86,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     deployParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretDeployParameters"u8))
-                {
-                    secretDeployParameters = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("networkFunctionType"u8))
                 {
                     networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, secretDeployParameters.Value, networkFunctionType, networkFunctionTemplate.Value);
+            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, networkFunctionTemplate.Value);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of ConfigurationValueWithoutSecrets. </summary>
         public ConfigurationValueWithoutSecrets()
         {
-            ConfigurationType = ConfigurationType.Open;
+            ConfigurationType = ConfigurationGroupValueConfigurationType.Open;
         }
 
         /// <summary> Initializes a new instance of ConfigurationValueWithoutSecrets. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
-        internal ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationType configurationType, string configurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType)
+        internal ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, string configurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType)
         {
             ConfigurationValue = configurationValue;
             ConfigurationType = configurationType;

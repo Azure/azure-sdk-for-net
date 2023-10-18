@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             {
                 Properties = new ConfigurationGroupSchemaPropertiesFormat()
                 {
+                    Description = "Schema with no secrets",
                     SchemaDefinition = "{\"type\":\"object\",\"properties\":{\"interconnect-groups\":{\"type\":\"object\",\"properties\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"international-interconnects\":{\"type\":\"array\",\"item\":{\"type\":\"string\"}},\"domestic-interconnects\":{\"type\":\"array\",\"item\":{\"type\":\"string\"}}}}},\"interconnect-group-assignments\":{\"type\":\"object\",\"properties\":{\"type\":\"object\",\"properties\":{\"ssc\":{\"type\":\"string\"},\"interconnects-interconnects\":{\"type\":\"string\"}}}}},\"required\":[\"interconnect-groups\",\"interconnect-group-assignments\"]}",
-                    ConfigurationType = ConfigurationType.Open,
                 },
             };
             ArmOperation<ConfigurationGroupSchemaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationGroupSchemaName, data);

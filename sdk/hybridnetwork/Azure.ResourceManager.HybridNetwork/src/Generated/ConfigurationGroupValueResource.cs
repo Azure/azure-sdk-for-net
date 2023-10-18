@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridNetwork
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _configurationGroupValueconfigurationGroupValuesClientDiagnostics;
-        private readonly ConfigurationGroupValuesRestOperations _configurationGroupValueconfigurationGroupValuesRestClient;
+        private readonly ClientDiagnostics _configurationGroupValueClientDiagnostics;
+        private readonly ConfigurationGroupValuesRestOperations _configurationGroupValueRestClient;
         private readonly ConfigurationGroupValueData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationGroupValueResource"/> class for mocking. </summary>
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfigurationGroupValueResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationGroupValueconfigurationGroupValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string configurationGroupValueconfigurationGroupValuesApiVersion);
-            _configurationGroupValueconfigurationGroupValuesRestClient = new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueconfigurationGroupValuesApiVersion);
+            _configurationGroupValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string configurationGroupValueApiVersion);
+            _configurationGroupValueRestClient = new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,18 +98,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationGroupValueResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Get");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Get");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationGroupValueResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Get");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Get");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Delete</description>
+        /// <description>ConfigurationGroupValues_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Delete");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Delete");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation(_configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, _configurationGroupValueconfigurationGroupValuesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _configurationGroupValueRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation(_configurationGroupValueClientDiagnostics, Pipeline, _configurationGroupValueRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Delete</description>
+        /// <description>ConfigurationGroupValues_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Delete");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Delete");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridNetworkArmOperation(_configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, _configurationGroupValueconfigurationGroupValuesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _configurationGroupValueRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new HybridNetworkArmOperation(_configurationGroupValueClientDiagnostics, Pipeline, _configurationGroupValueRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_UpdateTags</description>
+        /// <description>ConfigurationGroupValues_UpdateTags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Update");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Update");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationGroupValueRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_UpdateTags</description>
+        /// <description>ConfigurationGroupValues_UpdateTags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Update");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.Update");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _configurationGroupValueRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.AddTag");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.AddTag");
             scope.Start();
             try
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.AddTag");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.AddTag");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.SetTags");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.SetTags");
             scope.Start();
             try
             {
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.SetTags");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.SetTags");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.RemoveTag");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.RemoveTag");
             scope.Start();
             try
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueResource.RemoveTag");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueResource.RemoveTag");
             scope.Start();
             try
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ConfigurationGroupValueResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

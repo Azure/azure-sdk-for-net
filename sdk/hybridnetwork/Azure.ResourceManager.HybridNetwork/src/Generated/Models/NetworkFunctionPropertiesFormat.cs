@@ -10,11 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Network function properties. </summary>
-    public partial class NetworkFunctionPropertiesFormat
+    /// <summary>
+    /// Network function properties.
+    /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+    /// </summary>
+    public abstract partial class NetworkFunctionPropertiesFormat
     {
         /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
-        public NetworkFunctionPropertiesFormat()
+        protected NetworkFunctionPropertiesFormat()
         {
             RoleOverrideValues = new ChangeTrackingList<string>();
         }
@@ -34,10 +38,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
-        /// <param name="secretDeploymentValues"> The JSON-serialized secret deployment values from the user. </param>
+        /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, string nfviId, bool? allowSoftwareUpdate, string deploymentValues, string secretDeploymentValues, IList<string> roleOverrideValues)
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, string nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -49,8 +52,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             NfviType = nfviType;
             NfviId = nfviId;
             AllowSoftwareUpdate = allowSoftwareUpdate;
-            DeploymentValues = deploymentValues;
-            SecretDeploymentValues = secretDeploymentValues;
+            ConfigurationType = configurationType;
             RoleOverrideValues = roleOverrideValues;
         }
 
@@ -78,10 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string NfviId { get; set; }
         /// <summary> Indicates if software updates are allowed during deployment. </summary>
         public bool? AllowSoftwareUpdate { get; set; }
-        /// <summary> The JSON-serialized deployment values from the user. </summary>
-        public string DeploymentValues { get; set; }
-        /// <summary> The JSON-serialized secret deployment values from the user. </summary>
-        public string SecretDeploymentValues { get; set; }
+        /// <summary> The value which indicates if NF  values are secrets. </summary>
+        internal NetworkFunctionConfigurationType ConfigurationType { get; set; }
         /// <summary> The role configuration override values from the user. </summary>
         public IList<string> RoleOverrideValues { get; }
     }

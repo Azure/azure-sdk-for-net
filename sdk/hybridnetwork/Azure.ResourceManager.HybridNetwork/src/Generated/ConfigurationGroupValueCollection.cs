@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class ConfigurationGroupValueCollection : ArmCollection, IEnumerable<ConfigurationGroupValueResource>, IAsyncEnumerable<ConfigurationGroupValueResource>
     {
-        private readonly ClientDiagnostics _configurationGroupValueconfigurationGroupValuesClientDiagnostics;
-        private readonly ConfigurationGroupValuesRestOperations _configurationGroupValueconfigurationGroupValuesRestClient;
+        private readonly ClientDiagnostics _configurationGroupValueClientDiagnostics;
+        private readonly ConfigurationGroupValuesRestOperations _configurationGroupValueRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationGroupValueCollection"/> class for mocking. </summary>
         protected ConfigurationGroupValueCollection()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConfigurationGroupValueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationGroupValueconfigurationGroupValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupValueResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfigurationGroupValueResource.ResourceType, out string configurationGroupValueconfigurationGroupValuesApiVersion);
-            _configurationGroupValueconfigurationGroupValuesRestClient = new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueconfigurationGroupValuesApiVersion);
+            _configurationGroupValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupValueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ConfigurationGroupValueResource.ResourceType, out string configurationGroupValueApiVersion);
+            _configurationGroupValueRestClient = new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_CreateOrUpdate</description>
+        /// <description>ConfigurationGroupValues_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(new ConfigurationGroupValueOperationSource(Client), _configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, _configurationGroupValueconfigurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _configurationGroupValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(new ConfigurationGroupValueOperationSource(Client), _configurationGroupValueClientDiagnostics, Pipeline, _configurationGroupValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_CreateOrUpdate</description>
+        /// <description>ConfigurationGroupValues_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(new ConfigurationGroupValueOperationSource(Client), _configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, _configurationGroupValueconfigurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _configurationGroupValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data, cancellationToken);
+                var operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(new ConfigurationGroupValueOperationSource(Client), _configurationGroupValueClientDiagnostics, Pipeline, _configurationGroupValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken);
+                var response = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListByResourceGroup</description>
+        /// <description>ConfigurationGroupValues_ListByResourceGroup</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationGroupValueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueconfigurationGroupValuesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueconfigurationGroupValuesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListByResourceGroup</description>
+        /// <description>ConfigurationGroupValues_ListByResourceGroup</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationGroupValueResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueconfigurationGroupValuesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueconfigurationGroupValuesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationGroupValueRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationGroupValueRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), _configurationGroupValueClientDiagnostics, Pipeline, "ConfigurationGroupValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _configurationGroupValueconfigurationGroupValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_Get</description>
+        /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
 
-            using var scope = _configurationGroupValueconfigurationGroupValuesClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
             scope.Start();
             try
             {
-                var response = _configurationGroupValueconfigurationGroupValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken);
+                var response = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

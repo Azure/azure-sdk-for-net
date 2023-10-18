@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.HybridNetwork
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _componentcomponentsClientDiagnostics;
-        private readonly ComponentsRestOperations _componentcomponentsRestClient;
+        private readonly ClientDiagnostics _componentClientDiagnostics;
+        private readonly ComponentsRestOperations _componentRestClient;
         private readonly ComponentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ComponentResource"/> class for mocking. </summary>
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComponentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentcomponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string componentcomponentsApiVersion);
-            _componentcomponentsRestClient = new ComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentcomponentsApiVersion);
+            _componentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string componentApiVersion);
+            _componentRestClient = new ComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,18 +95,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ComponentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentResource.Get");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentResource.Get");
             scope.Start();
             try
             {
-                var response = await _componentcomponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _componentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentResource(Client, response.Value), response.GetRawResponse());
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ComponentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentResource.Get");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentResource.Get");
             scope.Start();
             try
             {
-                var response = _componentcomponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _componentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentResource(Client, response.Value), response.GetRawResponse());

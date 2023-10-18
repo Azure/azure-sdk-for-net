@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
-        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationType configurationType)
+        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// </summary>
         public DeploymentResourceIdReference ConfigurationGroupSchemaResourceReference { get; set; }
         /// <summary> The value which indicates if configuration values are secrets. </summary>
-        internal ConfigurationType ConfigurationType { get; set; }
+        internal ConfigurationGroupValueConfigurationType ConfigurationType { get; set; }
     }
 }

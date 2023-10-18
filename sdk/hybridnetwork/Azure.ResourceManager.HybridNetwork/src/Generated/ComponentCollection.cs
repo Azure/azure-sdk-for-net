@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class ComponentCollection : ArmCollection, IEnumerable<ComponentResource>, IAsyncEnumerable<ComponentResource>
     {
-        private readonly ClientDiagnostics _componentcomponentsClientDiagnostics;
-        private readonly ComponentsRestOperations _componentcomponentsRestClient;
+        private readonly ClientDiagnostics _componentClientDiagnostics;
+        private readonly ComponentsRestOperations _componentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ComponentCollection"/> class for mocking. </summary>
         protected ComponentCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComponentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentcomponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ComponentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ComponentResource.ResourceType, out string componentcomponentsApiVersion);
-            _componentcomponentsRestClient = new ComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentcomponentsApiVersion);
+            _componentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ComponentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ComponentResource.ResourceType, out string componentApiVersion);
+            _componentRestClient = new ComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentCollection.Get");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _componentcomponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken).ConfigureAwait(false);
+                var response = await _componentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentResource(Client, response.Value), response.GetRawResponse());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentCollection.Get");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = _componentcomponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken);
+                var response = _componentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentResource(Client, response.Value), response.GetRawResponse());
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _componentcomponentsRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _componentcomponentsRestClient.CreateListByNetworkFunctionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComponentResource(Client, ComponentData.DeserializeComponentData(e)), _componentcomponentsClientDiagnostics, Pipeline, "ComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _componentRestClient.CreateListByNetworkFunctionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComponentResource(Client, ComponentData.DeserializeComponentData(e)), _componentClientDiagnostics, Pipeline, "ComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _componentcomponentsRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _componentcomponentsRestClient.CreateListByNetworkFunctionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComponentResource(Client, ComponentData.DeserializeComponentData(e)), _componentcomponentsClientDiagnostics, Pipeline, "ComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _componentRestClient.CreateListByNetworkFunctionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComponentResource(Client, ComponentData.DeserializeComponentData(e)), _componentClientDiagnostics, Pipeline, "ComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentCollection.Exists");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _componentcomponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _componentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var scope = _componentcomponentsClientDiagnostics.CreateScope("ComponentCollection.Exists");
+            using var scope = _componentClientDiagnostics.CreateScope("ComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _componentcomponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken);
+                var response = _componentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

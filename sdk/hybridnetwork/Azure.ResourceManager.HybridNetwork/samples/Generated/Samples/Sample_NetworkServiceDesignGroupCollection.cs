@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task GetAll_GetNetworkServiceDesignGroupsUnderPublisherResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupsListByPublisherName.json
-            // this example is just showing the usage of "networkServiceDesignGroups_ListByPublisher" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignGroups_ListByPublisher" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task CreateOrUpdate_CreateOrUpdateTheNetworkServiceDesignGroup()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupCreate.json
-            // this example is just showing the usage of "networkServiceDesignGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task Get_GetANetworkServiceDesignGroupResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupGet.json
-            // this example is just showing the usage of "networkServiceDesignGroups_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task Exists_GetANetworkServiceDesignGroupResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignGroupGet.json
-            // this example is just showing the usage of "networkServiceDesignGroups_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

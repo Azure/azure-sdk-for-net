@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,17 +15,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class SitePropertiesFormat
     {
         /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
-        /// <param name="nfvis">
-        /// List of NFVIs
-        /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nfvis"/> is null. </exception>
-        public SitePropertiesFormat(IEnumerable<NFVIs> nfvis)
+        public SitePropertiesFormat()
         {
-            Argument.AssertNotNull(nfvis, nameof(nfvis));
-
-            Nfvis = nfvis.ToList();
+            Nfvis = new ChangeTrackingList<NFVIs>();
             SiteNetworkServiceReferences = new ChangeTrackingList<WritableSubResource>();
         }
 

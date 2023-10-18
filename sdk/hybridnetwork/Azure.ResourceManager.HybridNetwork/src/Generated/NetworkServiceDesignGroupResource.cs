@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.HybridNetwork
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics;
-        private readonly NetworkServiceDesignGroupsRestOperations _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient;
+        private readonly ClientDiagnostics _networkServiceDesignGroupClientDiagnostics;
+        private readonly NetworkServiceDesignGroupsRestOperations _networkServiceDesignGroupRestClient;
         private readonly NetworkServiceDesignGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignGroupResource"/> class for mocking. </summary>
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkServiceDesignGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkServiceDesignGroupnetworkServiceDesignGroupsApiVersion);
-            _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient = new NetworkServiceDesignGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupnetworkServiceDesignGroupsApiVersion);
+            _networkServiceDesignGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string networkServiceDesignGroupApiVersion);
+            _networkServiceDesignGroupRestClient = new NetworkServiceDesignGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkServiceDesignGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Get");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkServiceDesignGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Get");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Delete</description>
+        /// <description>NetworkServiceDesignGroups_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Delete");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation(_networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkServiceDesignGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation(_networkServiceDesignGroupClientDiagnostics, Pipeline, _networkServiceDesignGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Delete</description>
+        /// <description>NetworkServiceDesignGroups_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,12 +256,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Delete");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridNetworkArmOperation(_networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkServiceDesignGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new HybridNetworkArmOperation(_networkServiceDesignGroupClientDiagnostics, Pipeline, _networkServiceDesignGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Update</description>
+        /// <description>NetworkServiceDesignGroups_Update</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,11 +293,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Update");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Update</description>
+        /// <description>NetworkServiceDesignGroups_Update</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Update");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                var response = _networkServiceDesignGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.AddTag");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.AddTag");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.SetTags");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.SetTags");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.RemoveTag");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.RemoveTag");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkServiceDesignGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

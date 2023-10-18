@@ -110,14 +110,17 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             string siteName = "testSite";
             SiteData data = new SiteData(new AzureLocation("westUs2"))
             {
-                Properties = new SitePropertiesFormat(new NFVIs[]
-            {
+                Properties = new SitePropertiesFormat()
+                {
+                    Nfvis =
+{
 new AzureCoreNfviDetails()
 {
 Location = new AzureLocation("westUs2"),
 Name = "azureWestUs2",
 }
-            }),
+},
+                },
             };
             ArmOperation<SiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, data);
             SiteResource result = lro.Value;

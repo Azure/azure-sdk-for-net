@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>components_Get</description>
+        /// <description>Components_Get</description>
         /// </item>
         /// </list>
         /// </summary>

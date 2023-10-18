@@ -24,15 +24,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="secretDeployParameters"> The secret deployment parameters of the network function definition version which can include secrets like passwords, ssh keys etc. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
-        internal NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, string secretDeployParameters, NetworkFunctionType networkFunctionType)
+        internal NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
             Description = description;
             DeployParameters = deployParameters;
-            SecretDeployParameters = secretDeployParameters;
             NetworkFunctionType = networkFunctionType;
         }
 
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string Description { get; set; }
         /// <summary> The deployment parameters of the network function definition version. </summary>
         public string DeployParameters { get; set; }
-        /// <summary> The secret deployment parameters of the network function definition version which can include secrets like passwords, ssh keys etc. </summary>
-        public string SecretDeployParameters { get; set; }
         /// <summary> The network function type. </summary>
         internal NetworkFunctionType NetworkFunctionType { get; set; }
     }

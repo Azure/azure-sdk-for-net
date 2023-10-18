@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         // Update an artifact state
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ChangeArtifactState_UpdateAnArtifactState()
+        public async Task UpdateStateProxyArtifact_UpdateAnArtifactState()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/PureProxyArtifact/ArtifactChangeState.json
-            // this example is just showing the usage of "Change Artifact State" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ProxyArtifact_UpdateState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             {
                 ArtifactState = ArtifactState.Deprecated,
             };
-            ArmOperation<ProxyArtifactVersionsListOverview> lro = await artifactStore.ChangeArtifactStateAsync(WaitUntil.Completed, artifactVersionName, artifactName, artifactChangeState);
+            ArmOperation<ProxyArtifactVersionsListOverview> lro = await artifactStore.UpdateStateProxyArtifactAsync(WaitUntil.Completed, artifactVersionName, artifactName, artifactChangeState);
             ProxyArtifactVersionsListOverview result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

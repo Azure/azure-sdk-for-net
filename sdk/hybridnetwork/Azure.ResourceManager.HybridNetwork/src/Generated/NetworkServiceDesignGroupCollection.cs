@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkServiceDesignGroupCollection : ArmCollection, IEnumerable<NetworkServiceDesignGroupResource>, IAsyncEnumerable<NetworkServiceDesignGroupResource>
     {
-        private readonly ClientDiagnostics _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics;
-        private readonly NetworkServiceDesignGroupsRestOperations _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient;
+        private readonly ClientDiagnostics _networkServiceDesignGroupClientDiagnostics;
+        private readonly NetworkServiceDesignGroupsRestOperations _networkServiceDesignGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignGroupCollection"/> class for mocking. </summary>
         protected NetworkServiceDesignGroupCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkServiceDesignGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkServiceDesignGroupResource.ResourceType, out string networkServiceDesignGroupnetworkServiceDesignGroupsApiVersion);
-            _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient = new NetworkServiceDesignGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupnetworkServiceDesignGroupsApiVersion);
+            _networkServiceDesignGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkServiceDesignGroupResource.ResourceType, out string networkServiceDesignGroupApiVersion);
+            _networkServiceDesignGroupRestClient = new NetworkServiceDesignGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_CreateOrUpdate</description>
+        /// <description>NetworkServiceDesignGroups_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupOperationSource(Client), _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkServiceDesignGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupOperationSource(Client), _networkServiceDesignGroupClientDiagnostics, Pipeline, _networkServiceDesignGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_CreateOrUpdate</description>
+        /// <description>NetworkServiceDesignGroups_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupOperationSource(Client), _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkServiceDesignGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data, cancellationToken);
+                var operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(new NetworkServiceDesignGroupOperationSource(Client), _networkServiceDesignGroupClientDiagnostics, Pipeline, _networkServiceDesignGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken);
+                var response = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_ListByPublisher</description>
+        /// <description>NetworkServiceDesignGroups_ListByPublisher</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="NetworkServiceDesignGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkServiceDesignGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignGroupResource(Client, NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(e)), _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, "NetworkServiceDesignGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignGroupResource(Client, NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(e)), _networkServiceDesignGroupClientDiagnostics, Pipeline, "NetworkServiceDesignGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_ListByPublisher</description>
+        /// <description>NetworkServiceDesignGroups_ListByPublisher</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="NetworkServiceDesignGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkServiceDesignGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignGroupResource(Client, NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(e)), _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics, Pipeline, "NetworkServiceDesignGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignGroupResource(Client, NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(e)), _networkServiceDesignGroupClientDiagnostics, Pipeline, "NetworkServiceDesignGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignGroups_Get</description>
+        /// <description>NetworkServiceDesignGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
-            using var scope = _networkServiceDesignGroupnetworkServiceDesignGroupsClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignGroupnetworkServiceDesignGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken);
+                var response = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

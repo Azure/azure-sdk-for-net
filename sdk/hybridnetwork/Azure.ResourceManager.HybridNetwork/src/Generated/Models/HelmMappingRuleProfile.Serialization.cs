@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Optional.IsDefined(SecretValues))
-            {
-                writer.WritePropertyName("secretValues"u8);
-                writer.WriteStringValue(SecretValues);
-            }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
@@ -58,7 +53,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> releaseName = default;
             Optional<string> helmPackageVersion = default;
             Optional<string> values = default;
-            Optional<string> secretValues = default;
             Optional<HelmMappingRuleProfileOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,11 +76,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     values = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretValues"u8))
-                {
-                    secretValues = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("options"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new HelmMappingRuleProfile(releaseNamespace.Value, releaseName.Value, helmPackageVersion.Value, values.Value, secretValues.Value, options.Value);
+            return new HelmMappingRuleProfile(releaseNamespace.Value, releaseName.Value, helmPackageVersion.Value, values.Value, options.Value);
         }
     }
 }

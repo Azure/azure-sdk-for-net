@@ -17,13 +17,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nfvis"u8);
-            writer.WriteStartArray();
-            foreach (var item in Nfvis)
+            if (Optional.IsCollectionDefined(Nfvis))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("nfvis"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nfvis)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             Optional<ProvisioningState> provisioningState = default;
-            IList<NFVIs> nfvis = default;
+            Optional<IList<NFVIs>> nfvis = default;
             Optional<IReadOnlyList<WritableSubResource>> siteNetworkServiceReferences = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,6 +52,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("nfvis"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<NFVIs> array = new List<NFVIs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -72,7 +79,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), nfvis, Optional.ToList(siteNetworkServiceReferences));
+            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToList(nfvis), Optional.ToList(siteNetworkServiceReferences));
         }
     }
 }

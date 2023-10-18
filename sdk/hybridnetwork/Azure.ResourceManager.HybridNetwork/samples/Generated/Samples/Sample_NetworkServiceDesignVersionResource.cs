@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task Delete_DeleteANetworkServiceDesignVersion()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignVersionDelete.json
-            // this example is just showing the usage of "networkServiceDesignVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task Get_GetANetworkServiceDesignVersionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignVersionGet.json
-            // this example is just showing the usage of "networkServiceDesignVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task Update_UpdateTheNetworkServiceDesignVersionTags()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignVersionUpdateTags.json
-            // this example is just showing the usage of "networkServiceDesignVersions_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignVersions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         public async Task UpdateState_UpdateNetworkServiceDesignVersionState()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkServiceDesignVersionUpdateState.json
-            // this example is just showing the usage of "networkServiceDesignVersions_updateState" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkServiceDesignVersions_updateState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

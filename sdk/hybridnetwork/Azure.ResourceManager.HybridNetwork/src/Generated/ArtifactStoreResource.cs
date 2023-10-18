@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ArtifactStoresRestOperations _artifactStoreRestClient;
         private readonly ClientDiagnostics _proxyArtifactClientDiagnostics;
         private readonly ProxyArtifactRestOperations _proxyArtifactRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly HybridNetworkManagementRestOperations _defaultRestClient;
         private readonly ArtifactStoreData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class for mocking. </summary>
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.HybridNetwork
             _artifactStoreRestClient = new ArtifactStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion);
             _proxyArtifactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _proxyArtifactRestClient = new ProxyArtifactRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new HybridNetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -455,7 +451,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Change Artifact State</description>
+        /// <description>ProxyArtifact_UpdateState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,18 +462,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProxyArtifactVersionsListOverview>> ChangeArtifactStateAsync(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProxyArtifactVersionsListOverview>> UpdateStateProxyArtifactAsync(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
             Argument.AssertNotNull(artifactName, nameof(artifactName));
             Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("ArtifactStoreResource.ChangeArtifactState");
+            using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.ChangeArtifactStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateChangeArtifactStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
+                var response = await _proxyArtifactRestClient.UpdateStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _proxyArtifactClientDiagnostics, Pipeline, _proxyArtifactRestClient.CreateUpdateStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -498,7 +494,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Change Artifact State</description>
+        /// <description>ProxyArtifact_UpdateState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,18 +505,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
-        public virtual ArmOperation<ProxyArtifactVersionsListOverview> ChangeArtifactState(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProxyArtifactVersionsListOverview> UpdateStateProxyArtifact(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
             Argument.AssertNotNull(artifactName, nameof(artifactName));
             Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("ArtifactStoreResource.ChangeArtifactState");
+            using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.ChangeArtifactState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken);
-                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateChangeArtifactStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
+                var response = _proxyArtifactRestClient.UpdateState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken);
+                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _proxyArtifactClientDiagnostics, Pipeline, _proxyArtifactRestClient.CreateUpdateStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

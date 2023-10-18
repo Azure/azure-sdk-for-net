@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkServiceDesignVersionCollection : ArmCollection, IEnumerable<NetworkServiceDesignVersionResource>, IAsyncEnumerable<NetworkServiceDesignVersionResource>
     {
-        private readonly ClientDiagnostics _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics;
-        private readonly NetworkServiceDesignVersionsRestOperations _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient;
+        private readonly ClientDiagnostics _networkServiceDesignVersionClientDiagnostics;
+        private readonly NetworkServiceDesignVersionsRestOperations _networkServiceDesignVersionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignVersionCollection"/> class for mocking. </summary>
         protected NetworkServiceDesignVersionCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkServiceDesignVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkServiceDesignVersionResource.ResourceType, out string networkServiceDesignVersionnetworkServiceDesignVersionsApiVersion);
-            _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient = new NetworkServiceDesignVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignVersionnetworkServiceDesignVersionsApiVersion);
+            _networkServiceDesignVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignVersionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkServiceDesignVersionResource.ResourceType, out string networkServiceDesignVersionApiVersion);
+            _networkServiceDesignVersionRestClient = new NetworkServiceDesignVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_CreateOrUpdate</description>
+        /// <description>NetworkServiceDesignVersions_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics, Pipeline, _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkServiceDesignVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionClientDiagnostics, Pipeline, _networkServiceDesignVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_CreateOrUpdate</description>
+        /// <description>NetworkServiceDesignVersions_CreateOrUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics, Pipeline, _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkServiceDesignVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken);
+                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionClientDiagnostics, Pipeline, _networkServiceDesignVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken);
+                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
+        /// <description>NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="NetworkServiceDesignVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkServiceDesignVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
+        /// <description>NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="NetworkServiceDesignVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkServiceDesignVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>networkServiceDesignVersions_Get</description>
+        /// <description>NetworkServiceDesignVersions_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionnetworkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionnetworkServiceDesignVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken);
+                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

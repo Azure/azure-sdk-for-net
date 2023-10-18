@@ -212,6 +212,101 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions/", false);
+            uri.AppendPath(artifactVersionName, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(artifactChangeState);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Change artifact state defined in artifact store. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactVersionName"> The name of the artifact version. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+
+            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Change artifact state defined in artifact store. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="publisherName"> The name of the publisher. </param>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="artifactVersionName"> The name of the artifact version. </param>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/>, <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+
+            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
         {
             var message = _pipeline.CreateMessage();

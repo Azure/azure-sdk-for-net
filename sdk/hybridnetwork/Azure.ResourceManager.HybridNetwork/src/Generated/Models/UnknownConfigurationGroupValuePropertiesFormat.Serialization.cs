@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
             }
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
 
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> configurationGroupSchemaName = default;
             Optional<string> configurationGroupSchemaOfferingLocation = default;
             Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
-            ConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("configurationType"u8))
                 {
-                    configurationType = new ConfigurationType(property.Value.GetString());
+                    configurationType = new ConfigurationGroupValueConfigurationType(property.Value.GetString());
                     continue;
                 }
             }

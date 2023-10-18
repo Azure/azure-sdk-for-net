@@ -21,14 +21,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="secretDeployParameters"> The secret deployment parameters of the network function definition version which can include secrets like passwords, ssh keys etc. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
         /// <param name="networkFunctionTemplate">
         /// Virtual network function template.
         /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
         /// </param>
-        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, string secretDeployParameters, NetworkFunctionType networkFunctionType, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, secretDeployParameters, networkFunctionType)
+        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, networkFunctionType)
         {
             NetworkFunctionTemplate = networkFunctionTemplate;
             NetworkFunctionType = networkFunctionType;

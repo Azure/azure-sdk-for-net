@@ -32,7 +32,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Network function properties. </param>
+        /// <param name="properties">
+        /// Network function properties.
+        /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+        /// </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
         internal NetworkFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionPropertiesFormat properties, ETag? etag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
@@ -42,7 +46,11 @@ namespace Azure.ResourceManager.HybridNetwork
             Identity = identity;
         }
 
-        /// <summary> Network function properties. </summary>
+        /// <summary>
+        /// Network function properties.
+        /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+        /// </summary>
         public NetworkFunctionPropertiesFormat Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; set; }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _configurationGroupValueconfigurationGroupValuesClientDiagnostics;
-        private ConfigurationGroupValuesRestOperations _configurationGroupValueconfigurationGroupValuesRestClient;
+        private ClientDiagnostics _configurationGroupValueClientDiagnostics;
+        private ConfigurationGroupValuesRestOperations _configurationGroupValueRestClient;
         private ClientDiagnostics _networkFunctionClientDiagnostics;
         private NetworkFunctionsRestOperations _networkFunctionRestClient;
         private ClientDiagnostics _publisherClientDiagnostics;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        private ClientDiagnostics ConfigurationGroupValueconfigurationGroupValuesClientDiagnostics => _configurationGroupValueconfigurationGroupValuesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupValueResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationGroupValuesRestOperations ConfigurationGroupValueconfigurationGroupValuesRestClient => _configurationGroupValueconfigurationGroupValuesRestClient ??= new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationGroupValueResource.ResourceType));
+        private ClientDiagnostics ConfigurationGroupValueClientDiagnostics => _configurationGroupValueClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupValueResource.ResourceType.Namespace, Diagnostics);
+        private ConfigurationGroupValuesRestOperations ConfigurationGroupValueRestClient => _configurationGroupValueRestClient ??= new ConfigurationGroupValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationGroupValueResource.ResourceType));
         private ClientDiagnostics NetworkFunctionClientDiagnostics => _networkFunctionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionResource.ResourceType.Namespace, Diagnostics);
         private NetworkFunctionsRestOperations NetworkFunctionRestClient => _networkFunctionRestClient ??= new NetworkFunctionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkFunctionResource.ResourceType));
         private ClientDiagnostics PublisherClientDiagnostics => _publisherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", PublisherResource.ResourceType.Namespace, Diagnostics);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListBySubscription</description>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueconfigurationGroupValuesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueconfigurationGroupValuesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>configurationGroupValues_ListBySubscription</description>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueconfigurationGroupValuesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueconfigurationGroupValuesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueconfigurationGroupValuesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
