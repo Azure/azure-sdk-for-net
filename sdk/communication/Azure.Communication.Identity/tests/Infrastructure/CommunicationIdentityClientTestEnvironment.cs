@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Azure.Communication.Tests;
 
 namespace Azure.Communication.Identity.Tests
@@ -30,7 +31,10 @@ namespace Azure.Communication.Identity.Tests
 
         public string CommunicationExpiredTeamsToken => GetOptionalVariable(CommunicationExpiredTeamsTokenEnvironmentVariableName) ?? "Sanitized";
 
-        public string SkipIntIdentityExchangeTokenTest => GetOptionalVariable(SkipIntIdentityExchangeTokenTestEnvironmentVariableName) ?? "True";
+        public string SkipIntIdentityExchangeTokenTest => GetOptionalVariable(SkipIntIdentityExchangeTokenTestEnvironmentVariableName) ?? "False";
+
         public bool ShouldIgnoreIdentityExchangeTokenTest => bool.Parse(SkipIntIdentityExchangeTokenTest);
+
+        public bool ShouldIgnoreVoipJoinScopeTest(string[] scopes) => scopes.Contains("voip.join");
     }
 }
