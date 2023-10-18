@@ -100,7 +100,7 @@ namespace Azure.Core
 #if NET6_0_OR_GREATER
             content.JsonWriter.WriteRawValue(value);
 #else
-            JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(value.ToString()).RootElement);
+            JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(value).RootElement);
 #endif
             return content;
         }
