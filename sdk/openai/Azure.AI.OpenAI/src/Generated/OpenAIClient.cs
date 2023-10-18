@@ -49,7 +49,11 @@ namespace Azure.AI.OpenAI
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
             Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            return ProtocolOperationHelpers.Convert(response, r =>
+            {
+                var resultJsonElement = System.Text.Json.JsonDocument.Parse(r.Content).RootElement.GetProperty("result");
+                return ImageGenerations.DeserializeImageGenerations(resultJsonElement);
+            }, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary> Starts the generation of a batch of images from a text caption. </summary>
@@ -64,7 +68,11 @@ namespace Azure.AI.OpenAI
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
             Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            return ProtocolOperationHelpers.Convert(response, r =>
+            {
+                var resultJsonElement = System.Text.Json.JsonDocument.Parse(r.Content).RootElement.GetProperty("result");
+                return ImageGenerations.DeserializeImageGenerations(resultJsonElement);
+            }, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary>
