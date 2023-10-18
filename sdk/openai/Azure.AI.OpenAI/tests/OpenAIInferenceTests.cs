@@ -276,6 +276,79 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         [TestCase(OpenAIClientServiceTarget.Azure)]
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task StreamingChatCompletions2(OpenAIClientServiceTarget serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
+                serviceTarget,
+                OpenAIClientScenario.ChatCompletions);
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatMessage(ChatRole.System, "You are a helpful assistant."),
+                    new ChatMessage(ChatRole.User, "Can you help me?"),
+                    new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
+                    new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
+                },
+                MaxTokens = 512,
+            };
+            Response<StreamingChatCompletions2> streamingResponse
+                = await client.GetChatCompletionsStreamingAsync2(deploymentOrModelName, requestOptions);
+            Assert.That(streamingResponse, Is.Not.Null);
+            using StreamingChatCompletions2 streamingChatCompletions = streamingResponse.Value;
+            Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions2>());
+
+            StringBuilder contentBuilder = new StringBuilder();
+            bool gotRole = false;
+            bool gotRequestContentFilterResults = false;
+            bool gotResponseContentFilterResults = false;
+
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in streamingChatCompletions.EnumerateChatUpdates())
+            {
+                Assert.That(chatUpdate, Is.Not.Null);
+
+                if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is null)
+                {
+                    Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
+                    Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+                    Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+                }
+                if (chatUpdate.Role.HasValue)
+                {
+                    Assert.IsFalse(gotRole);
+                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
+                    gotRole = true;
+                }
+                if (chatUpdate.ContentUpdate is not null)
+                {
+                    contentBuilder.Append(chatUpdate.ContentUpdate);
+                }
+                if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is not null)
+                {
+                    Assert.IsFalse(gotRequestContentFilterResults);
+                    AssertExpectedContentFilterResults(chatUpdate.AzureExtensionsContext.RequestContentFilterResults, serviceTarget);
+                    gotRequestContentFilterResults = true;
+                }
+                if (chatUpdate.AzureExtensionsContext?.ResponseContentFilterResults is not null)
+                {
+                    AssertExpectedContentFilterResults(chatUpdate.AzureExtensionsContext.ResponseContentFilterResults, serviceTarget);
+                    gotResponseContentFilterResults = true;
+                }
+            }
+
+            Assert.IsTrue(gotRole);
+            Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
+            if (serviceTarget == OpenAIClientServiceTarget.Azure)
+            {
+                Assert.IsTrue(gotRequestContentFilterResults);
+                Assert.IsTrue(gotResponseContentFilterResults);
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task AdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);

@@ -500,6 +500,106 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary>
+        ///     Begin a chat completions request and get an object that can stream response data as it becomes
+        ///     available.
+        /// </summary>
+        /// <param name="deploymentOrModelName">
+        ///     <inheritdoc
+        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
+        ///         path="/param[@name='deploymentOrModelName']"/>
+        /// </param>
+        /// <param name="chatCompletionsOptions">
+        ///     the chat completions options for this chat completions request.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        /// </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response<StreamingChatCompletions2> GetChatCompletionsStreaming2(
+            string deploymentOrModelName,
+            ChatCompletionsOptions chatCompletionsOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
+            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming2");
+            scope.Start();
+
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = true;
+
+            string operationPath = GetOperationPath(chatCompletionsOptions);
+
+            RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            try
+            {
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    operationPath,
+                    content,
+                    context);
+                message.BufferResponse = false;
+                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                return Response.FromValue(new StreamingChatCompletions2(baseResponse), baseResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc cref="GetChatCompletionsStreaming2(string, ChatCompletionsOptions, CancellationToken)"/>
+        public virtual async Task<Response<StreamingChatCompletions2>> GetChatCompletionsStreamingAsync2(
+            string deploymentOrModelName,
+            ChatCompletionsOptions chatCompletionsOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
+            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming2");
+            scope.Start();
+
+            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
+            chatCompletionsOptions.InternalShouldStreamResponse = true;
+
+            string operationPath = GetOperationPath(chatCompletionsOptions);
+
+            RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            try
+            {
+                // Response value object takes IDisposable ownership of message
+                HttpMessage message = CreatePostRequestMessage(
+                    deploymentOrModelName,
+                    operationPath,
+                    content,
+                    context);
+                message.BufferResponse = false;
+                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                    message,
+                    context,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StreamingChatCompletions2(baseResponse), baseResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Return the computed embeddings for a given prompt. </summary>
         /// <param name="deploymentOrModelName">
         ///     <inheritdoc
