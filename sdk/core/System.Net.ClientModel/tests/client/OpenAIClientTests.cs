@@ -8,6 +8,9 @@ namespace System.Net.ClientModel.Tests;
 
 public class OpenAIClientTests
 {
+    // This is a "TestSupportProject", so these tests will never be run as part of CIs.
+    // It's here now for quick manual validation of client functionality, but we can revisit
+    // this story going forward.
     [Test]
     public void TestClientSync()
     {
@@ -21,15 +24,11 @@ public class OpenAIClientTests
             InternalNonAzureModelName = "text-davinci-003"
         };
 
-        // TODO: Mock this out.
-        // We don't have test recordings, so we won't actually assert this.
-        // But, if you uncomment this code and run it, the test should pass.
+        Result<Completions> result = client.GetCompletions(
+            "<unused in public service>",
+            input);
+        Choice choice = result.Value.Choices[0];
 
-        //Result<Completions> result = client.GetCompletions(
-        //    "<unused in public service>",
-        //    input);
-        //Choice choice = result.Value.Choices[0];
-
-        //Assert.IsTrue(choice.Text.StartsWith("\n\nLife is"));
+        Assert.IsTrue(choice.Text.StartsWith("\n\nLife is"));
     }
 }

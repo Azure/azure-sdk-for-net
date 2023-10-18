@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Test client code for use in System.Net.ClientModel test libraries.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   
   <ItemGroup>

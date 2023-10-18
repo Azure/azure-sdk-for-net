@@ -16,7 +16,6 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="..\clients\System.Net.ClientModel.Tests.Clients.csproj" />
   </ItemGroup>
 
 </Project>

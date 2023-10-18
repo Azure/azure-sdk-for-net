@@ -41,9 +41,6 @@ $(RepoRoot)sdk\core\Azure.Core.Experimental\tests\perf\Azure.Core.Experimental.P
 $(RepoRoot)sdk\core\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core\tests\Azure.Core.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core\tests\public\Azure.Core.Tests.Public.csproj
-$(RepoRoot)sdk\core\System.Net.ClientModel\tests\System.Net.ClientModel.Tests.csproj
-$(RepoRoot)sdk\core\System.Net.ClientModel\tests\clients\System.Net.ClientModel.Tests.Clients.csproj
-$(RepoRoot)sdk\core\System.Net.ClientModel\tests\internal\System.Net.ClientModel.Tests.Internal.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj

@@ -16,13 +16,12 @@
   
   <ItemGroup>
     <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
-    <ProjectReference Include="clients\System.Net.ClientModel.Tests.Clients.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="clients/**" />
+    <Compile Remove="client/**" />
     <Compile Remove="internal/**" />
-    <Compile Remove="perf.internal/**" />
+    <Compile Remove="internal.perf/**" />
   </ItemGroup>
 
 </Project>
