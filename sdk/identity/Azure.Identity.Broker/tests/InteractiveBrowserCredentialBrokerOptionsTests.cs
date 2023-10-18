@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
-namespace Azure.Identity.BrokeredAuthentication.Tests
+namespace Azure.Identity.Broker.Tests
 {
     public class InteractiveBrowserCredentialBrokerOptionsTests
     {
@@ -18,7 +18,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
-                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsMsaPassthroughEnabled = enableMsaPassthrough.Value } as IMsalPublicClientInitializerOptions;
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsLegacyMsaPassthroughEnabled = enableMsaPassthrough.Value } as IMsalPublicClientInitializerOptions;
             }
             else
             {

@@ -1,9 +1,9 @@
-namespace Azure.Identity.BrokeredAuthentication
+namespace Azure.Identity.Broker
 {
     public partial class InteractiveBrowserCredentialBrokerOptions : Azure.Identity.InteractiveBrowserCredentialOptions
     {
         public InteractiveBrowserCredentialBrokerOptions(System.IntPtr parentWindowHandle) { }
-        public bool? IsMsaPassthroughEnabled { get { throw null; } set { } }
+        public bool? IsLegacyMsaPassthroughEnabled { get { throw null; } set { } }
     }
     public partial class SharedTokenCacheCredentialBrokerOptions : Azure.Identity.SharedTokenCacheCredentialOptions
     {

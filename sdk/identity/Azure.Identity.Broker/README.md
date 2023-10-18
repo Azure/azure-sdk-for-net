@@ -10,11 +10,11 @@
 Install the Azure Identity client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Identity.BrokeredAuthentication --prerelease
+dotnet add package Azure.Identity.Broker --prerelease
 ```
 
 ### Prerequisites
-* The [Azure.Identity][azure_identity] library is a dependency of Azure.Identity.BrokeredAuthentication.
+* The [Azure.Identity][azure_identity] library is a dependency of Azure.Identity.Broker.
 
 ### Authenticate the client
 
@@ -125,8 +125,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_powerShell]: https://docs.microsoft.com/powershell/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity.BrokeredAuthentication/src
-[package]: https://www.nuget.org/packages?q=Azure.Identity.BrokeredAuthentication
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity.Broker/src
+[package]: https://www.nuget.org/packages?q=Azure.Identity.Broker
 [aad_doc]: https://docs.microsoft.com/azure/active-directory/
 [aad_err_doc]: https://docs.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates

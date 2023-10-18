@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
 
-namespace Azure.Identity.BrokeredAuthentication.Tests
+namespace Azure.Identity.Broker.Tests
 {
     public class ManualInteractiveBrowserCredentialBrokerTests
     {
