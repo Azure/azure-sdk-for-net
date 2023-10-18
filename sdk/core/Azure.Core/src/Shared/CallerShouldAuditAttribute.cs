@@ -3,6 +3,8 @@
 
 using System;
 
+#nullable enable
+
 namespace Azure.Core
 {
     /// <summary>
