@@ -63,7 +63,7 @@ namespace Azure.Identity
             UseLegacyPowerShell = false;
             _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
@@ -139,8 +139,11 @@ namespace Azure.Identity
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
-            ScopeUtilities.ValidateScope(resource);
             var tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
+
+            ScopeUtilities.ValidateScope(resource);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
