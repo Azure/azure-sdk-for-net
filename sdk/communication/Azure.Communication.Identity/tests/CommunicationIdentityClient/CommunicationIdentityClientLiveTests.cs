@@ -93,11 +93,6 @@ namespace Azure.Communication.Identity.Tests
         [TestCase("chat.join", "voip.join", TestName = "GettingTokenWithChatJoinVoipJoinScopes")]
         public async Task GetTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
         {
-            if (TestEnvironment.ShouldIgnoreVoipJoinScopeTest(scopes))
-            {
-                Assert.Pass("Ignore create user and token test if voip.join scope is passed.");
-            }
-
             CommunicationIdentityClient client = CreateClient();
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
@@ -162,11 +157,6 @@ namespace Azure.Communication.Identity.Tests
         [TestCase("chat.join", "voip.join", TestName = "CreateUserAndTokenWithChatJoinVoipJoinScopes")]
         public async Task CreateUserAndTokenWithDifferentScopes(params string[] scopes)
         {
-            if (TestEnvironment.ShouldIgnoreVoipJoinScopeTest(scopes))
-            {
-                Assert.Pass("Ignore create user and token test if voip.join scope is passed.");
-            }
-
             CommunicationIdentityClient client = CreateClient();
             Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: scopes.Select(x => new CommunicationTokenScope(x)));
 
