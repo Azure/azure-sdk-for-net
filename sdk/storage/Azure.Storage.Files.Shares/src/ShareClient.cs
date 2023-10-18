@@ -348,7 +348,7 @@ namespace Azure.Storage.Files.Shares
                 clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options)
             {
-                Audience = options.Audience ?? ShareAudience.PublicAudience,
+                Audience = options.Audience ?? ShareAudience.DefaultAudience,
             };
             _shareRestClient = BuildShareRestClient(shareUri);
         }
