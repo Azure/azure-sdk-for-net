@@ -89,68 +89,6 @@ public class AzureChatExtensionsTests : OpenAITestBase
         Assert.That(context.Messages.First().Content.Contains("citations"));
     }
 
-    //[RecordedTest]
-    //[TestCase(OpenAIClientServiceTarget.Azure)]
-    //public async Task StreamingSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
-    //{
-    //    OpenAIClient client = GetTestClient(serviceTarget);
-    //    string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-    //        serviceTarget,
-    //        OpenAIClientScenario.ChatCompletions);
-
-    //    var requestOptions = new ChatCompletionsOptions()
-    //    {
-    //        Messages =
-    //        {
-    //            new ChatMessage(ChatRole.User, "What does PR complete mean?"),
-    //        },
-    //        MaxTokens = 512,
-    //        AzureExtensionsOptions = new()
-    //        {
-    //            Extensions =
-    //            {
-    //                new AzureChatExtensionConfiguration()
-    //                {
-    //                    Type = "AzureCognitiveSearch",
-    //                    Parameters = BinaryData.FromObjectAsJson(new
-    //                    {
-    //                        Endpoint = "https://openaisdktestsearch.search.windows.net",
-    //                        IndexName = "openai-test-index-carbon-wiki",
-    //                        Key = GetCognitiveSearchApiKey().Key,
-    //                    },
-    //                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-    //                },
-    //            }
-    //        },
-    //    };
-
-    //    Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
-    //        deploymentOrModelName,
-    //        requestOptions);
-    //    Assert.That(response, Is.Not.Null);
-    //    Assert.That(response.Value, Is.Not.Null);
-
-    //    using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-    //    int choiceCount = 0;
-    //    List<ChatMessage> messageChunks = new();
-
-    //    await foreach (StreamingChatChoice streamingChatChoice in response.Value.GetChoicesStreaming())
-    //    {
-    //        choiceCount++;
-    //        await foreach (ChatMessage chatMessage in streamingChatChoice.GetMessageStreaming())
-    //        {
-    //            messageChunks.Add(chatMessage);
-    //        }
-    //    }
-
-    //    Assert.That(choiceCount, Is.EqualTo(1));
-    //    Assert.That(messageChunks, Is.Not.Null.Or.Empty);
-    //    Assert.That(messageChunks.Any(chunk => chunk.AzureExtensionsContext != null && chunk.AzureExtensionsContext.Messages.Any(m => m.Role == ChatRole.Tool)));
-    //    //Assert.That(messageChunks.Any(chunk => chunk.Role == ChatRole.Assistant));
-    //    Assert.That(messageChunks.Any(chunk => !string.IsNullOrWhiteSpace(chunk.Content)));
-    //}
-
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task StreamingSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
