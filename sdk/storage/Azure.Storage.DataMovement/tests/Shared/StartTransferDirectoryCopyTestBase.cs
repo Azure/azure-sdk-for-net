@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -57,6 +56,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         #region Service-Specific Methods
         /// <summary>
+        /// Gets the service client using OAuth to authenticate.
+        /// </summary>
+        protected abstract TSourceServiceClient GetOAuthSourceServiceClient();
+
+        /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
         /// </summary>
         /// <param name="service">Optionally specified service client to get container from.</param>
@@ -70,27 +74,18 @@ namespace Azure.Storage.DataMovement.Tests
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
         /// </summary>
         /// <param name="containerClient">The object client to create the storage resource object.</param>
-        /// <param name="prefix">The prefix for a Storage Resource Container. If not specified, will default to root directory.</param>
+        /// <param name="directoryPath">The path of the directory.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetSourceStorageResourceContainer(TSourceContainerClient containerClient, string prefix = default);
+        protected abstract StorageResourceContainer GetSourceStorageResourceContainer(TSourceContainerClient directoryClient, string prefix);
 
         /// <summary>
         /// Creates the object in the source storage resource container.
         /// </summary>
-        /// <param name="containerClient">The container client to create the storage resource object.</param>
+        /// <param name="objectLength">The length to create the object of.</param>
         /// <param name="objectName">The name of the object to create.</param>
-        /// <param name="size">Optional. The size of the object.</param>
+        /// <param name="contents">The contents to set in the object.</param>
         /// <returns></returns>
-        protected abstract Task CreateObjectInSource(TSourceContainerClient containerClient, string objectName = default, long? size = default);
-
-        /// <summary>
-        /// Creates the object in the source storage resource container.
-        /// </summary>
-        /// <param name="containerClient">The container client to create the storage resource object.</param>
-        /// <param name="objectName">The name of the object to create.</param>
-        /// <param name="content">Optional. The contents to set in the object resource.</param>
-        /// <returns></returns>
-        protected abstract Task CreateObjectInSource(TSourceContainerClient containerClient, string objectName = default, Stream content = default);
+        protected abstract Task CreateObjectInSourceAsync(TSourceContainerClient container, long? objectLength = null, string objectName = null, Stream contents = default);
 
         /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
@@ -105,24 +100,41 @@ namespace Azure.Storage.DataMovement.Tests
         /// Gets the specific storage resource from the given TDestinationObjectClient
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
         /// </summary>
-        /// <param name="containerClient">The object client to create the storage resource object.</param>
-        /// <param name="prefix">The prefix for a Storage Resource Container.</param>
+        /// <param name="directoryClient">The object client to create the storage resource object.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient containerClient, string prefix);
+        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient sourceContainerClient, string directoryPath);
+
+        /// <summary>
+        /// Creates the object in the source storage resource container.
+        /// </summary>
+        /// <param name="objectLength">The length to create the object of.</param>
+        /// <param name="objectName">The name of the object to create.</param>
+        /// <param name="contents">The contents to set in the object.</param>
+        /// <returns></returns>
+        protected abstract Task CreateObjectInDestinationAsync(TDestinationContainerClient container, long? objectLength = null, string objectName = null, Stream contents = default);
+
+        /// <summary>
+        /// Verifies that the destination container is empty when we expect it to be.
+        /// </summary>
+        /// <param name="destinationContainer">
+        /// The respective destination container to verify empty contents.
+        /// </param>
+        /// <returns></returns>
+        protected abstract Task VerifyEmptyDestinationContainerAsync(TDestinationContainerClient destinationContainer, string destinationPrefix);
 
         /// <summary>
         /// Verifies the results between the source and the destination container.
         /// </summary>
-        /// <param name="sourceClient">The source client to check the contents and compare against the destination.</param>
+        /// <param name="sourceContainer">The source client to check the contents and compare against the destination.</param>
         /// <param name="destinationContainer">The destinatiojn client to check the contents and compare against the source.</param>
         /// <param name="sourcePrefix">Optional. The prefix to start listing at the source container.</param>
         /// <param name="destinationPrefix">Optional. The prefix to start listing at the destination container.</param>
         /// <returns></returns>
-        protected abstract Task VerifyResults(
-            TSourceContainerClient sourceClient,
+        protected abstract Task VerifyResultsAsync(
+            TSourceContainerClient sourceContainer,
+            string sourcePrefix,
             TDestinationContainerClient destinationContainer,
-            string sourcePrefix = default,
-            string destinationPrefix = default);
+            string destinationPrefix);
         #endregion
 
         protected string GetNewObjectName()
@@ -135,19 +147,20 @@ namespace Azure.Storage.DataMovement.Tests
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="sourceContainer">The source container which will contains the source blobs</param>
-        /// <param name="sourceBlobPrefix">The source blob prefix/folder</param>
-        /// <param name="destinationBlobPrefix">The destination local path to download the blobs to</param>
+        /// <param name="sourcePrefix">The source blob prefix/folder</param>
+        /// <param name="destinationPrefix">The destination local path to download the blobs to</param>
         /// <param name="waitTimeInSec">
         /// How long we should wait until we cancel the operation. If this timeout is reached the test will fail.
         /// </param>
         /// <param name="transferManagerOptions">Options for the transfer manager</param>
         /// <param name="options">Options for the transfer Options</param>
         /// <returns></returns>
-        private async Task CopyBlobDirectoryAndVerify(
+        private async Task CopyDirectoryAndVerifyAsync(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
-            string sourceBlobPrefix,
-            string destinationBlobPrefix,
+            string sourcePrefix,
+            string destinationPrefix,
+            int itemTransferCount,
             int waitTimeInSec = 30,
             TransferManagerOptions transferManagerOptions = default,
             DataTransferOptions options = default)
@@ -165,9 +178,9 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             StorageResourceContainer sourceResource =
-                GetSourceStorageResourceContainer(sourceContainer, sourceBlobPrefix);
+                GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
             StorageResourceContainer destinationResource =
-                GetDestinationStorageResourceContainer(destinationContainer, destinationBlobPrefix);
+                GetDestinationStorageResourceContainer(destinationContainer, destinationPrefix);
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
@@ -175,44 +188,16 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
-            await testEventFailed.AssertContainerCompletedCheck(sourceFiles.Count);
+            await testEventFailed.AssertContainerCompletedCheck(itemTransferCount);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
 
             // List all files in source blob folder path
-            List<string> sourceblobNames = new List<string>();
-            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(prefix: sourceBlobPrefix).AsPages())
-            {
-                sourceblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
-            }
-
-            // List all files in the destination blob folder path
-            List<string> destblobNames = new List<string>();
-            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(prefix: destinationBlobPrefix).AsPages())
-            {
-                destblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
-            }
-            Assert.AreEqual(sourceblobNames.Count, destblobNames.Count);
-            sourceblobNames.Sort();
-            destblobNames.Sort();
-            for (int i = 0; i < sourceFiles.Count; i++)
-            {
-                // Verify file name to match the
-                // (prefix folder path) + (the blob name without the blob folder prefix)
-                string sourceNonPrefixed = sourceblobNames[i].Substring(sourceBlobPrefix.Length + 1);
-                Assert.AreEqual(
-                    sourceNonPrefixed,
-                    destblobNames[i].Substring(destinationBlobPrefix.Length + 1));
-
-                // Verify Download
-                string sourceFileName = Path.Combine(sourceFilePrefix, sourceNonPrefixed);
-                using (FileStream fileStream = File.OpenRead(sourceFileName))
-                {
-                    BlockBlobClient destinationBlob = sourceContainer.GetBlockBlobClient(destblobNames[i]);
-                    Assert.IsTrue(await destinationBlob.ExistsAsync());
-                    await DownloadAndAssertAsync(fileStream, destinationBlob);
-                }
-            }
+            await VerifyResultsAsync(
+                sourceContainer: sourceContainer,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destinationContainer,
+                destinationPrefix: destinationPrefix);
         }
 
         [Test]
@@ -220,40 +205,40 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
-        public async Task BlockBlobDirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
+        public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            string sourceBlobDirectoryName = "sourceFolder";
+            string sourceDirectoryName = "sourceFolder";
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceDirectoryName);
 
             List<string> blobNames = new List<string>();
 
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName1, size);
-            await CreateObjectInSource(source.Container, blobName2, size);
-            blobNames.Add(blobName1);
-            blobNames.Add(blobName2);
+            string itemName1 = Path.Combine(sourceDirectoryName, GetNewObjectName());
+            string itemName2 = Path.Combine(sourceDirectoryName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+            blobNames.Add(itemName1);
+            blobNames.Add(itemName2);
 
             string subDirName = "bar";
             CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName3, size);
-            blobNames.Add(blobName3);
+            string itemName3 = Path.Combine(sourceDirectoryName, subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            blobNames.Add(itemName3);
 
             string subDirName2 = "pik";
             CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName4, size);
-            blobNames.Add(blobName4);
+            string itemName4 = Path.Combine(sourceDirectoryName, subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            blobNames.Add(itemName4);
 
-            await CopyBlobDirectoryAndVerify(
+            await CopyDirectoryAndVerifyAsync(
                 source.Container,
                 destination.Container,
-                sourceBlobDirectoryName,
+                sourceDirectoryName,
                 sourceFolderPath,
                 waitTimeInSec).ConfigureAwait(false);
         }
@@ -265,7 +250,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 200)]
         [TestCase(257 * Constants.MB, 500)]
         [TestCase(Constants.GB, 500)]
-        public async Task BlockBlobDirectoryToDirectory_LargeSize(long size, int waitTimeInSec)
+        public async Task DirectoryToDirectory_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
@@ -274,26 +259,26 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> blobNames = new List<string>();
 
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName1, size);
-            await CreateObjectInSource(source.Container, blobName2, size);
-            blobNames.Add(blobName1);
-            blobNames.Add(blobName2);
+            string itemName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
+            string itemName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+            blobNames.Add(itemName1);
+            blobNames.Add(itemName2);
 
             string subDirName = "bar";
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName3, size);
-            blobNames.Add(blobName3);
+            string itemName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            blobNames.Add(itemName3);
 
             string subDirName2 = "pik";
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
-            await CreateObjectInSource(source.Container, blobName4, size);
-            blobNames.Add(blobName4);
+            string itemName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            blobNames.Add(itemName4);
 
             string destinationFolder = "destFolder";
 
-            await CopyBlobDirectoryAndVerify(
+            await CopyDirectoryAndVerifyAsync(
                 source.Container,
                 destination.Container,
                 sourceBlobDirectoryName,
@@ -303,25 +288,19 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_EmptyFolder()
+        public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Set up directory to upload
-            var dirName = GetNewObjectName();
-            var dirName2 = GetNewObjectName();
-            string folder = CreateRandomDirectory(testDirectory.DirectoryPath);
+            var destinationName = GetNewObjectName();
+            var sourceName = GetNewObjectName();
 
             // Set up destination client
-            StorageResourceContainer destinationResource = GetDestinationStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = dirName });
-            StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(test.Container,
-                new BlobStorageResourceContainerOptions()
-                {
-                    BlobDirectoryPrefix = dirName2,
-                });
+            StorageResourceContainer destinationResource = GetDestinationStorageResourceContainer(destination.Container, destinationName);
+            StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(source.Container, sourceName);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -341,73 +320,63 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
 
             // Assert
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
-            // Assert
-            Assert.IsEmpty(blobs);
+            await VerifyEmptyDestinationContainerAsync(destination.Container, destinationName);
             testEventsRaised.AssertUnexpectedFailureCheck();
         }
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_SingleFile()
+        public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
-            await using IDisposingContainer<TSourceContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            string sourceFolderName = "sourceFolder";
-            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceFolderName);
+            string sourcePrefix = "sourceFolder";
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourcePrefix);
 
-            string blobName1 = Path.Combine(sourceFolderName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, Constants.KB);
-            List<string> blobNames = new List<string>() { blobName1 };
+            string itemName1 = Path.Combine(sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destFolder";
 
-            await CopyBlobDirectoryAndVerify(
-                container: test.Container,
-                sourceBlobPrefix: sourceFolderName,
-                sourceFilePrefix: sourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+            await CopyDirectoryAndVerifyAsync(
+                sourceContainer: source.Container,
+                destinationContainer: destination.Container,
+                sourcePrefix: sourcePrefix,
+                destinationPrefix: destinationPrefix,
+                itemTransferCount: 1).ConfigureAwait(false);
         }
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_ManySubDirectories()
+        public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            string blobDirectoryName = "sourceFolder";
-            string fullSourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, blobDirectoryName);
+            string sourcePrefix = "sourceFolder";
 
-            List<string> blobNames = new List<string>();
-            string subDir1 = CreateRandomDirectory(fullSourceFolderPath, "bar").Substring(fullSourceFolderPath.Length + 1);
-            string blobName1 = Path.Combine(blobDirectoryName, subDir1, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, Constants.KB);
-            blobNames.Add(blobName1);
-            string subDir2 = CreateRandomDirectory(fullSourceFolderPath, "rul").Substring(fullSourceFolderPath.Length + 1);
-            string blobName2 = Path.Combine(blobDirectoryName, subDir2, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName2, Constants.KB);
-            blobNames.Add(blobName2);
-            string subDir3 = CreateRandomDirectory(fullSourceFolderPath, "pik").Substring(fullSourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(blobDirectoryName, subDir3, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName3, Constants.KB);
-            blobNames.Add(blobName3);
+            string subDir1 = string.Join("/", sourcePrefix, "foo");
+            string itemName1 = Path.Combine(sourcePrefix, subDir1, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
+            string subDir2 = string.Join("/", sourcePrefix, "rul");
+            string itemName2 = Path.Combine(sourcePrefix, subDir2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName2);
+            string subDir3 = string.Join("/", sourcePrefix, "pik");
+            string itemName3 = Path.Combine(sourcePrefix, subDir3, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName3);
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destFolder";
 
-            string sourceBlobPrefix = fullSourceFolderPath.Substring(testDirectory.DirectoryPath.Length + 1);
-
-            await CopyBlobDirectoryAndVerify(
-                container: test.Container,
-                sourceBlobPrefix: sourceBlobPrefix,
-                sourceFilePrefix: fullSourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+            await CopyDirectoryAndVerifyAsync(
+                sourceContainer: source.Container,
+                destinationContainer: destination.Container,
+                sourcePrefix: sourcePrefix,
+                destinationPrefix: destinationPrefix,
+                itemTransferCount: 3).ConfigureAwait(false);
         }
 
         [Test]
@@ -415,208 +384,186 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
-        public async Task BlockBlobDirectoryToDirectory_SubDirectoriesLevels(int level)
+        public async Task DirectoryToDirectory_SubDirectoriesLevels(int level)
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            string sourceBlobDirectoryName = "sourceFolder";
-            string fullSourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
+            string sourcePrefix = "sourceFolder";
 
-            List<string> blobNames = new List<string>();
-
-            string subDir = default;
             for (int i = 0; i < level; i++)
             {
-                subDir = CreateRandomDirectory(fullSourceFolderPath, $"folder{i}");
-                string blobName = Path.Combine(sourceBlobDirectoryName, subDir.Substring(fullSourceFolderPath.Length + 1), GetNewObjectName());
-                await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName, Constants.KB);
-                blobNames.Add(blobName);
+                string subDirPrefix = $"{sourcePrefix}/folder{i}/{GetNewObjectName()}";
+                await CreateObjectInSourceAsync(source.Container, Constants.KB, subDirPrefix);
             }
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destFolder";
 
-            await CopyBlobDirectoryAndVerify(
-                test.Container,
-                sourceBlobDirectoryName,
-                fullSourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                sourcePrefix,
+                destinationPrefix: destinationPrefix,
+                itemTransferCount: level).ConfigureAwait(false);
         }
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_OverwriteTrue()
+        public async Task DirectoryToDirectory_OverwriteTrue()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             long size = Constants.KB;
-            string sourceBlobDirectoryName = "sourceFolder";
-            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
+            string sourcePrefix = "sourceFolder";
 
-            List<string> blobNames = new List<string>();
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, size);
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName2, size);
-            blobNames.Add(blobName1);
-            blobNames.Add(blobName2);
+            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
+            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
 
             string subDirName = "bar";
-            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName3, size);
-            blobNames.Add(blobName3);
+            string itemName3 = string.Join("/", sourcePrefix, subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
 
             string subDirName2 = "pik";
-            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName4, size);
-            blobNames.Add(blobName4);
+            string itemName4 = string.Join("/", sourcePrefix, subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
 
             DataTransferOptions options = new DataTransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
             };
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destPrefix";
 
             // Act
-            await CopyBlobDirectoryAndVerify(
-                test.Container,
-                sourceBlobDirectoryName,
-                sourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames,
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                sourcePrefix,
+                destinationPrefix,
+                itemTransferCount: 4,
                 options: options).ConfigureAwait(false);
         }
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_OverwriteFalse()
+        public async Task DirectoryToDirectory_OverwriteFalse()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             long size = Constants.KB;
-            string sourceBlobDirectoryName = "sourceFolder";
-            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
+            string sourcePrefix = "sourceFolder";
 
             List<string> blobNames = new List<string>();
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName1, size);
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName2, size);
-            blobNames.Add(blobName1);
-            blobNames.Add(blobName2);
+            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
+            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+            blobNames.Add(itemName1);
+            blobNames.Add(itemName2);
 
             string subDirName = "bar";
-            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName3, size);
-            blobNames.Add(blobName3);
+            string itemName3 = string.Join("/", sourcePrefix, subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            blobNames.Add(itemName3);
 
             string subDirName2 = "pik";
-            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(test.Container, testDirectory.DirectoryPath, blobName4, size);
-            blobNames.Add(blobName4);
+            string itemName4 = string.Join("/", sourcePrefix, subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            blobNames.Add(itemName4);
 
             DataTransferOptions options = new DataTransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
             };
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destFolder";
 
             // Act
-            await CopyBlobDirectoryAndVerify(
-                test.Container,
-                sourceBlobDirectoryName,
-                sourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames,
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                sourcePrefix,
+                destinationPrefix,
+                itemTransferCount: 4,
                 options: options).ConfigureAwait(false);
         }
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task BlockBlobDirectoryToDirectory_OAuth()
+        public async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
             long size = Constants.KB;
             int waitTimeInSec = 10;
-            TSourceServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
-            var containerName = GetNewContainerName();
-            await using IDisposingContainer<TContainerClient> testContainer = await GetTestContainerAsync(
-                service,
-                containerName,
-                publicAccessType: PublicAccessType.BlobContainer);
-            string sourceBlobDirectoryName = "sourceFolder";
+            TSourceServiceClient service = GetOAuthSourceServiceClient();
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(service);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            string sourcePrefix = "sourceFolder";
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
 
             List<string> blobNames = new List<string>();
 
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName1, size);
-            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName2, size);
-            blobNames.Add(blobName1);
-            blobNames.Add(blobName2);
+            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
+            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+            blobNames.Add(itemName1);
+            blobNames.Add(itemName2);
 
             string subDirName = "bar";
-            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName3, size);
-            blobNames.Add(blobName3);
+            string itemName3 = string.Join("/", sourcePrefix, subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            blobNames.Add(itemName3);
 
             string subDirName2 = "pik";
-            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewObjectName());
-            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName4, size);
-            blobNames.Add(blobName4);
+            string itemName4 = Path.Combine(sourcePrefix, subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            blobNames.Add(itemName4);
 
-            string destinationFolder = "destFolder";
+            string destinationPrefix = "destFolder";
 
-            await CopyBlobDirectoryAndVerify(
-                testContainer.Container,
-                sourceBlobDirectoryName,
-                sourceFolderPath,
-                destinationFolder,
-                blobNames,
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                sourcePrefix,
+                destinationPrefix,
                 waitTimeInSec).ConfigureAwait(false);
         }
 
         #region Single Concurrency
-        private async Task CreateBlobDirectoryTree(
+        private async Task CreateDirectoryTree(
             TSourceContainerClient client,
             string sourceFolderPath,
             string sourceBlobDirectoryName,
             int size)
         {
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, "blob2");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName1, size);
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName2, size);
+            string itemName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
+            string itemName2 = Path.Combine(sourceBlobDirectoryName, "blob2");
+            await CreateObjectInSourceAsync(client, size, itemName1);
+            await CreateObjectInSourceAsync(client, size, itemName2);
 
             string subDirName = "bar";
             CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob3");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName3, size);
+            string itemName3 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob3");
+            await CreateObjectInSourceAsync(client, size, itemName3);
 
             string subDirName2 = "pik";
             CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
-            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob4");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName4, size);
+            string itemName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob4");
+            await CreateObjectInSourceAsync(client, size, itemName4);
         }
 
         private async Task<DataTransfer> CreateStartTransfer(
-            TSourceContainerClient containerClient,
+            TSourceContainerClient sourceContainer,
+            TDestinationContainerClient destinationContainer,
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
@@ -628,21 +575,17 @@ namespace Azure.Storage.DataMovement.Tests
             string sourceBlobPrefix = "sourceFolder";
             string destBlobPrefix = "destFolder";
             string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobPrefix);
-            await CreateBlobDirectoryTree(containerClient, sourceFolderPath, sourceBlobPrefix, size);
+            await CreateDirectoryTree(sourceContainer, sourceFolderPath, sourceBlobPrefix, size);
 
             // Create new source block blob.
-            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(containerClient, new() { BlobDirectoryPrefix = sourceBlobPrefix });
-            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(containerClient,
-                new BlobStorageResourceContainerOptions()
-                {
-                    BlobDirectoryPrefix = destBlobPrefix,
-                });
+            StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(sourceContainer, sourceBlobPrefix);
+            StorageResourceContainer destinationResource = GetDestinationStorageResourceContainer(destinationContainer, destBlobPrefix);
 
             // If we want a failure condition to happen
             if (createFailedCondition)
             {
                 string destBlobName = $"{destBlobPrefix}/blob1";
-                await CreateBlockBlob(containerClient, Path.Combine(testDirectory.DirectoryPath, "blob1"), destBlobName, size);
+                await CreateObjectInDestinationAsync(destinationContainer, size, destBlobName);
             }
 
             // Create Transfer Manager with single threaded operation
@@ -664,12 +607,17 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             // Create transfer to do a AwaitCompletion
             DataTransferOptions options = new DataTransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            DataTransfer transfer = await CreateStartTransfer(test.Container, 1, options: options);
+            DataTransfer transfer = await CreateStartTransfer(
+                source.Container,
+                destination.Container,
+                1,
+                options: options);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -687,7 +635,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -697,7 +646,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
+                source.Container,
+                destination.Container,
                 1,
                 createFailedCondition: true,
                 options: options);
@@ -720,7 +670,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             // Create transfer options with Skipping available
             DataTransferOptions options = new DataTransferOptions()
@@ -731,7 +682,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
+                source.Container,
+                destination.Container,
                 1,
                 createFailedCondition: true,
                 options: options);
@@ -753,13 +705,18 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             // Create transfer to do a EnsureCompleted
             DataTransferOptions options = new DataTransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
-            DataTransfer transfer = await CreateStartTransfer(test.Container, 1, options: options);
+            DataTransfer transfer = await CreateStartTransfer(
+                source.Container,
+                destination.Container,
+                1,
+                options: options);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -777,7 +734,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -787,7 +745,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
+                source.Container,
+                destination.Container,
                 1,
                 createFailedCondition: true,
                 options: options);
@@ -810,7 +769,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             // Create transfer options with Skipping available
             DataTransferOptions options = new DataTransferOptions()
@@ -821,7 +781,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a EnsureCompleted
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
+                source.Container,
+                destination.Container,
                 1,
                 createFailedCondition: true,
                 options: options);
@@ -845,8 +806,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -858,7 +817,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
+                source.Container,
+                destination.Container,
                 1,
                 createFailedCondition: true,
                 options: options,

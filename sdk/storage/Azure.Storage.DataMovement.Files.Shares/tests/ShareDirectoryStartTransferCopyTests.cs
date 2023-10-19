@@ -8,14 +8,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Files.Shares.Tests;
 using NUnit.Framework;
+using System.Security.AccessControl;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
+    [ShareClientTestFixture]
     public class ShareDirectoryStartTransferCopyTests : StartTransferDirectoryCopyTestBase<
         ShareServiceClient,
         ShareClient,
@@ -25,59 +29,59 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         ShareClientOptions,
         StorageTestEnvironment>
     {
-        protected override async Task CreateObjectInSource(
-            ShareClient containerClient,
+        private const string _fileResourcePrefix = "test-file-";
+        private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
+
+        public ShareDirectoryStartTransferCopyTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
+        {
+            SourceClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
+            DestinationClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
+        }
+
+        protected override async Task CreateObjectInSourceAsync(
+            ShareClient container,
+            long? objectLength = null,
             string objectName = null,
-            long? size = null)
-        {
-            objectName ??= GetNewObjectName();
-            ShareFileClient fileClient = containerClient.GetRootDirectoryClient().GetFileClient(objectName);
-            size ??= 0;
-            await fileClient.CreateAsync(size.Value);
+            Stream contents = default)
+            => await CreateShareFileAsync(container, objectLength, objectName, contents);
 
-            // Upload random content if the size is non-zero
-            if ()
-        }
-
-        protected override async Task CreateObjectInSource(
-            ShareClient containerClient,
+        protected override async Task CreateObjectInDestinationAsync(
+            ShareClient container,
+            long? objectLength = null,
             string objectName = null,
-            Stream content = null)
-        {
-            objectName ??= GetNewObjectName();
-            ShareFileClient fileClient = containerClient.GetRootDirectoryClient().GetFileClient(objectName);
-            if (content != null)
-            {
-                await fileClient.UploadAsync(content);
-            }
-            using Stream originalStream = await CreateLimitedMemoryStream(size);
-        }
+            Stream contents = null)
+            => await CreateShareFileAsync(container, objectLength, objectName, contents);
 
-        protected override Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
-        {
-            throw new NotImplementedException();
-        }
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+            => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(ShareClient containerClient, string prefix)
-        {
-            throw new NotImplementedException();
-        }
+            => new ShareDirectoryStorageResourceContainer(containerClient.GetDirectoryClient(prefix), default);
 
-        protected override Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
-        {
-            throw new NotImplementedException();
-        }
+        protected override ShareServiceClient GetOAuthSourceServiceClient()
+            => SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+            => await SourceClientBuilder.GetTestShareAsync(service, containerName);
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(ShareClient containerClient, string prefix = null)
+            => new ShareDirectoryStorageResourceContainer(containerClient.GetDirectoryClient(prefix), default);
+
+        protected override async Task VerifyEmptyDestinationContainerAsync(ShareClient destinationContainer, string destinationPrefix)
         {
-            throw new NotImplementedException();
+            ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(destinationPrefix) ?
+                destinationContainer.GetRootDirectoryClient() :
+                destinationContainer.GetDirectoryClient(destinationPrefix);
+            IList<ShareFileItem> items = await destinationDirectory.GetFilesAndDirectoriesAsync().ToListAsync();
+            Assert.IsEmpty(items);
         }
 
-        protected override async Task VerifyResults(
+        protected override async Task VerifyResultsAsync(
             ShareClient sourceContainer,
+            string sourcePrefix,
             ShareClient destinationContainer,
-            string sourcePrefix = default,
-            string destiantionPrefix = default)
+            string destinationPrefix)
         {
             // List all files in source blob folder path
             List<string> sourceNames = new List<string>();
@@ -94,9 +98,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // List all files in the destination blob folder path
             List<string> destinationNames = new List<string>();
 
-            ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(destiantionPrefix) ?
+            ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(destinationPrefix) ?
                 destinationContainer.GetRootDirectoryClient() :
-                destinationContainer.GetDirectoryClient(sourcePrefix);
+                destinationContainer.GetDirectoryClient(destinationPrefix);
             await foreach (Page<ShareFileItem> page in destinationDirectory.GetFilesAndDirectoriesAsync().AsPages())
             {
                 destinationNames.AddRange(page.Values.Select((ShareFileItem item) => item.Name));
@@ -112,13 +116,33 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 string sourceNonPrefixed = sourceNames[i].Substring(sourcePrefix.Length + 1);
                 Assert.AreEqual(
                     sourceNonPrefixed,
-                    destinationNames[i].Substring(destiantionPrefix.Length + 1));
+                    destinationNames[i].Substring(destinationPrefix.Length + 1));
 
                 // Verify Download
                 string sourceFileName = Path.Combine(sourcePrefix, sourceNonPrefixed);
                 using Stream sourceStream = await sourceDirectory.GetFileClient(sourceNames[i]).OpenReadAsync();
                 using Stream destinationStream = await destinationDirectory.GetFileClient(destinationNames[i]).OpenReadAsync();
                 Assert.AreEqual(sourceStream, destinationStream);
+            }
+        }
+
+        private async Task CreateShareFileAsync(
+            ShareClient container,
+            long? objectLength = null,
+            string objectName = null,
+            Stream contents = default)
+        {
+            objectName ??= GetNewObjectName();
+            if (!objectLength.HasValue)
+            {
+                throw new InvalidOperationException($"Cannot create share file without size specified. Specify {nameof(objectLength)}.");
+            }
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+            await fileClient.CreateAsync(objectLength.Value);
+
+            if (contents != default)
+            {
+                await fileClient.UploadAsync(contents);
             }
         }
     }
