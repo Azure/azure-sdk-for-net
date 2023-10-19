@@ -16,7 +16,7 @@
       netcoreapp2.1 is out of support but we'll keep is as a target for a bit
       to give customers time to migrate without losing perf optimizations
      -->
-    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+    <NoWarn>$(NoWarn);NETSDK1138;NU1902;NU1903</NoWarn>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
