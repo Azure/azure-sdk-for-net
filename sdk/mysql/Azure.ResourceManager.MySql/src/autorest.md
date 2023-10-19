@@ -184,6 +184,8 @@ directive:
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview'
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/4c38cb9966cd6afbb03c7e9b14997720a728baee/specification/common-types/resource-management/v5/privatelinks.json
 namespace: Azure.ResourceManager.MySql.FlexibleServers
 require: https://github.com/Azure/azure-rest-api-specs/blob/4c38cb9966cd6afbb03c7e9b14997720a728baee/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
