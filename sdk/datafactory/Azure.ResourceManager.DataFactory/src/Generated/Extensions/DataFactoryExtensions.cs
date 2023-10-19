@@ -21,29 +21,6 @@ namespace Azure.ResourceManager.DataFactory
     public static partial class DataFactoryExtensions
     {
         private static DataFactoryArmClientMockingExtension GetDataFactoryArmClientMockingExtension(ArmClient client)
-<<<<<<< HEAD
-        {
-            return client.GetCachedClient(client =>
-            {
-                return new DataFactoryArmClientMockingExtension(client);
-            });
-        }
-
-        private static DataFactoryResourceGroupMockingExtension GetDataFactoryResourceGroupMockingExtension(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataFactoryResourceGroupMockingExtension(client, resource.Id);
-            });
-        }
-
-        private static DataFactorySubscriptionMockingExtension GetDataFactorySubscriptionMockingExtension(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new DataFactorySubscriptionMockingExtension(client, resource.Id);
-            });
-=======
         {
             return client.GetCachedClient(client0 => new DataFactoryArmClientMockingExtension(client0));
         }
@@ -56,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory
         private static DataFactorySubscriptionMockingExtension GetDataFactorySubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client => new DataFactorySubscriptionMockingExtension(client, resource.Id));
->>>>>>> azuresdk/auto-update-autorest-3.0.0-alpha.20231016.12
         }
 
         /// <summary>

@@ -40,11 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
         public virtual DataFactoryCollection GetDataFactories()
         {
-<<<<<<< HEAD
-            return GetCachedClient(Client => new DataFactoryCollection(Client, Id));
-=======
             return GetCachedClient(client => new DataFactoryCollection(client, Id));
->>>>>>> azuresdk/auto-update-autorest-3.0.0-alpha.20231016.12
         }
 
         /// <summary>
@@ -63,13 +59,8 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> azuresdk/auto-update-autorest-3.0.0-alpha.20231016.12
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryResource>> GetDataFactoryAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -92,13 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="factoryName"> The factory name. </param>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> azuresdk/auto-update-autorest-3.0.0-alpha.20231016.12
         [ForwardsClientCalls]
         public virtual Response<DataFactoryResource> GetDataFactory(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
