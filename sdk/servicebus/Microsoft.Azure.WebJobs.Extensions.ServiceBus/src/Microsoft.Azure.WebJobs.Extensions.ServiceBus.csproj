@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.13.0-beta.1</Version>
+    <Version>5.14.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <!--Since we are adding a new target for net6.0, we need to temporarily condition on netstandard-->
-    <ApiCompatVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">5.12.0</ApiCompatVersion>
+    <ApiCompatVersion>5.13.2</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;AZC0007;AZC0015</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -34,6 +34,7 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
 		<Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Administration\AdministrationClientConstants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Core\Argument.cs" LinkBase="Shared" />
@@ -47,11 +48,7 @@
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreAmqpSharedSources)AmqpAnnotatedMessageConverter.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
+    <Compile Include="$(AzureCoreAmqpSharedSources)MessageBody.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
   </ItemGroup>
-
-<!--Temp - remove after next release-->
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
-  </ItemGroup>
-<!--End Temp-->
 </Project>

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -43,7 +42,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 // create backup queue
 string backupJobQueueId = "job-queue-2";
 
-Response<Models.RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+Response<RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: backupJobQueueId,
     distributionPolicyId: distributionPolicyId));
 
@@ -80,7 +79,7 @@ Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.Cre
 
 string activeJobQueueId = "active-job-queue";
 
-Response<Models.RouterQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
     options: new CreateQueueOptions(queueId: activeJobQueueId, distributionPolicyId: distributionPolicyId) { ExceptionPolicyId = exceptionPolicyId });
 
 // create 10 jobs to fill in primary queue
