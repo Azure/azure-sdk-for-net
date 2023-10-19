@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Tests
             ResourceGroupPrefix = "Communication-RG-";
             ResourceLocation = "global";
             ResourceDataLocation = "UnitedStates";
-            //Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+            // Sanitizer = new CommunicationManagementRecordedTestSanitizer();
         }
 
         protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
@@ -70,6 +70,16 @@ namespace Azure.ResourceManager.Communication.Tests
                 DomainManagement = DomainManagement.CustomerManaged
             };
             var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
+            return domainLro.Value;
+        }
+
+        internal async Task<CommunicationDomainResource> CreateAzureManagedDomain(EmailServiceResource emailService)
+        {
+            CommunicationDomainResourceData data = new CommunicationDomainResourceData(ResourceLocation)
+            {
+                DomainManagement = DomainManagement.AzureManaged
+            };
+            var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, "AzureManagedDomain", data);
             return domainLro.Value;
         }
 

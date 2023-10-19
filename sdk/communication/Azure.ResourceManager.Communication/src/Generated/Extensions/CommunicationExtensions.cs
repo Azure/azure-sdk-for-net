@@ -126,6 +126,44 @@ namespace Azure.ResourceManager.Communication
         }
         #endregion
 
+        #region SuppressionListResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SuppressionListResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SuppressionListResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SuppressionListResource" /> object. </returns>
+        public static SuppressionListResource GetSuppressionListResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SuppressionListResource.ValidateResourceId(id);
+                return new SuppressionListResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SuppressionListAddressResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SuppressionListAddressResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SuppressionListAddressResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SuppressionListAddressResource" /> object. </returns>
+        public static SuppressionListAddressResource GetSuppressionListAddressResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SuppressionListAddressResource.ValidateResourceId(id);
+                return new SuppressionListAddressResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
