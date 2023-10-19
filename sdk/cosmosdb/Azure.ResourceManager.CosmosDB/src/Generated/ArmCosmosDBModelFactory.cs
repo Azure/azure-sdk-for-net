@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
         /// <returns> A new <see cref="Models.CassandraClusterProperties"/> instance for mocking. </returns>
-        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, ClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<BackupSchedule> backupSchedules = null)
+        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, ClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = null)
         {
             clientCertificates ??= new List<CassandraCertificate>();
             externalGossipCertificates ??= new List<CassandraCertificate>();
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             externalSeedNodes ??= new List<CassandraDataCenterSeedNode>();
             seedNodes ??= new List<CassandraDataCenterSeedNode>();
             extensions ??= new List<string>();
-            backupSchedules ??= new List<BackupSchedule>();
+            backupSchedules ??= new List<CassandraClusterBackupSchedule>();
 
             return new CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress) : null, isRepairEnabled, clientCertificates?.ToList(), externalGossipCertificates?.ToList(), gossipCertificates?.ToList(), externalSeedNodes?.ToList(), seedNodes?.ToList(), hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled, clusterType, provisionError, extensions?.ToList(), backupSchedules?.ToList());
         }
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
         /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
         /// <returns> A new <see cref="Models.CassandraClusterBackupResourceInfo"/> instance for mocking. </returns>
-        public static CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = null, BackupState? backupState = null, DateTimeOffset? backupStartTimestamp = null, DateTimeOffset? backupStopTimestamp = null, DateTimeOffset? backupExpiryTimestamp = null)
+        public static CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = null, CassandraClusterBackupState? backupState = null, DateTimeOffset? backupStartTimestamp = null, DateTimeOffset? backupStopTimestamp = null, DateTimeOffset? backupExpiryTimestamp = null)
         {
             return new CassandraClusterBackupResourceInfo(backupId, backupState, backupStartTimestamp, backupStopTimestamp, backupExpiryTimestamp);
         }

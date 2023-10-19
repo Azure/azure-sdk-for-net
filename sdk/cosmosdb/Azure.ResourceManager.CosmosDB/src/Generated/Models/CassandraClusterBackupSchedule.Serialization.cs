@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class BackupSchedule : IUtf8JsonSerializable
+    public partial class CassandraClusterBackupSchedule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static BackupSchedule DeserializeBackupSchedule(JsonElement element)
+        internal static CassandraClusterBackupSchedule DeserializeCassandraClusterBackupSchedule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new BackupSchedule(scheduleName.Value, cronExpression.Value, Optional.ToNullable(retentionInHours));
+            return new CassandraClusterBackupSchedule(scheduleName.Value, cronExpression.Value, Optional.ToNullable(retentionInHours));
         }
     }
 }

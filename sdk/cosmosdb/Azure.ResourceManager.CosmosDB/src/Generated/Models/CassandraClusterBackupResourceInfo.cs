@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>
         /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
         /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
-        internal CassandraClusterBackupResourceInfo(string backupId, BackupState? backupState, DateTimeOffset? backupStartTimestamp, DateTimeOffset? backupStopTimestamp, DateTimeOffset? backupExpiryTimestamp)
+        internal CassandraClusterBackupResourceInfo(string backupId, CassandraClusterBackupState? backupState, DateTimeOffset? backupStartTimestamp, DateTimeOffset? backupStopTimestamp, DateTimeOffset? backupExpiryTimestamp)
         {
             BackupId = backupId;
             BackupState = backupState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The unique identifier of backup. </summary>
         public string BackupId { get; }
         /// <summary> The current state of the backup. </summary>
-        public BackupState? BackupState { get; }
+        public CassandraClusterBackupState? BackupState { get; }
         /// <summary> The time at which the backup process begins. </summary>
         public DateTimeOffset? BackupStartTimestamp { get; }
         /// <summary> The time at which the backup process ends. </summary>

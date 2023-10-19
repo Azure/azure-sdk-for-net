@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ClusterType> clusterType = default;
             Optional<CassandraError> provisionError = default;
             Optional<IList<string>> extensions = default;
-            Optional<IList<BackupSchedule>> backupSchedules = default;
+            Optional<IList<CassandraClusterBackupSchedule>> backupSchedules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<BackupSchedule> array = new List<BackupSchedule>();
+                    List<CassandraClusterBackupSchedule> array = new List<CassandraClusterBackupSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSchedule.DeserializeBackupSchedule(item));
+                        array.Add(CassandraClusterBackupSchedule.DeserializeCassandraClusterBackupSchedule(item));
                     }
                     backupSchedules = array;
                     continue;

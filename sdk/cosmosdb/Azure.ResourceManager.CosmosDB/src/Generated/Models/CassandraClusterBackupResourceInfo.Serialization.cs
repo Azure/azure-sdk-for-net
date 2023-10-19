@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> backupId = default;
-            Optional<BackupState> backupState = default;
+            Optional<CassandraClusterBackupState> backupState = default;
             Optional<DateTimeOffset> backupStartTimestamp = default;
             Optional<DateTimeOffset> backupStopTimestamp = default;
             Optional<DateTimeOffset> backupExpiryTimestamp = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    backupState = new BackupState(property.Value.GetString());
+                    backupState = new CassandraClusterBackupState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupStartTimestamp"u8))
