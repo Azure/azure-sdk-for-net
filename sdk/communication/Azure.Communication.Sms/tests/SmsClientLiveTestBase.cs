@@ -47,10 +47,6 @@ namespace Azure.Communication.Sms.Tests
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             SmsClient client = new SmsClient(connectionString, null);
 
-            #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-            //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@SmsClient client = new SmsClient(connectionString);
-            #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
             return InstrumentClient(client);
         }
 
@@ -59,10 +55,6 @@ namespace Azure.Communication.Sms.Tests
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             SmsClient client = new SmsClient(connectionString);
 
-            #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-            //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@SmsClient client = new SmsClient(connectionString);
-            #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
             return InstrumentClient(client);
         }
 
