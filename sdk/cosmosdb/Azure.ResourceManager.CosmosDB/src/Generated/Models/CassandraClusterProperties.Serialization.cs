@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> hoursBetweenBackups = default;
             Optional<bool> deallocated = default;
             Optional<bool> cassandraAuditLoggingEnabled = default;
-            Optional<ClusterType> clusterType = default;
+            Optional<CassandraClusterType> clusterType = default;
             Optional<CassandraError> provisionError = default;
             Optional<IList<string>> extensions = default;
             Optional<IList<CassandraClusterBackupSchedule>> backupSchedules = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    clusterType = new ClusterType(property.Value.GetString());
+                    clusterType = new CassandraClusterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisionError"u8))

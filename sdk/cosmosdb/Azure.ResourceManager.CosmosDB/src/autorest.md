@@ -206,7 +206,7 @@ rename-mapping:
   ClusterResource: CassandraCluster
   ClusterKey: CassandraClusterKey
   ClusterResourceProperties: CassandraClusterProperties
-  ClusterResourceProperties.ClusterType: CassandraClusterType
+  ClusterType: CassandraClusterType
   DataCenterResource: CassandraDataCenter
   DataCenterResourceProperties: CassandraDataCenterProperties
   ListDataCenters: CassandraDataCenterListResult

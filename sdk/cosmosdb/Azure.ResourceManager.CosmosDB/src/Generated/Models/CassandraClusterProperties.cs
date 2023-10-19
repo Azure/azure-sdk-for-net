@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, ClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules)
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Whether Cassandra audit logging is enabled. </summary>
         public bool? IsCassandraAuditLoggingEnabled { get; set; }
         /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
-        public ClusterType? ClusterType { get; set; }
+        public CassandraClusterType? ClusterType { get; set; }
         /// <summary> Error related to resource provisioning. </summary>
         public CassandraError ProvisionError { get; set; }
         /// <summary> Extensions to be added or updated on cluster. </summary>
