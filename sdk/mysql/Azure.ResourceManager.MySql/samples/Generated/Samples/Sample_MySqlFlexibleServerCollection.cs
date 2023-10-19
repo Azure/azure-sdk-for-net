@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateANewServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerCreate.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerCreate.json
             // this example is just showing the usage of "Servers_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             string serverName = "mysqltestserver";
             MySqlFlexibleServerData data = new MySqlFlexibleServerData(new AzureLocation("southeastasia"))
             {
-                Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySQLServerSku("Standard_D2ds_v4", ServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
                 Version = MySqlFlexibleServerVersion.Ver5_7,
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAReplicaServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerCreateReplica.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerCreateReplica.json
             // this example is just showing the usage of "Servers_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAServerAsAPointInTimeRestore()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerCreateWithPointInTimeRestore.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerCreateWithPointInTimeRestore.json
             // this example is just showing the usage of "Servers_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             string serverName = "targetserver";
             MySqlFlexibleServerData data = new MySqlFlexibleServerData(new AzureLocation("SoutheastAsia"))
             {
-                Sku = new MySqlFlexibleServerSku("Standard_D14_v2", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySQLServerSku("Standard_D14_v2", ServerSkuTier.GeneralPurpose),
                 CreateMode = MySqlFlexibleServerCreateMode.PointInTimeRestore,
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/SourceResourceGroup/providers/Microsoft.DBforMySQL/flexibleServers/sourceserver"),
                 RestorePointInTime = DateTimeOffset.Parse("2021-06-24T00:00:37.467Z"),
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAServerWithByok()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerCreateWithBYOK.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerCreateWithBYOK.json
             // this example is just showing the usage of "Servers_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 [new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
 },
                 },
-                Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySQLServerSku("Standard_D2ds_v4", ServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
                 Version = MySqlFlexibleServerVersion.Ver5_7,
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAServerWithVnet()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGetWithVnet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGetWithVnet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAServerWithVnet()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGetWithVnet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGetWithVnet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAServerWithVnet()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServerGetWithVnet.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServerGetWithVnet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListServersInAResourceGroup()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ServersListByResourceGroup.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ServersListByResourceGroup.json
             // this example is just showing the usage of "Servers_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetReplicas_ListReplicasForAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2022-09-30-preview/examples/ReplicasListByServer.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2023-06-01-preview/examples/ReplicasListByServer.json
             // this example is just showing the usage of "Replicas_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

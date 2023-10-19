@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _checkNameAvailabilityWithoutLocationClientDiagnostics;
         private CheckNameAvailabilityWithoutLocationRestOperations _checkNameAvailabilityWithoutLocationRestClient;
+        private ClientDiagnostics _operationResultsClientDiagnostics;
+        private OperationResultsRestOperations _operationResultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -53,11 +55,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckNameAvailabilityWithoutLocationClientDiagnostics => _checkNameAvailabilityWithoutLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CheckNameAvailabilityWithoutLocationRestOperations CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of CapabilityResources in the SubscriptionResource. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
+        public virtual CapabilityCollection GetCapabilities(AzureLocation locationName)
+        {
+            return new CapabilityCollection(Client, Id, locationName);
         }
 
         /// <summary>
@@ -331,6 +343,70 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = CheckNameAvailabilityWithoutLocationRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the operation result for a long running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="operationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperationStatusExtendedResult>> GetOperationResultAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
+            scope.Start();
+            try
+            {
+                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the operation result for a long running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="operationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperationStatusExtendedResult> GetOperationResult(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
+            scope.Start();
+            try
+            {
+                var response = OperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

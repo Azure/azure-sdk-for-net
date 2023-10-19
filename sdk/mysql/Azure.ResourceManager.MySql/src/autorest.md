@@ -8,12 +8,12 @@ csharp: true
 clear-output-folder: true
 skip-csproj: true
 library-name: MySql
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2022-09-30-preview
+  - tag: package-flexibleserver-2023-06-01-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -183,9 +183,9 @@ directive:
 
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2022-09-30-preview'
+``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/6c6b16dc98d720304633b76c8e82c282ffa9cc08/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3cdd83e05fbc5ed0ec25c2bd0c03bb6c4b6cfb30/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -313,9 +313,9 @@ directive:
   - from: FlexibleServers.json
     where: $.definitions
     transform: >
-      $.Identity['x-ms-client-flatten'] = false;
-      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
-      delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
+      $.MySQLServerIdentity['x-ms-client-flatten'] = false;
+      $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
+      delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
 
   # Add a new mode for update operation
   - from: Configurations.json

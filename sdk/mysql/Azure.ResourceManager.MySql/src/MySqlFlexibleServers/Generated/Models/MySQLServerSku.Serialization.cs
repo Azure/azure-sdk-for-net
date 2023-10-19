@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerSku : IUtf8JsonSerializable
+    public partial class MySQLServerSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerSku DeserializeMySqlFlexibleServerSku(JsonElement element)
+        internal static MySQLServerSku DeserializeMySQLServerSku(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            MySqlFlexibleServerSkuTier tier = default;
+            ServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (property.NameEquals("tier"u8))
                 {
-                    tier = new MySqlFlexibleServerSkuTier(property.Value.GetString());
+                    tier = new ServerSkuTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new MySqlFlexibleServerSku(name, tier);
+            return new MySQLServerSku(name, tier);
         }
     }
 }
