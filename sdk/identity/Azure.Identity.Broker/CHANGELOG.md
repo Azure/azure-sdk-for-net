@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (2023-10-18)
+## 1.0.0-beta.5 (2023-10-19)
 
 ### Breaking Changes
 - Renamed the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` to `IsLegacyMsaPassthroughEnabled`.
