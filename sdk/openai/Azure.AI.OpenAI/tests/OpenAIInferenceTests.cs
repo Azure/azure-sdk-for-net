@@ -223,60 +223,10 @@ namespace Azure.AI.OpenAI.Tests
             AssertExpectedContentFilterResults(firstChoice.ContentFilterResults, serviceTarget);
         }
 
-        //[RecordedTest]
-        //[TestCase(OpenAIClientServiceTarget.Azure)]
-        //[TestCase(OpenAIClientServiceTarget.NonAzure)]
-        //public async Task StreamingChatCompletions(OpenAIClientServiceTarget serviceTarget)
-        //{
-        //    OpenAIClient client = GetTestClient(serviceTarget);
-        //    string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-        //        serviceTarget,
-        //        OpenAIClientScenario.ChatCompletions);
-        //    var requestOptions = new ChatCompletionsOptions()
-        //    {
-        //        Messages =
-        //        {
-        //            new ChatMessage(ChatRole.System, "You are a helpful assistant."),
-        //            new ChatMessage(ChatRole.User, "Can you help me?"),
-        //            new ChatMessage(ChatRole.Assistant, "Of course! What do you need help with?"),
-        //            new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
-        //        },
-        //        MaxTokens = 512,
-        //    };
-        //    Response<StreamingChatCompletions> streamingResponse
-        //        = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
-        //    Assert.That(streamingResponse, Is.Not.Null);
-        //    using StreamingChatCompletions streamingChatCompletions = streamingResponse.Value;
-        //    Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions>());
-
-        //    int totalMessages = 0;
-
-        //    await foreach (StreamingChatChoice streamingChoice in streamingChatCompletions.GetChoicesStreaming())
-        //    {
-        //        Assert.That(streamingChoice, Is.Not.Null);
-        //        await foreach (ChatMessage streamingMessage in streamingChoice.GetMessageStreaming())
-        //        {
-        //            Assert.That(streamingMessage.Role, Is.EqualTo(ChatRole.Assistant));
-        //            totalMessages++;
-        //        }
-        //        AssertExpectedContentFilterResults(streamingChoice.ContentFilterResults, serviceTarget);
-        //    }
-
-        //    Assert.That(totalMessages, Is.GreaterThan(1));
-
-        //    // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
-        //    // choice has arrived.
-        //    Assert.That(streamingResponse.GetRawResponse(), Is.Not.Null.Or.Empty);
-        //    Assert.That(streamingChatCompletions.Id, Is.Not.Null.Or.Empty);
-        //    Assert.That(streamingChatCompletions.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
-        //    Assert.That(streamingChatCompletions.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
-        //    AssertExpectedPromptFilterResults(streamingChatCompletions.PromptFilterResults, serviceTarget, (requestOptions.ChoiceCount ?? 1));
-        //}
-
         [RecordedTest]
         [TestCase(OpenAIClientServiceTarget.Azure)]
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task StreamingChatCompletions2(OpenAIClientServiceTarget serviceTarget)
+        public async Task StreamingChatCompletions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(

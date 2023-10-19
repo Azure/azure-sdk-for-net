@@ -84,61 +84,10 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
     }
 
-    //[RecordedTest]
-    //[TestCase(OpenAIClientServiceTarget.Azure)]
-    //[TestCase(OpenAIClientServiceTarget.NonAzure)]
-    //public async Task StreamingFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
-    //{
-    //    OpenAIClient client = GetTestClient(serviceTarget);
-    //    string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
-
-    //    var requestOptions = new ChatCompletionsOptions()
-    //    {
-    //        Functions = { s_futureTemperatureFunction },
-    //        Messages =
-    //        {
-    //            new ChatMessage(ChatRole.System, "You are a helpful assistant."),
-    //            new ChatMessage(ChatRole.User, "What should I wear in Honolulu next Thursday?"),
-    //        },
-    //        MaxTokens = 512,
-    //    };
-
-    //    Response<StreamingChatCompletions> response
-    //        = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
-    //    Assert.That(response, Is.Not.Null);
-
-    //    using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-    //    ChatRole streamedRole = default;
-    //    string functionName = default;
-    //    StringBuilder argumentsBuilder = new();
-
-    //    await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
-    //    {
-    //        await foreach (ChatMessage message in choice.GetMessageStreaming())
-    //        {
-    //            if (message.Role != default)
-    //            {
-    //                streamedRole = message.Role;
-    //            }
-    //            if (message.FunctionCall?.Name != null)
-    //            {
-    //                Assert.That(functionName, Is.Null.Or.Empty);
-    //                functionName = message.FunctionCall.Name;
-    //            }
-    //            argumentsBuilder.Append(message.FunctionCall?.Arguments ?? string.Empty);
-    //        }
-    //    }
-
-    //    Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
-    //    Assert.That(functionName, Is.EqualTo(s_futureTemperatureFunction.Name));
-    //    Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
-    //}
-
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
-    public async Task StreamingFunctionCallWorks2(OpenAIClientServiceTarget serviceTarget)
+    public async Task StreamingFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);

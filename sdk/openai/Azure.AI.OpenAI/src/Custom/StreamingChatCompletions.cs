@@ -12,13 +12,24 @@ using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI
 {
+    /// <summary>
+    /// Represents a streaming source of <see cref="StreamingChatCompletionsUpdate"/> instances that allow an
+    /// application to incrementally use and display text and other information as it becomes available during a
+    /// generation operation.
+    /// </summary>
     public class StreamingChatCompletions : IDisposable
     {
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
-        private List<StreamingChatCompletionsUpdate> _cachedUpdates;
+        private readonly List<StreamingChatCompletionsUpdate> _cachedUpdates;
         private bool _disposedValue;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="StreamingChatCompletions"/> based on a REST response stream.
+        /// </summary>
+        /// <param name="response">
+        /// The <see cref="Response"/> from which server-sent events will be consumed.
+        /// </param>
         internal StreamingChatCompletions(Response response)
         {
             _baseResponse = response;
@@ -26,11 +37,42 @@ namespace Azure.AI.OpenAI
             _cachedUpdates = new();
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="StreamingChatCompletions"/> based on an existing set of
+        /// <see cref="StreamingChatCompletionsUpdate"/> instances. Typically used for tests or mocking.
+        /// </summary>
+        /// <param name="updates">
+        /// An existing collection of <see cref="StreamingChatCompletionsUpdate"/> instances to use. Update enumeration
+        /// will yield these instances instead of instances derived from a response stream.
+        /// </param>
         internal StreamingChatCompletions(IEnumerable<StreamingChatCompletionsUpdate> updates)
         {
-            _cachedUpdates.AddRange(updates);
+            _cachedUpdates = new(updates);
         }
 
+        /// <summary>
+        /// Returns an asynchronous enumeration of <see cref="StreamingChatCompletionsUpdate"/> instances as they
+        /// become available via the associated network response or other data source.
+        /// </summary>
+        /// <remarks>
+        /// This collection may be iterated over using the "await foreach" statement.
+        /// </remarks>
+        /// <param name="cancellationToken">
+        /// <para>
+        /// An optional <see cref="CancellationToken"/> used to end enumeration before it would normally complete.
+        /// </para>
+        /// <para>
+        /// Cancellation will immediately close any underlying network response stream and may consequently limit
+        /// incurred token generation and associated cost.
+        /// </para>
+        /// </param>
+        /// <returns>
+        /// An asynchronous enumeration of <see cref="StreamingChatCompletionsUpdate"/> instances.
+        /// </returns>
+        /// <exception cref="InvalidDataException">
+        /// Thrown when an underlying data source provided data in an unsupported format, e.g. server-sent events not
+        /// prefixed with the expected 'data:' tag.
+        /// </exception>
         public async IAsyncEnumerable<StreamingChatCompletionsUpdate> EnumerateChatUpdates(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -52,7 +94,7 @@ namespace Azure.AI.OpenAI
                 SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
                 if (sseEvent == null)
                 {
-                    _baseResponse.ContentStream?.Dispose();
+                    _baseResponse?.ContentStream?.Dispose();
                     break;
                 }
 
@@ -63,7 +105,7 @@ namespace Azure.AI.OpenAI
                 ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
                 if (value.Span.SequenceEqual("[DONE]".AsSpan()))
                 {
-                    _baseResponse.ContentStream?.Dispose();
+                    _baseResponse?.ContentStream?.Dispose();
                     break;
                 }
 
@@ -78,19 +120,21 @@ namespace Azure.AI.OpenAI
             _baseResponse?.ContentStream?.Dispose();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
+        /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    _baseResponseReader.Dispose();
+                    _baseResponseReader?.Dispose();
                 }
 
                 _disposedValue = true;

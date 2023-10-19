@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests
@@ -179,6 +181,38 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(audioTranslation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(audioTranslation.Segments, Is.Not.Null.Or.Empty);
             Assert.That(audioTranslation.Segments.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task TestStreamingChatCompletions()
+        {
+            const string expectedId = "expected-id-value";
+
+            StreamingChatCompletionsUpdate firstUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                expectedId,
+                DateTime.Now,
+                role: ChatRole.Assistant,
+                contentUpdate: "hello");
+            StreamingChatCompletionsUpdate secondUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                expectedId,
+                DateTime.Now,
+                contentUpdate: " world");
+            StreamingChatCompletionsUpdate thirdUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                expectedId,
+                DateTime.Now,
+                finishReason: CompletionsFinishReason.Stopped);
+
+            using StreamingChatCompletions streamingChatCompletions = AzureOpenAIModelFactory.StreamingChatCompletions(
+                new[] { firstUpdate, secondUpdate, thirdUpdate });
+
+            StringBuilder contentBuilder = new();
+            await foreach (StreamingChatCompletionsUpdate update in  streamingChatCompletions.EnumerateChatUpdates())
+            {
+                Assert.That(update.Id == expectedId);
+                Assert.That(update.Created > new DateTimeOffset(new DateTime(2023, 1, 1)));
+                contentBuilder.Append(update.ContentUpdate);
+            }
+            Assert.That(contentBuilder.ToString() == "hello world");
         }
     }
 }
