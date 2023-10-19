@@ -69,7 +69,7 @@ resource eventHubNamespaceAuthRules 'Microsoft.EventHub/namespaces/Authorization
         ]
     }
 }
- 
+
 resource eventHubNamespaceEventHubAuthRules 'Microsoft.EventHub/namespaces/eventhubs/authorizationRules@2017-04-01' = {
     name: '${eventHubNamespaceEventHub.name}/owner'
     properties: {
@@ -103,6 +103,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
         name: 'Standard_LRS'
     }
     kind: 'StorageV2'
+    properties: {
+        minimumTlsVersion: 'TLS1_2'
+    }
 
     resource blobService 'blobServices' = {
         name: 'default'
