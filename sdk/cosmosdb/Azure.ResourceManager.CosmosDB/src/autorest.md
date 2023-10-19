@@ -206,6 +206,7 @@ rename-mapping:
   ClusterResource: CassandraCluster
   ClusterKey: CassandraClusterKey
   ClusterResourceProperties: CassandraClusterProperties
+  ClusterResourceProperties.ClusterType: CassandraClusterType
   DataCenterResource: CassandraDataCenter
   DataCenterResourceProperties: CassandraDataCenterProperties
   ListDataCenters: CassandraDataCenterListResult
@@ -306,6 +307,8 @@ rename-mapping:
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
   BackupResource: CassandraClusterBackupResourceInfo
+  BackupSchedule: CassandraClusterBackupSchedule
+  BackupState: CassandraClusterBackupState
   CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
   CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
