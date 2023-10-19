@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Chat;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -50,7 +49,7 @@ namespace Azure.Communication
             {
                 return null;
             }
-            Optional<Chat.CommunicationIdentifierModelKind> kind = default;
+            Optional<CommunicationIdentifierModelKind> kind = default;
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
@@ -63,7 +62,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    kind = new Chat.CommunicationIdentifierModelKind(property.Value.GetString());
+                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rawId"u8))

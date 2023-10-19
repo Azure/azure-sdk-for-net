@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Chat
+namespace Azure.Communication
 {
     /// <summary> The identifier kind, for example 'communicationUser' or 'phoneNumber'. </summary>
-    public readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
+    internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
         private readonly string _value;
 
