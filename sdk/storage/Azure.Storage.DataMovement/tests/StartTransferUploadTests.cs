@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using (Stream fs = File.OpenWrite(filePath))
             {
-                await new MemoryStream(GetRandomBuffer(size)).CopyToAsync(fs, cancellationToken);
+                await new MemoryStream(GetRandomBuffer(size)).CopyToAsync(fs, bufferSize: Constants.KB, cancellationToken);
             }
 
             LocalFileStorageResource sourceResource = new(filePath);
@@ -479,7 +479,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using (Stream fs = File.OpenWrite(filePath))
             {
-                await (await CreateLimitedMemoryStream(size)).CopyToAsync(fs, cancellationToken);
+                await (await CreateLimitedMemoryStream(size)).CopyToAsync(fs, bufferSize: Constants.KB, cancellationToken);
             }
 
             LocalFileStorageResource sourceResource = new(filePath);
@@ -862,7 +862,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using (Stream fs = File.OpenWrite(filePath))
             {
-                await (await CreateLimitedMemoryStream(size)).CopyToAsync(fs, cancellationToken);
+                await (await CreateLimitedMemoryStream(size)).CopyToAsync(fs, bufferSize: Constants.KB, cancellationToken);
             }
 
             LocalFileStorageResource sourceResource = new(filePath);
