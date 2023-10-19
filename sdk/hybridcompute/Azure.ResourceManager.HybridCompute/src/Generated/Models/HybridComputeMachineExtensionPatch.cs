@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a Machine Extension Update. </summary>
@@ -13,9 +17,83 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of HybridComputeMachineExtensionPatch. </summary>
         public HybridComputeMachineExtensionPatch()
         {
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
+            ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Describes Machine Extension Update Properties. </summary>
-        public MachineExtensionUpdateProperties Properties { get; set; }
+        /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        public string ForceUpdateTag { get; set; }
+        /// <summary> The name of the extension handler publisher. </summary>
+        public string Publisher { get; set; }
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
+        public string MachineExtensionUpdatePropertiesType { get; set; }
+        /// <summary> Specifies the version of the script handler. </summary>
+        public string TypeHandlerVersion { get; set; }
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        public bool? EnableAutomaticUpgrade { get; set; }
+        /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        public bool? AutoUpgradeMinorVersion { get; set; }
+        /// <summary>
+        /// Json formatted public settings for the extension.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary>
+        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> ProtectedSettings { get; }
     }
 }

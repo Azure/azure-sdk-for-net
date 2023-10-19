@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(UpdateStrategyId))
+            {
+                writer.WritePropertyName("updateStrategyId"u8);
+                writer.WriteStringValue(UpdateStrategyId);
+            }
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ContainerServiceFleetUpdateRunProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> updateStrategyId = default;
             Optional<ContainerServiceFleetUpdateRunStrategy> strategy = default;
             Optional<ContainerServiceFleetManagedClusterUpdate> managedClusterUpdate = default;
             Optional<ContainerServiceFleetUpdateRunStatus> status = default;
@@ -102,6 +108,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             provisioningState = new ContainerServiceFleetUpdateRunProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("updateStrategyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updateStrategyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("strategy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -133,7 +148,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     continue;
                 }
             }
-            return new ContainerServiceFleetUpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), strategy.Value, managedClusterUpdate.Value, status.Value);
+            return new ContainerServiceFleetUpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), updateStrategyId.Value, strategy.Value, managedClusterUpdate.Value, status.Value);
         }
     }
 }

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The FleetHubProfile configures the fleet hub. </summary>
@@ -23,13 +21,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="agentProfile"> The agent profile for the Fleet hub. </param>
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
-        internal FleetHubProfile(string dnsPrefix, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile, ContainerServiceFleetAgentProfile agentProfile, string fqdn, string kubernetesVersion)
+        /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
+        internal FleetHubProfile(string dnsPrefix, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile, ContainerServiceFleetAgentProfile agentProfile, string fqdn, string kubernetesVersion, string portalFqdn)
         {
             DnsPrefix = dnsPrefix;
             ApiServerAccessProfile = apiServerAccessProfile;
             AgentProfile = agentProfile;
             Fqdn = fqdn;
             KubernetesVersion = kubernetesVersion;
+            PortalFqdn = portalFqdn;
         }
 
         /// <summary> DNS prefix used to create the FQDN for the Fleet hub. </summary>
@@ -37,22 +37,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The access profile for the Fleet hub API server. </summary>
         public ContainerServiceFleetAPIServerAccessProfile ApiServerAccessProfile { get; set; }
         /// <summary> The agent profile for the Fleet hub. </summary>
-        internal ContainerServiceFleetAgentProfile AgentProfile { get; set; }
-        /// <summary> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </summary>
-        public ResourceIdentifier AgentSubnetId
-        {
-            get => AgentProfile is null ? default : AgentProfile.SubnetId;
-            set
-            {
-                if (AgentProfile is null)
-                    AgentProfile = new ContainerServiceFleetAgentProfile();
-                AgentProfile.SubnetId = value;
-            }
-        }
-
+        public ContainerServiceFleetAgentProfile AgentProfile { get; set; }
         /// <summary> The FQDN of the Fleet hub. </summary>
         public string Fqdn { get; }
         /// <summary> The Kubernetes version of the Fleet hub. </summary>
         public string KubernetesVersion { get; }
+        /// <summary> The Azure Portal FQDN of the Fleet hub. </summary>
+        public string PortalFqdn { get; }
     }
 }
