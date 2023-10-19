@@ -125,6 +125,7 @@ namespace Azure.AI.OpenAI
             _baseResponse?.ContentStream?.Dispose();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(disposing: true);

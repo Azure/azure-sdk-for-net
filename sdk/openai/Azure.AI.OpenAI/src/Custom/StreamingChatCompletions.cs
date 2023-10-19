@@ -127,7 +127,6 @@ namespace Azure.AI.OpenAI
             GC.SuppressFinalize(this);
         }
 
-        /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
