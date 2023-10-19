@@ -299,63 +299,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerSkuCapability(name, vCores, supportedIops, supportedMemoryPerVCoreInMB);
         }
 
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
-        /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
-        /// <param name="supportedServerVersions"> A list of supported server versions. </param>
-        /// <returns> A new <see cref="FlexibleServers.CapabilityData"/> instance for mocking. </returns>
-        public static CapabilityData CapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> supportedGeoBackupRegions = null, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = null)
-        {
-            supportedGeoBackupRegions ??= new List<string>();
-            supportedFlexibleServerEditions ??= new List<ServerEditionCapabilityV2>();
-            supportedServerVersions ??= new List<ServerVersionCapabilityV2>();
-
-            return new CapabilityData(id, name, resourceType, systemData, supportedGeoBackupRegions?.ToList(), supportedFlexibleServerEditions?.ToList(), supportedServerVersions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ServerEditionCapabilityV2. </summary>
-        /// <param name="name"> Server edition name. </param>
-        /// <param name="defaultSku"> Default Sku name. </param>
-        /// <param name="defaultStorageSize"> Default storage size. </param>
-        /// <param name="supportedStorageEditions"> A list of supported storage editions. </param>
-        /// <param name="supportedSkus"> A list of supported Skus. </param>
-        /// <returns> A new <see cref="Models.ServerEditionCapabilityV2"/> instance for mocking. </returns>
-        public static ServerEditionCapabilityV2 ServerEditionCapabilityV2(string name = null, string defaultSku = null, int? defaultStorageSize = null, IEnumerable<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = null, IEnumerable<SkuCapabilityV2> supportedSkus = null)
-        {
-            supportedStorageEditions ??= new List<MySqlFlexibleServerStorageEditionCapability>();
-            supportedSkus ??= new List<SkuCapabilityV2>();
-
-            return new ServerEditionCapabilityV2(name, defaultSku, defaultStorageSize, supportedStorageEditions?.ToList(), supportedSkus?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SkuCapabilityV2. </summary>
-        /// <param name="name"> vCore name. </param>
-        /// <param name="vCores"> supported vCores. </param>
-        /// <param name="supportedIops"> supported IOPS. </param>
-        /// <param name="supportedMemoryPerVCoreMB"> supported memory per vCore in MB. </param>
-        /// <param name="supportedZones"> Supported zones. </param>
-        /// <param name="supportedHAMode"> Supported high availability mode. </param>
-        /// <returns> A new <see cref="Models.SkuCapabilityV2"/> instance for mocking. </returns>
-        public static SkuCapabilityV2 SkuCapabilityV2(string name = null, long? vCores = null, long? supportedIops = null, long? supportedMemoryPerVCoreMB = null, IEnumerable<string> supportedZones = null, IEnumerable<string> supportedHAMode = null)
-        {
-            supportedZones ??= new List<string>();
-            supportedHAMode ??= new List<string>();
-
-            return new SkuCapabilityV2(name, vCores, supportedIops, supportedMemoryPerVCoreMB, supportedZones?.ToList(), supportedHAMode?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ServerVersionCapabilityV2. </summary>
-        /// <param name="name"> server version. </param>
-        /// <returns> A new <see cref="Models.ServerVersionCapabilityV2"/> instance for mocking. </returns>
-        public static ServerVersionCapabilityV2 ServerVersionCapabilityV2(string name = null)
-        {
-            return new ServerVersionCapabilityV2(name);
-        }
-
         /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="subscriptionId"> The subscription id. </param>
@@ -385,6 +328,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerNameAvailabilityResult MySqlFlexibleServerNameAvailabilityResult(string message = null, bool? isNameAvailable = null, string reason = null)
         {
             return new MySqlFlexibleServerNameAvailabilityResult(message, isNameAvailable, reason);
+        }
+
+        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
+        /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null)
+        {
+            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix);
         }
 
         /// <summary> Initializes a new instance of OperationStatusExtendedResult. </summary>
@@ -423,14 +374,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             operations ??= new List<OperationStatusResult>();
 
             return new OperationStatusResult(id, resourceId, name, status, percentComplete, startOn, endOn, operations?.ToList(), error);
-        }
-
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPrivateDnsZoneSuffixResponse. </summary>
-        /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null)
-        {
-            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix);
         }
     }
 }
