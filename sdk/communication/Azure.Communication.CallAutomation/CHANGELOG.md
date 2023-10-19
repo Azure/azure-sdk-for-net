@@ -3,6 +3,7 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- StartRecording now accepts PauseOnStart.
 
 ### Breaking Changes
 
