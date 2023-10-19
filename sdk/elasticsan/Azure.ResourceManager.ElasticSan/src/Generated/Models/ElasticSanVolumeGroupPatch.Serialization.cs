@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtocolType))
@@ -26,6 +31,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
+            }
+            if (Optional.IsDefined(EncryptionProperties))
+            {
+                writer.WritePropertyName("encryptionProperties"u8);
+                writer.WriteObjectValue(EncryptionProperties);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
