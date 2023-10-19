@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Samples
             // invoke the operation
             SandboxCustomImageData data = new SandboxCustomImageData()
             {
-                Language = Language.Python,
+                Language = SandboxCustomImageLanguage.Python,
                 LanguageVersion = "3.10.8",
                 RequirementsFileContent = "Requests",
             };

@@ -59,12 +59,14 @@ rename-mapping:
   PublicNetworkAccess: KustoClusterPublicNetworkAccess
   ClusterNetworkAccessFlag: KustoClusterNetworkAccessFlag
   State: KustoClusterState
+  VnetState: KustoClusterVnetState
   VirtualNetworkConfiguration: KustoClusterVirtualNetworkConfiguration
   ClusterPrincipalAssignment: KustoClusterPrincipalAssignment
   ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
   ClusterPrincipalAssignment.properties.principalId: ClusterPrincipalId
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
+  Language: SandboxCustomImageLanguage
   LanguageExtension: KustoLanguageExtension
   LanguageExtensionsList: KustoLanguageExtensionList
   LanguageExtensionName: KustoLanguageExtensionName

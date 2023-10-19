@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Kusto.Samples
             string sandboxCustomImageName = "customImage8";
             SandboxCustomImageData data = new SandboxCustomImageData()
             {
-                Language = Language.Python,
+                Language = SandboxCustomImageLanguage.Python,
                 LanguageVersion = "3.10.8",
                 RequirementsFileContent = "Requests",
             };

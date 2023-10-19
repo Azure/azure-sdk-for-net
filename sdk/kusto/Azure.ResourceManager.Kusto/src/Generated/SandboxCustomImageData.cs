@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="languageVersion"> The version of the language. </param>
         /// <param name="requirementsFileContent"> The requirements file content. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Language? language, string languageVersion, string requirementsFileContent, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageLanguage? language, string languageVersion, string requirementsFileContent, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Language = language;
             LanguageVersion = languageVersion;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The language name, for example Python. </summary>
-        public Language? Language { get; set; }
+        public SandboxCustomImageLanguage? Language { get; set; }
         /// <summary> The version of the language. </summary>
         public string LanguageVersion { get; set; }
         /// <summary> The requirements file content. </summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;
-            Optional<VnetState> state = default;
+            Optional<KustoClusterVnetState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    state = new VnetState(property.Value.GetString());
+                    state = new KustoClusterVnetState(property.Value.GetString());
                     continue;
                 }
             }

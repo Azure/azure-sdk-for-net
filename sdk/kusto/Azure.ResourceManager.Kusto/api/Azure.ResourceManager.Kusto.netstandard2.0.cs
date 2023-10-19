@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Kusto
     public partial class SandboxCustomImageData : Azure.ResourceManager.Models.ResourceData
     {
         public SandboxCustomImageData() { }
-        public Azure.ResourceManager.Kusto.Models.Language? Language { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? Language { get { throw null; } set { } }
         public string LanguageVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public string RequirementsFileContent { get { throw null; } set { } }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem KustoSkuLocationInfoItem(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails> zoneDetails = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.MigrationClusterProperties MigrationClusterProperties(string id = null, System.Uri uri = null, System.Uri dataIngestionUri = null, Azure.ResourceManager.Kusto.Models.MigrationClusterRole? role = default(Azure.ResourceManager.Kusto.Models.MigrationClusterRole?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.EndpointDependency> endpoints = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Kusto.SandboxCustomImageData SandboxCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.Language? language = default(Azure.ResourceManager.Kusto.Models.Language?), string languageVersion = null, string requirementsFileContent = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.SandboxCustomImageData SandboxCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? language = default(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage?), string languageVersion = null, string requirementsFileContent = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttachedDatabaseType : System.IEquatable<Azure.ResourceManager.Kusto.Models.AttachedDatabaseType>
@@ -957,8 +957,26 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId) { }
         public string DataManagementPublicIPId { get { throw null; } set { } }
         public string EnginePublicIPId { get { throw null; } set { } }
-        public Azure.ResourceManager.Kusto.Models.VnetState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoClusterVnetState? State { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoClusterVnetState : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoClusterVnetState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoClusterVnetState(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterVnetState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoCosmosDBDataConnection : Azure.ResourceManager.Kusto.KustoDataConnectionData
     {
@@ -1702,23 +1720,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoSkuTier left, Azure.ResourceManager.Kusto.Models.KustoSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Language : System.IEquatable<Azure.ResourceManager.Kusto.Models.Language>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Language(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.Language Python { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.Language other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.Language left, Azure.ResourceManager.Kusto.Models.Language right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.Language (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.Language left, Azure.ResourceManager.Kusto.Models.Language right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MigrationClusterProperties
     {
         internal MigrationClusterProperties() { }
@@ -1761,6 +1762,23 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SandboxCustomImageLanguage : System.IEquatable<Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SandboxCustomImageLanguage(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage Python { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SandboxCustomImagesCheckNameContent
     {
         public SandboxCustomImagesCheckNameContent(string name) { }
@@ -1782,24 +1800,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VnetState : System.IEquatable<Azure.ResourceManager.Kusto.Models.VnetState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VnetState(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.VnetState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.VnetState Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.VnetState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.VnetState left, Azure.ResourceManager.Kusto.Models.VnetState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.VnetState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.VnetState left, Azure.ResourceManager.Kusto.Models.VnetState right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Language> language = default;
+            Optional<SandboxCustomImageLanguage> language = default;
             Optional<string> languageVersion = default;
             Optional<string> requirementsFileContent = default;
             Optional<KustoProvisioningState> provisioningState = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            language = new Language(property0.Value.GetString());
+                            language = new SandboxCustomImageLanguage(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("languageVersion"u8))

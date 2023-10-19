@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
         /// <param name="state"> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </param>
-        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, VnetState? state)
+        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, KustoClusterVnetState? state)
         {
             SubnetId = subnetId;
             EnginePublicIPId = enginePublicIPId;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Data management's service public IP address resource id. </summary>
         public string DataManagementPublicIPId { get; set; }
         /// <summary> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </summary>
-        public VnetState? State { get; set; }
+        public KustoClusterVnetState? State { get; set; }
     }
 }
