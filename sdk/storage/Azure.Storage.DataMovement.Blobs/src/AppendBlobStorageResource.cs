@@ -292,10 +292,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Append,
-                _options.HttpHeaders,
-                _options.AccessTier,
-                _options.Metadata,
-                _options.Tags,
+                _options?.HttpHeaders,
+                _options?.AccessTier,
+                _options?.Metadata,
+                _options?.Tags,
                 default); // TODO: Update when we support encryption scopes
         }
 

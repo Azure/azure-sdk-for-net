@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Text;
 using Azure.Core;
@@ -69,18 +70,18 @@ namespace Azure.Storage.DataMovement.Blobs
             Version = DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion;
             BlobType = blobType;
             ContentHeaders = contentHeaders;
-            _contentTypeBytes = ContentHeaders?.ContentType != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentType) : new byte[0];
-            _contentEncodingBytes = ContentHeaders?.ContentEncoding != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentEncoding) : new byte[0];
-            _contentLanguageBytes = ContentHeaders?.ContentLanguage != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentLanguage) : new byte[0];
-            _contentDispositionBytes = ContentHeaders?.ContentDisposition != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentDisposition) : new byte[0];
-            _cacheControlBytes = ContentHeaders?.CacheControl != default ? Encoding.UTF8.GetBytes(ContentHeaders.CacheControl) : new byte[0];
+            _contentTypeBytes = ContentHeaders?.ContentType != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentType) : Array.Empty<byte>();
+            _contentEncodingBytes = ContentHeaders?.ContentEncoding != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentEncoding) : Array.Empty<byte>();
+            _contentLanguageBytes = ContentHeaders?.ContentLanguage != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentLanguage) : Array.Empty<byte>();
+            _contentDispositionBytes = ContentHeaders?.ContentDisposition != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentDisposition) : Array.Empty<byte>();
+            _cacheControlBytes = ContentHeaders?.CacheControl != default ? Encoding.UTF8.GetBytes(ContentHeaders.CacheControl) : Array.Empty<byte>();
             AccessTier = accessTier;
             Metadata = metadata;
-            _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : new byte[0];
+            _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : Array.Empty<byte>();
             Tags = blobTags;
-            _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : new byte[0];
+            _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : Array.Empty<byte>();
             CpkScope = cpkScope;
-            _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : new byte[0];
+            _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : Array.Empty<byte>();
         }
 
         public override void Serialize(Stream stream)
@@ -168,7 +169,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // AccessTier
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
-            AccessTier accessTier = new AccessTier(jobPlanAccessTier.ToString());
+            AccessTier? accessTier = default;
+            if (!jobPlanAccessTier.Equals(JobPlanAccessTier.None))
+            {
+                accessTier = new AccessTier(jobPlanAccessTier.ToString());
+            }
 
             // Metadata offset/length
             int metadataOffset = reader.ReadInt32();

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -222,19 +223,20 @@ namespace Azure.Storage.DataMovement.Blobs
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
+        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(properties, getSource: true, cancellationToken));
 
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
-            => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
+        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(properties, getSource: false, cancellationToken));
 
-        private async Task<StorageResource> FromTransferPropertiesAsync(
+        private StorageResource FromTransferProperties(
             DataTransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
         {
-            ResourceType type = GetType(getSource ? properties.SourceTypeId : properties.DestinationTypeId, properties.IsContainer);
+            BlobDestinationCheckpointData checkpointData = properties.GetCheckpointData();
+            ResourceType type = GetType(checkpointData.BlobType, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
             IBlobResourceRehydrator rehydrator = type switch
             {
@@ -246,29 +248,29 @@ namespace Azure.Storage.DataMovement.Blobs
             };
             return _credentialType switch
             {
-                CredentialType.None => await rehydrator.RehydrateAsync(
+                CredentialType.None => rehydrator.Rehydrate(
                     properties,
+                    checkpointData,
                     getSource,
-                    cancellationToken)
-                    .ConfigureAwait(false),
-                CredentialType.SharedKey => await rehydrator.RehydrateAsync(
+                    cancellationToken),
+                CredentialType.SharedKey => rehydrator.Rehydrate(
                     properties,
+                    checkpointData,
                     getSource,
                     _getStorageSharedKeyCredential(uri, getSource),
-                    cancellationToken)
-                    .ConfigureAwait(false),
-                CredentialType.Token => await rehydrator.RehydrateAsync(
+                    cancellationToken),
+                CredentialType.Token => rehydrator.Rehydrate(
                     properties,
+                    checkpointData,
                     getSource,
                     _getTokenCredential(uri, getSource),
-                    cancellationToken)
-                    .ConfigureAwait(false),
-                CredentialType.Sas => await rehydrator.RehydrateAsync(
+                    cancellationToken),
+                CredentialType.Sas => rehydrator.Rehydrate(
                     properties,
+                    checkpointData,
                     getSource,
                     _getAzureSasCredential(uri, getSource),
-                    cancellationToken)
-                    .ConfigureAwait(false),
+                    cancellationToken),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
         }
@@ -476,22 +478,26 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private interface IBlobResourceRehydrator
         {
-            Task<StorageResource> RehydrateAsync(
+            StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 CancellationToken cancellationToken);
-            Task<StorageResource> RehydrateAsync(
+            StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken);
-            Task<StorageResource> RehydrateAsync(
+            StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken);
-            Task<StorageResource> RehydrateAsync(
+            StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken);
@@ -499,21 +505,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private class BlobContainerResourceRehydrator : IBlobResourceRehydrator
         {
-            private async Task<BlobStorageResourceContainerOptions> GetOptionsAsync(
-                DataTransferProperties transferProperties,
-                bool isSource,
-                CancellationToken cancellationToken)
-            {
-                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-                TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-                return await checkpointer.GetBlobContainerOptionsAsync(
-                    GetPrefix(transferProperties, isSource),
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
             private Uri GetUri(DataTransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
@@ -526,220 +517,194 @@ namespace Azure.Storage.DataMovement.Blobs
                     BlobName = ""
                 }.ToUri();
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource)),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
         }
 
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private async Task<BlockBlobStorageResourceOptions> GetOptionsAsync(
-                DataTransferProperties transferProperties,
-                bool isSource,
-                CancellationToken cancellationToken)
-            {
-                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-                TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-                return await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
             private Uri GetUri(DataTransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource)),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlockBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlockBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlockBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
                     new BlockBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetBlockBlobResourceOptions() : default);
         }
 
         private class PageBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private async Task<PageBlobStorageResourceOptions> GetOptionsAsync(
-                DataTransferProperties transferProperties,
-                bool isSource,
-                CancellationToken cancellationToken)
-            {
-                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-                TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-                return await checkpointer.GetPageBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
             private Uri GetUri(DataTransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource)),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetPageBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetPageBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetPageBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
                     new PageBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetPageBlobResourceOptions() : default);
         }
 
         private class AppendBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private async Task<AppendBlobStorageResourceOptions> GetOptionsAsync(
-                DataTransferProperties transferProperties,
-                bool isSource,
-                CancellationToken cancellationToken)
-            {
-                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-                TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-                return new AppendBlobStorageResourceOptions(await checkpointer.GetBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false));
-            }
-
             private Uri GetUri(DataTransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource)),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetAppendBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetAppendBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetAppendBlobResourceOptions() : default);
 
-            public async Task<StorageResource> RehydrateAsync(
+            public StorageResource Rehydrate(
                 DataTransferProperties properties,
+                BlobDestinationCheckpointData checkpointData,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
-                    await GetOptionsAsync(properties, isSource, cancellationToken).ConfigureAwait(false));
+                    !isSource ? checkpointData.GetAppendBlobResourceOptions() : default);
         }
         #endregion
 
-        private static ResourceType GetType(string typeId, bool isContainer)
+        private static ResourceType GetType(BlobType blobType, bool isContainer)
         {
             if (isContainer)
             {
                 return ResourceType.BlobContainer;
             }
 
-            return typeId switch
+            return blobType switch
             {
-                "BlockBlob" => ResourceType.BlockBlob,
-                "PageBlob" => ResourceType.PageBlob,
-                "AppendBlob" => ResourceType.AppendBlob,
+                BlobType.Block => ResourceType.BlockBlob,
+                BlobType.Page => ResourceType.PageBlob,
+                BlobType.Append => ResourceType.AppendBlob,
                 _ => ResourceType.Unknown
             };
         }
