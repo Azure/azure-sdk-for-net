@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
         }
 
+        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task continuousDtmfDetectionAndSendDtmfTest()
         {

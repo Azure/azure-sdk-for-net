@@ -15,6 +15,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
         }
 
+        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task RemoveAUserCallTest()
         {
@@ -112,7 +113,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         /// 5. Cancel the add participant
         /// </summary>
         /// <returns></returns>
-        [Ignore("ignore until record asset infrastructure is in place")]
+        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task CancelAddParticipantTest()
         {
