@@ -45,5 +45,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public SourceDataStoreType SourceDataStoreType { get; }
         /// <summary> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary>
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </summary>
+        public DataProtectionIdentityDetails IdentityDetails { get; set; }
     }
 }

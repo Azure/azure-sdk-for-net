@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/links/{linkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Links_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkName"> The name of the link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LinkResourceFormatResource>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+
+            using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _linkResourceFormatLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LinkResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/links/{linkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Links_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkName"> The name of the link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        public virtual NullableResponse<LinkResourceFormatResource> GetIfExists(string linkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+
+            using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _linkResourceFormatLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LinkResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LinkResourceFormatResource> IEnumerable<LinkResourceFormatResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.DefenderEasm
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Easm/workspaces/{workspaceName}/labels/{labelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labels_GetByWorkspace</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labelName"> The name of the Label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EasmLabelResource>> GetIfExistsAsync(string labelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
+
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _easmLabelLabelsRestClient.GetByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EasmLabelResource>(response.GetRawResponse());
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Easm/workspaces/{workspaceName}/labels/{labelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labels_GetByWorkspace</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labelName"> The name of the Label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        public virtual NullableResponse<EasmLabelResource> GetIfExists(string labelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
+
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _easmLabelLabelsRestClient.GetByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labelName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EasmLabelResource>(response.GetRawResponse());
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<EasmLabelResource> IEnumerable<EasmLabelResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

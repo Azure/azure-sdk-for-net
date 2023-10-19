@@ -220,7 +220,7 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.GetQueueServiceAccountAudience(test.Queue.AccountName));
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.CreateQueueServiceAccountAudience(test.Queue.AccountName));
 
             QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
             {

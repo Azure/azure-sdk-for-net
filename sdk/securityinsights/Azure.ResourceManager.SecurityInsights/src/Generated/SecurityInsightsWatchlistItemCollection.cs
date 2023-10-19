@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsWatchlistItemResource>> GetIfExistsAsync(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsWatchlistItemResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsWatchlistItemResource> GetIfExists(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsWatchlistItemResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SecurityInsightsWatchlistItemResource> IEnumerable<SecurityInsightsWatchlistItemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -91,10 +91,11 @@
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.3" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.16.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.16.2" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.9.0" />
+    <PackageReference Update="Azure.Identity" Version="1.10.3" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
@@ -107,13 +108,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.3" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.54.1" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.31.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.56.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.56.0" />
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
-      Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
+      Currently, it is referencd by Azure.Identity.Broker which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.54.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
@@ -125,11 +126,9 @@
     <PackageReference Update="OpenTelemetry" Version="1.6.0" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.6.0" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.6.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.5.1-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.5.1-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.5.1-beta.1" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
-    <PackageReference Update="OpenTelemetry.ResourceDetectors.Azure" Version="1.0.0-beta.2" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
   <!--
@@ -140,6 +139,8 @@
     <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
+    <PackageReference Update="Google.Protobuf" Version="3.24.3" />
+    <PackageReference Update="Grpc.Tools" Version="2.51.0" PrivateAssets="all" />
     <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
     <PackageReference Update="Microsoft.Azure.SignalR" Version="1.21.6" />
@@ -147,7 +148,8 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.21.6" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" PrivateAssets="All"/>
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
@@ -174,8 +176,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230919.1" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230822.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231019.2" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230927.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -259,6 +261,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Graph" Version="4.52.0" />
@@ -277,6 +280,8 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry" Version="1.6.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.5.1-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.5.1-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />

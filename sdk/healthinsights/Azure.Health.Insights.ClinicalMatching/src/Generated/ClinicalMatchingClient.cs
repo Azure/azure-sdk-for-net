@@ -73,7 +73,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = trialMatcherData.ToRequestContent();
+            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
@@ -89,7 +90,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData.ToRequestContent(), context);
+            using RequestContent content = trialMatcherData.ToRequestContent();
+            Operation<BinaryData> response = MatchTrials(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
@@ -124,7 +126,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -164,7 +166,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

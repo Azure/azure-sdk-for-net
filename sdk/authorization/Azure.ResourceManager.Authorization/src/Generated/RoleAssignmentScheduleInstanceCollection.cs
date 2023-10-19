@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleAssignmentScheduleInstanceResource>> GetIfExistsAsync(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleAssignmentScheduleInstanceRestClient.GetAsync(Id, roleAssignmentScheduleInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        public virtual NullableResponse<RoleAssignmentScheduleInstanceResource> GetIfExists(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleAssignmentScheduleInstanceRestClient.Get(Id, roleAssignmentScheduleInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RoleAssignmentScheduleInstanceResource> IEnumerable<RoleAssignmentScheduleInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

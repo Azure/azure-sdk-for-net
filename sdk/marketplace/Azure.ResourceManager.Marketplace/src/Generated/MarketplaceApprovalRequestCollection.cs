@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        public virtual async Task<NullableResponse<MarketplaceApprovalRequestResource>> GetIfExistsAsync(string requestApprovalId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
+
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApprovalAsync(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MarketplaceApprovalRequestResource>(response.GetRawResponse());
+                return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        public virtual NullableResponse<MarketplaceApprovalRequestResource> GetIfExists(string requestApprovalId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
+
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApproval(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MarketplaceApprovalRequestResource>(response.GetRawResponse());
+                return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MarketplaceApprovalRequestResource> IEnumerable<MarketplaceApprovalRequestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

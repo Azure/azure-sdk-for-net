@@ -36,7 +36,17 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceType.BlockBlob => "BlockBlob",
                 StorageResourceType.PageBlob => "PageBlob",
                 StorageResourceType.AppendBlob => "AppendBlob",
-                StorageResourceType.Local => "LocalFile",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        private static string ToProviderId(StorageResourceType type)
+        {
+            return type switch
+            {
+                StorageResourceType.BlockBlob => "blob",
+                StorageResourceType.PageBlob => "blob",
+                StorageResourceType.AppendBlob => "blob",
                 _ => throw new NotImplementedException(),
             };
         }
@@ -48,15 +58,19 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath,
             string sourceResourceId,
             string destinationResourceId,
+            string sourceProviderId,
+            string destinationProviderId,
             bool isContainer)
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
-            mock.Setup(p => p.SourcePath).Returns(sourcePath);
-            mock.Setup(p => p.DestinationPath).Returns(destinationPath);
+            mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
+            mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
             mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
             mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
+            mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -112,8 +126,10 @@ namespace Azure.Storage.DataMovement.Tests
             // Use mock resources that don't correspond to correct paths
             var sourceMock = new Mock<StorageResource>();
             sourceMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebSourcePath));
+            sourceMock.Setup(s => s.ProviderId).Returns(ToProviderId(sourceType));
             var destMock = new Mock<StorageResource>();
             destMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebDestinationPath));
+            destMock.Setup(s => s.ProviderId).Returns(ToProviderId(destinationType));
             await checkpointer.AddNewJobAsync(transferId, sourceMock.Object, destMock.Object);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
@@ -149,8 +165,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -159,6 +175,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -186,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -196,6 +214,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -240,8 +260,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
+            StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -250,6 +270,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -277,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -287,6 +309,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -331,8 +355,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
+            StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -341,6 +365,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
@@ -368,7 +394,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
@@ -378,6 +404,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: false).Object;
 
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -429,8 +457,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
@@ -441,6 +469,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationParentPath,
                 ToResourceId(sourceType),
                 ToResourceId(destinationType),
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
                 isContainer: true).Object;
 
             await AddJobPartToCheckpointer(

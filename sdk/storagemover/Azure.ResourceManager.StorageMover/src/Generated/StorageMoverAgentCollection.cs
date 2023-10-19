@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/agents/{agentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Agents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the Agent resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageMoverAgentResource>> GetIfExistsAsync(string agentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageMoverAgentAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageMoverAgentResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/agents/{agentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Agents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the Agent resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        public virtual NullableResponse<StorageMoverAgentResource> GetIfExists(string agentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageMoverAgentAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageMoverAgentResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StorageMoverAgentResource> IEnumerable<StorageMoverAgentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

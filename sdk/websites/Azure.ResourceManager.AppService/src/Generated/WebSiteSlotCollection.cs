@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteSlotResource>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        public virtual NullableResponse<WebSiteSlotResource> GetIfExists(string slot, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<WebSiteSlotResource> IEnumerable<WebSiteSlotResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

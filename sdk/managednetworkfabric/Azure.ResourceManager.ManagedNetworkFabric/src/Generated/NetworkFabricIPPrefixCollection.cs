@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricIPPrefixResource>> GetIfExistsAsync(string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricIPPrefixIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricIPPrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricIPPrefixResource> GetIfExists(string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricIPPrefixIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricIPPrefixResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricIPPrefixResource> IEnumerable<NetworkFabricIPPrefixResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

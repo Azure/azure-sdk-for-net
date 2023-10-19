@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            JsonSerializer.Serialize(writer, Resource); if (Optional.IsDefined(Options))
+            JsonSerializer.Serialize(writer, Resource);
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);

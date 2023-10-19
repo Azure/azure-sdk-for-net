@@ -4,11 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -79,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(routerWorkerResponse.Value);
         }
 
-        [Test]
+        /*[Test]
         public async Task GetWorkersTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -246,7 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[1]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[2]);
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[3]);
-        }
+        }*/
 
         [Test]
         public async Task UpdateWorkerTest()

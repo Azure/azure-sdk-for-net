@@ -239,6 +239,80 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources/{subResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subResourceName"> Sub resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AgFoodPlatformPrivateLinkResource>> GetIfExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+
+            using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AgFoodPlatformPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AgFoodPlatformPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources/{subResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subResourceName"> Sub resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        public virtual NullableResponse<AgFoodPlatformPrivateLinkResource> GetIfExists(string subResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+
+            using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AgFoodPlatformPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AgFoodPlatformPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AgFoodPlatformPrivateLinkResource> IEnumerable<AgFoodPlatformPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

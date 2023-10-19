@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bindings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bindingName"> The name of the Binding resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformBindingResource>> GetIfExistsAsync(string bindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
+
+            using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformBindingBindingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bindings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bindingName"> The name of the Binding resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformBindingResource> GetIfExists(string bindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
+
+            using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformBindingBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AppPlatformBindingResource> IEnumerable<AppPlatformBindingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -16,6 +16,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "mock";
+
         protected internal override string ResourceId => "Mock";
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
@@ -83,6 +85,24 @@ namespace Azure.Storage.DataMovement.Tests
         {
             _readStream.Position = 0;
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
+        }
+
+        /// <summary>
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return null;
         }
 
         protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)

@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskRestorePoint_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DiskRestorePointResource>> GetIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
+
+            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskRestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskRestorePoint_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        public virtual NullableResponse<DiskRestorePointResource> GetIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
+
+            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskRestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DiskRestorePointResource> IEnumerable<DiskRestorePointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

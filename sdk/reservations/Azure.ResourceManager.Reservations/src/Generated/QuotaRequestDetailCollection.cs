@@ -248,6 +248,72 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<QuotaRequestDetailResource>> GetIfExistsAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _quotaRequestDetailQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<QuotaRequestDetailResource> GetIfExists(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _quotaRequestDetailQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<QuotaRequestDetailResource> IEnumerable<QuotaRequestDetailResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

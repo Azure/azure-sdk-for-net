@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformGatewayCustomDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            using var scope = _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics.CreateScope("AppPlatformGatewayCustomDomainCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformGatewayCustomDomainResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformGatewayCustomDomainResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformGatewayCustomDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            using var scope = _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics.CreateScope("AppPlatformGatewayCustomDomainCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformGatewayCustomDomainResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformGatewayCustomDomainResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AppPlatformGatewayCustomDomainResource> IEnumerable<AppPlatformGatewayCustomDomainResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
