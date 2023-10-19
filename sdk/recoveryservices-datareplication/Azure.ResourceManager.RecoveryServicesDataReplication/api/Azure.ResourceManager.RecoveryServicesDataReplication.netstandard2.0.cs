@@ -406,6 +406,45 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public static Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowResource GetDataReplicationWorkflowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
+{
+    public partial class RecoveryServicesDataReplicationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesDataReplicationArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraResource GetDataReplicationDraResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource GetDataReplicationEmailConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventResource GetDataReplicationEventResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource GetDataReplicationFabricResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyResource GetDataReplicationPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemResource GetDataReplicationProtectedItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointResource GetDataReplicationRecoveryPointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource GetDataReplicationReplicationExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource GetDataReplicationVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowResource GetDataReplicationWorkflowResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class RecoveryServicesDataReplicationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesDataReplicationResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightModel> DeploymentPreflight(string deploymentId, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightModel body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightModel>> DeploymentPreflightAsync(string deploymentId, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightModel body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource> GetDataReplicationFabric(string fabricName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>> GetDataReplicationFabricAsync(string fabricName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricCollection GetDataReplicationFabrics() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource> GetDataReplicationVault(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource>> GetDataReplicationVaultAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultCollection GetDataReplicationVaults() { throw null; }
+    }
+    public partial class RecoveryServicesDataReplicationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesDataReplicationSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource> GetDataReplicationFabrics(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource> GetDataReplicationFabricsAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource> GetDataReplicationVaults(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource> GetDataReplicationVaultsAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public static partial class ArmRecoveryServicesDataReplicationModelFactory

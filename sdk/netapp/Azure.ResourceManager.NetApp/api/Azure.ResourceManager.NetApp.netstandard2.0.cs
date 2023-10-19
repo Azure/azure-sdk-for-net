@@ -673,11 +673,9 @@ namespace Azure.ResourceManager.NetApp.Mocking
     {
         protected NetAppArmClientMockingExtension() { }
         public virtual Azure.ResourceManager.NetApp.CapacityPoolResource GetCapacityPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.NetApp.NetAppAccountBackupResource GetNetAppAccountBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppAccountResource GetNetAppAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupPolicyResource GetNetAppBackupPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.NetApp.NetAppVolumeBackupResource GetNetAppVolumeBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeGroupResource GetNetAppVolumeGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeResource GetNetAppVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -706,8 +704,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(Azure.Core.AzureLocation location, string quotaLimitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.QueryNetworkSiblingSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.QueryNetworkSiblingSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppRegionInfo> QueryRegionInfoNetAppResource(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.UpdateNetworkSiblingSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.UpdateNetworkSiblingSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.NetApp.Models

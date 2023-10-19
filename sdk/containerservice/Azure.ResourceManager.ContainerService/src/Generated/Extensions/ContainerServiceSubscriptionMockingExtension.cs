@@ -59,13 +59,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a OSOptionProfileResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
-        public virtual OSOptionProfileResource GetOSOptionProfile()
-        {
-            return new OSOptionProfileResource(Client, Id.AppendChildResource("osOptions", "default"));
-        }
-
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
         /// <list type="bullet">

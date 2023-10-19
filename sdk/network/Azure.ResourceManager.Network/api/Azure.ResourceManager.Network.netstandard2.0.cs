@@ -5902,6 +5902,8 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Azure.ResourceManager.Network.VirtualApplianceSiteResource GetVirtualApplianceSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.VirtualHubResource GetVirtualHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource GetVirtualHubRouteTableV2Resource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualMachineScaleSetNetworkResource GetVirtualMachineScaleSetNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Network.VirtualMachineScaleSetVmNetworkResource GetVirtualMachineScaleSetVmNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource GetVirtualNetworkGatewayConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource GetVirtualNetworkGatewayNatRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.VirtualNetworkGatewayResource GetVirtualNetworkGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }

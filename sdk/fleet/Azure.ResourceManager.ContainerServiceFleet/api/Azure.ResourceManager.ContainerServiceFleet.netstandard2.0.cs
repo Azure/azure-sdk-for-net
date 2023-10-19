@@ -191,6 +191,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerServiceFleet.FleetUpdateStrategyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerServiceFleet.FleetUpdateStrategyData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
+{
+    public partial class ContainerServiceFleetArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ContainerServiceFleetArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetResource GetContainerServiceFleetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceFleet.FleetUpdateStrategyResource GetFleetUpdateStrategyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ContainerServiceFleetResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ContainerServiceFleetResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetResource> GetContainerServiceFleet(string fleetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetResource>> GetContainerServiceFleetAsync(string fleetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetCollection GetContainerServiceFleets() { throw null; }
+    }
+    public partial class ContainerServiceFleetSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ContainerServiceFleetSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetResource> GetContainerServiceFleets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetResource> GetContainerServiceFleetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public static partial class ArmContainerServiceFleetModelFactory

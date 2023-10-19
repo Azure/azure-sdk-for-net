@@ -311,6 +311,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     public partial class HybridComputeArmClientMockingExtension : Azure.ResourceManager.ArmResource
     {
         protected HybridComputeArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.HybridCompute.ExtensionValueResource GetExtensionValueResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeMachineResource GetHybridComputeMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -330,6 +331,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     public partial class HybridComputeSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
     {
         protected HybridComputeSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueResource> GetExtensionValue(Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ExtensionValueResource>> GetExtensionValueAsync(Azure.Core.AzureLocation location, string publisher, string extensionType, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.ExtensionValueCollection GetExtensionValues(Azure.Core.AzureLocation location, string publisher, string extensionType) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputeMachineResource> GetHybridComputeMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
