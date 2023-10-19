@@ -12,9 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <!-- Revert project reference when Azure.Identity ships with updated InternalsVisibleTo -->
-    <!-- <PackageReference Include="Azure.Identity" /> -->
-    <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
