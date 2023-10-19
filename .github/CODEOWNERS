@@ -722,7 +722,7 @@
 /sdk/schemaregistry/                                               @jsquire @JoshLove-msft
 
 # ServiceLabel: %Schema Registry %Service Attention
-#/sdk/schemaregistry/                                              @hmlam
+#/<NotInRepo>/                                                     @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
 /sdk/signalr/                                                      @sffamily @chenkennt @Y-Sindo
