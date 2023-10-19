@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Assert.IsNotNull(nsdvResourceRetrieved);
             Assert.AreEqual(nsdv.Data.Location, retrievedData.Location);
             Assert.AreEqual(CGSchemaId, retrievedData.Properties.ConfigurationGroupSchemaReferences["vnet_ConfigGroupSchema"].Id);
-            var ret = (ArmResourceDefinitionResourceElementTemplateDetails)retrievedData.Properties.ResourceElementTemplates[0];
+            var ret = (NetworkFunctionDefinitionResourceElementTemplateDetails)retrievedData.Properties.ResourceElementTemplates[0];
             Assert.AreEqual(ArtifactStoreId, ret.Configuration.ArtifactProfile.ArtifactStoreReferenceId);
         }
 
@@ -278,9 +279,10 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Assert.AreEqual(cgValues.Data.Location, retrievedData.Location);
             Assert.AreEqual(ConfigurationGroupValueConfigurationType.Open, properties.ConfigurationType);
             var cgSchemaRef = (OpenDeploymentResourceReference)properties.ConfigurationGroupSchemaResourceReference;
-            Assert.AreEqual(CGSchemaId, cgSchemaRef);
-            var values = ReadJsonFile("DeploymentValues.json").ToString(Newtonsoft.Json.Formatting.None);
-            Assert.AreEqual(properties.ConfigurationValue, values);
+            Assert.AreEqual(CGSchemaId, cgSchemaRef.Id);
+            var values = ReadJsonFile("DeploymentValues.json");
+            values["nfdvId"] = NFDVId.ToString();
+            Assert.AreEqual(properties.ConfigurationValue, values.ToString(Newtonsoft.Json.Formatting.None));
         }
 
         [TestCase]
@@ -301,7 +303,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             SiteNetworkServiceResource snsResourceRetrieved = getSnsResponse.Value;
             SiteNetworkServiceData retrievedData = snsResourceRetrieved.Data;
             Assert.IsNotNull(snsResourceRetrieved);
-            Assert.AreEqual(site.Data.Location, retrievedData.Location);
+            Assert.AreEqual(sns.Data.Location, retrievedData.Location);
             Assert.AreEqual(SiteId, retrievedData.Properties.SiteReferenceId);
             Assert.AreEqual(CGValueId, retrievedData.Properties.DesiredStateConfigurationGroupValueReferences["vnet_ConfigGroupSchema"].Id);
             var nsdvRef = (OpenDeploymentResourceReference)retrievedData.Properties.NetworkServiceDesignVersionResourceReference;

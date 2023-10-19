@@ -4,38 +4,31 @@
     "type": "object",
     "properties": {
         "vnetName": {
-            "type": "string",
-            "description": "The name of the VNET you want to deploy"
+            "description": "The name of the VNET you want to deploy",
+            "type": "string"
         },
         "vnetAddressPrefixes": {
-            "type": "array",
             "description": "An array of VNET address prefixes, e.g. [\"10.0.0.0/16\",\"11.0.0.0/16\"]",
+            "type": "array"
         },
         "subnets": {
-            "type": "array",
             "description": "Array of subnet objects to create under the vnet",
+            "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "string",
-                        "description": "Name for the subnet"
+                        "description": "Name for the subnet",
+                        "type": "string"
                     },
                     "addressPrefix": {
-                        "type": "string",
-                        "description": "addressPrefix for the subnet, must exist within one of the VNET address prefixes."
+                        "description": "addressPrefix for the subnet, must exist within one of the VNET address prefixes.",
+                        "type": "string"
                     }
                 },
-                "required": [
-                    "name",
-                    "addressPrefix"
-                ]
+                "required": [ "name", "addressPrefix" ]
             }
         }
     },
-    "required": [
-        "vnetName",
-        "vnetAddressPrefixes",
-        "subnets"
-    ]
+    "required": [ "vnetName", "vnetAddressPrefixes", "subnets" ]
 }

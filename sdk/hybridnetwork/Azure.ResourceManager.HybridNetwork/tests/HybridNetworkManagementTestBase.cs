@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
         protected HybridNetworkManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..acrToken");
         }
 
         protected HybridNetworkManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..acrToken");
         }
 
         protected void UploadArmTemplate(
@@ -334,7 +336,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                     {
                         Id = cgs.Id
                     },
-                    ConfigurationValue = deploymentValues.ToString()
+                    ConfigurationValue = deploymentValues.ToString(Newtonsoft.Json.Formatting.None)
                 }
             };
 
