@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new QuotaUsageResult(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new QuotaUsageResult(new ResourceIdentifier(id.Value), unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

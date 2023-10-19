@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="limit"> The quota limit for the particular search sku. </param>
         /// <param name="name"> The name of the sku supported by Azure Cognitive Search. </param>
         /// <returns> A new <see cref="Models.QuotaUsageResult"/> instance for mocking. </returns>
-        public static QuotaUsageResult QuotaUsageResult(string id = null, string unit = null, int? currentValue = null, int? limit = null, QuotaUsageResultName name = null)
+        public static QuotaUsageResult QuotaUsageResult(ResourceIdentifier id = null, string unit = null, int? currentValue = null, int? limit = null, QuotaUsageResultName name = null)
         {
             return new QuotaUsageResult(id, unit, currentValue, limit, name);
         }
