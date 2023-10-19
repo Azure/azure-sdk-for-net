@@ -185,7 +185,7 @@ directive:
 
 ``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/3cdd83e05fbc5ed0ec25c2bd0c03bb6c4b6cfb30/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4c38cb9966cd6afbb03c7e9b14997720a728baee/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -316,6 +316,7 @@ directive:
       $.MySQLServerIdentity['x-ms-client-flatten'] = false;
       $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
+      $.ServerProperties.properties.privateEndpointConnections.items['$ref'] = '../../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection';
 
   # Add a new mode for update operation
   - from: Configurations.json
