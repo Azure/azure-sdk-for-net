@@ -19,7 +19,17 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
     {
         protected ArmClient Client { get; set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Scenario", "TestAssets");
+        private readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Scenario", "TestAssets");
+        protected readonly string VnetArmTemplateArtifactName = "vnet-arm-template";
+        protected readonly string VnetArmTemplateFileName = "VnetArmTemplate.json";
+        protected readonly string VnetArmTemplateMappingFileName = "VnetArmTemplateMappings.json";
+        protected readonly string NfArmTemplateArtifactName = "nf-arm-template";
+        protected readonly string NfArmTemplateFileName = "NfArmTemplate.json";
+        protected readonly string NfArmTemplateMappingFileName = "NfArmTemplateMappings.json";
+        protected readonly string DeployParametersFileName = "DeployParameters.json";
+        protected readonly string DeployValuesFileName = "DeploymentValues.json";
+        protected readonly string NfviName = "exampleNFVI";
+        protected readonly string CGSchemaFileName = "CGSchema.json";
 
         protected HybridNetworkManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -98,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 Properties = new ConfigurationGroupSchemaPropertiesFormat()
                 {
-                    SchemaDefinition = ReadJsonFile("CGSchema.json").ToString(),
+                    SchemaDefinition = ReadJsonFile(CGSchemaFileName).ToString(),
                 }
             };
             var lro = await publisher
@@ -173,13 +183,13 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
         {
             var vnetArtifact = new ManifestArtifactFormat()
             {
-                ArtifactName = "vnet-arm-template",
+                ArtifactName = VnetArmTemplateArtifactName,
                 ArtifactType = ArtifactType.OCIArtifact,
                 ArtifactVersion = "1.0.0",
             };
             var nfArtifact = new ManifestArtifactFormat()
             {
-                ArtifactName = "nf-arm-template",
+                ArtifactName = NfArmTemplateArtifactName,
                 ArtifactType = ArtifactType.OCIArtifact,
                 ArtifactVersion = "1.0.0",
             };
@@ -209,14 +219,14 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 DeployParametersMappingRuleProfile = new AzureCoreArmTemplateDeployMappingRuleProfile()
                 {
                     ApplicationEnablement = ApplicationEnablement.Unknown,
-                    TemplateParameters = ReadJsonFile("VnetArmTemplateMappings.json").ToString()
+                    TemplateParameters = ReadJsonFile(VnetArmTemplateMappingFileName).ToString()
                 },
                 ArtifactProfile = new AzureCoreArmTemplateArtifactProfile()
                 {
                     ArtifactStoreId = artifactStore.Id,
                     TemplateArtifactProfile = new ArmTemplateArtifactProfile()
                     {
-                        TemplateName = "vnet-arm-template",
+                        TemplateName = VnetArmTemplateArtifactName,
                         TemplateVersion = "1.0.0",
                     }
                 }
@@ -233,7 +243,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 NetworkFunctionType = NetworkFunctionType.VirtualNetworkFunction,
                 NetworkFunctionTemplate = nfTemplate,
-                DeployParameters = ReadJsonFile("DeployParameters.json").ToString()
+                DeployParameters = ReadJsonFile(DeployParametersFileName).ToString()
             };
 
             var nfdvData = new NetworkFunctionDefinitionVersionData(location)
@@ -265,7 +275,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
 
             nsdvData.Properties.NfvisFromSite.Add("nfvi1", new NfviDetails()
             {
-                Name = "exampleNFVI",
+                Name = NfviName,
                 NfviDetailsType = "AzureCore"
             });
 
@@ -279,11 +289,11 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 {
                     ArtifactProfile = new NSDArtifactProfile()
                     {
-                        ArtifactName = "nf-arm-template",
+                        ArtifactName = NfArmTemplateArtifactName,
                         ArtifactVersion = "1.0.0",
                         ArtifactStoreReferenceId = artifactStore.Id,
                     },
-                    ParameterValues = ReadJsonFile("NfArmTemplateMappings.json").ToString(),
+                    ParameterValues = ReadJsonFile(NfArmTemplateMappingFileName).ToString(),
                     TemplateType = TemplateType.ArmTemplate
                 }
             };
@@ -302,7 +312,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             string siteName,
             AzureLocation location)
         {
-            var nfvi = new AzureCoreNfviDetails() { Name = "exampleNFVI", Location = location };
+            var nfvi = new AzureCoreNfviDetails() { Name = NfviName, Location = location };
 
             var siteData = new SiteData(location)
             {
@@ -325,7 +335,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             ResourceIdentifier nfdvId,
             AzureLocation location)
         {
-            var deploymentValues = ReadJsonFile("DeploymentValues.json");
+            var deploymentValues = ReadJsonFile(DeployValuesFileName);
             deploymentValues["nfdvId"] = nfdvId.ToString();
 
             var cgvData = new ConfigurationGroupValueData(location)

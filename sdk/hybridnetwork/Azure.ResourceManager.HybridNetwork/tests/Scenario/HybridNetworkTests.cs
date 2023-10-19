@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             SiteResource siteResourceRetrieved = getSiteResponse.Value;
             Assert.IsNotNull(siteResourceRetrieved);
             Assert.AreEqual(site.Data.Location, siteResourceRetrieved.Data.Location);
-            Assert.AreEqual("exampleNFVI", siteResourceRetrieved.Data.Properties.Nfvis[0].Name);
+            Assert.AreEqual(NfviName, siteResourceRetrieved.Data.Properties.Nfvis[0].Name);
             Assert.AreEqual(NfviType.AzureCore, siteResourceRetrieved.Data.Properties.Nfvis[0].NfviType);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             ConfigurationGroupSchemaResource cgSchemaResourceRetrieved = getArtifactStoreResponse.Value;
             ConfigurationGroupSchemaData retrievedData = cgSchemaResourceRetrieved.Data;
             Assert.IsNotNull(cgSchemaResourceRetrieved);
-            var schema = ReadJsonFile("CGSchema.json").ToString(Newtonsoft.Json.Formatting.None);
+            var schema = ReadJsonFile(CGSchemaFileName).ToString(Newtonsoft.Json.Formatting.None);
             Assert.AreEqual(cgSchema.Data.Location, retrievedData.Location);
             Assert.AreEqual(schema, retrievedData.Properties.SchemaDefinition);
         }
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             if (Mode == RecordedTestMode.Record)
             {
                 AzureContainerRegistryScopedTokenCredential creds = (AzureContainerRegistryScopedTokenCredential)await artifactManifest.GetCredentialAsync();
-                UploadArmTemplate("VnetArmTemplate.json", "vnet-arm-template", "1.0.0", creds);
-                UploadArmTemplate("NfArmTemplate.json", "nf-arm-template", "1.0.0", creds);
+                UploadArmTemplate(VnetArmTemplateFileName, VnetArmTemplateArtifactName, "1.0.0", creds);
+                UploadArmTemplate(NfArmTemplateFileName, NfArmTemplateArtifactName, "1.0.0", creds);
             }
 
             // Get Artifact Manifest
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             ArtifactManifestData retrievedData = artifactManifestResourceRetrieved.Data;
             Assert.IsNotNull(artifactManifestResourceRetrieved);
             Assert.AreEqual(artifactManifest.Data.Location, retrievedData.Location);
-            Assert.AreEqual("vnet-arm-template", retrievedData.Properties.Artifacts[0].ArtifactName);
+            Assert.AreEqual(VnetArmTemplateArtifactName, retrievedData.Properties.Artifacts[0].ArtifactName);
             Assert.AreEqual(ArtifactType.OCIArtifact, retrievedData.Properties.Artifacts[0].ArtifactType);
             Assert.AreEqual("1.0.0", retrievedData.Properties.Artifacts[0].ArtifactVersion);
-            Assert.AreEqual("nf-arm-template", retrievedData.Properties.Artifacts[1].ArtifactName);
+            Assert.AreEqual(NfArmTemplateArtifactName, retrievedData.Properties.Artifacts[1].ArtifactName);
             Assert.AreEqual(ArtifactType.OCIArtifact, retrievedData.Properties.Artifacts[1].ArtifactType);
             Assert.AreEqual("1.0.0", retrievedData.Properties.Artifacts[1].ArtifactVersion);
         }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             VirtualNetworkFunctionDefinitionVersion properties = (VirtualNetworkFunctionDefinitionVersion)retrievedData.Properties;
             Assert.IsNotNull(nfdvResourceRetrieved);
             Assert.AreEqual(nfdv.Data.Location, retrievedData.Location);
-            var deployParams = ReadJsonFile("DeployParameters.json").ToString(Newtonsoft.Json.Formatting.None);
+            var deployParams = ReadJsonFile(DeployParametersFileName).ToString(Newtonsoft.Json.Formatting.None);
             Assert.AreEqual(deployParams, properties.DeployParameters);
             var nfTemplate = (AzureCoreNetworkFunctionTemplate)properties.NetworkFunctionTemplate;
             var armAplication = (AzureCoreNetworkFunctionArmTemplateApplication)nfTemplate.NetworkFunctionApplications[0];
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Assert.AreEqual(ConfigurationGroupValueConfigurationType.Open, properties.ConfigurationType);
             var cgSchemaRef = (OpenDeploymentResourceReference)properties.ConfigurationGroupSchemaResourceReference;
             Assert.AreEqual(CGSchemaId, cgSchemaRef.Id);
-            var values = ReadJsonFile("DeploymentValues.json");
+            var values = ReadJsonFile(DeployValuesFileName);
             values["nfdvId"] = NFDVId.ToString();
             Assert.AreEqual(properties.ConfigurationValue, values.ToString(Newtonsoft.Json.Formatting.None));
         }
