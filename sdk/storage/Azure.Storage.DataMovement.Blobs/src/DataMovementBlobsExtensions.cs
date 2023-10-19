@@ -407,11 +407,21 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobDestinationCheckpointData GetCheckpointData(this DataTransferProperties properties)
+        internal static BlobCheckpointData GetCheckpointData(this DataTransferProperties properties, bool isSource)
         {
-            using (MemoryStream stream = new(properties.DestinationCheckpointData))
+            if (isSource)
             {
-                return BlobDestinationCheckpointData.Deserialize(stream);
+                using (MemoryStream stream = new(properties.SourceCheckpointData))
+                {
+                    return BlobSourceCheckpointData.Deserialize(stream);
+                }
+            }
+            else
+            {
+                using (MemoryStream stream = new(properties.DestinationCheckpointData))
+                {
+                    return BlobDestinationCheckpointData.Deserialize(stream);
+                }
             }
         }
 

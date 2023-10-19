@@ -50,7 +50,12 @@ namespace Azure.Storage.DataMovement.Tests
             };
         }
 
-        private static BlobDestinationCheckpointData GetPopulatedCheckpointData(
+        private static BlobSourceCheckpointData GetSourceCheckpointData(BlobType blobType)
+        {
+            return new BlobSourceCheckpointData(blobType);
+        }
+
+        private static BlobDestinationCheckpointData GetPopulatedDestinationCheckpointData(
             BlobType blobType,
             AccessTier? accessTier = default)
         {
@@ -71,12 +76,12 @@ namespace Azure.Storage.DataMovement.Tests
                 "encryption-scope");
         }
 
-        private static BlobDestinationCheckpointData GetDefaultCheckpointData(BlobType blobType)
+        private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
         {
             return new BlobDestinationCheckpointData(blobType, default, default, default, default, default);
         }
 
-        private static byte[] GetBytes(StorageResourceCheckpointData checkpointData)
+        private static byte[] GetBytes(BlobCheckpointData checkpointData)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -95,6 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourceProviderId,
             string destinationProviderId,
             bool isContainer,
+            BlobSourceCheckpointData sourceCheckpointData,
             BlobDestinationCheckpointData destinationCheckpointData)
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
@@ -106,7 +112,7 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
             mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
-            mock.Setup(p => p.SourceCheckpointData).Returns(Array.Empty<byte>());
+            mock.Setup(p => p.SourceCheckpointData).Returns(GetBytes(sourceCheckpointData));
             mock.Setup(p => p.DestinationCheckpointData).Returns(GetBytes(destinationCheckpointData));
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
@@ -135,7 +141,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetDefaultCheckpointData(BlobType.Block)).Object;
+                GetSourceCheckpointData(BlobType.Block),
+                GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource
                 ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
@@ -156,7 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.BlockBlob;
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
-            BlobDestinationCheckpointData checkpointData = GetPopulatedCheckpointData(BlobType.Block, AccessTier.Cool);
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Block, AccessTier.Cool);
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
                 transferId,
@@ -167,6 +174,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
+                GetSourceCheckpointData(BlobType.Block),
                 checkpointData).Object;
 
             BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
@@ -206,7 +214,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetDefaultCheckpointData(BlobType.Page)).Object;
+                GetSourceCheckpointData(BlobType.Page),
+                GetDefaultDestinationCheckpointData(BlobType.Page)).Object;
 
             StorageResource storageResource = isSource
                     ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
@@ -227,7 +236,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.PageBlob;
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
-            BlobDestinationCheckpointData checkpointData = GetPopulatedCheckpointData(BlobType.Page, AccessTier.P30);
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Page, AccessTier.P30);
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
                 transferId,
@@ -238,6 +247,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
+                GetSourceCheckpointData(BlobType.Page),
                 checkpointData).Object;
 
             PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider()
@@ -277,7 +287,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetDefaultCheckpointData(BlobType.Append)).Object;
+                GetSourceCheckpointData(BlobType.Append),
+                GetDefaultDestinationCheckpointData(BlobType.Append)).Object;
 
             StorageResource storageResource = isSource
                     ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
@@ -298,7 +309,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.AppendBlob;
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
-            BlobDestinationCheckpointData checkpointData = GetPopulatedCheckpointData(BlobType.Append, accessTier: default);
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Append, accessTier: default);
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
                 transferId,
@@ -309,6 +320,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
+                GetSourceCheckpointData(BlobType.Append),
                 checkpointData).Object;
 
             AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
@@ -358,7 +370,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: true,
-                GetDefaultCheckpointData(BlobType.Block)).Object;
+                GetSourceCheckpointData(BlobType.Block),
+                GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource
                     ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)

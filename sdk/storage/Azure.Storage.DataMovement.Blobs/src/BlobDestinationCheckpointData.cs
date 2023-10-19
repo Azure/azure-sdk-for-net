@@ -12,18 +12,8 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDestinationCheckpointData : StorageResourceCheckpointData
+    internal class BlobDestinationCheckpointData : BlobCheckpointData
     {
-        /// <summary>
-        /// Schema version.
-        /// </summary>
-        public int Version;
-
-        /// <summary>
-        /// The type of the destination blob.
-        /// </summary>
-        public BlobType BlobType;
-
         /// <summary>
         /// The content headers for the destination blob.
         /// </summary>
@@ -66,9 +56,8 @@ namespace Azure.Storage.DataMovement.Blobs
             Metadata metadata,
             Tags blobTags,
             string cpkScope)
+            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
         {
-            Version = DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion;
-            BlobType = blobType;
             ContentHeaders = contentHeaders;
             _contentTypeBytes = ContentHeaders?.ContentType != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentType) : Array.Empty<byte>();
             _contentEncodingBytes = ContentHeaders?.ContentEncoding != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentEncoding) : Array.Empty<byte>();
@@ -88,7 +77,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex;
+            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
@@ -142,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            CheckSchemaVersion(version);
+            CheckSchemaVersion(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, version);
 
             // BlobType
             BlobType blobType = (BlobType)reader.ReadByte();
@@ -272,7 +261,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private int CalculateLength()
         {
             // Length is fixed size fields plus length of each variable length field
-            int length = DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex;
+            int length = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             length += _contentTypeBytes.Length;
             length += _contentEncodingBytes.Length;
             length += _contentLanguageBytes.Length;
@@ -282,14 +271,6 @@ namespace Azure.Storage.DataMovement.Blobs
             length += _tagsBytes.Length;
             length += _cpkScopeBytes.Length;
             return length;
-        }
-
-        private static void CheckSchemaVersion(int version)
-        {
-            if (version != DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion)
-            {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
-            }
         }
     }
 }
