@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.HybridNetwork
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.HybridNetwork
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;

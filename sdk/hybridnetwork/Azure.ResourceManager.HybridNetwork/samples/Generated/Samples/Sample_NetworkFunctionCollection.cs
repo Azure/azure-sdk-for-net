@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
                         Id = "/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1",
                     },
                     NfviType = NfviType.AzureCore,
-                    NfviId = "/subscriptions/subid/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation",
+                    NfviId = "/subscriptions/subid/resourceGroups/testResourceGroup",
                     AllowSoftwareUpdate = false,
                 },
             };

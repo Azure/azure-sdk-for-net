@@ -117,7 +117,15 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 new AzureCoreNfviDetails()
 {
 Location = new AzureLocation("westUs2"),
-Name = "azureWestUs2",
+Name = "nfvi1",
+},new AzureArcK8SClusterNfviDetails()
+{
+CustomLocationReferenceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation1"),
+Name = "nfvi2",
+},new AzureOperatorNexusClusterNfviDetails()
+{
+CustomLocationReferenceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation2"),
+Name = "nfvi3",
 }
 },
                 },
