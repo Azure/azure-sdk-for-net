@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF.Channels
 {
     /// <summary>
     /// IChannelFactory implementation for AzureQueueStorage.
@@ -15,7 +15,7 @@ namespace Microsoft.ServiceModel.AQS
     {
         #region member_variables
         private BufferManager _bufferManager;
-        private MessageEncoderFactory _messageEncoderFactory;
+        private MessageEncoderFactory _messageEncoderFactory = null;
         #endregion
 
         public AzureQueueStorageChannelFactory(AzureQueueStorageTransportBindingElement bindingElement, BindingContext context)
@@ -73,8 +73,8 @@ namespace Microsoft.ServiceModel.AQS
         /// <summary>
         /// Create a new Azure Queue Storage Channel. Supports IOutputChannel.
         /// </summary>
-        /// <typeparam name="TChannel">The type of Channel to create (e.g. IOutputChannel)</typeparam>
         /// <param name="remoteAddress">The address of the remote endpoint</param>
+        /// <param name="via">The via address.</param>
         /// <returns></returns>
         protected override IOutputChannel OnCreateChannel(EndpointAddress remoteAddress, Uri via)
         {

@@ -6,16 +6,16 @@ using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF.Channels
 {
+    /// <summary>
+    /// Helper class for some tasks.
+    /// </summary>
     public static class TaskHelpers
     {
-        // Helper method when implementing an APM wrapper around a Task based async method which returns a result. 
-        // In the BeginMethod method, you would call use ToApm to wrap a call to MethodAsync:
-        //     return MethodAsync(params).ToApm(callback, state);
-        // In the EndMethod, you would use ToApmEnd to ensure the correct exception handling
-        // This will handle throwing exceptions in the correct place and ensure the IAsyncResult contains the provided
-        // state object
+        /// <summary>
+        /// Converts a task to the APM Begin-End pattern.
+        /// </summary>
         public static Task ToApm(this Task task, AsyncCallback callback, object state)
         {
             // When using APM, the returned IAsyncResult must have the passed in state object stored in AsyncState. This
@@ -38,7 +38,7 @@ namespace Microsoft.ServiceModel.AQS
             // Need to create a TaskCompletionSource so that the returned Task object has the correct AsyncState value.
             // As we intend to create a task with no Result value, we don't care what result type the TCS holds as we
             // won't be using it. As Task<TResult> derives from Task, the returned Task is compatible.
-            var tcs = new TaskCompletionSource<object>(state);
+            var tcs = new TaskCompletionSource<object>(state, TaskCreationOptions.RunContinuationsAsynchronously);
             var continuationState = Tuple.Create(tcs, callback);
             task.ContinueWith((antecedent, obj) =>
             {
@@ -66,13 +66,16 @@ namespace Microsoft.ServiceModel.AQS
             return tcs.Task;
         }
 
-        // Helper method to implement the End method of an APM method pair which is wrapping a Task based
-        // async method when the Task does not return result.
+        /// <summary>
+        /// Converts the specified IAsyncResult to a Task and waits for it to complete.
+        /// </summary>
         public static void ToApmEnd(this IAsyncResult iar)
         {
             Task task = iar as Task;
             Contract.Assert(task != null, "IAsyncResult must be an instance of Task");
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             task.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
     }
 }

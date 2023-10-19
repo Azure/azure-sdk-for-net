@@ -1,11 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.WCF.Channels;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF
 {
+    /// <summary>
+    /// The class that contains the binding elements that specify the protocols, transports,
+    /// and message encoders used for communication between clients and services.
+    /// </summary>
     public class AzureQueueStorageBinding : Binding
     {
         private AzureQueueStorageTransportBindingElement _transport;
@@ -13,24 +18,33 @@ namespace Microsoft.ServiceModel.AQS
         private BinaryMessageEncodingBindingElement _binaryMessageEncodingBindingElement;
         private bool _isInitialized;
 
+        /// <summary>
+        /// Initializes a new instance of the AzureQueueStorageBinding class with the specified parameters.
+        /// </summary>
         public AzureQueueStorageBinding(AzureQueueStorageMessageEncoding azureQueueStorageMessageEncoding)
         {
             this.MessageEncoding = azureQueueStorageMessageEncoding;
             Initialize();
         }
 
+        /// <summary>
+        /// Gets the URI scheme that specifies the transport used by the channel and listener
+        /// factories that are built by the bindings.
+        /// </summary>
         public override string Scheme { get { return "net.aqs"; } }
 
+        /// <summary>
+        /// Gets the Soap version used by the channel and listener
+        /// factories that are built by the bindings.
+        /// </summary>
         public EnvelopeVersion SoapVersion
         {
             get { return EnvelopeVersion.Soap12; }
         }
 
         /// <summary>
-        /// Create the set of binding elements that make up this binding. 
-        /// NOTE: order of binding elements is important.
+        /// Overidden method to create a collection that contains the binding elements that are part of the current binding.
         /// </summary>
-        /// <returns></returns>
         public override BindingElementCollection CreateBindingElements()
         {
             BindingElementCollection elements = new BindingElementCollection();
@@ -67,6 +81,9 @@ namespace Microsoft.ServiceModel.AQS
             }
         }
 
+        /// <summary>
+        /// Gets and sets the message encoding.
+        /// </summary>
         public AzureQueueStorageMessageEncoding MessageEncoding { get; set; } = AzureQueueStorageMessageEncoding.Text;
     }
 }

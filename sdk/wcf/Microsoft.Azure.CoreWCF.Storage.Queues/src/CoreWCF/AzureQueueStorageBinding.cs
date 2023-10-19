@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.CoreWCF.Channels;
 using CoreWCF.Channels;
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Azure.Storage.CoreWCF
 {
     /// <summary>
     /// The class that contains the binding elements that specify the protocols, transports,

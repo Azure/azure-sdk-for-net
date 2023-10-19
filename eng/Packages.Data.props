@@ -299,6 +299,11 @@
     <PackageReference Update="xunit" Version="2.4.2" />
   </ItemGroup>
 
+  <!-- Packages for WCF Client library -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.WCF'))">
+    <PackageReference Update="System.ServiceModel.Primitives" Version="4.10.3" />
+  </ItemGroup>
+  
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>

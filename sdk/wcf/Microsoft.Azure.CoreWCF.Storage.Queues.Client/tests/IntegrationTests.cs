@@ -2,21 +2,15 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
 using Contracts;
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.ServiceModel.AQS;
 using NUnit.Framework;
 using System;
-using System.Net.Http;
-using System.Net;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Threading;
+using Azure.Storage.WCF;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace WCF.AzureQueueStorage.Tests
 {
     public class IntegrationTests
     {
@@ -33,13 +27,11 @@ namespace CoreWCF.AzureQueueStorage.Tests
             var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
             queueClient.CreateIfNotExists();
 
-            
             AzureQueueStorageBinding azureQueueStorageBinding = new AzureQueueStorageBinding(AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();
             channel.Create("test");
-
 
             string inputMessage = "<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>test</name></Create></s:Body></s:Envelope>";
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -48,5 +40,4 @@ namespace CoreWCF.AzureQueueStorage.Tests
             Assert.Equals(message.ToString(), inputMessage);
         }
     }
-
 }

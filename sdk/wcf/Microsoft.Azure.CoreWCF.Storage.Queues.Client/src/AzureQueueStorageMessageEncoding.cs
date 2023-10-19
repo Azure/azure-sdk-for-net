@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF
 {
+    /// <summary>
+    /// The enum which will be used by message encoder.
+    /// </summary>
     public enum AzureQueueStorageMessageEncoding
     {
         /// <summary>

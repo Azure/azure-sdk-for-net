@@ -8,18 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.8.1" />
-    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.12.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
-    <PackageReference Include="NUnitTestAdapter" Version="2.3.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="xunit.runner.utility" Version="2.4.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Storage.Files.Shares" VersionOverride="12.1.0" />
+    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" VersionOverride="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" VersionOverride="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="6.0.1" />
+    <PackageReference Include="NUnitTestAdapter" VersionOverride="2.3.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="xunit.runner.utility" VersionOverride="2.5.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
-    <ProjectReference Include="..\src\AzureQueueStorageClient.csproj" />
+    <ProjectReference Include="..\src\Azure.WCF.AzureQueueStorage.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

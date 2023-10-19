@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Storage.Queues;
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF.Channels
 {
     /// <summary>
     /// IOutputChannel implementation for AzureQueueStorage.
@@ -20,7 +20,7 @@ namespace Microsoft.ServiceModel.AQS
         private EndpointAddress _remoteAddress;
         private Uri _via;
         private MessageEncoder _encoder;
-        private AzureQueueStorageChannelFactory _parent;
+        private AzureQueueStorageChannelFactory _parent = null;
         private QueueClient _queueClient;
         private ArraySegment<byte> _messageBuffer;
         #endregion
@@ -88,14 +88,12 @@ namespace Microsoft.ServiceModel.AQS
             result.ToApmEnd();
         }
 
-
         #region Shutdown
         /// <summary>
         /// Shutdown ungracefully
         /// </summary>
         protected override void OnAbort()
         {
-
         }
 
         /// <summary>
@@ -103,7 +101,6 @@ namespace Microsoft.ServiceModel.AQS
         /// </summary>
         protected override void OnClose(TimeSpan timeout)
         {
-
         }
 
         protected override IAsyncResult OnBeginClose(TimeSpan timeout, AsyncCallback callback, object state)
@@ -147,7 +144,7 @@ namespace Microsoft.ServiceModel.AQS
 
         #region Send_Asynchronous
         public IAsyncResult BeginSend(Message message, AsyncCallback callback, object state)
-        {      
+        {
             return BeginSend(message, default, callback, state);
         }
 
@@ -165,7 +162,7 @@ namespace Microsoft.ServiceModel.AQS
         private async Task SendAsync(Message message, TimeSpan timeout)
         {
             CancellationTokenSource cts = new(timeout);
-            
+
             try
             {
                 _messageBuffer = EncodeMessage(message);

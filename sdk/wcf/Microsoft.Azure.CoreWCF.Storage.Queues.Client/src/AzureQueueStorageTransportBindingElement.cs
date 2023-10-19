@@ -4,24 +4,32 @@
 using System;
 using System.ServiceModel.Channels;
 
-namespace Microsoft.ServiceModel.AQS
+namespace Azure.Storage.WCF.Channels
 {
     /// <summary>
-    /// AzureQueueStorage Binding Element.  
-    /// Used to configure and construct AzureQueueStorage ChannelFactories.
+    /// Class that represents Azure Queue Storage transport binding element.
     /// </summary>
     public class AzureQueueStorageTransportBindingElement
         : TransportBindingElement // to signal that we're a transport
     {
+        /// <summary>
+        /// Creates a new instance of the AzureQueueStorageTransportBindingElement Class.
+        /// </summary>
         public AzureQueueStorageTransportBindingElement()
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of this class from an existing instance.
+        /// </summary>
         protected AzureQueueStorageTransportBindingElement(AzureQueueStorageTransportBindingElement other)
             : base(other)
         {
         }
 
+        /// <summary>
+        /// Overridden method to build channel factory from binding context.
+        /// </summary>
         public override IChannelFactory<TChannel> BuildChannelFactory<TChannel>(BindingContext context)
         {
             if (context == null)
@@ -41,6 +49,9 @@ namespace Microsoft.ServiceModel.AQS
             return (typeof(TChannel) == typeof(IOutputChannel));
         }
 
+        /// <summary>
+        /// Gets the URI scheme for the transport.
+        /// </summary>
         public override string Scheme
         {
             get
@@ -49,11 +60,17 @@ namespace Microsoft.ServiceModel.AQS
             }
         }
 
+        /// <summary>
+        /// Overridden method to return a copy of the binding AzureQueueStorageTransportBindingElement object.
+        /// </summary>
         public override BindingElement Clone()
         {
             return new AzureQueueStorageTransportBindingElement(this);
         }
 
+        /// <summary>
+        /// Gets a property from the specified BindingContext.
+        /// </summary>
         public override T GetProperty<T>(BindingContext context)
         {
             if (context == null)
@@ -64,7 +81,9 @@ namespace Microsoft.ServiceModel.AQS
             return context.GetInnerProperty<T>();
         }
 
+        /// <summary>
+        /// Gets the QueueMessageEncoding for the transport.
+        /// </summary>
         public Azure.Storage.Queues.QueueMessageEncoding QueueMessageEncoding { get; set; }
-
     }
 }

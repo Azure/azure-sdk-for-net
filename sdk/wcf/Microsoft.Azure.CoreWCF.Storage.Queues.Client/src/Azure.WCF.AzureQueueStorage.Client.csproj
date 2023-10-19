@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Compile Remove="bin\**" />
     <Compile Remove="obj\**" />
@@ -14,9 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.8.1" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.12.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
+    <PackageReference Include="Azure.Identity"/>
+    <PackageReference Include="Azure.Storage.Queues"/>
+    <PackageReference Include="System.ServiceModel.Primitives"/>
   </ItemGroup>
-
 </Project>
