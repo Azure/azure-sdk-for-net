@@ -84,6 +84,15 @@ namespace Azure.Communication.CallAutomation
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
         public int SampleRate { get { throw null; } set { } }
     }
+    public partial class AzureOpenAIDialog : Azure.Communication.CallAutomation.BaseDialog
+    {
+        public AzureOpenAIDialog(System.Collections.Generic.IDictionary<string, object> context) : base (default(System.Collections.Generic.IDictionary<string, object>)) { }
+    }
+    public abstract partial class BaseDialog
+    {
+        protected BaseDialog(System.Collections.Generic.IDictionary<string, object> context) { }
+        public System.Collections.Generic.IDictionary<string, object> Context { get { throw null; } set { } }
+    }
     public partial class BlobStorage : Azure.Communication.CallAutomation.ExternalStorage
     {
         public BlobStorage(System.Uri containerUri) { }
@@ -1228,11 +1237,6 @@ namespace Azure.Communication.CallAutomation
         public int? SubCode { get { throw null; } }
     }
     public enum ResultStatus
-    {
-        Intermediate = 0,
-        Final = 1,
-    }
-    public partial class SendDtmfCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         Intermediate = 0,
         Final = 1,
