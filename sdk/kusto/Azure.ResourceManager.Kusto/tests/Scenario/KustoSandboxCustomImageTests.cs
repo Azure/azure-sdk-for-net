@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var sandboxCustomImageDataCreate = new SandboxCustomImageData()
             {
-                Language = Language.Python,
+                Language = SandboxCustomImageLanguage.Python,
                 LanguageVersion = "3.9.7",
                 RequirementsFileContent = "Requests\n urllib3"
             };
 
             var sandboxCustomImageDataUpdate = new SandboxCustomImageData()
             {
-                Language = Language.Python,
+                Language = SandboxCustomImageLanguage.Python,
                 LanguageVersion = "3.10.8",
                 RequirementsFileContent = "Pillow"
             };
