@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.AccessControl
 {
     // Data plane generated client.
-    /// <summary> The RoleAssignments service client. </summary>
+    /// <summary> The RoleAssignments service client. Hello World. </summary>
     public partial class RoleAssignmentsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://dev.azuresynapse.net/.default" };
