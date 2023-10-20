@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Tests.Client
             StringBuilder builder = new StringBuilder();
             int indexAfter = testsLocation.IndexOf(".Tests") + 6;
             builder.Append(testsLocation.Substring(0, indexAfter));
-            builder.Append(".Common");
+            builder.Append(".Client");
             if (testsLocation[indexAfter] == Path.DirectorySeparatorChar)
             {
                 builder.Append(testsLocation.Substring(indexAfter));
