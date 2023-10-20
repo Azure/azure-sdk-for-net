@@ -35,4 +35,30 @@ public static partial class ArmDesktopVirtualizationModelFactory
     /// <param name="plan"> Gets or sets the plan. </param>
     public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, SessionHostAgentUpdateProperties agentUpdate, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         => HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, default, SessionHostAgentUpdateProperties agentUpdate, default, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location);
+
+    /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+    /// <param name="id"> The id. </param>
+    /// <param name="name"> The name. </param>
+    /// <param name="resourceType"> The resourceType. </param>
+    /// <param name="systemData"> The systemData. </param>
+    /// <param name="tags"> tags to be updated. </param>
+    /// <param name="friendlyName"> Friendly name of HostPool. </param>
+    /// <param name="description"> Description of HostPool. </param>
+    /// <param name="customRdpProperty"> Custom rdp property of HostPool. </param>
+    /// <param name="maxSessionLimit"> The max session limit of HostPool. </param>
+    /// <param name="personalDesktopAssignmentType"> PersonalDesktopAssignment type for HostPool. </param>
+    /// <param name="loadBalancerType"> The type of the load balancer. </param>
+    /// <param name="ring"> The ring number of HostPool. </param>
+    /// <param name="isValidationEnvironment"> Is validation environment. </param>
+    /// <param name="registrationInfo"> The registration info of HostPool. </param>
+    /// <param name="vmTemplate"> VM template for sessionhosts configuration within hostpool. </param>
+    /// <param name="ssoAdfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
+    /// <param name="ssoClientId"> ClientId for the registered Relying Party used to issue WVD SSO certificates. </param>
+    /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
+    /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
+    /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
+    /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
+    /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
+    public static HostPoolPatch HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate) : base(id, name, resourceType, systemData)
+        => HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, default, SessionHostAgentUpdatePatchProperties agentUpdate)
 }
