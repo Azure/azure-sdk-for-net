@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Job Worker Selector State. </summary>
     public readonly partial struct AcsRouterWorkerSelectorState : IEquatable<AcsRouterWorkerSelectorState>

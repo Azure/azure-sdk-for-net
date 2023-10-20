@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -128,6 +129,30 @@ namespace Azure.Monitor.Query.Tests
                             $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
                     }
                 }
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task QueryBatchMetrics()
+        {
+            #region Snippet:QueryBatchMetrics
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
+            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+                resourceIds: new List<string> { resourceId },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+            MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+            foreach (var value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Interval);
             }
             #endregion
         }

@@ -1,6 +1,16 @@
 # Release History
 
-## 1.4.0-beta.1 (2023-10-15)
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0 (2023-10-19)
 - Updated to support ANF api-version 2023-05-01
 ### Features Added
 - Added `QueryNetworkSiblingSetNetAppResource` and `UpdateNetworkSiblingSetNetAppResource` to allow clients to query and update the Networking features for a Networking siblingset related to a ANF Volume
@@ -12,7 +22,7 @@
 ## 1.3.0 (2023-08-15)
 
 ### Features Added
-- Updated to support ANF api-version 2022-09-01
+- Updated to support ANF api-version 2022-11-01
 - Added `GetGetGroupIdListForLdapUser` to `NetAppVolumeResource` and `NetAppVolumeGroupVolume` to get a list of group Ids for a specific LDAP User
 - Added `ActualThroughputMibps` to `NetAppVolumeData` to show actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
 - Added `OriginatingResourceId` to `NetAppVolumeData`, the Id of the snapshot or backup that the volume is restored from.
