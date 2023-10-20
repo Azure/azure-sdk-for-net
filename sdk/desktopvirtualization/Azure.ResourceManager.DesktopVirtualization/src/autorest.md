@@ -112,8 +112,8 @@ rename-mapping:
   AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
   MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
   HostpoolPublicNetworkAccess: HostPoolPublicNetworkAccess
-  DesktopVirtualizationPrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
-  PrivateEndpointConnectionWithSystemDataData: DesktopVirtualizationPrivateEndpointConnectionData
+  PrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
+  PrivateEndpointConnectionWithSystemData: DesktopVirtualizationPrivateEndpointConnectionData
   PublicNetworkAccess: DesktopVirtualizationPublicNetworkAccess
 
 prepend-rp-prefix:
