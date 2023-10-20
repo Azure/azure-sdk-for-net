@@ -155,6 +155,15 @@ directive:
       {
           $[path]["properties"]["disconnectionReason"]["x-namespace"] = namespace;
       }
+      if (path.includes("AcsRouterJobReceivedEventData"))
+      {
+          $[path]["properties"]["jobStatus"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterWorkerSelector"))
+      {
+          $[path]["properties"]["labelOperator"]["x-namespace"] = namespace;
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
     }
 ```
 
