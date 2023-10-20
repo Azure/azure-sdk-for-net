@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Tests
     {
         private SubscriptionSupportTicketCollection _supportAzureServiceCollection => DefaultSubscription.GetSubscriptionSupportTickets();
 
-        private const string _existSupportTicketName = "2310120040010764";
+        private const string _existSupportTicketName = "dotnet_sdk_test_638333917418076091";
         private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
 
         public SupportTicketTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)

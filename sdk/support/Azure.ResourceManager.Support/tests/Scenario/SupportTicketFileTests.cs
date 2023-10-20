@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Tests
     internal class SupportTicketFileTests : SupportManagementTestBase
     {
         private SupportTicketFileCollection _supportTicketFileCollection;
-        private const string _existSupportTicketFileWorkspaceName = "dotnet_test_workspacename";
+        private const string _existSupportTicketFileWorkspaceName = "dotnet_test_workspacename1";
         private const string _existSupportTicketFileName = "dotnet_test_filename.txt";
         private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            var flag = await _supportTicketFileCollection.ExistsAsync(_existSupportTicketFileWorkspaceName);
+            var flag = await _supportTicketFileCollection.ExistsAsync(_existSupportTicketFileName);
             Assert.IsTrue(flag);
         }
 

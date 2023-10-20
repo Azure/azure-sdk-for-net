@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Support.Tests
     {
         private SupportTicketCommunicationCollection _supportTicketCommunicationCollection;
         private SubscriptionSupportTicketResource _subscriptionSupportTicketResource;
-        private const string _existSupportTicketCommunicationName = "0b60e9a8-98bd-ed11-83ff-000d3a18b532";
+        private const string _existSupportTicketCommunicationName = "2310190040011036-lnyu3pmk";
         private const string _subscriptionId = "cca0326c-4c31-46d8-8fcb-c67023a46f4b";
-        private const string _existSupportTicketName = "2310120040010764";
+        private const string _existSupportTicketName = "E2ETest638333338893197306";
 
         public SupportTicketCommunicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
