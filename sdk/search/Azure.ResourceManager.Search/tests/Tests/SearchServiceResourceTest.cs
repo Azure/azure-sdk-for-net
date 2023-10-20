@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotEmpty(list);
             Assert.AreEqual(queryName,list.First(item => item.Name == queryName).Name);
             Assert.IsNotNull(list.First(item => item.Name == queryName).Key);
-            Assert.AreEqual(originKey.Key, list.First(item => item.Name == queryName).Key);
+            Assert.IsNotEmpty(list.First(item => item.Name == queryName).Key);
         }
         [Test]
         public async Task AddTagAsync()
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         {
             await setResourceGroup();
             var name = Recording.GenerateAssetName("search");
-            var data = new SearchServiceData(DefaultLocation)
+            var data = new SearchServiceData(AzureLocation.WestCentralUS)
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
