@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
@@ -558,6 +559,78 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: dResource,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Test]
+        [LiveOnly]
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task ResumeTransferAsync_Options(TransferDirection transferType)
+        {
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingContainer blobContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+
+            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            LocalFilesStorageResourceProvider localProvider = new();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { blobProvider, localProvider },
+            };
+            TransferManager transferManager = new TransferManager(options);
+
+            BlockBlobStorageResourceOptions testOptions = new()
+            {
+                Metadata = DataProvider.BuildMetadata(),
+                Tags = DataProvider.BuildTags(),
+                AccessTier = AccessTier.Cool,
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentLanguage = "en-US",
+                },
+            };
+
+            long size = Constants.KB;
+            StorageResource source;
+            StorageResource destination;
+            if (transferType == TransferDirection.Upload)
+            {
+                source = await CreateLocalFileSourceResourceAsync(size, localDirectory.DirectoryPath, localProvider);
+                destination = CreateBlobDestinationResource(blobContainer.Container, blobProvider, options: testOptions);
+            }
+            else // Copy
+            {
+                source = await CreateBlobSourceResourceAsync(size, GetNewBlobName(), blobContainer.Container, blobProvider);
+                destination = CreateBlobDestinationResource(blobContainer.Container, blobProvider, options: testOptions);
+            }
+
+            DataTransfer transfer = await transferManager.StartTransferAsync(source, destination);
+
+            // Act - Pause Job
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
+
+            // Act - Resume Job
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(transfer.Id);
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
+
+            // Assert
+            Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus.State);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            BlobUriBuilder builder = new BlobUriBuilder(destination.Uri);
+            BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
+            BlobProperties props = (await blob.GetPropertiesAsync()).Value;
+            Assert.AreEqual(testOptions.Metadata, props.Metadata);
+            Assert.AreEqual(testOptions.Tags.Count, props.TagCount);
+            Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
+            Assert.AreEqual(testOptions.HttpHeaders.ContentLanguage, props.ContentLanguage);
         }
 
         private async Task<StorageResource> CreateBlobDirectorySourceResourceAsync(
