@@ -35,8 +35,8 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 If you get an error with HTTP status code 403 (Forbidden), it means that the provided credentials have insufficient permissions to upload logs to the specified Data Collection Endpoint (DCE) and Data Collection Rule (DCR) ID.
 
 ```text
-Status code 403, "{"error":{"code":"OperationFailed","message":"The 
-authentication token provided does not have access to ingest data for the data collection rule with immutable Id 
+Status code 403, "{"error":{"code":"OperationFailed","message":"The
+authentication token provided does not have access to ingest data for the data collection rule with immutable Id
 '<REDACTED>' PipelineAccessResult: AccessGranted: False, IsRbacPresent: False, IsDcrDceBindingValid: , DcrArmId: <REDACTED>,
  Message: Required authorization action was not found for tenantId <REDACTED> objectId <REDACTED> on resourceId <REDACTED>
  ConfigurationId: <REDACTED>.."}}"
@@ -58,7 +58,7 @@ When you send logs to Azure Monitor for ingestion, the request may succeed, but 
 
 * Verify that the custom table specified in the DCR exists in the Log Analytics workspace. Ensure that you provide the accurate name of the custom table to the upload method. Mismatched table names can lead to logs not being stored correctly.
 
-* Confirm that the logs you're sending adhere to the format expected by the DCR. The data should be in the form of a JSON object or array, structured according to the requirements specified in the DCR. Additionally, it's essential to encode the request body in UTF-8 to avoid any data transmission issues.
+* Confirm that the logs you're sending adhere to the format expected by the DCR. The data should be an array of JSON objects, structured according to the requirements specified in the DCR. Additionally, it's essential to encode the request body in UTF-8 to avoid any data transmission issues.
 
 * Keep in mind that data ingestion may take some time, especially if you're sending data to a specific table for the first time. In such cases, allow up to 15 minutes for the data to be fully ingested and available for querying and analysis.
 
