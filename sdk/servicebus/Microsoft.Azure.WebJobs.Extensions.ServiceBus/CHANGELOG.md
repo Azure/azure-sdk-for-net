@@ -1,5 +1,21 @@
 # Release History
 
+## 5.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.13.2 (2023-10-18)
+
+### Other Changes
+
+- Updated proto service definition to use StringValue rather than string for deadletter error reason and description.
+
 ## 5.13.1 (2023-10-17)
 
 ### Bugs Fixed

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.20.0-beta.1 (Unreleased)
+## 4.21.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
 
 ## 4.19.0 (2023-10-11)
 
