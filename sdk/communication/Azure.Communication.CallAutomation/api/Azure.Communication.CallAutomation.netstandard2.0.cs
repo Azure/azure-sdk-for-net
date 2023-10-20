@@ -268,7 +268,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
         public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } }
-        public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }
+        public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
     }

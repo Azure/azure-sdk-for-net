@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 copyStatusDescription: properties?.CopyStatusDescription,
                 copyId: properties?.CopyId,
                 copyProgress: properties?.CopyProgress,
-                copySource: properties?.CopySource != default ? new Uri(properties?.CopySource) : default,
+                copySource: properties?.CopySource != null ? new Uri(properties?.CopySource) : null,
                 contentLength: properties.ContentLength,
                 contentType: properties?.ContentType,
                 eTag: properties.ETag,
