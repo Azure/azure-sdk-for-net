@@ -272,5 +272,79 @@ namespace Azure.ResourceManager.Support
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionFileWorkspaceResource>> GetIfExistsAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+
+            using var scope = _subscriptionFileWorkspaceFileWorkspacesClientDiagnostics.CreateScope("SubscriptionFileWorkspaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionFileWorkspaceFileWorkspacesRestClient.GetAsync(Id.SubscriptionId, fileWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionFileWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionFileWorkspaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionFileWorkspaceResource> GetIfExists(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+
+            using var scope = _subscriptionFileWorkspaceFileWorkspacesClientDiagnostics.CreateScope("SubscriptionFileWorkspaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionFileWorkspaceFileWorkspacesRestClient.Get(Id.SubscriptionId, fileWorkspaceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionFileWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionFileWorkspaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

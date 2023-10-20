@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of FilesListResult. </summary>
         internal FilesListResult()
         {
-            Value = new ChangeTrackingList<FileDetailData>();
+            Value = new ChangeTrackingList<SupportFileDetailData>();
         }
 
         /// <summary> Initializes a new instance of FilesListResult. </summary>
         /// <param name="value"> List of File resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of File resources. </param>
-        internal FilesListResult(IReadOnlyList<FileDetailData> value, string nextLink)
+        internal FilesListResult(IReadOnlyList<SupportFileDetailData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of File resources. </summary>
-        public IReadOnlyList<FileDetailData> Value { get; }
+        public IReadOnlyList<SupportFileDetailData> Value { get; }
         /// <summary> The URI to fetch the next page of File resources. </summary>
         public string NextLink { get; }
     }

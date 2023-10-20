@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class UploadFile : IUtf8JsonSerializable
+    public partial class UploadFileContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

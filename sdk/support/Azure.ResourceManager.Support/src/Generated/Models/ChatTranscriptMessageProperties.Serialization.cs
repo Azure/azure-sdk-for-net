@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class MessageProperties : IUtf8JsonSerializable
+    public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteEndObject();
         }
 
-        internal static MessageProperties DeserializeMessageProperties(JsonElement element)
+        internal static ChatTranscriptMessageProperties DeserializeChatTranscriptMessageProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new MessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate));
+            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate));
         }
     }
 }

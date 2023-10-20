@@ -332,6 +332,80 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationName"> Communication name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SupportTicketNoSubCommunicationResource>> GetIfExistsAsync(string communicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+
+            using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.GetAsync(Id.Name, communicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketNoSubCommunicationResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketNoSubCommunicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationName"> Communication name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        public virtual NullableResponse<SupportTicketNoSubCommunicationResource> GetIfExists(string communicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+
+            using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.Get(Id.Name, communicationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketNoSubCommunicationResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketNoSubCommunicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SupportTicketNoSubCommunicationResource> IEnumerable<SupportTicketNoSubCommunicationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

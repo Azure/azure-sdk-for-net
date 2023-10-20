@@ -3,16 +3,8 @@ namespace Azure.ResourceManager.Support
     public partial class ChatTranscriptDetailData : Azure.ResourceManager.Models.ResourceData
     {
         public ChatTranscriptDetailData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.MessageProperties> Messages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> Messages { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-    }
-    public partial class FileDetailData : Azure.ResourceManager.Models.ResourceData
-    {
-        public FileDetailData() { }
-        public float? ChunkSize { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public float? FileSize { get { throw null; } set { } }
-        public float? NumberOfChunks { get { throw null; } set { } }
     }
     public partial class FileWorkspaceDetailData : Azure.ResourceManager.Models.ResourceData
     {
@@ -60,6 +52,8 @@ namespace Azure.ResourceManager.Support
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource> Get(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource>> GetAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource> GetIfExists(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource>> GetIfExistsAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubscriptionFileWorkspaceResource : Azure.ResourceManager.ArmResource
     {
@@ -87,6 +81,8 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SubscriptionSupportTicketResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SubscriptionSupportTicketResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SubscriptionSupportTicketResource>> GetAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SubscriptionSupportTicketResource> GetIfExists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SubscriptionSupportTicketResource>> GetIfExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SubscriptionSupportTicketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SubscriptionSupportTicketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SubscriptionSupportTicketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SubscriptionSupportTicketResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -179,6 +175,14 @@ namespace Azure.ResourceManager.Support
         public static Azure.ResourceManager.Support.TenantSupportTicketResource GetTenantSupportTicketResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Support.TenantSupportTicketCollection GetTenantSupportTickets(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
     }
+    public partial class SupportFileDetailData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SupportFileDetailData() { }
+        public float? ChunkSize { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public float? FileSize { get { throw null; } set { } }
+        public float? NumberOfChunks { get { throw null; } set { } }
+    }
     public partial class SupportTicketChatTranscriptCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>, System.Collections.IEnumerable
     {
         protected SupportTicketChatTranscriptCollection() { }
@@ -188,6 +192,8 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>> GetAsync(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> GetIfExists(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>> GetIfExistsAsync(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -201,23 +207,6 @@ namespace Azure.ResourceManager.Support
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName, string chatTranscriptName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SupportTicketCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketResource>, System.Collections.IEnumerable
-    {
-        protected SupportTicketCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string supportTicketName, Azure.ResourceManager.Support.SupportTicketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string supportTicketName, Azure.ResourceManager.Support.SupportTicketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketResource> Get(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketResource>> GetAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketResource> GetIfExists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketResource>> GetIfExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class SupportTicketCommunicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketCommunicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketCommunicationResource>, System.Collections.IEnumerable
     {
@@ -261,7 +250,7 @@ namespace Azure.ResourceManager.Support
     public partial class SupportTicketData : Azure.ResourceManager.Models.ResourceData
     {
         public SupportTicketData() { }
-        public Azure.ResourceManager.Support.Models.Consent? AdvancedDiagnosticConsent { get { throw null; } set { } }
+        public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportContactProfile ContactDetails { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -291,14 +280,16 @@ namespace Azure.ResourceManager.Support
     public partial class SupportTicketFileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>, System.Collections.IEnumerable
     {
         protected SupportTicketFileCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketFileResource> Get(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketFileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketFileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketFileResource>> GetAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketFileResource> GetIfExists(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketFileResource>> GetIfExistsAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketFileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketFileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -307,15 +298,15 @@ namespace Azure.ResourceManager.Support
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SupportTicketFileResource() { }
-        public virtual Azure.ResourceManager.Support.FileDetailData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.Support.SupportFileDetailData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string fileWorkspaceName, string fileName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketFileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketFileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Upload(Azure.ResourceManager.Support.Models.UploadFile uploadFile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(Azure.ResourceManager.Support.Models.UploadFile uploadFile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketFileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Upload(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SupportTicketNoSubChatTranscriptCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>, System.Collections.IEnumerable
     {
@@ -326,6 +317,8 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>> GetAsync(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetIfExists(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>> GetIfExistsAsync(string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -351,6 +344,8 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>> GetAsync(string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetIfExists(string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>> GetIfExistsAsync(string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -370,14 +365,16 @@ namespace Azure.ResourceManager.Support
     public partial class SupportTicketNoSubFileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>, System.Collections.IEnumerable
     {
         protected SupportTicketNoSubFileCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fileName, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> Get(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> GetAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetIfExists(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> GetIfExistsAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -386,32 +383,15 @@ namespace Azure.ResourceManager.Support
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SupportTicketNoSubFileResource() { }
-        public virtual Azure.ResourceManager.Support.FileDetailData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.Support.SupportFileDetailData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName, string fileName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.FileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Upload(Azure.ResourceManager.Support.Models.UploadFile uploadFile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(Azure.ResourceManager.Support.Models.UploadFile uploadFile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SupportTicketResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SupportTicketResource() { }
-        public virtual Azure.ResourceManager.Support.SupportTicketData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult> CheckCommunicationNameAvailability(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketCommunicationResource> GetSupportTicketCommunication(string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketCommunicationResource>> GetSupportTicketCommunicationAsync(string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Support.SupportTicketCommunicationCollection GetSupportTicketCommunications() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketResource> Update(Azure.ResourceManager.Support.Models.SupportTicketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketResource>> UpdateAsync(Azure.ResourceManager.Support.Models.SupportTicketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Upload(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TenantFileWorkspaceCollection : Azure.ResourceManager.ArmCollection
     {
@@ -422,6 +402,8 @@ namespace Azure.ResourceManager.Support
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.TenantFileWorkspaceResource> Get(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.TenantFileWorkspaceResource>> GetAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.TenantFileWorkspaceResource> GetIfExists(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.TenantFileWorkspaceResource>> GetIfExistsAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TenantFileWorkspaceResource : Azure.ResourceManager.ArmResource
     {
@@ -449,6 +431,8 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Pageable<Azure.ResourceManager.Support.TenantSupportTicketResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.TenantSupportTicketResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Support.TenantSupportTicketResource> GetIfExists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetIfExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.TenantSupportTicketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.TenantSupportTicketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -476,41 +460,41 @@ namespace Azure.ResourceManager.Support
 }
 namespace Azure.ResourceManager.Support.Models
 {
-    public static partial class ArmSupportModelFactory
-    {
-        public static Azure.ResourceManager.Support.ChatTranscriptDetailData ChatTranscriptDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.MessageProperties> messages = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.FileDetailData FileDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), float? chunkSize = default(float?), float? fileSize = default(float?), float? numberOfChunks = default(float?)) { throw null; }
-        public static Azure.ResourceManager.Support.FileWorkspaceDetailData FileWorkspaceDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.Models.MessageProperties MessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType = default(Azure.ResourceManager.Support.Models.TranscriptContentType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabled = null) { throw null; }
-        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null) { throw null; }
-        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
-        public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement SupportServiceLevelAgreement(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), int? slaInMinutes = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Support.SupportTicketCommunicationData SupportTicketCommunicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType? communicationType = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string subject = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, Azure.ResourceManager.Support.Models.SupportSeverityLevel? severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel?), string enrollmentId = null, bool? require24X7Response = default(bool?), Azure.ResourceManager.Support.Models.Consent? advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.Consent?), string problemScopingQuestions = null, string supportPlanId = null, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails = null, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, System.DateTimeOffset? problemStartOn = default(System.DateTimeOffset?), string serviceId = null, string serviceDisplayName = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string fileWorkspaceName = null, Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId = null, Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Consent : System.IEquatable<Azure.ResourceManager.Support.Models.Consent>
+    public readonly partial struct AdvancedDiagnosticConsent : System.IEquatable<Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Consent(string value) { throw null; }
-        public static Azure.ResourceManager.Support.Models.Consent No { get { throw null; } }
-        public static Azure.ResourceManager.Support.Models.Consent Yes { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Support.Models.Consent other) { throw null; }
+        public AdvancedDiagnosticConsent(string value) { throw null; }
+        public static Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent No { get { throw null; } }
+        public static Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent Yes { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Support.Models.Consent left, Azure.ResourceManager.Support.Models.Consent right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Support.Models.Consent (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Support.Models.Consent left, Azure.ResourceManager.Support.Models.Consent right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent left, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent left, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageProperties
+    public static partial class ArmSupportModelFactory
     {
-        public MessageProperties(string body) { }
+        public static Azure.ResourceManager.Support.ChatTranscriptDetailData ChatTranscriptDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> messages = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType = default(Azure.ResourceManager.Support.Models.TranscriptContentType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Support.FileWorkspaceDetailData FileWorkspaceDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabled = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null) { throw null; }
+        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Support.SupportFileDetailData SupportFileDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), float? chunkSize = default(float?), float? fileSize = default(float?), float? numberOfChunks = default(float?)) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement SupportServiceLevelAgreement(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), int? slaInMinutes = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Support.SupportTicketCommunicationData SupportTicketCommunicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType? communicationType = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string subject = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, Azure.ResourceManager.Support.Models.SupportSeverityLevel? severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel?), string enrollmentId = null, bool? require24X7Response = default(bool?), Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent?), string problemScopingQuestions = null, string supportPlanId = null, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails = null, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, System.DateTimeOffset? problemStartOn = default(System.DateTimeOffset?), string serviceId = null, string serviceDisplayName = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string fileWorkspaceName = null, Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId = null, Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null) { throw null; }
+    }
+    public partial class ChatTranscriptMessageProperties
+    {
+        public ChatTranscriptMessageProperties(string body) { }
         public string Body { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? CommunicationDirection { get { throw null; } }
         public Azure.ResourceManager.Support.Models.TranscriptContentType? ContentType { get { throw null; } }
@@ -667,13 +651,6 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator !=(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SupportTicketPatch
-    {
-        public SupportTicketPatch() { }
-        public Azure.ResourceManager.Support.Models.SupportContactProfileContent ContactDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.Support.Models.SupportSeverityLevel? Severity { get { throw null; } set { } }
-        public Azure.ResourceManager.Support.Models.SupportTicketStatus? Status { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SupportTicketStatus : System.IEquatable<Azure.ResourceManager.Support.Models.SupportTicketStatus>
     {
@@ -711,15 +688,15 @@ namespace Azure.ResourceManager.Support.Models
     public partial class UpdateSupportTicket
     {
         public UpdateSupportTicket() { }
-        public Azure.ResourceManager.Support.Models.Consent? AdvancedDiagnosticConsent { get { throw null; } set { } }
+        public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportContactProfileContent ContactDetails { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsent> SecondaryConsent { get { throw null; } }
         public Azure.ResourceManager.Support.Models.SupportSeverityLevel? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportTicketStatus? Status { get { throw null; } set { } }
     }
-    public partial class UploadFile
+    public partial class UploadFileContent
     {
-        public UploadFile() { }
+        public UploadFileContent() { }
         public float? ChunkIndex { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
     }

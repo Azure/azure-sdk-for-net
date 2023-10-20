@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Describes the properties of a Message Details resource. </summary>
-    public partial class MessageProperties
+    public partial class ChatTranscriptMessageProperties
     {
-        /// <summary> Initializes a new instance of MessageProperties. </summary>
+        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
         /// <param name="body"> Body of the communication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public MessageProperties(string body)
+        public ChatTranscriptMessageProperties(string body)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Body = body;
         }
 
-        /// <summary> Initializes a new instance of MessageProperties. </summary>
+        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
         /// <param name="contentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        internal MessageProperties(TranscriptContentType? contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn)
+        internal ChatTranscriptMessageProperties(TranscriptContentType? contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn)
         {
             ContentType = contentType;
             CommunicationDirection = communicationDirection;

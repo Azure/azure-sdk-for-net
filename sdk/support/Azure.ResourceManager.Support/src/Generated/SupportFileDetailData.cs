@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing the FileDetail data model.
+    /// A class representing the SupportFileDetail data model.
     /// Object that represents File Details resource
     /// </summary>
-    public partial class FileDetailData : ResourceData
+    public partial class SupportFileDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of FileDetailData. </summary>
-        public FileDetailData()
+        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        public SupportFileDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of FileDetailData. </summary>
+        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="chunkSize"> Size of each chunk. </param>
         /// <param name="fileSize"> Size of the file to be uploaded. </param>
         /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
-        internal FileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, float? chunkSize, float? fileSize, float? numberOfChunks) : base(id, name, resourceType, systemData)
+        internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, float? chunkSize, float? fileSize, float? numberOfChunks) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ChunkSize = chunkSize;

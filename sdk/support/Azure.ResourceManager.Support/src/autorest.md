@@ -8,6 +8,7 @@ csharp: true
 library-name: Support
 namespace: Azure.ResourceManager.Support
 require: https://github.com/Azure/azure-rest-api-specs/blob/e0583a2cb882c7c6d88d455bd20bacf0de3a82d4/specification/support/resource-manager/readme.md
+#tag: package-preview-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +18,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}: SupportTicketCommunication
@@ -64,6 +67,7 @@ prepend-rp-prefix:
   - ContactProfile
   - ServiceLevelAgreement
   - SeverityLevel
+  - FileDetails
 
 rename-mapping:
   CommunicationDetails: SupportTicketCommunication
@@ -80,6 +84,9 @@ rename-mapping:
   Type: SupportResourceType
   Service: SupportAzureService
   TechnicalTicketDetails.resourceId: -|arm-id
+  Consent: AdvancedDiagnosticConsent
+  MessageProperties: ChatTranscriptMessageProperties
+  UploadFile: UploadFileContent
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability

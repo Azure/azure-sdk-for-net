@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Support
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<MessageProperties>> messages = default;
+            Optional<IList<ChatTranscriptMessageProperties>> messages = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            List<MessageProperties> array = new List<MessageProperties>();
+                            List<ChatTranscriptMessageProperties> array = new List<ChatTranscriptMessageProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MessageProperties.DeserializeMessageProperties(item));
+                                array.Add(ChatTranscriptMessageProperties.DeserializeChatTranscriptMessageProperties(item));
                             }
                             messages = array;
                             continue;

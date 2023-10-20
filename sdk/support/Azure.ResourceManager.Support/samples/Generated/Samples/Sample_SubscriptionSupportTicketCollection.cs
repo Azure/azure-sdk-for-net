@@ -17,14 +17,14 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support.Samples
 {
-    public partial class Sample_SupportTicketCollection
+    public partial class Sample_SubscriptionSupportTicketCollection
     {
         // List support tickets created on or after a certain date and in open state for a subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSupportTicketsCreatedOnOrAfterACertainDateAndInOpenStateForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListSupportTicketsCreatedOnOrAfterAndInOpenStateBySubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsCreatedOnOrAfterAndInOpenStateBySubscription.json
             // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -38,11 +38,47 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Open'";
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SupportTicketData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List support tickets created on or after a certain date and in updating state for a subscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_ListSupportTicketsCreatedOnOrAfterACertainDateAndInUpdatingStateForASubscription()
+        {
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsCreatedOnOrAfterAndInUpdatingStateBySubscription.json
+            // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionSupportTicketResource
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
+
+            // invoke the operation and iterate over the result
+            string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Updating'";
             await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -60,7 +96,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSupportTicketsForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListSupportTicketsBySubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsBySubscription.json
             // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +110,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
@@ -95,7 +131,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSupportTicketsInOpenStateForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListSupportTicketsInOpenStateBySubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsInOpenStateBySubscription.json
             // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,11 +145,47 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Open'";
+            await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SupportTicketData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List support tickets in updating state for a subscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_ListSupportTicketsInUpdatingStateForASubscription()
+        {
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsInUpdatingStateBySubscription.json
+            // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionSupportTicketResource
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
+
+            // invoke the operation and iterate over the result
+            string filter = "status eq 'Updating'";
             await foreach (SubscriptionSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -131,7 +203,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSupportTicketsWithACertainProblemClassificationIdForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListSupportTicketsProblemClassificationIdEqualsForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsProblemClassificationIdEqualsForSubscription.json
             // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +217,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
@@ -167,7 +239,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSupportTicketsWithACertainServiceIdForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListSupportTicketsServiceIdEqualsForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListSupportTicketsServiceIdEqualsForSubscription.json
             // this example is just showing the usage of "SupportTickets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +253,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation and iterate over the result
@@ -203,7 +275,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDetailsOfASubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetSubscriptionSupportTicketDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetSubscriptionSupportTicketDetails.json
             // this example is just showing the usage of "SupportTickets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +289,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -236,7 +308,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDetailsOfASubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetSubscriptionSupportTicketDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetSubscriptionSupportTicketDetails.json
             // this example is just showing the usage of "SupportTickets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +322,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -265,7 +337,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDetailsOfASubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetSubscriptionSupportTicketDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetSubscriptionSupportTicketDetails.json
             // this example is just showing the usage of "SupportTickets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,13 +351,13 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
-            SupportTicketCollection collection = subscriptionResource.GetSupportTickets();
+            // get the collection of this SubscriptionSupportTicketResource
+            SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
-            NullableResponse<SupportTicketResource> response = await collection.GetIfExistsAsync(supportTicketName);
-            SupportTicketResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SubscriptionSupportTicketResource> response = await collection.GetIfExistsAsync(supportTicketName);
+            SubscriptionSupportTicketResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -306,7 +378,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketForBillingRelatedIssues()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBillingSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBillingSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -320,7 +392,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -330,9 +402,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/billing_service_guid/problemClassifications/billing_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/billing_service_guid",
+                FileWorkspaceName = "6f16735c-1530836f-e9970f1a-2e49-47b7-96cd-9746b83aa066",
             };
             ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
             SubscriptionSupportTicketResource result = lro.Value;
@@ -349,7 +423,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketForSubscriptionManagementRelatedIssues()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSubMgmtSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSubMgmtSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -363,7 +437,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -373,9 +447,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/subscription_management_service_guid/problemClassifications/subscription_management_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/subscription_management_service_guid",
+                FileWorkspaceName = "6f16735c-1530836f-e9970f1a-2e49-47b7-96cd-9746b83aa066",
             };
             ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
             SubscriptionSupportTicketResource result = lro.Value;
@@ -392,7 +468,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketForTechnicalIssueRelatedToASpecificResource()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateTechnicalSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateTechnicalSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +482,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -416,10 +492,22 @@ namespace Azure.ResourceManager.Support.Samples
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/virtual_machine_running_linux_service_guid/problemClassifications/problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                ProblemScopingQuestions = "{\"articleId\":\"076846c1-4c0b-4b21-91c6-1a30246b3867\",\"scopingDetails\":[{\"question\":\"When did the problem begin?\",\"controlId\":\"problem_start_time\",\"orderId\":1,\"inputType\":\"static\",\"answer\":{\"displayValue\":\"2023-08-31T18:55:00.739Z\",\"value\":\"2023-08-31T18:55:00.739Z\",\"type\":\"datetime\"}},{\"question\":\"API Type of the Cosmos DB account\",\"controlId\":\"api_type\",\"orderId\":2,\"inputType\":\"static\",\"answer\":{\"displayValue\":\"Table\",\"value\":\"tables\",\"type\":\"string\"}},{\"question\":\"Table name\",\"controlId\":\"collection_name_table\",\"orderId\":11,\"inputType\":\"nonstatic\",\"answer\":{\"displayValue\":\"Select Table Name\",\"value\":\"dont_know_answer\",\"type\":\"string\"}},{\"question\":\"Provide additional details about the issue you're facing\",\"controlId\":\"problem_description\",\"orderId\":12,\"inputType\":\"nonstatic\",\"answer\":{\"displayValue\":\"test ticket, please ignore and close\",\"value\":\"test ticket, please ignore and close\",\"type\":\"string\"}}]}",
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/cddd3eb5-1830-b494-44fd-782f691479dc",
+                FileWorkspaceName = "6f16735c-1530836f-e9970f1a-2e49-47b7-96cd-9746b83aa066",
                 TechnicalTicketDetailsResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/test/providers/Microsoft.Compute/virtualMachines/testserver"),
+                SecondaryConsent =
+{
+new SecondaryConsent()
+{
+UserConsent = UserConsent.Yes,
+SecondaryConsentType = "virtualmachinerunninglinuxservice",
+}
+},
             };
             ArmOperation<SubscriptionSupportTicketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, data);
             SubscriptionSupportTicketResource result = lro.Value;
@@ -436,7 +524,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForActiveJobsAndJobSchedulesForABatchAccount()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForActiveJobs.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBatchQuotaTicketForSpecificBatchAccountForActiveJobs.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -450,7 +538,7 @@ namespace Azure.ResourceManager.Support.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -460,6 +548,8 @@ namespace Azure.ResourceManager.Support.Samples
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/batch_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -492,7 +582,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForAzureSQLManagedInstance()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSqlManagedInstanceQuotaTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSqlManagedInstanceQuotaTicket.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -506,7 +596,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -516,6 +606,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/sql_managedinstance_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -552,7 +644,7 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForBatchAccountsForASubscription()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBatchQuotaTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBatchQuotaTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -566,7 +658,7 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -576,6 +668,8 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/batch_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -608,7 +702,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForComputeVMCores()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateCoresQuotaTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateCoresQuotaTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -622,7 +716,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -632,6 +726,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/cores_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -663,7 +759,7 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForDTUsForAzureSynapseAnalytics()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSqlDatawarehouseQuotaTicketForDTUs.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSqlDatawarehouseQuotaTicketForDTUs.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -677,7 +773,7 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -687,6 +783,8 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/sql_datawarehouse_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -719,7 +817,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForDTUsForSQLDatabase()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSqlDatabaseQuotaTicketForDTUs.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSqlDatabaseQuotaTicketForDTUs.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -733,7 +831,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -743,6 +841,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/sql_database_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -775,7 +875,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForLowPriorityCoresForMachineLearningService()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateMachineLearningQuotaTicketForLowPriorityCores.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateMachineLearningQuotaTicketForLowPriorityCores.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -789,7 +889,7 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -799,6 +899,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/machine_learning_service_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -831,7 +933,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForLowPriorityCoresForABatchAccount()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForLowPriorityCores.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBatchQuotaTicketForSpecificBatchAccountForLowPriorityCores.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -845,7 +947,7 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -855,6 +957,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/batch_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -887,7 +991,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForPoolsForABatchAccount()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForPools.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBatchQuotaTicketForSpecificBatchAccountForPools.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -901,7 +1005,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -911,6 +1015,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/batch_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -943,7 +1049,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServersForAzureSynapseAnalytics()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSqlDatawarehouseQuotaTicketForServers.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSqlDatawarehouseQuotaTicketForServers.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -957,7 +1063,7 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -967,6 +1073,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/sql_datawarehouse_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -999,7 +1107,7 @@ Payload = "{\"NewLimit\":200}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServersForSQLDatabase()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSqlDatabaseQuotaTicketForServers.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSqlDatabaseQuotaTicketForServers.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1013,7 +1121,7 @@ Payload = "{\"NewLimit\":200}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -1023,6 +1131,8 @@ Payload = "{\"NewLimit\":200}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/sql_database_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -1055,7 +1165,7 @@ Payload = "{\"NewLimit\":200}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServicesThatDoNotRequireAdditionalDetailsInTheQuotaTicketDetailsObject()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateGenericQuotaTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateGenericQuotaTicket.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1069,7 +1179,7 @@ Payload = "{\"NewLimit\":200}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -1098,7 +1208,7 @@ Payload = "{\"NewLimit\":200}",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForSpecificVMFamilyCoresForMachineLearningService()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateMachineLearningQuotaTicketForDedicatedCores.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateMachineLearningQuotaTicketForDedicatedCores.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1112,7 +1222,7 @@ Payload = "{\"NewLimit\":200}",
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -1122,6 +1232,8 @@ Payload = "{\"NewLimit\":200}",
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/machine_learning_service_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",
@@ -1154,7 +1266,7 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForSpecificVMFamilyCoresForABatchAccount()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForDedicatedCores.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateBatchQuotaTicketForSpecificBatchAccountForDedicatedCores.json
             // this example is just showing the usage of "SupportTickets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1168,7 +1280,7 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SupportTicketResource
+            // get the collection of this SubscriptionSupportTicketResource
             SubscriptionSupportTicketCollection collection = subscriptionResource.GetSubscriptionSupportTickets();
 
             // invoke the operation
@@ -1178,6 +1290,8 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
                 Description = "my description",
                 ProblemClassificationId = "/providers/Microsoft.Support/services/quota_service_guid/problemClassifications/batch_problemClassification_guid",
                 Severity = SupportSeverityLevel.Moderate,
+                AdvancedDiagnosticConsent = AdvancedDiagnosticConsent.Yes,
+                SupportPlanId = "U291cmNlOlNDTSxDbGFyaWZ5SW5zdGFsbGF0aW9uU2l0ZUlkOjcsTGluZUl0ZW1JZDo5ODY1NzIyOSxDb250cmFjdElkOjk4NjU5MTk0LFN1YnNjcmlwdGlvbklkOjc2Y2I3N2ZhLThiMTctNGVhYi05NDkzLWI2NWRhY2U5OTgxMyw=",
                 ContactDetails = new SupportContactProfile("abc", "xyz", PreferredContactMethod.Email, "abc@contoso.com", "Pacific Standard Time", "usa", "en-US"),
                 Title = "my title",
                 ServiceId = "/providers/Microsoft.Support/services/quota_service_guid",

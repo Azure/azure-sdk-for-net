@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class FileDetailData : IUtf8JsonSerializable
+    public partial class SupportFileDetailData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Support
             writer.WriteEndObject();
         }
 
-        internal static FileDetailData DeserializeFileDetailData(JsonElement element)
+        internal static SupportFileDetailData DeserializeSupportFileDetailData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support
                     continue;
                 }
             }
-            return new FileDetailData(id, name, type, systemData.Value, Optional.ToNullable(createdOn), Optional.ToNullable(chunkSize), Optional.ToNullable(fileSize), Optional.ToNullable(numberOfChunks));
+            return new SupportFileDetailData(id, name, type, systemData.Value, Optional.ToNullable(createdOn), Optional.ToNullable(chunkSize), Optional.ToNullable(fileSize), Optional.ToNullable(numberOfChunks));
         }
     }
 }
