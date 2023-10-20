@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 
@@ -171,11 +172,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // TODO: This needs an update to ShareFileClient to allow getting the Copy Authorization Token
-            throw new NotImplementedException();
+            return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
