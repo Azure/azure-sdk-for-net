@@ -506,6 +506,26 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private class BlobContainerResourceRehydrator : IBlobResourceRehydrator
         {
+            private BlobStorageResourceContainerOptions GetOptions(
+                DataTransferProperties transferProperties,
+                BlobDestinationCheckpointData destinationCheckpointData,
+                bool isSource)
+            {
+                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+
+                if (isSource)
+                {
+                    return new BlobStorageResourceContainerOptions()
+                    {
+                        BlobDirectoryPrefix = GetPrefix(transferProperties, isSource)
+                    };
+                }
+                else
+                {
+                    return destinationCheckpointData.GetBlobContainerOptions(GetPrefix(transferProperties, isSource));
+                }
+            }
+
             private Uri GetUri(DataTransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
@@ -525,7 +545,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource)),
-                    !isSource ? destinationCheckpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
+                    GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
                 DataTransferProperties properties,
@@ -535,7 +555,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
+                    GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
                 DataTransferProperties properties,
@@ -545,7 +565,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
+                    GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
                 DataTransferProperties properties,
@@ -555,7 +575,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 CancellationToken cancellationToken)
                 => new BlobStorageResourceContainer(
                     new BlobContainerClient(GetContainerUri(properties, isSource), credential),
-                    !isSource ? destinationCheckpointData.GetBlobContainerOptions(GetPrefix(properties, isSource)) : default);
+                    GetOptions(properties, destinationCheckpointData, isSource));
         }
 
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
