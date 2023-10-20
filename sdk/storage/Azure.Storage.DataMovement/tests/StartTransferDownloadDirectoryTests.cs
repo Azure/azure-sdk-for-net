@@ -15,7 +15,6 @@ using Azure.Storage.Blobs.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using System.Drawing;
 
 namespace Azure.Storage.DataMovement.Tests
 {
