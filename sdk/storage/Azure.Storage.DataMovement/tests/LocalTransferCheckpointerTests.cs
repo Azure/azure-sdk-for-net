@@ -226,11 +226,11 @@ namespace Azure.Storage.DataMovement.Tests
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
             Assert.AreEqual(1, partCount);
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -352,41 +352,41 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(1, transferIds.Count);
             Assert.IsTrue(transferIds.Contains(transferId));
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
             }
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
             }
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 2,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
             }
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 3,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
@@ -434,11 +434,11 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(1, transferIds.Count);
             Assert.IsTrue(transferIds.Contains(transferId));
 
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -731,7 +731,62 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task ReadableStreamAsync()
+        public async Task ReadJobPlanFileAsync()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            JobPlanHeader header;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(transferId, offset: 0, length: 0))
+            {
+                header = JobPlanHeader.Deserialize(stream);
+            }
+
+            // Assert
+            Assert.IsNotNull(header);
+            Assert.AreEqual(DataMovementConstants.JobPlanFile.SchemaVersion, header.Version);
+            Assert.AreEqual(transferId, header.TransferId);
+            Assert.AreEqual(CheckpointerTesting.DefaultWebSourcePath, header.ParentSourcePath);
+            Assert.AreEqual(CheckpointerTesting.DefaultWebDestinationPath, header.ParentDestinationPath);
+        }
+
+        [Test]
+        public async Task ReadJobPlanFileAsync_Partial()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            string actualTransferId;
+            int length = DataMovementConstants.GuidSizeInBytes;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.TransferIdIndex,
+                length))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                byte[] transferIdBytes = reader.ReadBytes(length);
+                actualTransferId = new Guid(transferIdBytes).ToString();
+            }
+
+            DataTransferStatus actualJobStatus = await transferCheckpointer.GetJobStatusAsync(transferId);
+
+            // Assert
+            Assert.AreEqual(transferId, actualTransferId);
+            Assert.AreEqual(actualJobStatus, new DataTransferStatus());
+        }
+
+        [Test]
+        public async Task ReadJobPartPlanFileAsync()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
@@ -758,11 +813,11 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Act
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -770,7 +825,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void ReadableStreamAsync_Error()
+        public void ReadJobPartPlanFileAsync_Error()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
@@ -782,12 +837,78 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferCheckpointer.ReadableStreamAsync(
+                async () => await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes));
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes));
         }
+
+        [Test]
+        public async Task WriteToJobPlanFileAsync()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            // Change enumerationComplete (test with extra byte)
+            byte[] enumerationCompleteBytes = { 0x00, Convert.ToByte(true) };
+            await transferCheckpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                enumerationCompleteBytes,
+                bufferOffset: 1,
+                length: DataMovementConstants.OneByte);
+
+            // Change Job Status
+            JobPlanStatus jobPlanStatus = JobPlanStatus.Completed | JobPlanStatus.HasSkipped;
+            byte[] jobPlanStatusBytes = BitConverter.GetBytes((int)jobPlanStatus);
+            await transferCheckpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.JobStatusIndex,
+                jobPlanStatusBytes,
+                bufferOffset: 0,
+                length: DataMovementConstants.IntSizeInBytes);
+
+            // Assert
+            int start = DataMovementConstants.JobPlanFile.EnumerationCompleteIndex;
+            int readLength = DataMovementConstants.JobPlanFile.ParentSourcePathOffsetIndex - start;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(
+                transferId,
+                offset: start,
+                length: readLength))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                bool enumerationComplete = Convert.ToBoolean(reader.ReadByte());
+                Assert.IsTrue(enumerationComplete);
+
+                JobPlanStatus actualJobPlanStatus = (JobPlanStatus)reader.ReadInt32();
+                Assert.AreEqual(jobPlanStatus, actualJobPlanStatus);
+            }
+        }
+
+        [Test]
+        public void WriteToJobPlanFileAsync_Error()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            string transferId = GetNewTransferId();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            // Act / Assert
+            byte[] bytes = { 0x00 };
+            Assert.CatchAsync<ArgumentException>(
+                async () => await transferCheckpointer.WriteToJobPlanFileAsync(
+                    transferId: Guid.NewGuid().ToString(),
+                    fileOffset: 0,
+                    buffer: bytes,
+                    bufferOffset: 0,
+                    length: 1));
+            }
 
         [Test]
         public async Task SetJobTransferStatusAsync()
@@ -822,11 +943,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             header.AtomicJobStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
@@ -904,38 +1025,38 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             header1.AtomicJobStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
             }
             header2.AtomicJobStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
             }
             header3.AtomicJobStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 2,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
             }
             header4.AtomicJobStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 3,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
             }
@@ -995,11 +1116,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             header.AtomicPartStatus = newStatus;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }

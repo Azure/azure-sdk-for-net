@@ -1,6 +1,6 @@
 # Release History
 
-## 5.13.0-beta.1 (Unreleased)
+## 5.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,33 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.13.2 (2023-10-18)
+
+### Other Changes
+
+- Updated proto service definition to use StringValue rather than string for deadletter error reason and description.
+
+## 5.13.1 (2023-10-17)
+
+### Bugs Fixed
+
+- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on 
+  host shutdown.
+
+### Other Changes
+
+- Updated the proto service definition to use bytes for application properties.
+
+## 5.13.0 (2023-10-11)
+
+### Features Added
+
+- Added `MaxConcurrentCallsPerSession` to `ServiceBusOptions` to allow configuring the maximum number of concurrent calls per session.
+
+### Other Changes
+
+- Added dependency on Grpc libraries in order to support message settlement from isolated worker.
 
 ## 5.12.0 (2023-08-11)
 
