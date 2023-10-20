@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes the quota usage for a particular sku supported by Azure Cognitive Search. </summary>
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="currentValue"> The currently used up value for the particular search sku. </param>
         /// <param name="limit"> The quota limit for the particular search sku. </param>
         /// <param name="name"> The name of the sku supported by Azure Cognitive Search. </param>
-        internal QuotaUsageResult(ResourceIdentifier id, string unit, int? currentValue, int? limit, QuotaUsageResultName name)
+        internal QuotaUsageResult(string id, string unit, int? currentValue, int? limit, QuotaUsageResultName name)
         {
             Id = id;
             Unit = unit;
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </summary>
-        public ResourceIdentifier Id { get; }
+        public string Id { get; }
         /// <summary> The unit of measurement for the search sku. </summary>
         public string Unit { get; }
         /// <summary> The currently used up value for the particular search sku. </summary>
