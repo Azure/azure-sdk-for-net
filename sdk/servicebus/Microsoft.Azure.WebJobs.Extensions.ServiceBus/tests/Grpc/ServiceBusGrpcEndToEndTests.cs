@@ -116,9 +116,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToBatchAndDeadletter()
+        public async Task BindToBatchAndDeadletterExceptionValidation()
         {
-            var host = BuildHost<ServiceBusBindToBatchAndDeadletter>();
+            // this test expects errors so set skipValidation=true
+            var host = BuildHost<ServiceBusBindToBatchAndDeadletter>(skipValidation: true);
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
             ServiceBusBindToBatchAndDeadletter.SettlementService = settlementImpl;
@@ -339,6 +340,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
                 Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
                 Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+
+                var exception = Assert.ThrowsAsync<RpcException>(
+                    async () =>
+                        await SettlementService.Complete(
+                            new CompleteRequest { Locktoken = message.LockToken },
+                            new MockServerCallContext()));
+                StringAssert.Contains(
+                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
+                    exception.ToString());
+
+                exception = Assert.ThrowsAsync<RpcException>(
+                    async () =>
+                        await SettlementService.Defer(
+                            new DeferRequest { Locktoken = message.LockToken },
+                            new MockServerCallContext()));
+                StringAssert.Contains(
+                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
+                    exception.ToString());
+
+                exception = Assert.ThrowsAsync<RpcException>(
+                    async () =>
+                        await SettlementService.Deadletter(
+                            new DeadletterRequest() { Locktoken = message.LockToken },
+                            new MockServerCallContext()));
+                StringAssert.Contains(
+                    "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
+                    exception.ToString());
+
+                // The service doesn't seem to throw when an already settled message gets abandoned over the mgmt link. Will need to discuss
+                // with service team.
+
                 _waitHandle1.Set();
             }
         }
