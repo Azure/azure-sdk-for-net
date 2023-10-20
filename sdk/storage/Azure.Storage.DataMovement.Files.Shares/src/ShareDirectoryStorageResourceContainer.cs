@@ -52,12 +52,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileSourceCheckpointData();
         }
 
         public override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileDestinationCheckpointData();
         }
     }
 }
