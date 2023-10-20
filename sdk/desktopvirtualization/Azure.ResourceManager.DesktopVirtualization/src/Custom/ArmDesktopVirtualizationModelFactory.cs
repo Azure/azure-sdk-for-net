@@ -61,4 +61,28 @@ public static partial class ArmDesktopVirtualizationModelFactory
     /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
     public static HostPoolPatch HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate) : base(id, name, resourceType, systemData)
         => HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, default, SessionHostAgentUpdatePatchProperties agentUpdate)
+
+    /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+    /// <param name="id"> The id. </param>
+    /// <param name="name"> The name. </param>
+    /// <param name="resourceType"> The resourceType. </param>
+    /// <param name="systemData"> The systemData. </param>
+    /// <param name="tags"> The tags. </param>
+    /// <param name="location"> The location. </param>
+    /// <param name="objectId"> ObjectId of ApplicationGroup. (internal use). </param>
+    /// <param name="description"> Description of ApplicationGroup. </param>
+    /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
+    /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
+    /// <param name="workspaceId"> Workspace arm path of ApplicationGroup. </param>
+    /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
+    /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
+    /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
+    /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+    /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+    /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
+    /// <param name="sku"> The resource model definition representing SKU. </param>
+    /// <param name="plan"> Gets or sets the plan. </param>
+
+    public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        =>                                    VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, default, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
 }
