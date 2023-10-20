@@ -272,10 +272,10 @@ namespace Azure.AI.OpenAI
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return new StreamingResponse<Completions>(
+                return StreamingResponse<Completions>.CreateFromResponse(
                     baseResponse,
-                    SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
-                        baseResponse.ContentStream,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
                         Completions.DeserializeCompletions,
                         cancellationToken));
             }
@@ -316,10 +316,10 @@ namespace Azure.AI.OpenAI
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
-                return new StreamingResponse<Completions>(
+                return StreamingResponse<Completions>.CreateFromResponse(
                     baseResponse,
-                    SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
-                        baseResponse.ContentStream,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
                         Completions.DeserializeCompletions,
                         cancellationToken));
             }
@@ -465,12 +465,13 @@ namespace Azure.AI.OpenAI
                     context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return new StreamingResponse<StreamingChatCompletionsUpdate>(
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
                     baseResponse,
-                    SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                        baseResponse.ContentStream,
-                        StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        cancellationToken));
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {
@@ -513,12 +514,13 @@ namespace Azure.AI.OpenAI
                     message,
                     context,
                     cancellationToken).ConfigureAwait(false);
-                return new StreamingResponse<StreamingChatCompletionsUpdate>(
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
                     baseResponse,
-                    SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                        baseResponse.ContentStream,
-                        StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        cancellationToken));
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {

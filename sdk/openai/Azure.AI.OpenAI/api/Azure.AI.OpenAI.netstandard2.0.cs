@@ -3,6 +3,7 @@ namespace Azure
     public partial class StreamingResponse<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable
     {
         internal StreamingResponse() { }
+        public static Azure.StreamingResponse<T> CreateFromResponse(Azure.Response response, System.Func<Azure.Response, System.Collections.Generic.IAsyncEnumerable<T>> asyncEnumerableProcessor) { throw null; }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Collections.Generic.IAsyncEnumerable<T> EnumerateValues() { throw null; }

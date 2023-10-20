@@ -20,10 +20,34 @@ public class StreamingResponse<T>
     private IAsyncEnumerable<T> _asyncEnumerableSource { get; }
     private bool _disposedValue { get; set; }
 
-    internal StreamingResponse(Response rawResponse,  IAsyncEnumerable<T> asyncEnumerableSource)
+    private StreamingResponse() { }
+
+    private StreamingResponse(
+        Response rawResponse,
+        Func<Response, IAsyncEnumerable<T>> asyncEnumerableProcessor)
     {
         _rawResponse = rawResponse;
-        _asyncEnumerableSource = asyncEnumerableSource;
+        _asyncEnumerableSource = asyncEnumerableProcessor.Invoke(rawResponse);
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="StreamingResponse{T}"/> using the provided underlying HTTP response. The
+    /// provided function will be used to resolve the response into an asynchronous enumeration of streamed response
+    /// items.
+    /// </summary>
+    /// <param name="response">The HTTP response.</param>
+    /// <param name="asyncEnumerableProcessor">
+    /// The function that will resolve the provided response into an IAsyncEnumerable.
+    /// </param>
+    /// <returns>
+    /// A new instance of <see cref="StreamingResponse{T}"/> that will be capable of asynchronous enumeration of
+    /// <typeparamref name="T"/> items from the HTTP response.
+    /// </returns>
+    public static StreamingResponse<T> CreateFromResponse(
+        Response response,
+        Func<Response, IAsyncEnumerable<T>> asyncEnumerableProcessor)
+    {
+        return new(response, asyncEnumerableProcessor);
     }
 
     /// <summary>
