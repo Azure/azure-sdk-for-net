@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> list role assignments. </summary>
-    public partial class ListRoleAssignments
+    public partial class RoleAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ListRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentResponse"/> is null. </exception>
-        internal ListRoleAssignments(int count, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse)
+        internal RoleAssignmentListResult(int count, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse)
         {
             Argument.AssertNotNull(roleAssignmentResponse, nameof(roleAssignmentResponse));
 
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             RoleAssignmentResponse = roleAssignmentResponse.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
-        internal ListRoleAssignments(int count, IReadOnlyList<RoleAssignmentDetail> roleAssignmentResponse)
+        internal RoleAssignmentListResult(int count, IReadOnlyList<RoleAssignmentDetail> roleAssignmentResponse)
         {
             Count = count;
             RoleAssignmentResponse = roleAssignmentResponse;

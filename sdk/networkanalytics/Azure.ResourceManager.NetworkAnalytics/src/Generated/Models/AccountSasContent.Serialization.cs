@@ -10,13 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class KeyVaultContent : IUtf8JsonSerializable
+    public partial class AccountSasContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultUrl"u8);
-            writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            writer.WritePropertyName("startTimeStamp"u8);
+            writer.WriteStringValue(StartTimeStamp, "O");
+            writer.WritePropertyName("expiryTimeStamp"u8);
+            writer.WriteStringValue(ExpiryTimeStamp, "O");
+            writer.WritePropertyName("ipAddress"u8);
+            writer.WriteStringValue(IPAddress);
             writer.WriteEndObject();
         }
     }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <summary> Purview collection url for data product to connect to. </summary>
         public string PurviewCollection { get; set; }
         /// <summary> Flag to enable or disable private link for data product resource. </summary>
-        public ControlState? PrivateLinksEnabled { get; set; }
+        public DataProductControlState? PrivateLinksEnabled { get; set; }
         /// <summary> Current configured minor version of the data product resource. </summary>
         public string CurrentMinorVersion { get; set; }
     }

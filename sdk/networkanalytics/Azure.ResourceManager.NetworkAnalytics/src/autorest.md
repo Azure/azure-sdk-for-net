@@ -8,6 +8,7 @@ csharp: true
 library-name: NetworkAnalytics
 namespace: Azure.ResourceManager.NetworkAnalytics
 require: https://github.com/Azure/azure-rest-api-specs/blob/c67016198d67ef0d833f12fe867b1adbad513315/specification/networkanalytics/resource-manager/readme.md
+#tag: package-2023-11-15
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,14 +21,27 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+rename-mapping:
+  AccountSas: AccountSasContent
+  ControlState: DataProductControlState
+  DataType: DataProductDataType
+  DataTypeState: DataProducDataTypeState
+  DefaultAction: NetworkAclDefaultAction
+  ListRoleAssignments: RoleAssignmentListResult
+
+prepend-rp-prefix:
+  - IPRules
+  - KeyVaultInfo
+  - ManagedResourceGroupConfiguration
+  - ProvisioningState
+  - VirtualNetworkRule
 
 acronym-mapping:
   CPU: Cpu

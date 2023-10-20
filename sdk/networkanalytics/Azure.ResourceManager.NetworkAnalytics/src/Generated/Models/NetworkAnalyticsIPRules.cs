@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
-    public partial class IPRules
+    public partial class NetworkAnalyticsIPRules
     {
-        /// <summary> Initializes a new instance of IPRules. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-        public IPRules(string action)
+        public NetworkAnalyticsIPRules(string action)
         {
             Argument.AssertNotNull(action, nameof(action));
 
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of IPRules. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
         /// <param name="value"> IP Rules Value. </param>
         /// <param name="action"> The action of virtual network rule. </param>
-        internal IPRules(string value, string action)
+        internal NetworkAnalyticsIPRules(string value, string action)
         {
             Value = value;
             Action = action;

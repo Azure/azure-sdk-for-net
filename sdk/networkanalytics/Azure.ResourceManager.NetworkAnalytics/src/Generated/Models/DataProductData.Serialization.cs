@@ -132,20 +132,20 @@ namespace Azure.ResourceManager.NetworkAnalytics
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> resourceGuid = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
             Optional<string> publisher = default;
             Optional<string> product = default;
             Optional<string> majorVersion = default;
             Optional<IList<string>> owners = default;
-            Optional<ControlState> redundancy = default;
+            Optional<DataProductControlState> redundancy = default;
             Optional<string> purviewAccount = default;
             Optional<string> purviewCollection = default;
-            Optional<ControlState> privateLinksEnabled = default;
-            Optional<ControlState> publicNetworkAccess = default;
-            Optional<ControlState> customerManagedKeyEncryptionEnabled = default;
+            Optional<DataProductControlState> privateLinksEnabled = default;
+            Optional<DataProductControlState> publicNetworkAccess = default;
+            Optional<DataProductControlState> customerManagedKeyEncryptionEnabled = default;
             Optional<EncryptionKeyDetails> customerEncryptionKey = default;
             Optional<DataProductNetworkAcls> networkacls = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            Optional<NetworkAnalyticsManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
             Optional<IReadOnlyList<string>> availableMinorVersions = default;
             Optional<string> currentMinorVersion = default;
             Optional<string> documentation = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkAnalyticsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publisher"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            redundancy = new ControlState(property0.Value.GetString());
+                            redundancy = new DataProductControlState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("purviewAccount"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            privateLinksEnabled = new ControlState(property0.Value.GetString());
+                            privateLinksEnabled = new DataProductControlState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new ControlState(property0.Value.GetString());
+                            publicNetworkAccess = new DataProductControlState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customerManagedKeyEncryptionEnabled"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            customerManagedKeyEncryptionEnabled = new ControlState(property0.Value.GetString());
+                            customerManagedKeyEncryptionEnabled = new DataProductControlState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customerEncryptionKey"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availableMinorVersions"u8))

@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> ManagedResourceGroup related properties. </summary>
-    public partial class ManagedResourceGroupConfiguration
+    public partial class NetworkAnalyticsManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsManagedResourceGroupConfiguration. </summary>
         /// <param name="name"> Name of managed resource group. </param>
         /// <param name="location"> Managed Resource Group location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ManagedResourceGroupConfiguration(string name, AzureLocation location)
+        public NetworkAnalyticsManagedResourceGroupConfiguration(string name, AzureLocation location)
         {
             Argument.AssertNotNull(name, nameof(name));
 

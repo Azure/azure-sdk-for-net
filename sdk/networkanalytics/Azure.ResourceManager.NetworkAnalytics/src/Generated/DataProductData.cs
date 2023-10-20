@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="documentation"> Documentation link for the data product based on definition file. </param>
         /// <param name="consumptionEndpoints"> Resource links which exposed to the customer to query the data. </param>
         /// <param name="keyVaultUri"> Key vault url. </param>
-        internal DataProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string resourceGuid, ProvisioningState? provisioningState, string publisher, string product, string majorVersion, IList<string> owners, ControlState? redundancy, string purviewAccount, string purviewCollection, ControlState? privateLinksEnabled, ControlState? publicNetworkAccess, ControlState? customerManagedKeyEncryptionEnabled, EncryptionKeyDetails customerEncryptionKey, DataProductNetworkAcls networkacls, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> availableMinorVersions, string currentMinorVersion, string documentation, ConsumptionEndpointsProperties consumptionEndpoints, Uri keyVaultUri) : base(id, name, resourceType, systemData, tags, location)
+        internal DataProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string resourceGuid, NetworkAnalyticsProvisioningState? provisioningState, string publisher, string product, string majorVersion, IList<string> owners, DataProductControlState? redundancy, string purviewAccount, string purviewCollection, DataProductControlState? privateLinksEnabled, DataProductControlState? publicNetworkAccess, DataProductControlState? customerManagedKeyEncryptionEnabled, EncryptionKeyDetails customerEncryptionKey, DataProductNetworkAcls networkacls, NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> availableMinorVersions, string currentMinorVersion, string documentation, ConsumptionEndpointsProperties consumptionEndpoints, Uri keyVaultUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ResourceGuid = resourceGuid;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <summary> The resource GUID property of the data product resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> Latest provisioning state  of data product. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkAnalyticsProvisioningState? ProvisioningState { get; }
         /// <summary> Data product publisher name. </summary>
         public string Publisher { get; set; }
         /// <summary> Product name of data product. </summary>
@@ -95,23 +95,23 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <summary> List of name or email associated with data product resource deployment. </summary>
         public IList<string> Owners { get; }
         /// <summary> Flag to enable or disable redundancy for data product. </summary>
-        public ControlState? Redundancy { get; set; }
+        public DataProductControlState? Redundancy { get; set; }
         /// <summary> Purview account url for data product to connect to. </summary>
         public string PurviewAccount { get; set; }
         /// <summary> Purview collection url for data product to connect to. </summary>
         public string PurviewCollection { get; set; }
         /// <summary> Flag to enable or disable private link for data product resource. </summary>
-        public ControlState? PrivateLinksEnabled { get; set; }
+        public DataProductControlState? PrivateLinksEnabled { get; set; }
         /// <summary> Flag to enable or disable public access of data product resource. </summary>
-        public ControlState? PublicNetworkAccess { get; set; }
+        public DataProductControlState? PublicNetworkAccess { get; set; }
         /// <summary> Flag to enable customer managed key encryption for data product. </summary>
-        public ControlState? CustomerManagedKeyEncryptionEnabled { get; set; }
+        public DataProductControlState? CustomerManagedKeyEncryptionEnabled { get; set; }
         /// <summary> Customer managed encryption key details for data product. </summary>
         public EncryptionKeyDetails CustomerEncryptionKey { get; set; }
         /// <summary> Network rule set for data product. </summary>
         public DataProductNetworkAcls Networkacls { get; set; }
         /// <summary> Managed resource group configuration. </summary>
-        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+        public NetworkAnalyticsManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> List of available minor versions of the data product resource. </summary>
         public IReadOnlyList<string> AvailableMinorVersions { get; }
         /// <summary> Current configured minor version of the data product resource. </summary>

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The data catalog provisioning state. </param>
         /// <param name="publishers"> The data product publisher information. </param>
-        internal DataProductsCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, IList<PublisherInformation> publishers) : base(id, name, resourceType, systemData)
+        internal DataProductsCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkAnalyticsProvisioningState? provisioningState, IList<PublisherInformation> publishers) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Publishers = publishers;
         }
 
         /// <summary> The data catalog provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkAnalyticsProvisioningState? ProvisioningState { get; }
         /// <summary> The data product publisher information. </summary>
         public IList<PublisherInformation> Publishers { get; }
     }

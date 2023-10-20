@@ -48,28 +48,28 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            IList<VirtualNetworkRule> virtualNetworkRule = default;
-            IList<IPRules> ipRules = default;
+            IList<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule = default;
+            IList<NetworkAnalyticsIPRules> ipRules = default;
             IList<string> allowedQueryIPRangeList = default;
-            DefaultAction defaultAction = default;
+            NetworkAclDefaultAction defaultAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkRule"u8))
                 {
-                    List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
+                    List<NetworkAnalyticsVirtualNetworkRule> array = new List<NetworkAnalyticsVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
+                        array.Add(NetworkAnalyticsVirtualNetworkRule.DeserializeNetworkAnalyticsVirtualNetworkRule(item));
                     }
                     virtualNetworkRule = array;
                     continue;
                 }
                 if (property.NameEquals("ipRules"u8))
                 {
-                    List<IPRules> array = new List<IPRules>();
+                    List<NetworkAnalyticsIPRules> array = new List<NetworkAnalyticsIPRules>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.IPRules.DeserializeIPRules(item));
+                        array.Add(NetworkAnalyticsIPRules.DeserializeNetworkAnalyticsIPRules(item));
                     }
                     ipRules = array;
                     continue;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 if (property.NameEquals("defaultAction"u8))
                 {
-                    defaultAction = new DefaultAction(property.Value.GetString());
+                    defaultAction = new NetworkAclDefaultAction(property.Value.GetString());
                     continue;
                 }
             }

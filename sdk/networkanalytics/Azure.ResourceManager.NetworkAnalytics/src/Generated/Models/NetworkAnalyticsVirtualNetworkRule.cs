@@ -11,23 +11,23 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> Virtual Network Rule. </summary>
-    public partial class VirtualNetworkRule
+    public partial class NetworkAnalyticsVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsVirtualNetworkRule. </summary>
         /// <param name="id"> Resource ID of a subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VirtualNetworkRule(string id)
+        public NetworkAnalyticsVirtualNetworkRule(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsVirtualNetworkRule. </summary>
         /// <param name="id"> Resource ID of a subnet. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
-        internal VirtualNetworkRule(string id, string action, string state)
+        internal NetworkAnalyticsVirtualNetworkRule(string id, string action, string state)
         {
             Id = id;
             Action = action;

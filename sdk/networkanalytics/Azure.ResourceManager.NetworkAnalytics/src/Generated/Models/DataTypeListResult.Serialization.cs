@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            IReadOnlyList<DataType> value = default;
+            IReadOnlyList<DataProductDataType> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataType> array = new List<DataType>();
+                    List<DataProductDataType> array = new List<DataProductDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataType.DeserializeDataType(item));
+                        array.Add(DataProductDataType.DeserializeDataProductDataType(item));
                     }
                     value = array;
                     continue;

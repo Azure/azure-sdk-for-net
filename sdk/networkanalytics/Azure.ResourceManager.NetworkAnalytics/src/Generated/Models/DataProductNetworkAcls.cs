@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="allowedQueryIPRangeList"> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </param>
         /// <param name="defaultAction"> Default Action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRule"/>, <paramref name="ipRules"/> or <paramref name="allowedQueryIPRangeList"/> is null. </exception>
-        public DataProductNetworkAcls(IEnumerable<VirtualNetworkRule> virtualNetworkRule, IEnumerable<IPRules> ipRules, IEnumerable<string> allowedQueryIPRangeList, DefaultAction defaultAction)
+        public DataProductNetworkAcls(IEnumerable<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IEnumerable<NetworkAnalyticsIPRules> ipRules, IEnumerable<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction)
         {
             Argument.AssertNotNull(virtualNetworkRule, nameof(virtualNetworkRule));
             Argument.AssertNotNull(ipRules, nameof(ipRules));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="ipRules"> IP rule with specific IP or IP range in CIDR format. </param>
         /// <param name="allowedQueryIPRangeList"> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </param>
         /// <param name="defaultAction"> Default Action. </param>
-        internal DataProductNetworkAcls(IList<VirtualNetworkRule> virtualNetworkRule, IList<IPRules> ipRules, IList<string> allowedQueryIPRangeList, DefaultAction defaultAction)
+        internal DataProductNetworkAcls(IList<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IList<NetworkAnalyticsIPRules> ipRules, IList<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction)
         {
             VirtualNetworkRule = virtualNetworkRule;
             IPRules = ipRules;
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         }
 
         /// <summary> Virtual Network Rule. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRule { get; }
+        public IList<NetworkAnalyticsVirtualNetworkRule> VirtualNetworkRule { get; }
         /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
-        public IList<IPRules> IPRules { get; }
+        public IList<NetworkAnalyticsIPRules> IPRules { get; }
         /// <summary> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </summary>
         public IList<string> AllowedQueryIPRangeList { get; }
         /// <summary> Default Action. </summary>
-        public DefaultAction DefaultAction { get; set; }
+        public NetworkAclDefaultAction DefaultAction { get; set; }
     }
 }

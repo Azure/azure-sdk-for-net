@@ -383,18 +383,18 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccountSasToken>> GenerateStorageAccountSasTokenAsync(AccountSas body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccountSasToken>> GenerateStorageAccountSasTokenAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GenerateStorageAccountSasToken");
             scope.Start();
             try
             {
-                var response = await _dataProductRestClient.GenerateStorageAccountSasTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _dataProductRestClient.GenerateStorageAccountSasTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -417,18 +417,18 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccountSasToken> GenerateStorageAccountSasToken(AccountSas body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccountSasToken> GenerateStorageAccountSasToken(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GenerateStorageAccountSasToken");
             scope.Start();
             try
             {
-                var response = _dataProductRestClient.GenerateStorageAccountSasToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _dataProductRestClient.GenerateStorageAccountSasToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<ListRoleAssignments>> GetRolesAssignmentsAsync(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleAssignmentListResult>> GetRolesAssignmentsAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<ListRoleAssignments> GetRolesAssignments(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual Response<RoleAssignmentListResult> GetRolesAssignments(BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> RotateKeyAsync(KeyVaultContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RotateKeyAsync(NetworkAnalyticsKeyVaultContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response RotateKey(KeyVaultContent content, CancellationToken cancellationToken = default)
+        public virtual Response RotateKey(NetworkAnalyticsKeyVaultContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -656,12 +656,12 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataType" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataType> GetDataTypesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataProductDataType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProductDataType> GetDataTypesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataType.DeserializeDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -678,12 +678,12 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataType" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataType> GetDataTypes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProductDataType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProductDataType> GetDataTypes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataType.DeserializeDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

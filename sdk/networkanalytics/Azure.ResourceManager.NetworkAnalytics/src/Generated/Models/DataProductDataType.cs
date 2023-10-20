@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> The data type resource. </summary>
-    public partial class DataType : ResourceData
+    public partial class DataProductDataType : ResourceData
     {
-        /// <summary> Initializes a new instance of DataType. </summary>
-        public DataType()
+        /// <summary> Initializes a new instance of DataProductDataType. </summary>
+        public DataProductDataType()
         {
         }
 
-        /// <summary> Initializes a new instance of DataType. </summary>
+        /// <summary> Initializes a new instance of DataProductDataType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="databaseCacheRetention"> Field for database cache retention in days. </param>
         /// <param name="databaseRetention"> Field for database data retention in days. </param>
         /// <param name="visualizationUri"> Url for data visualization. </param>
-        internal DataType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, DataTypeState? state, string stateReason, int? storageOutputRetention, int? databaseCacheRetention, int? databaseRetention, Uri visualizationUri) : base(id, name, resourceType, systemData)
+        internal DataProductDataType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkAnalyticsProvisioningState? provisioningState, DataProducDataTypeState? state, string stateReason, int? storageOutputRetention, int? databaseCacheRetention, int? databaseRetention, Uri visualizationUri) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         }
 
         /// <summary> Latest provisioning state  of data product. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkAnalyticsProvisioningState? ProvisioningState { get; }
         /// <summary> State of data type. </summary>
-        public DataTypeState? State { get; set; }
+        public DataProducDataTypeState? State { get; set; }
         /// <summary> Reason for the state of data type. </summary>
         public string StateReason { get; }
         /// <summary> Field for storage output retention in days. </summary>

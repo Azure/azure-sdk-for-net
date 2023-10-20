@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class VirtualNetworkRule : IUtf8JsonSerializable
+    public partial class NetworkAnalyticsVirtualNetworkRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
+        internal static NetworkAnalyticsVirtualNetworkRule DeserializeNetworkAnalyticsVirtualNetworkRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, action.Value, state.Value);
+            return new NetworkAnalyticsVirtualNetworkRule(id, action.Value, state.Value);
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> The details for storage account sas creation. </summary>
-    public partial class AccountSas
+    public partial class AccountSasContent
     {
-        /// <summary> Initializes a new instance of AccountSas. </summary>
+        /// <summary> Initializes a new instance of AccountSasContent. </summary>
         /// <param name="startTimeStamp"> Sas token start timestamp. </param>
         /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
         /// <param name="ipAddress"> Ip Address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public AccountSas(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress)
+        public AccountSasContent(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress)
         {
             Argument.AssertNotNull(ipAddress, nameof(ipAddress));
 

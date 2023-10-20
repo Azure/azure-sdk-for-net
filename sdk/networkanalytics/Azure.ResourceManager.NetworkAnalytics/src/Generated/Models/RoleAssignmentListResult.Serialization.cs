@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class ListRoleAssignments
+    public partial class RoleAssignmentListResult
     {
-        internal static ListRoleAssignments DeserializeListRoleAssignments(JsonElement element)
+        internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     continue;
                 }
             }
-            return new ListRoleAssignments(count, roleAssignmentResponse);
+            return new RoleAssignmentListResult(count, roleAssignmentResponse);
         }
     }
 }

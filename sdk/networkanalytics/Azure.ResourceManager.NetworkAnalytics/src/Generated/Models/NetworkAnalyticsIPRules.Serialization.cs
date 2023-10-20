@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class IPRules : IUtf8JsonSerializable
+    public partial class NetworkAnalyticsIPRules : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static IPRules DeserializeIPRules(JsonElement element)
+        internal static NetworkAnalyticsIPRules DeserializeNetworkAnalyticsIPRules(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     continue;
                 }
             }
-            return new IPRules(value.Value, action);
+            return new NetworkAnalyticsIPRules(value.Value, action);
         }
     }
 }

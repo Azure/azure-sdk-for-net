@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataType : IUtf8JsonSerializable
+    public partial class DataProductDataType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static DataType DeserializeDataType(JsonElement element)
+        internal static DataProductDataType DeserializeDataProductDataType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<DataTypeState> state = default;
+            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
+            Optional<DataProducDataTypeState> state = default;
             Optional<string> stateReason = default;
             Optional<int> storageOutputRetention = default;
             Optional<int> databaseCacheRetention = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkAnalyticsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                             {
                                 continue;
                             }
-                            state = new DataTypeState(property0.Value.GetString());
+                            state = new DataProducDataTypeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("stateReason"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     continue;
                 }
             }
-            return new DataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value);
+            return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value);
         }
     }
 }

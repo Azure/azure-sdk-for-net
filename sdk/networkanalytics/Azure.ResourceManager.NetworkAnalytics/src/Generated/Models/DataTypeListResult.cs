@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <summary> Initializes a new instance of DataTypeListResult. </summary>
         /// <param name="value"> The DataType items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataTypeListResult(IEnumerable<DataType> value)
+        internal DataTypeListResult(IEnumerable<DataProductDataType> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <summary> Initializes a new instance of DataTypeListResult. </summary>
         /// <param name="value"> The DataType items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal DataTypeListResult(IReadOnlyList<DataType> value, Uri nextLink)
+        internal DataTypeListResult(IReadOnlyList<DataProductDataType> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The DataType items on this page. </summary>
-        public IReadOnlyList<DataType> Value { get; }
+        public IReadOnlyList<DataProductDataType> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

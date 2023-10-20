@@ -345,31 +345,31 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 {
 "abc@micros.com"
 },
-                Redundancy = ControlState.Disabled,
+                Redundancy = DataProductControlState.Disabled,
                 PurviewAccount = "testpurview",
                 PurviewCollection = "134567890",
-                PrivateLinksEnabled = ControlState.Disabled,
-                PublicNetworkAccess = ControlState.Enabled,
-                CustomerManagedKeyEncryptionEnabled = ControlState.Enabled,
+                PrivateLinksEnabled = DataProductControlState.Disabled,
+                PublicNetworkAccess = DataProductControlState.Enabled,
+                CustomerManagedKeyEncryptionEnabled = DataProductControlState.Enabled,
                 CustomerEncryptionKey = new EncryptionKeyDetails(new Uri("https://KeyVault.vault.azure.net"), "keyName", "keyVersion"),
-                Networkacls = new DataProductNetworkAcls(new VirtualNetworkRule[]
+                Networkacls = new DataProductNetworkAcls(new NetworkAnalyticsVirtualNetworkRule[]
             {
-new VirtualNetworkRule("/subscriptions/subscriptionId/resourcegroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/virtualNetworkName/subnets/subnetName")
+new NetworkAnalyticsVirtualNetworkRule("/subscriptions/subscriptionId/resourcegroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/virtualNetworkName/subnets/subnetName")
 {
 Action = "Allow",
 State = "",
 }
-            }, new IPRules[]
+            }, new NetworkAnalyticsIPRules[]
             {
-new IPRules("Allow")
+new NetworkAnalyticsIPRules("Allow")
 {
 Value = "1.1.1.1",
 }
             }, new string[]
             {
 "1.1.1.1"
-            }, DefaultAction.Allow),
-                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration("managedResourceGroupName", new AzureLocation("eastus")),
+            }, NetworkAclDefaultAction.Allow),
+                ManagedResourceGroupConfiguration = new NetworkAnalyticsManagedResourceGroupConfiguration("managedResourceGroupName", new AzureLocation("eastus")),
                 CurrentMinorVersion = "1.0.1",
                 Tags =
 {

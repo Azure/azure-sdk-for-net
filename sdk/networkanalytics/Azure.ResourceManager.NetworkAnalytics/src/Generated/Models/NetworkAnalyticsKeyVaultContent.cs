@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> Details for KeyVault. </summary>
-    public partial class KeyVaultContent
+    public partial class NetworkAnalyticsKeyVaultContent
     {
-        /// <summary> Initializes a new instance of KeyVaultContent. </summary>
+        /// <summary> Initializes a new instance of NetworkAnalyticsKeyVaultContent. </summary>
         /// <param name="keyVaultUri"> key vault url. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> is null. </exception>
-        public KeyVaultContent(Uri keyVaultUri)
+        public NetworkAnalyticsKeyVaultContent(Uri keyVaultUri)
         {
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
 

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="consumptionEndpoints"> Resource links which exposed to the customer to query the data. </param>
         /// <param name="keyVaultUri"> Key vault url. </param>
         /// <returns> A new <see cref="NetworkAnalytics.DataProductData"/> instance for mocking. </returns>
-        public static DataProductData DataProductData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string resourceGuid = null, ProvisioningState? provisioningState = null, string publisher = null, string product = null, string majorVersion = null, IEnumerable<string> owners = null, ControlState? redundancy = null, string purviewAccount = null, string purviewCollection = null, ControlState? privateLinksEnabled = null, ControlState? publicNetworkAccess = null, ControlState? customerManagedKeyEncryptionEnabled = null, EncryptionKeyDetails customerEncryptionKey = null, DataProductNetworkAcls networkacls = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<string> availableMinorVersions = null, string currentMinorVersion = null, string documentation = null, ConsumptionEndpointsProperties consumptionEndpoints = null, Uri keyVaultUri = null)
+        public static DataProductData DataProductData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string resourceGuid = null, NetworkAnalyticsProvisioningState? provisioningState = null, string publisher = null, string product = null, string majorVersion = null, IEnumerable<string> owners = null, DataProductControlState? redundancy = null, string purviewAccount = null, string purviewCollection = null, DataProductControlState? privateLinksEnabled = null, DataProductControlState? publicNetworkAccess = null, DataProductControlState? customerManagedKeyEncryptionEnabled = null, EncryptionKeyDetails customerEncryptionKey = null, DataProductNetworkAcls networkacls = null, NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<string> availableMinorVersions = null, string currentMinorVersion = null, string documentation = null, ConsumptionEndpointsProperties consumptionEndpoints = null, Uri keyVaultUri = null)
         {
             tags ??= new Dictionary<string, string>();
             owners ??= new List<string>();
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="provisioningState"> The data catalog provisioning state. </param>
         /// <param name="publishers"> The data product publisher information. </param>
         /// <returns> A new <see cref="NetworkAnalytics.DataProductsCatalogData"/> instance for mocking. </returns>
-        public static DataProductsCatalogData DataProductsCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, IEnumerable<PublisherInformation> publishers = null)
+        public static DataProductsCatalogData DataProductsCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, IEnumerable<PublisherInformation> publishers = null)
         {
             publishers ??= new List<PublisherInformation>();
 
             return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataType. </summary>
+        /// <summary> Initializes a new instance of DataProductDataType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="databaseCacheRetention"> Field for database cache retention in days. </param>
         /// <param name="databaseRetention"> Field for database data retention in days. </param>
         /// <param name="visualizationUri"> Url for data visualization. </param>
-        /// <returns> A new <see cref="Models.DataType"/> instance for mocking. </returns>
-        public static DataType DataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, DataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
+        /// <returns> A new <see cref="Models.DataProductDataType"/> instance for mocking. </returns>
+        public static DataProductDataType DataProductDataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, DataProducDataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
         {
-            return new DataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
+            return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
         }
 
         /// <summary> Initializes a new instance of AccountSasToken. </summary>
@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new AccountSasToken(storageAccountSasToken);
         }
 
-        /// <summary> Initializes a new instance of ListRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
-        /// <returns> A new <see cref="Models.ListRoleAssignments"/> instance for mocking. </returns>
-        public static ListRoleAssignments ListRoleAssignments(int count = default, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse = null)
+        /// <returns> A new <see cref="Models.RoleAssignmentListResult"/> instance for mocking. </returns>
+        public static RoleAssignmentListResult RoleAssignmentListResult(int count = default, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse = null)
         {
             roleAssignmentResponse ??= new List<RoleAssignmentDetail>();
 
-            return new ListRoleAssignments(count, roleAssignmentResponse?.ToList());
+            return new RoleAssignmentListResult(count, roleAssignmentResponse?.ToList());
         }
     }
 }

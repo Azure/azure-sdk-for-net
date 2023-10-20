@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 },
                 PurviewAccount = "testpurview",
                 PurviewCollection = "134567890",
-                PrivateLinksEnabled = ControlState.Disabled,
+                PrivateLinksEnabled = DataProductControlState.Disabled,
                 CurrentMinorVersion = "1.0.1",
             };
             ArmOperation<DataProductResource> lro = await dataProduct.UpdateAsync(WaitUntil.Completed, patch);
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation
-            AccountSas body = new AccountSas(DateTimeOffset.Parse("2023-08-24T05:34:58.151Z"), DateTimeOffset.Parse("2023-08-24T05:34:58.151Z"), "1.1.1.1");
-            AccountSasToken result = await dataProduct.GenerateStorageAccountSasTokenAsync(body);
+            AccountSasContent content = new AccountSasContent(DateTimeOffset.Parse("2023-08-24T05:34:58.151Z"), DateTimeOffset.Parse("2023-08-24T05:34:58.151Z"), "1.1.1.1");
+            AccountSasToken result = await dataProduct.GenerateStorageAccountSasTokenAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -400,8 +400,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation
-            AccountSas body = new AccountSas(DateTimeOffset.Parse("2023-08-24T05:35:17.051Z"), DateTimeOffset.Parse("2023-08-24T05:35:17.051Z"), "1.1.1.1");
-            AccountSasToken result = await dataProduct.GenerateStorageAccountSasTokenAsync(body);
+            AccountSasContent content = new AccountSasContent(DateTimeOffset.Parse("2023-08-24T05:35:17.051Z"), DateTimeOffset.Parse("2023-08-24T05:35:17.051Z"), "1.1.1.1");
+            AccountSasToken result = await dataProduct.GenerateStorageAccountSasTokenAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             {
             });
-            ListRoleAssignments result = await dataProduct.GetRolesAssignmentsAsync(body);
+            RoleAssignmentListResult result = await dataProduct.GetRolesAssignmentsAsync(body);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             {
             });
-            ListRoleAssignments result = await dataProduct.GetRolesAssignmentsAsync(body);
+            RoleAssignmentListResult result = await dataProduct.GetRolesAssignmentsAsync(body);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation
-            KeyVaultContent content = new KeyVaultContent(new Uri("https://myKeyVault.vault.azure.net"));
+            NetworkAnalyticsKeyVaultContent content = new NetworkAnalyticsKeyVaultContent(new Uri("https://myKeyVault.vault.azure.net"));
             await dataProduct.RotateKeyAsync(content);
 
             Console.WriteLine($"Succeeded");
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation
-            KeyVaultContent content = new KeyVaultContent(new Uri("https://myKeyVault.vault.azure.net"));
+            NetworkAnalyticsKeyVaultContent content = new NetworkAnalyticsKeyVaultContent(new Uri("https://myKeyVault.vault.azure.net"));
             await dataProduct.RotateKeyAsync(content);
 
             Console.WriteLine($"Succeeded");
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DataType item in dataProduct.GetDataTypesAsync())
+            await foreach (DataProductDataType item in dataProduct.GetDataTypesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
             DataProductResource dataProduct = client.GetDataProductResource(dataProductResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DataType item in dataProduct.GetDataTypesAsync())
+            await foreach (DataProductDataType item in dataProduct.GetDataTypesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

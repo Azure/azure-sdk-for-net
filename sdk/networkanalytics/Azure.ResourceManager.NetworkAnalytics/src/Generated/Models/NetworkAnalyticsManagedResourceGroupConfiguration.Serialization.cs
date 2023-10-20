@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class ManagedResourceGroupConfiguration : IUtf8JsonSerializable
+    public partial class NetworkAnalyticsManagedResourceGroupConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedResourceGroupConfiguration DeserializeManagedResourceGroupConfiguration(JsonElement element)
+        internal static NetworkAnalyticsManagedResourceGroupConfiguration DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     continue;
                 }
             }
-            return new ManagedResourceGroupConfiguration(name, location);
+            return new NetworkAnalyticsManagedResourceGroupConfiguration(name, location);
         }
     }
 }
