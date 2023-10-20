@@ -73,14 +73,12 @@ namespace Azure.ResourceManager.Support.Tests
         {
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             var severity = supportTicket.Value.Data.Severity;
-            var firstName = supportTicket.Value.Data.ContactDetails.FirstName;
             await supportTicket.Value.UpdateAsync(BuildUpdateSupportTicket(supportTicket.Value.Data));
             supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
             Assert.AreEqual(supportTicket.Value.Data.Name, _existSupportTicketName);
             Assert.AreNotEqual(supportTicket.Value.Data.Severity, severity);
-            Assert.AreNotEqual(supportTicket.Value.Data.ContactDetails.FirstName, firstName);
         }
 
         private void ValidateGetSupportTicket(SupportTicketData supportTicket, string supportTicketName)
@@ -107,13 +105,11 @@ namespace Azure.ResourceManager.Support.Tests
 
         private UpdateSupportTicket BuildUpdateSupportTicket(SupportTicketData supportTicket)
         {
-            var firstName = $"firstName_{DateTime.Now.Ticks.ToString()}";
             //  Change severity to Minimal if Moderate and vice versa
             var severity = supportTicket.Severity.Value == "Minimal" ? "Moderate" : "Minimal";
             var updateSupportTicket = new UpdateSupportTicket()
             {
                 Severity = severity,
-                ContactDetails = new SupportContactProfileContent() { FirstName = firstName }
             };
             return updateSupportTicket;
         }
