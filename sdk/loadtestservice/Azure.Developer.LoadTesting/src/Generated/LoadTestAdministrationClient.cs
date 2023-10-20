@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Developer.LoadTesting
 {
     // Data plane generated client.
-    /// <summary> The LoadTestAdministration service client. </summary>
+    /// <summary> The LoadTestAdministration service client. Hello World. </summary>
     public partial class LoadTestAdministrationClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
