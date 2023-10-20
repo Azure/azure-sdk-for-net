@@ -188,25 +188,34 @@ namespace Azure.AI.OpenAI.Tests
         {
             const string expectedId = "expected-id-value";
 
-            StreamingChatCompletionsUpdate firstUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
-                expectedId,
-                DateTime.Now,
-                role: ChatRole.Assistant,
-                contentUpdate: "hello");
-            StreamingChatCompletionsUpdate secondUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
-                expectedId,
-                DateTime.Now,
-                contentUpdate: " world");
-            StreamingChatCompletionsUpdate thirdUpdate = AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
-                expectedId,
-                DateTime.Now,
-                finishReason: CompletionsFinishReason.Stopped);
+            StreamingChatCompletionsUpdate[] updates = new[]
+            {
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    role: ChatRole.Assistant,
+                    contentUpdate: "hello"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    contentUpdate: " world"),
+                AzureOpenAIModelFactory.StreamingChatCompletionsUpdate(
+                    expectedId,
+                    DateTime.Now,
+                    finishReason: CompletionsFinishReason.Stopped),
+            };
 
-            using StreamingChatCompletions streamingChatCompletions = AzureOpenAIModelFactory.StreamingChatCompletions(
-                new[] { firstUpdate, secondUpdate, thirdUpdate });
+            async IAsyncEnumerable<StreamingChatCompletionsUpdate> EnumerateMockUpdates()
+            {
+                foreach (StreamingChatCompletionsUpdate update in updates)
+                {
+                    yield return update;
+                }
+                await Task.Delay(0);
+            }
 
             StringBuilder contentBuilder = new();
-            await foreach (StreamingChatCompletionsUpdate update in  streamingChatCompletions.EnumerateChatUpdates())
+            await foreach (StreamingChatCompletionsUpdate update in EnumerateMockUpdates())
             {
                 Assert.That(update.Id == expectedId);
                 Assert.That(update.Created > new DateTimeOffset(new DateTime(2023, 1, 1)));

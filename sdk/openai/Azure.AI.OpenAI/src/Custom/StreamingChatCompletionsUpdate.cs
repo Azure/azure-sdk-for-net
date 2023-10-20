@@ -2,9 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
+using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI
 {
+    /// <summary>
+    /// Represents an incremental update to a streamed Chat Completions response.
+    /// </summary>
     public partial class StreamingChatCompletionsUpdate
     {
         /// <summary>
@@ -84,8 +93,8 @@ namespace Azure.AI.OpenAI
         ///
         /// <para>
         /// As is the case for non-streaming <see cref="FunctionCall.Arguments"/>, the content provided for function
-        /// arguments is not guaranteed to be well-formed JSON or to contain expected data. Use of function arguments
-        /// should validate before consumption.
+        /// arguments is not guaranteed to be well-formed JSON or to contain expected data. Callers should validate
+        /// function arguments before using them.
         /// </para>
         /// </remarks>
         public string FunctionArgumentsUpdate { get; }

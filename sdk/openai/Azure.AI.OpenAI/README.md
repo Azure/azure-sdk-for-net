@@ -206,13 +206,9 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
+await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
     deploymentOrModelName: "gpt-3.5-turbo",
-    chatCompletionsOptions);
-using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-await foreach (StreamingChatCompletionsUpdate chatUpdate
-    in streamingChatCompletions.EnumerateChatUpdates())
+    chatCompletionsOptions))
 {
     if (chatUpdate.Role.HasValue)
     {

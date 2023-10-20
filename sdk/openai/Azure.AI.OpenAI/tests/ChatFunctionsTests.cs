@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -103,17 +101,15 @@ public class ChatFunctionsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
-        Response<StreamingChatCompletions> response
+        StreamingResponse<StreamingChatCompletionsUpdate> response
             = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
         Assert.That(response, Is.Not.Null);
-
-        using StreamingChatCompletions streamingChatCompletions = response.Value;
 
         ChatRole? streamedRole = default;
         string functionName = null;
         StringBuilder argumentsBuilder = new();
 
-        await foreach (StreamingChatCompletionsUpdate chatUpdate in streamingChatCompletions.EnumerateChatUpdates())
+        await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
             if (chatUpdate.Role.HasValue)
             {

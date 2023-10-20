@@ -47,7 +47,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
                 {
                     Endpoint = "https://openaisdktestsearch.search.windows.net",
                     IndexName = "openai-test-index-carbon-wiki",
-                    Key = GetCognitiveSearchApiKey().Key,
+                    GetCognitiveSearchApiKey().Key,
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
             },
@@ -116,7 +116,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
                         {
                             Endpoint = "https://openaisdktestsearch.search.windows.net",
                             IndexName = "openai-test-index-carbon-wiki",
-                            Key = GetCognitiveSearchApiKey().Key,
+                            GetCognitiveSearchApiKey().Key,
                         },
                         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
                     },
@@ -124,19 +124,16 @@ public class AzureChatExtensionsTests : OpenAITestBase
             },
         };
 
-        Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
-            deploymentOrModelName,
-            requestOptions);
+        using StreamingResponse<StreamingChatCompletionsUpdate> response
+            = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
         Assert.That(response, Is.Not.Null);
-        Assert.That(response.Value, Is.Not.Null);
-
-        using StreamingChatCompletions streamingChatCompletions = response.Value;
+        Assert.That(response.GetRawResponse(), Is.Not.Null);
 
         ChatRole? streamedRole = null;
         IEnumerable<ChatMessage> azureContextMessages = null;
         StringBuilder contentBuilder = new();
 
-        await foreach (StreamingChatCompletionsUpdate chatUpdate in response.Value.EnumerateChatUpdates())
+        await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
             if (chatUpdate.Role.HasValue)
             {

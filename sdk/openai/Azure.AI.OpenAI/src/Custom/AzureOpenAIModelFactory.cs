@@ -14,11 +14,11 @@ namespace Azure.AI.OpenAI
     public static partial class AzureOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="message"> The chat message associated with this chat completions choice </param>
+        /// <param name="message"> The chat message associated with this chat completions choice. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload </param>
-        /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering </param>
+        /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload. </param>
+        /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering. </param>
         /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
         public static ChatChoice ChatChoice(
             ChatMessage message = null,
@@ -28,16 +28,6 @@ namespace Azure.AI.OpenAI
             ContentFilterResults contentFilterResults = null)
         {
             return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StreamingCompletions for tests and mocking.
-        /// </summary>
-        /// <param name="completions"> A static set of Completions instances to use for tests and mocking. </param>
-        /// <returns> A new instance of StreamingCompletions. </returns>
-        public static StreamingCompletions StreamingCompletions(IEnumerable<Completions> completions)
-        {
-            return new StreamingCompletions(completions);
         }
 
         public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
@@ -63,19 +53,6 @@ namespace Azure.AI.OpenAI
                 functionName,
                 functionArgumentsUpdate,
                 azureExtensionsContext);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StreamingChatCompletions for tests and mocking.
-        /// </summary>
-        /// <param name="updates">
-        /// A static collection of StreamingChatCompletionUpdates to use for tests and mocking.
-        /// </param>
-        /// <returns> A new instance of StreamingChatCompletions </returns>
-        public static StreamingChatCompletions StreamingChatCompletions(
-            IEnumerable<StreamingChatCompletionsUpdate> updates)
-        {
-            return new StreamingChatCompletions(updates);
         }
 
         /// <summary> Initializes a new instance of AudioTranscription. </summary>

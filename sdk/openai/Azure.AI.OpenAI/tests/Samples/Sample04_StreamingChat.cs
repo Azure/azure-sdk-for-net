@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples
@@ -29,13 +27,9 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 }
             };
 
-            Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
                 deploymentOrModelName: "gpt-3.5-turbo",
-                chatCompletionsOptions);
-            using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-            await foreach (StreamingChatCompletionsUpdate chatUpdate
-                in streamingChatCompletions.EnumerateChatUpdates())
+                chatCompletionsOptions))
             {
                 if (chatUpdate.Role.HasValue)
                 {

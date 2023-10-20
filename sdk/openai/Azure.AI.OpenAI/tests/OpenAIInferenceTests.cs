@@ -243,18 +243,16 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
-            Response<StreamingChatCompletions> streamingResponse
+            StreamingResponse<StreamingChatCompletionsUpdate> response
                 = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
-            Assert.That(streamingResponse, Is.Not.Null);
-            using StreamingChatCompletions streamingChatCompletions = streamingResponse.Value;
-            Assert.That(streamingChatCompletions, Is.InstanceOf<StreamingChatCompletions>());
+            Assert.That(response, Is.Not.Null);
 
-            StringBuilder contentBuilder = new StringBuilder();
+            StringBuilder contentBuilder = new();
             bool gotRole = false;
             bool gotRequestContentFilterResults = false;
             bool gotResponseContentFilterResults = false;
 
-            await foreach (StreamingChatCompletionsUpdate chatUpdate in streamingChatCompletions.EnumerateChatUpdates())
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
                 Assert.That(chatUpdate, Is.Not.Null);
 
@@ -404,21 +402,16 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbabilityCount = 1,
             };
 
-            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(
+            using StreamingResponse<Completions> response = await client.GetCompletionsStreamingAsync(
                 deploymentOrModelName,
                 requestOptions);
             Assert.That(response, Is.Not.Null);
-
-            // StreamingCompletions implements IDisposable; capturing the .Value field of `response` with a `using`
-            // statement is unusual but properly ensures that `.Dispose()` will be called, as `Response<T>` does *not*
-            // implement IDisposable or otherwise ensure that an `IDisposable` underlying `.Value` is disposed.
-            using StreamingCompletions responseValue = response.Value;
 
             Dictionary<int, PromptFilterResult> promptFilterResultsByPromptIndex = new();
             Dictionary<int, CompletionsFinishReason> finishReasonsByChoiceIndex = new();
             Dictionary<int, StringBuilder> textBuildersByChoiceIndex = new();
 
-            await foreach (Completions streamingCompletions in responseValue.EnumerateCompletions())
+            await foreach (Completions streamingCompletions in response)
             {
                 if (streamingCompletions.PromptFilterResults is not null)
                 {
@@ -493,18 +486,6 @@ namespace Azure.AI.OpenAI.Tests
             ChatMessage messageFromUtf8Bytes = System.Text.Json.JsonSerializer.Deserialize<ChatMessage>(utf8SerializedMessage);
             Assert.That(messageFromUtf8Bytes.Role, Is.EqualTo(originalMessage.Role));
             Assert.That(messageFromUtf8Bytes.Content, Is.EqualTo(originalMessage.Content));
-        }
-
-        // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
-        private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(
-            IAsyncEnumerable<T> asyncValues)
-        {
-            List<T> result = new();
-            await foreach (T asyncValue in asyncValues)
-            {
-                result.Add(asyncValue);
-            }
-            return result;
         }
 
         private void AssertExpectedPromptFilterResults(
