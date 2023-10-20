@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
-        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Is cloud pc resource. </summary>
         public bool? IsCloudPCResource { get; }
         /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
         public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>

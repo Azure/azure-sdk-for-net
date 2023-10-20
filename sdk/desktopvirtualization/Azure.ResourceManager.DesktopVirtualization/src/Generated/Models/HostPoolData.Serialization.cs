@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
             Optional<bool> cloudPCResource = default;
-            Optional<HostpoolPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<HostPoolPublicNetworkAccess> publicNetworkAccess = default;
             Optional<SessionHostAgentUpdateProperties> agentUpdate = default;
             Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new HostpoolPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new HostPoolPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("agentUpdate"u8))

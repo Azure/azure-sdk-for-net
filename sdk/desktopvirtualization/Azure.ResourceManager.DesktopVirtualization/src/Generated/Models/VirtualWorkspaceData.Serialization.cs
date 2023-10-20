@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> friendlyName = default;
             Optional<IList<string>> applicationGroupReferences = default;
             Optional<bool> cloudPCResource = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DesktopVirtualizationPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

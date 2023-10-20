@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
-    public readonly partial struct HostpoolPublicNetworkAccess : IEquatable<HostpoolPublicNetworkAccess>
+    public readonly partial struct HostPoolPublicNetworkAccess : IEquatable<HostPoolPublicNetworkAccess>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="HostpoolPublicNetworkAccess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPublicNetworkAccess"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HostpoolPublicNetworkAccess(string value)
+        public HostPoolPublicNetworkAccess(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private const string EnabledForClientsOnlyValue = "EnabledForClientsOnly";
 
         /// <summary> Enabled. </summary>
-        public static HostpoolPublicNetworkAccess Enabled { get; } = new HostpoolPublicNetworkAccess(EnabledValue);
+        public static HostPoolPublicNetworkAccess Enabled { get; } = new HostPoolPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
-        public static HostpoolPublicNetworkAccess Disabled { get; } = new HostpoolPublicNetworkAccess(DisabledValue);
+        public static HostPoolPublicNetworkAccess Disabled { get; } = new HostPoolPublicNetworkAccess(DisabledValue);
         /// <summary> EnabledForSessionHostsOnly. </summary>
-        public static HostpoolPublicNetworkAccess EnabledForSessionHostsOnly { get; } = new HostpoolPublicNetworkAccess(EnabledForSessionHostsOnlyValue);
+        public static HostPoolPublicNetworkAccess EnabledForSessionHostsOnly { get; } = new HostPoolPublicNetworkAccess(EnabledForSessionHostsOnlyValue);
         /// <summary> EnabledForClientsOnly. </summary>
-        public static HostpoolPublicNetworkAccess EnabledForClientsOnly { get; } = new HostpoolPublicNetworkAccess(EnabledForClientsOnlyValue);
-        /// <summary> Determines if two <see cref="HostpoolPublicNetworkAccess"/> values are the same. </summary>
-        public static bool operator ==(HostpoolPublicNetworkAccess left, HostpoolPublicNetworkAccess right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="HostpoolPublicNetworkAccess"/> values are not the same. </summary>
-        public static bool operator !=(HostpoolPublicNetworkAccess left, HostpoolPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HostpoolPublicNetworkAccess"/>. </summary>
-        public static implicit operator HostpoolPublicNetworkAccess(string value) => new HostpoolPublicNetworkAccess(value);
+        public static HostPoolPublicNetworkAccess EnabledForClientsOnly { get; } = new HostPoolPublicNetworkAccess(EnabledForClientsOnlyValue);
+        /// <summary> Determines if two <see cref="HostPoolPublicNetworkAccess"/> values are the same. </summary>
+        public static bool operator ==(HostPoolPublicNetworkAccess left, HostPoolPublicNetworkAccess right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HostPoolPublicNetworkAccess"/> values are not the same. </summary>
+        public static bool operator !=(HostPoolPublicNetworkAccess left, HostPoolPublicNetworkAccess right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="HostPoolPublicNetworkAccess"/>. </summary>
+        public static implicit operator HostPoolPublicNetworkAccess(string value) => new HostPoolPublicNetworkAccess(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HostpoolPublicNetworkAccess other && Equals(other);
+        public override bool Equals(object obj) => obj is HostPoolPublicNetworkAccess other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(HostpoolPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HostPoolPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

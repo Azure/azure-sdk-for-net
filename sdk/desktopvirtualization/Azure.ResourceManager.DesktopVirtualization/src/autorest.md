@@ -111,6 +111,10 @@ rename-mapping:
   AgentUpdatePatchProperties: SessionHostAgentUpdatePatchProperties
   AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
   MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
+  HostpoolPublicNetworkAccess: HostPoolPublicNetworkAccess
+  DesktopVirtualizationPrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
+  PrivateEndpointConnectionWithSystemDataData: DesktopVirtualizationPrivateEndpointConnectionData
+  PublicNetworkAccess: DesktopVirtualizationPublicNetworkAccess
 
 prepend-rp-prefix:
   - DayOfWeek

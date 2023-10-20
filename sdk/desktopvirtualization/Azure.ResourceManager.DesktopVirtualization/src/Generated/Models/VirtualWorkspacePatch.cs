@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> List of applicationGroup links. </summary>
         public IList<string> ApplicationGroupReferences { get; }
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

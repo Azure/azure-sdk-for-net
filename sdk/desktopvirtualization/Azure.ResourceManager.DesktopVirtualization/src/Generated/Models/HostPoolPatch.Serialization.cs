@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<HostPoolSsoSecretType> ssoSecretType = default;
             Optional<PreferredAppGroupType> preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
-            Optional<HostpoolPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<HostPoolPublicNetworkAccess> publicNetworkAccess = default;
             Optional<SessionHostAgentUpdatePatchProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new HostpoolPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new HostPoolPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("agentUpdate"u8))
