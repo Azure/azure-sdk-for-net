@@ -368,8 +368,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     "Azure.Messaging.ServiceBus.ServiceBusException: The lock supplied is invalid.",
                     exception.ToString());
 
-                // The service doesn't seem to throw when an already settled message gets abandoned over the mgmt link. Will need to discuss
-                // with service team.
+                // The service doesn't throw when an already settled message gets abandoned over the mgmt link, so we won't
+                // test for that here.
 
                 _waitHandle1.Set();
             }
