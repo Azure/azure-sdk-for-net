@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated client.
-    /// <summary> The ConversationAuthoring service client. </summary>
+    /// <summary> The ConversationAuthoring service client. Hello World. </summary>
     public partial class ConversationAuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

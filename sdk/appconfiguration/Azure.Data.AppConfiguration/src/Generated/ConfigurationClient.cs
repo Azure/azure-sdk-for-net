@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     // Data plane generated client.
-    /// <summary> The Configuration service client. </summary>
+    /// <summary> The Configuration service client. Hello World. </summary>
     public partial class ConfigurationClient
     {
         private const string AuthorizationHeader = "Connection String";
