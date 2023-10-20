@@ -6,7 +6,7 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {
     public class ModelJsonConverterTests
     {

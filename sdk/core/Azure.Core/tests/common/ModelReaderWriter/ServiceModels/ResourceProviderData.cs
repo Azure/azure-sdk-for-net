@@ -26,7 +26,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Response response)

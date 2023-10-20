@@ -70,7 +70,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }

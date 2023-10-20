@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {
     public class ModelReaderWriterPipelineContentTests
     {

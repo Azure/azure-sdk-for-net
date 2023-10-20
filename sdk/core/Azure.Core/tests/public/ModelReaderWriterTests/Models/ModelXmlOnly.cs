@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent(modelXml, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(modelXml, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXmlOnly(Response response)

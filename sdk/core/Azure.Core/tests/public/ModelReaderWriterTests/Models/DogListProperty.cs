@@ -43,7 +43,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            return RequestContent.Create(PipelineContent.CreateContent(dog, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(dog, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         #region Serialization

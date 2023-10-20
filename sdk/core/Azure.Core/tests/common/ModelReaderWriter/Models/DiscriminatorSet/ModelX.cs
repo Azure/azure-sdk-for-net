@@ -37,14 +37,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
-        public static implicit operator PipelineContent(ModelX modelX)
+        public static implicit operator RequestContent(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return PipelineContent.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Response response)
@@ -207,7 +207,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }

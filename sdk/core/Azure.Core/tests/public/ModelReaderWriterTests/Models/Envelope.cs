@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent(envelope, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(envelope, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator Envelope<T>(Response response)

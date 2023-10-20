@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXml(Response response)
@@ -136,7 +136,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
-                return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+                return ModelReaderWriter.WriteCore(this, options);
             }
             else
             {

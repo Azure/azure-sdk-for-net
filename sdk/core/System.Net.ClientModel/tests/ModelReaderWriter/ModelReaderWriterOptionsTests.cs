@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {
     internal class ModelReaderWriterOptionsTests
     {

@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent(baseModel, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Response response)
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }

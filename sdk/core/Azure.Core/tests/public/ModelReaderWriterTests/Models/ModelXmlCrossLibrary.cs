@@ -55,7 +55,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(PipelineContent.CreateContent((IModel<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create((IModel<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXmlCrossLibrary(Response response)

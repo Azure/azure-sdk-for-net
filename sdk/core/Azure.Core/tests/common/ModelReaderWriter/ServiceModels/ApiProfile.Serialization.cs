@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }

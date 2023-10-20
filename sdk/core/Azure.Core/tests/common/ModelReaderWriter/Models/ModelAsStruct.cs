@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(ModelAsStruct model)
         {
-            return RequestContent.Create(PipelineContent.CreateContent(model, ModelReaderWriterOptions.DefaultWireOptions));
+            return RequestContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
@@ -129,7 +129,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
 
         object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)

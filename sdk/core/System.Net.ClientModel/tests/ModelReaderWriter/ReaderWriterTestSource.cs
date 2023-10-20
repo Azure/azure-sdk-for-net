@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {
     internal static class ReaderWriterTestSource
     {

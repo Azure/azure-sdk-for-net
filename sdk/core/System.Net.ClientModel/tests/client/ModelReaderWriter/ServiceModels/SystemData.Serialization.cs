@@ -178,7 +178,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }
