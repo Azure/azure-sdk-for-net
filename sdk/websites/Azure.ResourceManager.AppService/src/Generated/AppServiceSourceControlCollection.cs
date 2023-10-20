@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlType"> Type of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppServiceSourceControlResource>> GetIfExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
+
+            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appServiceSourceControlRestClient.GetSourceControlAsync(sourceControlType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppServiceSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlType"> Type of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        public virtual NullableResponse<AppServiceSourceControlResource> GetIfExists(string sourceControlType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
+
+            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appServiceSourceControlRestClient.GetSourceControl(sourceControlType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppServiceSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AppServiceSourceControlResource> IEnumerable<AppServiceSourceControlResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

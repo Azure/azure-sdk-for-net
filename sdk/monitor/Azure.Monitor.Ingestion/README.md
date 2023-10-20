@@ -41,6 +41,20 @@ var credential = new DefaultAzureCredential();
 var client = new LogsIngestionClient(endpoint, credential);
 ```
 
+#### Configure client for Azure sovereign cloud
+
+By default, `LogsIngestionClient` is configured to connect to the Azure public cloud. To connect to a sovereign cloud instead, set the `LogsIngestionClientOptions.Audience` property. For example:
+
+```C# Snippet:CreateLogsIngestionClientWithOptions
+var endpoint = new Uri("<data_collection_endpoint_uri>");
+var credential = new DefaultAzureCredential();
+var clientOptions = new LogsIngestionClientOptions
+{
+    Audience = LogsIngestionAudience.AzureChina
+};
+var client = new LogsIngestionClient(endpoint, credential, clientOptions);
+```
+
 ### Upload the logs
 
 For examples of logs ingestion, see the [Examples](#examples) section.

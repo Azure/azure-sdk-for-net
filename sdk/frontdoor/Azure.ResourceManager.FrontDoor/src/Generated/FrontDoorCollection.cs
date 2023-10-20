@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontDoorResource>> GetIfExistsAsync(string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
+        public virtual NullableResponse<FrontDoorResource> GetIfExists(string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FrontDoorResource> IEnumerable<FrontDoorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

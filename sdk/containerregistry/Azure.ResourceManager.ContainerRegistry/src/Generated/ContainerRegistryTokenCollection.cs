@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryTokenResource>> GetIfExistsAsync(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryTokenTokensRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryTokenResource> GetIfExists(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryTokenTokensRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ContainerRegistryTokenResource> IEnumerable<ContainerRegistryTokenResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

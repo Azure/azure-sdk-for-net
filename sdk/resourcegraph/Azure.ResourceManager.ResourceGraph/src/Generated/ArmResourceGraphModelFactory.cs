@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="data"> Query output in JObject array or Table format. </param>
         /// <param name="facets">
         /// Query facets.
-        /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
+        /// Please note <see cref="Models.Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.FacetError"/> and <see cref="Models.FacetResult"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ResourceQueryResult"/> instance for mocking. </returns>
         public static ResourceQueryResult ResourceQueryResult(long totalRecords = default, long count = default, ResultTruncated resultTruncated = default, string skipToken = null, BinaryData data = null, IEnumerable<Facet> facets = null)

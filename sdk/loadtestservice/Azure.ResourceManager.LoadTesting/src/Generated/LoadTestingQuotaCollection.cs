@@ -245,6 +245,80 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="quotaBucketName"> Quota Bucket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LoadTestingQuotaResource>> GetIfExistsAsync(string quotaBucketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+
+            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _loadTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), quotaBucketName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LoadTestingQuotaResource>(response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="quotaBucketName"> Quota Bucket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
+        public virtual NullableResponse<LoadTestingQuotaResource> GetIfExists(string quotaBucketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+
+            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _loadTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), quotaBucketName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LoadTestingQuotaResource>(response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LoadTestingQuotaResource> IEnumerable<LoadTestingQuotaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

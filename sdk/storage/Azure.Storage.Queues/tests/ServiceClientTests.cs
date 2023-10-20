@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
@@ -104,6 +105,77 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new QueueClient(uri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.PublicAudience);
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
+
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience($"https://{uriBuilder.AccountName}.queue.core.windows.net/"));
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
+
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.CreateQueueServiceAccountAudience(uriBuilder.AccountName));
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience("https://badaudience.queue.core.windows.net"));
+
+            QueueServiceClient aadContainer = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadContainer.GetPropertiesAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

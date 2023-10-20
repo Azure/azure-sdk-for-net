@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -47,7 +46,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -106,7 +105,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -218,7 +217,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");

@@ -158,8 +158,9 @@ namespace Azure.Core.Serialization
                         continue;
                     }
 
-                    // Don't allow heterogenous collections
-                    if (item.GetType() != elementType)
+                    // Don't allow heterogenous collections,
+                    // unless the types it's holding are allowed types.
+                    if (item.GetType() != elementType && !IsAllowedType(item.GetType()))
                     {
                         return false;
                     }

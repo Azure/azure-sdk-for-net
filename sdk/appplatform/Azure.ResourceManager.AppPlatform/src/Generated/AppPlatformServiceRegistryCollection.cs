@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceRegistryName"> The name of Service Registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformServiceRegistryResource>> GetIfExistsAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
+
+            using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformServiceRegistryServiceRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformServiceRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformServiceRegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/serviceRegistries/{serviceRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRegistries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceRegistryName"> The name of Service Registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformServiceRegistryResource> GetIfExists(string serviceRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
+
+            using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformServiceRegistryServiceRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformServiceRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformServiceRegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AppPlatformServiceRegistryResource> IEnumerable<AppPlatformServiceRegistryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

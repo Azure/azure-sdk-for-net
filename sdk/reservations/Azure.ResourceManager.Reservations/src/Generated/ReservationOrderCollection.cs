@@ -309,6 +309,74 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ReservationOrderResource>> GetIfExistsAsync(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _reservationOrderRestClient.GetAsync(reservationOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ReservationOrderResource>(response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ReservationOrderResource> GetIfExists(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _reservationOrderRestClient.Get(reservationOrderId, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ReservationOrderResource>(response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ReservationOrderResource> IEnumerable<ReservationOrderResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

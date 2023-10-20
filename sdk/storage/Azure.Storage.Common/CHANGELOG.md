@@ -1,6 +1,6 @@
 # Release History
 
-## 12.17.0-beta.2 (Unreleased)
+## 12.18.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.18.0-beta.1 (2023-10-16)
+- This release contains bug fixes to improve quality.
+
+## 12.17.0 (2023-09-12)
+- Includes all features from 12.17.0-beta.1.
 
 ## 12.17.0-beta.1 (2023-08-08)
 - This release contains bug fixes to improve quality.

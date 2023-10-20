@@ -17,9 +17,11 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long _testPartNumber = 5;
         internal static readonly DateTimeOffset _testStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string _testSourceProviderId = "test";
         internal const string _testSourceResourceId = "LocalFile";
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testSourceQuery = "sourcequery";
+        internal const string _testDestinationProviderId = "test";
         internal const string _testDestinationResourceId = "LocalFile";
         internal const string _testDestinationPath = "C:/sample-destination";
         internal const string _testDestinationQuery = "destquery";
@@ -43,8 +45,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption _testDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption _testPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const DataTransferStatus _testJobStatus = DataTransferStatus.Queued;
-        internal const DataTransferStatus _testPartStatus = DataTransferStatus.Queued;
+        internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
 
         private string _checkpointerPath;
 
@@ -58,9 +60,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Create stub files
             for (int i = 0; i < transferCount; i++)
             {
+                string transferId = GetNewTransferId();
+                CreateStubJobPlanFile(_checkpointerPath, transferId);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
-                    transferId: GetNewTransferId(),
+                    transferId: transferId,
                     jobPartCount: _partCountDefault);
             }
 
@@ -72,11 +76,12 @@ namespace Azure.Storage.DataMovement.Tests
         {
             foreach (DataTransfer dataTransfer in dataTransfers)
             {
+                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id, status: dataTransfer.TransferStatus);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
                     transferId: dataTransfer.Id,
                     jobPartCount: _partCountDefault,
-                    status: dataTransfer.TransferStatus);
+                    status: new DataTransferStatus(DataTransferState.Paused, false, false));
             }
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
@@ -89,12 +94,13 @@ namespace Azure.Storage.DataMovement.Tests
             string checkpointerPath,
             string transferId,
             int jobPartCount,
-            DataTransferStatus status = DataTransferStatus.Queued,
+            DataTransferStatus status = default,
             List<string> sourcePaths = default,
             List<string> destinationPaths = default,
             string sourceResourceId = "LocalFile",
             string destinationResourceId = "LocalFile")
         {
+            status ??= _testPartStatus;
             // Populate sourcePaths if not provided
             if (sourcePaths == default)
             {
@@ -136,6 +142,37 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     header.Serialize(stream);
                 }
+            }
+        }
+
+        internal void CreateStubJobPlanFile(
+            string checkpointPath,
+            string transferId,
+            string parentSourcePath = _testSourcePath,
+            string parentDestinationPath = _testDestinationPath,
+            string sourceProviderId = _testSourceProviderId,
+            string destinationProviderId = _testDestinationProviderId,
+            bool isContainer = false,
+            DataTransferStatus status = default)
+        {
+            status ??= new DataTransferStatus();
+            JobPlanHeader header = new JobPlanHeader(
+                DataMovementConstants.JobPlanFile.SchemaVersion,
+                transferId,
+                DateTimeOffset.UtcNow,
+                JobPlanOperation.ServiceToService,
+                sourceProviderId,
+                destinationProviderId,
+                isContainer,
+                false, /* enumerationComplete */
+                status,
+                parentSourcePath,
+                parentDestinationPath);
+
+            string filePath = Path.Combine(checkpointPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            using (FileStream stream = File.Create(filePath))
+            {
+                header.Serialize(stream);
             }
         }
 
@@ -185,9 +222,11 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = _testDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = _testPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = _testRehydratePriorityType,
-            DataTransferStatus atomicJobStatus = _testJobStatus,
-            DataTransferStatus atomicPartStatus = _testPartStatus)
+            DataTransferStatus atomicJobStatus = default,
+            DataTransferStatus atomicPartStatus = default)
         {
+            atomicJobStatus ??= _testJobStatus;
+            atomicPartStatus ??= _testPartStatus;
             if (startTime == default)
             {
                 startTime = _testStartTime;

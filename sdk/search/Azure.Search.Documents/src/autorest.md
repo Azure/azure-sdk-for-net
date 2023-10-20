@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -92,17 +92,6 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
-### Rename Vector definition
-
- It conflicts with https://learn.microsoft.com/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
-
-``` yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.Vector
-  transform: $["x-ms-client-name"] = "SearchQueryVector";
-```
-
 ### Rename Dimensions
 
  To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
@@ -125,14 +114,14 @@ directive:
   transform: $["x-ms-format"] = "arm-id";
 ```
 
-### Rename Vector property `K`
+### Rename VectorQuery property `K`
 
- Rename Vector property `K` to `KNearestNeighborsCount`
+ Rename VectorQuery property `K` to `KNearestNeighborsCount`
 
 ```yaml
 directive:
 - from: searchindex.json
-  where: $.definitions.Vector.properties.k
+  where: $.definitions.VectorQuery.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
 ```
 
@@ -145,17 +134,6 @@ directive:
 - from: searchindex.json
   where: $.definitions.QueryResultDocumentSemanticFieldState
   transform: $["x-ms-enum"].name = "SemanticFieldState";
-```
-
-### Remove `Vector` Property
-
- Remove the `Vector` Property from `SearchRequest` in favor of the `Vectors` Array
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.SearchRequest
-  transform: delete $.properties.vector;
 ```
 
 ### Rename one of SearchMode definitions

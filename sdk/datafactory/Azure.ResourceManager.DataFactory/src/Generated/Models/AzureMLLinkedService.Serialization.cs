@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("mlEndpoint"u8);
             JsonSerializer.Serialize(writer, MLEndpoint);
             writer.WritePropertyName("apiKey"u8);
-            JsonSerializer.Serialize(writer, ApiKey); if (Optional.IsDefined(UpdateResourceEndpoint))
+            JsonSerializer.Serialize(writer, ApiKey);
+            if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
                 JsonSerializer.Serialize(writer, UpdateResourceEndpoint);

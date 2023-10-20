@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -13,10 +14,12 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public class SecretReferenceConfigurationSetting : ConfigurationSetting
     {
+        internal const string SecretReferenceContentType = "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8";
+
         private string _originalValue;
         private bool _isValidValue;
         private Uri _secretId;
-        internal const string SecretReferenceContentType = "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8";
+        private List<(string Name, JsonElement Json)> _parsedProperties = new(1);
 
         internal SecretReferenceConfigurationSetting()
         {
@@ -28,13 +31,26 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="secretId">The secret identifier to reference.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public SecretReferenceConfigurationSetting(string key, Uri secretId, string label = null)
+        public SecretReferenceConfigurationSetting(string key, Uri secretId, string label = null) : this(key, secretId, label, default)
         {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SecretReferenceConfigurationSetting"/> referencing the provided KeyVault secret.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="secretId">The secret identifier to reference.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="etag">The ETag value for the configuration setting.</param>
+        public SecretReferenceConfigurationSetting(string key, Uri secretId, string label, ETag etag)
+        {
+            _isValidValue = true;
+            _secretId = secretId;
+
             Key = key;
             Label = label;
-            _isValidValue = true;
+            ETag = etag;
             ContentType = SecretReferenceContentType;
-            _secretId = secretId;
         }
 
         /// <summary>
@@ -49,67 +65,94 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
-                _secretId = value;
+               _secretId = value;
             }
         }
 
         internal override void SetValue(string value)
         {
             _originalValue = value;
-
             _isValidValue = TryParseValue();
         }
 
         internal override string GetValue()
         {
-            return _isValidValue ? FormatValue() : _originalValue;
-        }
+            // If the value wasn't valid, return it verbatim.
+            if (!_isValidValue)
+            {
+                return _originalValue;
+            }
 
-        private string FormatValue()
-        {
+            var uriWritten = false;
+
             using var memoryStream = new MemoryStream();
             using var writer = new Utf8JsonWriter(memoryStream);
 
             writer.WriteStartObject();
-            writer.WriteString("uri", _secretId.AbsoluteUri);
+
+            for (var index = 0; index < _parsedProperties.Count; ++index)
+            {
+                var (name, jsonValue) = _parsedProperties[index];
+
+                if (name == "uri")
+                {
+                    writer.WriteString("uri", _secretId.AbsoluteUri);
+                    uriWritten = true;
+                }
+                else
+                {
+                    writer.WritePropertyName(name);
+                    jsonValue.WriteTo(writer);
+                }
+            }
+
+            if (!uriWritten)
+            {
+                writer.WriteString("uri", _secretId.AbsoluteUri);
+            }
+
             writer.WriteEndObject();
             writer.Flush();
 
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
+            return _originalValue;
         }
 
         private bool TryParseValue()
         {
+            _parsedProperties.Clear();
+
             try
             {
+                var isUriValid = false;
                 using var document = JsonDocument.Parse(_originalValue);
-                var root = document.RootElement;
 
-                if (!root.TryGetProperty("uri", out var uriProperty))
+                foreach (var item in document.RootElement.EnumerateObject())
                 {
-                    return false;
+                    switch (item.Name)
+                    {
+                        case "uri":
+                            if (Uri.TryCreate(item.Value.GetString(), UriKind.Absolute, out Uri uriValue))
+                            {
+                                _secretId = uriValue;
+                                _parsedProperties.Add((item.Name, default));
+
+                                isUriValid = true;
+                            }
+                            break;
+
+                        default:
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
+                            break;
+                    }
                 }
 
-                if (!Uri.TryCreate(uriProperty.GetString(), UriKind.Absolute, out Uri uriValue))
-                {
-                    return false;
-                }
-
-                _secretId = uriValue;
+                return isUriValid;
             }
             catch (Exception)
             {
                 return false;
             }
-
-            return true;
-        }
-
-        private void CheckValidWrite()
-        {
-            CheckValid();
-            _originalValue = null;
         }
 
         private void CheckValid()

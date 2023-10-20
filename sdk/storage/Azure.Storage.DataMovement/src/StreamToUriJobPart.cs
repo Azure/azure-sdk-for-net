@@ -23,10 +23,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private StreamToUriJobPart(
-            StreamToUriTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+        private StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -38,7 +35,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -57,8 +53,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
-            DataTransferStatus jobPartStatus = DataTransferStatus.Queued,
+            DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -71,7 +66,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -91,17 +85,11 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            int partNumber)
         {
-            // Create Job Part file as we're intializing the job part
-            StreamToUriJobPart part = new StreamToUriJobPart(
-                job: job,
-                partNumber: partNumber,
-                isFinalPart: isFinalPart);
-            await part.AddJobPartToCheckpointerAsync(
-                chunksTotal: 1, // For now we only store 1 chunk
-                isFinalPart: isFinalPart).ConfigureAwait(false);
+            // Create Job Part file as we're initializing the job part
+            StreamToUriJobPart part = new StreamToUriJobPart(job, partNumber);
+            await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             return part;
         }
 
@@ -110,25 +98,21 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
             DataTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
         {
-            // Create Job Part file as we're intializing the job part
+            // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
                 partNumber: partNumber,
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                length: length,
-                isFinalPart: isFinalPart);
+                length: length);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointerAsync(
-                    chunksTotal: 1,
-                    isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }
@@ -142,7 +126,7 @@ namespace Azure.Storage.DataMovement
             // Attempt to get the length, it's possible the file could
             // not be accesible (or does not exist).
             string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
-            await OnTransferStatusChanged(DataTransferStatus.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             long? fileLength = default;
             try
             {
@@ -250,7 +234,7 @@ namespace Azure.Storage.DataMovement
                     ReportBytesWritten(blockSize);
 
                     // Set completion status to completed
-                    await OnTransferStatusChanged(DataTransferStatus.Completed).ConfigureAwait(false);
+                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
                 else
                 {
@@ -280,6 +264,11 @@ namespace Azure.Storage.DataMovement
             }
             catch (RequestFailedException ex)
             when (ex.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreationPreference.SkipIfExists)
+            {
+                await InvokeSkippedArg().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            when (ex.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationPreference.SkipIfExists)
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
@@ -395,7 +384,7 @@ namespace Azure.Storage.DataMovement
             await DisposeHandlers().ConfigureAwait(false);
 
             // Set completion status to completed
-            await OnTransferStatusChanged(DataTransferStatus.Completed).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
         }
 
         private async Task QueueStageBlockRequests(List<(long Offset, long Size)> rangeList, long completeLength)

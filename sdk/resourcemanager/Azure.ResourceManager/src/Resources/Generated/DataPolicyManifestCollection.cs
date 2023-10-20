@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataPolicyManifestResource>> GetIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
+
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataPolicyManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        public virtual NullableResponse<DataPolicyManifestResource> GetIfExists(string policyMode, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
+
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataPolicyManifestRestClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataPolicyManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataPolicyManifestResource> IEnumerable<DataPolicyManifestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
