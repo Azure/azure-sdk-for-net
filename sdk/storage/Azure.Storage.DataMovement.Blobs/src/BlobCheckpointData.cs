@@ -28,13 +28,5 @@ namespace Azure.Storage.DataMovement.Blobs
             Version = version;
             BlobType = blobType;
         }
-
-        protected static void CheckSchemaVersion(int expected, int actual)
-        {
-            if (expected != actual)
-            {
-                throw Errors.UnsupportedJobSchemaVersionHeader(actual.ToString());
-            }
-        }
     }
 }

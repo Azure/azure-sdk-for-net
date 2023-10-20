@@ -131,7 +131,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            CheckSchemaVersion(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, version);
+            if (version != DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+            }
 
             // BlobType
             BlobType blobType = (BlobType)reader.ReadByte();

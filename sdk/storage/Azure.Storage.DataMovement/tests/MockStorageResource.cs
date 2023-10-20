@@ -89,12 +89,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return null;
+            return new MockResourceCheckpointData();
         }
 
         public override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return null;
+            return new MockResourceCheckpointData();
         }
 
         protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
