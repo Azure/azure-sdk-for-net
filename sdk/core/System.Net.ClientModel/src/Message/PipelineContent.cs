@@ -32,6 +32,24 @@ namespace System.Net.ClientModel.Core
         public static PipelineContent CreateContent(BinaryData content) => new BinaryDataPipelineContent(content.ToMemory());
 
         /// <summary>
+        /// Creates an instance of <see cref="PipelineContent"/> that wraps a <see cref="IModel{T}"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="PipelineContent"/> that wraps a <see cref="IModel{T}"/>.</returns>
+        public static PipelineContent CreateContent(IModel<object> model, ModelReaderWriterOptions? options = default)
+            => new ModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
+
+        /// <summary>
+        /// Creates an instance of <see cref="PipelineContent"/> that wraps a <see cref="IJsonModel{T}"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="PipelineContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
+        public static PipelineContent CreateContent(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+            => new JsonModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
+
+        /// <summary>
         /// Attempts to compute the length of the underlying content, if available.
         /// </summary>
         /// <param name="length">The length of the underlying data.</param>
@@ -157,6 +175,63 @@ namespace System.Net.ClientModel.Core
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
+        private sealed class JsonModelWriterContent : PipelineContent
+        {
+            private readonly IJsonModel<object> _model;
+            private readonly ModelReaderWriterOptions _options;
+
+            public JsonModelWriterContent(IJsonModel<object> model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+            }
+
+            private ModelWriter? _writer;
+            private ModelWriter Writer => _writer ??= new ModelWriter(_model, _options);
+
+            public override void Dispose() => _writer?.Dispose();
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => Writer.CopyTo(stream, cancellation);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+
+            public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
+        }
+
+        private sealed class ModelWriterContent : PipelineContent
+        {
+            private readonly IModel<object> _model;
+            private readonly ModelReaderWriterOptions _options;
+
+            public ModelWriterContent(IModel<object> model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+            }
+
+            public override void Dispose() { }
+
+            private BinaryData? _data;
+            private BinaryData Data => _data ??= _model.Write(_options);
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
+            private byte[] Bytes => _bytes ??= Data.ToArray();
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Bytes, 0, Bytes.Length);
+#else
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Data.ToMemory().Span);
+#endif
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = Data.ToMemory().Length;
+                return true;
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
+        }
+
         private sealed class StreamPipelineContent : PipelineContent
         {
             private const int CopyToBufferSize = 81920;
