@@ -94,6 +94,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToMessageAndDeadletterWithNoPropertiesToModify()
+        {
+            var host = BuildHost<ServiceBusBindToMessageAndDeadletterWithNoPropertiesToModify>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToMessageAndDeadletterWithNoPropertiesToModify.SettlementService = settlementImpl;
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+            Assert.IsEmpty(provider.ActionsCache);
+        }
+
+        [Test]
         public async Task BindToBatchAndDeadletter()
         {
             var host = BuildHost<ServiceBusBindToBatchAndDeadletter>();
@@ -257,6 +279,31 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
                 Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
                 Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToMessageAndDeadletterWithNoPropertiesToModify
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusClient client)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Deadletter(
+                    new DeadletterRequest()
+                    {
+                        Locktoken = message.LockToken,
+                        DeadletterErrorDescription = "description",
+                        DeadletterReason = "reason"
+                    },
+                    new MockServerCallContext());
+
+                var receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {SubQueue = SubQueue.DeadLetter});
+                var deadletterMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
+                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
+                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
                 _waitHandle1.Set();
             }
         }

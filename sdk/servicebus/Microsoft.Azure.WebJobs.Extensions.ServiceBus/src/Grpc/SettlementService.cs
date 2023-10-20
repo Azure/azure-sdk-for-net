@@ -71,12 +71,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
         {
             if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
             {
-                await tuple.Actions.DeadLetterMessageAsync(
-                    tuple.Message,
-                    DeserializeAmqpMap(request.PropertiesToModify),
-                    request.DeadletterReason,
-                    request.DeadletterErrorDescription,
-                    context.CancellationToken).ConfigureAwait(false);
+                if (request.PropertiesToModify == null || request.PropertiesToModify == ByteString.Empty)
+                {
+                    await tuple.Actions.DeadLetterMessageAsync(
+                        tuple.Message,
+                        request.DeadletterReason,
+                        request.DeadletterErrorDescription,
+                        context.CancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    await tuple.Actions.DeadLetterMessageAsync(
+                        tuple.Message,
+                        DeserializeAmqpMap(request.PropertiesToModify),
+                        request.DeadletterReason,
+                        request.DeadletterErrorDescription,
+                        context.CancellationToken).ConfigureAwait(false);
+                }
                 return new Empty();
             }
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));

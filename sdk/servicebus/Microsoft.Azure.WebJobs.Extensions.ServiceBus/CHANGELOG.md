@@ -1,14 +1,11 @@
 # Release History
 
-## 5.14.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.13.3 (2023-10-20)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+  an exception from out of proc extension.
 
 ## 5.13.2 (2023-10-18)
 
