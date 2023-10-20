@@ -20,9 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="client/**" />
     <Compile Remove="client/**" />
     <Compile Remove="internal/**" />
     <Compile Remove="internal.perf/**" />
+    <None Remove="internal.perf/**" />
   </ItemGroup>
 
 </Project>
