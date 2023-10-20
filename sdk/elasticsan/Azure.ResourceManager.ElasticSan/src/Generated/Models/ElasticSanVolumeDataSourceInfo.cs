@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
-        /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
-        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, Uri sourceUri)
+        /// <param name="sourceId"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, ResourceIdentifier sourceId)
         {
             CreateSource = createSource;
-            SourceUri = sourceUri;
+            SourceId = sourceId;
         }
 
         /// <summary> This enumerates the possible sources of a volume creation. </summary>
         public ElasticSanVolumeCreateOption? CreateSource { get; set; }
-        /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </summary>
-        public Uri SourceUri { get; set; }
+        /// <summary> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </summary>
+        public ResourceIdentifier SourceId { get; set; }
     }
 }

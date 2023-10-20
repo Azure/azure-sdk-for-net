@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobRuns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        public virtual async Task<NullableResponse<JobRunResource>> GetIfExistsAsync(string jobRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobRunName, nameof(jobRunName));
+
+            using var scope = _jobRunClientDiagnostics.CreateScope("JobRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _jobRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<JobRunResource>(response.GetRawResponse());
+                return Response.FromValue(new JobRunResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobRuns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        public virtual NullableResponse<JobRunResource> GetIfExists(string jobRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobRunName, nameof(jobRunName));
+
+            using var scope = _jobRunClientDiagnostics.CreateScope("JobRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _jobRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<JobRunResource>(response.GetRawResponse());
+                return Response.FromValue(new JobRunResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<JobRunResource> IEnumerable<JobRunResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -249,6 +249,80 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+
+            using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _targetTypeRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TargetTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new TargetTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
+        public virtual NullableResponse<TargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+
+            using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _targetTypeRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TargetTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new TargetTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<TargetTypeResource> IEnumerable<TargetTypeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

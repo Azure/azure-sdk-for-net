@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SupportTicketFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, FileDetailData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SupportTicketFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SupportTicketFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, FileDetailData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SupportTicketFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, FileDetailData.DeserializeFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, FileDetailData.DeserializeFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketFileFilesClientDiagnostics, Pipeline, "SupportTicketFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Support
             {
                 var response = _supportTicketFileFilesRestClient.Get(Id.SubscriptionId, Id.Name, fileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Files_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileName"> File Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SupportTicketFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _supportTicketFileFilesRestClient.GetAsync(Id.SubscriptionId, Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketFileResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketFileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Files_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileName"> File Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        public virtual NullableResponse<SupportTicketFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _supportTicketFileFilesRestClient.Get(Id.SubscriptionId, Id.Name, fileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketFileResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

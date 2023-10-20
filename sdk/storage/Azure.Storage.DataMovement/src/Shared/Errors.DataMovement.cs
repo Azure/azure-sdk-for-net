@@ -13,8 +13,8 @@ namespace Azure.Storage
     internal partial class Errors
     {
         public static ArgumentException InvalidSourceDestinationParams()
-            => new ArgumentException($"Cannot perform transfer because neither source and destination resource cannot produce a Uri. " +
-                $"Either the source or destination resource, or both resources needs to produce a Uri.");
+            => new ArgumentException($"Cannot perform transfer because neither source nor destination resource are web resources. " +
+                $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
             => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because " +
@@ -26,8 +26,11 @@ namespace Azure.Storage
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
 
-        public static ArgumentException UnsupportedSchemaVersionHeader(string schemaVersion)
+        public static ArgumentException UnsupportedJobSchemaVersionHeader(string schemaVersion)
             => new ArgumentException($"The checkpoint file schema version {schemaVersion} is not supported by this version of the SDK.");
+
+        public static ArgumentException UnsupportedJobPartSchemaVersionHeader(string schemaVersion)
+            => new ArgumentException($"The checkpoint part file schema version {schemaVersion} is not supported by this version of the SDK.");
 
         public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
             => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID " +
@@ -56,10 +59,10 @@ namespace Azure.Storage
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
 
         public static ArgumentException InvalidTransferIdFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
+            => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains a Transfer ID that is invalid {fileName}");
 
-        public static ArgumentException InvalidJobPartFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
+        public static ArgumentException InvalidJobPartFileNameExtension(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid extension: {fileName}");
 
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
@@ -121,5 +124,9 @@ namespace Azure.Storage
 
         public static ArgumentException ResourceUriInvalid(string parameterResource)
             => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
+
+        public static ArgumentException NoResourceProviderFound(bool isSource, string providerId)
+            => new ArgumentException($"Unable to find resource provider for transfer {(isSource ? "source" : "destination")} with provider id: {providerId}. " +
+                $"Please ensure you have registered the required resource provider with TransferManagerOptions.ResumeProviders.");
     }
 }

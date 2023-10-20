@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <summary> Initializes a new instance of SkuEnumerationForExistingResourceResult. </summary>
         internal SkuEnumerationForExistingResourceResult()
         {
-            Value = new ChangeTrackingList<SkuDetailsForExistingResource>();
+            Value = new ChangeTrackingList<SkuDetails>();
         }
 
         /// <summary> Initializes a new instance of SkuEnumerationForExistingResourceResult. </summary>
         /// <param name="value"> The collection of available SKUs for existing resources. </param>
-        internal SkuEnumerationForExistingResourceResult(IReadOnlyList<SkuDetailsForExistingResource> value)
+        internal SkuEnumerationForExistingResourceResult(IReadOnlyList<SkuDetails> value)
         {
             Value = value;
         }
 
         /// <summary> The collection of available SKUs for existing resources. </summary>
-        public IReadOnlyList<SkuDetailsForExistingResource> Value { get; }
+        public IReadOnlyList<SkuDetails> Value { get; }
     }
 }

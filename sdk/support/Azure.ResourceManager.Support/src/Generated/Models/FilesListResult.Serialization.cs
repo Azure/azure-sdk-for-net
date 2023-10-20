@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FileDetailData>> value = default;
+            Optional<IReadOnlyList<SupportFileDetailData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    List<FileDetailData> array = new List<FileDetailData>();
+                    List<SupportFileDetailData> array = new List<SupportFileDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileDetailData.DeserializeFileDetailData(item));
+                        array.Add(SupportFileDetailData.DeserializeSupportFileDetailData(item));
                     }
                     value = array;
                     continue;

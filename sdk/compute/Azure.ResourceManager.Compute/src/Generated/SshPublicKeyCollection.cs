@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SshPublicKeys_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SshPublicKeyResource>> GetIfExistsAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+
+            using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sshPublicKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SshPublicKeyResource>(response.GetRawResponse());
+                return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SshPublicKeys_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
+        public virtual NullableResponse<SshPublicKeyResource> GetIfExists(string sshPublicKeyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+
+            using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sshPublicKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SshPublicKeyResource>(response.GetRawResponse());
+                return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SshPublicKeyResource> IEnumerable<SshPublicKeyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

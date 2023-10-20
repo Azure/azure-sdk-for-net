@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support
             Optional<SupportSeverityLevel> severity = default;
             Optional<string> enrollmentId = default;
             Optional<bool> require24X7Response = default;
-            Optional<Consent> advancedDiagnosticConsent = default;
+            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
             Optional<string> problemScopingQuestions = default;
             Optional<string> supportPlanId = default;
             Optional<SupportContactProfile> contactDetails = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            advancedDiagnosticConsent = new Consent(property0.Value.GetString());
+                            advancedDiagnosticConsent = new AdvancedDiagnosticConsent(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("problemScopingQuestions"u8))

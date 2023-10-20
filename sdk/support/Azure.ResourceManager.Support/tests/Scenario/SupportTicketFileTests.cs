@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Support.Tests
             //  Create file
             var fileName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}.txt";
             var resource = SupportTicketFileResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName, fileName);
-            var fileData = new FileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 4, 4, 1);
+            var fileData = new SupportFileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 4, 4, 1);
             await _supportTicketFileCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, fileData);
             var supportTicketFile = await _supportTicketFileCollection.GetAsync(fileName);
             ValidateSupportTicketFileData(supportTicketFile.Value.Data, fileName);
 
             //  Upload content
             var fileSize = supportTicketFile.Value.Data.FileSize;
-            var uploadFile = new UploadFile() { ChunkIndex = 0, Content = "VGVzdA==" };
+            var uploadFile = new UploadFileContent() { ChunkIndex = 0, Content = "VGVzdA==" };
             await supportTicketFile.Value.UploadAsync(uploadFile);
             supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
             Assert.IsNotNull(supportTicketFile);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Support.Tests
             Assert.Greater(supportTicketFile.Value.Data.FileSize, fileSize);
         }
 
-        private void ValidateSupportTicketFileData(FileDetailData supportTicketFile, string fileName)
+        private void ValidateSupportTicketFileData(SupportFileDetailData supportTicketFile, string fileName)
         {
             Assert.IsNotNull(supportTicketFile);
             Assert.IsNotEmpty(supportTicketFile.Id);

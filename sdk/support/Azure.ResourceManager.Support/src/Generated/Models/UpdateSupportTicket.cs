@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Contact details to be updated on the support ticket. </summary>
         public SupportContactProfileContent ContactDetails { get; set; }
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
-        public Consent? AdvancedDiagnosticConsent { get; set; }
+        public AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get; set; }
         /// <summary> This property indicates secondary consents for the support ticket. </summary>
         public IList<SecondaryConsent> SecondaryConsent { get; }
     }

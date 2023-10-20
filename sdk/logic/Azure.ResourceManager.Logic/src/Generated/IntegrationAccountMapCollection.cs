@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mapName"> The integration account map name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountMapResource>> GetIfExistsAsync(string mapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+
+            using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountMapResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mapName"> The integration account map name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountMapResource> GetIfExists(string mapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+
+            using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountMapResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<IntegrationAccountMapResource> IEnumerable<IntegrationAccountMapResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

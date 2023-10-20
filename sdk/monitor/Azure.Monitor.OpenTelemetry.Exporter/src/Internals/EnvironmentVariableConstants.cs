@@ -55,5 +55,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// INTERNAL ONLY. Used by Statsbeat to get the App Service Website Name.
         /// </summary>
         public const string WEBSITE_SITE_NAME = "WEBSITE_SITE_NAME";
+
+        /// <summary>
+        /// When set to true, exporter will emit resources as metric telemetry.
+        /// </summary>
+        public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";
     }
 }

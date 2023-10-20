@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TenantSupportTicketResource>> GetIfExistsAsync(string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var scope = _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.GetAsync(supportTicketName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantSupportTicketResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantSupportTicketResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        public virtual NullableResponse<TenantSupportTicketResource> GetIfExists(string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var scope = _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _tenantSupportTicketSupportTicketsNoSubscriptionRestClient.Get(supportTicketName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantSupportTicketResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantSupportTicketResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<TenantSupportTicketResource> IEnumerable<TenantSupportTicketResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

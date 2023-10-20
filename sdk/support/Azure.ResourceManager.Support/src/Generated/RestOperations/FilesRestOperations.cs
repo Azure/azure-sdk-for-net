@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileDetailData>> GetAsync(string subscriptionId, string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportFileDetailData>> GetAsync(string subscriptionId, string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        FileDetailData value = default;
+                        SupportFileDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileDetailData.DeserializeFileDetailData(document.RootElement);
+                        value = SupportFileDetailData.DeserializeSupportFileDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FileDetailData)null, message.Response);
+                    return Response.FromValue((SupportFileDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileDetailData> Get(string subscriptionId, string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        public Response<SupportFileDetailData> Get(string subscriptionId, string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
@@ -180,19 +180,19 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        FileDetailData value = default;
+                        SupportFileDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileDetailData.DeserializeFileDetailData(document.RootElement);
+                        value = SupportFileDetailData.DeserializeSupportFileDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FileDetailData)null, message.Response);
+                    return Response.FromValue((SupportFileDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string fileWorkspaceName, string fileName, FileDetailData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string fileWorkspaceName, string fileName, SupportFileDetailData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileDetailData>> CreateAsync(string subscriptionId, string fileWorkspaceName, string fileName, FileDetailData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportFileDetailData>> CreateAsync(string subscriptionId, string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 201:
                     {
-                        FileDetailData value = default;
+                        SupportFileDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileDetailData.DeserializeFileDetailData(document.RootElement);
+                        value = SupportFileDetailData.DeserializeSupportFileDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileDetailData> Create(string subscriptionId, string fileWorkspaceName, string fileName, FileDetailData data, CancellationToken cancellationToken = default)
+        public Response<SupportFileDetailData> Create(string subscriptionId, string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 201:
                     {
-                        FileDetailData value = default;
+                        SupportFileDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileDetailData.DeserializeFileDetailData(document.RootElement);
+                        value = SupportFileDetailData.DeserializeSupportFileDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Support
             }
         }
 
-        internal HttpMessage CreateUploadRequest(string subscriptionId, string fileWorkspaceName, string fileName, UploadFile uploadFile)
+        internal HttpMessage CreateUploadRequest(string subscriptionId, string fileWorkspaceName, string fileName, UploadFileContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.Support
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(uploadFile);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -307,18 +307,18 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="fileWorkspaceName"> File WorkspaceName. </param>
         /// <param name="fileName"> File Name. </param>
-        /// <param name="uploadFile"> UploadFile object. </param>
+        /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="uploadFile"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UploadAsync(string subscriptionId, string fileWorkspaceName, string fileName, UploadFile uploadFile, CancellationToken cancellationToken = default)
+        public async Task<Response> UploadAsync(string subscriptionId, string fileWorkspaceName, string fileName, UploadFileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(uploadFile, nameof(uploadFile));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUploadRequest(subscriptionId, fileWorkspaceName, fileName, uploadFile);
+            using var message = CreateUploadRequest(subscriptionId, fileWorkspaceName, fileName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -333,18 +333,18 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="fileWorkspaceName"> File WorkspaceName. </param>
         /// <param name="fileName"> File Name. </param>
-        /// <param name="uploadFile"> UploadFile object. </param>
+        /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="uploadFile"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Upload(string subscriptionId, string fileWorkspaceName, string fileName, UploadFile uploadFile, CancellationToken cancellationToken = default)
+        public Response Upload(string subscriptionId, string fileWorkspaceName, string fileName, UploadFileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(uploadFile, nameof(uploadFile));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUploadRequest(subscriptionId, fileWorkspaceName, fileName, uploadFile);
+            using var message = CreateUploadRequest(subscriptionId, fileWorkspaceName, fileName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

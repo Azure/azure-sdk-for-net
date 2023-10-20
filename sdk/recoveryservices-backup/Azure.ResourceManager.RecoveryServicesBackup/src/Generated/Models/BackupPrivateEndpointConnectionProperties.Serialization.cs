@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -26,6 +27,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
+            if (Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
@@ -42,6 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<BackupPrivateEndpointConnectionProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
+            Optional<IList<VaultSubResourceType>> groupIds = default;
             Optional<RecoveryServicesBackupPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,6 +75,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("groupIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VaultSubResourceType> array = new List<VaultSubResourceType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new VaultSubResourceType(item.GetString()));
+                    }
+                    groupIds = array;
+                    continue;
+                }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -73,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new BackupPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

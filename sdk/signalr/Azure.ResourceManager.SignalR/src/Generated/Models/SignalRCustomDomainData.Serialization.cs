@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.SignalR
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("customCertificate"u8);
-            JsonSerializer.Serialize(writer, CustomCertificate); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, CustomCertificate);
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

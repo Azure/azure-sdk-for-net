@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of IPMatchCondition. </summary>
-        /// <param name="sourceDestinationType"> IP Address type. </param>
-        /// <param name="prefixType"> IP Prefix Type. </param>
-        /// <param name="ipPrefixValues"> The list of IP Prefixes. </param>
+        /// <param name="sourceDestinationType"> IP Address type that needs to be matched. </param>
+        /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
+        /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
         internal IPMatchCondition(SourceDestinationType? sourceDestinationType, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPGroupNames = ipGroupNames;
         }
 
-        /// <summary> IP Address type. </summary>
+        /// <summary> IP Address type that needs to be matched. </summary>
         public SourceDestinationType? SourceDestinationType { get; set; }
-        /// <summary> IP Prefix Type. </summary>
+        /// <summary> IP Prefix Type that needs to be matched. </summary>
         public IPMatchConditionPrefixType? PrefixType { get; set; }
-        /// <summary> The list of IP Prefixes. </summary>
+        /// <summary> The list of IP Prefixes that need to be matched. </summary>
         public IList<string> IPPrefixValues { get; }
         /// <summary> The List of IP Group Names that need to be matched. </summary>
         public IList<string> IPGroupNames { get; }

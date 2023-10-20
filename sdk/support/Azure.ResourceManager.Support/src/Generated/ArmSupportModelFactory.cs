@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, SupportSeverityLevel? severity = null, string enrollmentId = null, bool? require24X7Response = null, Consent? advancedDiagnosticConsent = null, string problemScopingQuestions = null, string supportPlanId = null, SupportContactProfile contactDetails = null, SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, DateTimeOffset? problemStartOn = null, string serviceId = null, string serviceDisplayName = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string fileWorkspaceName = null, ResourceIdentifier technicalTicketDetailsResourceId = null, QuotaTicketDetails quotaTicketDetails = null, IEnumerable<SecondaryConsent> secondaryConsent = null)
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, SupportSeverityLevel? severity = null, string enrollmentId = null, bool? require24X7Response = null, AdvancedDiagnosticConsent? advancedDiagnosticConsent = null, string problemScopingQuestions = null, string supportPlanId = null, SupportContactProfile contactDetails = null, SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, DateTimeOffset? problemStartOn = null, string serviceId = null, string serviceDisplayName = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string fileWorkspaceName = null, ResourceIdentifier technicalTicketDetailsResourceId = null, QuotaTicketDetails quotaTicketDetails = null, IEnumerable<SecondaryConsent> secondaryConsent = null)
         {
             secondaryConsent ??= new List<SecondaryConsent>();
 
@@ -140,23 +140,23 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="messages"> List of chat transcript communication resources. </param>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
         /// <returns> A new <see cref="Support.ChatTranscriptDetailData"/> instance for mocking. </returns>
-        public static ChatTranscriptDetailData ChatTranscriptDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MessageProperties> messages = null, DateTimeOffset? startOn = null)
+        public static ChatTranscriptDetailData ChatTranscriptDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ChatTranscriptMessageProperties> messages = null, DateTimeOffset? startOn = null)
         {
-            messages ??= new List<MessageProperties>();
+            messages ??= new List<ChatTranscriptMessageProperties>();
 
             return new ChatTranscriptDetailData(id, name, resourceType, systemData, messages?.ToList(), startOn);
         }
 
-        /// <summary> Initializes a new instance of MessageProperties. </summary>
+        /// <summary> Initializes a new instance of ChatTranscriptMessageProperties. </summary>
         /// <param name="contentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        /// <returns> A new <see cref="Models.MessageProperties"/> instance for mocking. </returns>
-        public static MessageProperties MessageProperties(TranscriptContentType? contentType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string body = null, DateTimeOffset? createdOn = null)
+        /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
+        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new MessageProperties(contentType, communicationDirection, sender, body, createdOn);
+            return new ChatTranscriptMessageProperties(contentType, communicationDirection, sender, body, createdOn);
         }
 
         /// <summary> Initializes a new instance of FileWorkspaceDetailData. </summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Support.Models
             return new FileWorkspaceDetailData(id, name, resourceType, systemData, createdOn, expireOn);
         }
 
-        /// <summary> Initializes a new instance of FileDetailData. </summary>
+        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="chunkSize"> Size of each chunk. </param>
         /// <param name="fileSize"> Size of the file to be uploaded. </param>
         /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
-        /// <returns> A new <see cref="Support.FileDetailData"/> instance for mocking. </returns>
-        public static FileDetailData FileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, float? chunkSize = null, float? fileSize = null, float? numberOfChunks = null)
+        /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
+        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, float? chunkSize = null, float? fileSize = null, float? numberOfChunks = null)
         {
-            return new FileDetailData(id, name, resourceType, systemData, createdOn, chunkSize, fileSize, numberOfChunks);
+            return new SupportFileDetailData(id, name, resourceType, systemData, createdOn, chunkSize, fileSize, numberOfChunks);
         }
     }
 }

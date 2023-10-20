@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatadogAgreementResource> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogAgreementResourceProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatadogAgreementResource> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogAgreementResourceProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatadogAgreementResourceProperties> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogAgreementResource to use. </param>
+        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogAgreementResource>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateMarketplaceAgreement");
             scope.Start();
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogAgreementResource to use. </param>
+        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogAgreementResource> CreateOrUpdateMarketplaceAgreement(DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
+        public virtual Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateMarketplaceAgreement");
             scope.Start();

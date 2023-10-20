@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Chaos.Tests.TestDependencies.Experiments
             IEnumerable<Models.Action> actions = new List<Models.Action>() { action };
             IEnumerable<Models.Branch> branches = new List<Models.Branch>() { new Models.Branch("branch1", actions) };
             IEnumerable<Models.Step> steps = new List<Models.Step>() { new Models.Step("step1", branches) };
-            IEnumerable<Models.TargetReference> targets = new List<Models.TargetReference>() { new Models.TargetReference($"/subscriptions/{this.subscriptionId}/resourceGroups/{this.resourceGroup}/providers/Microsoft.Compute/virtualMachineScaleSets/{this.vmssName}/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet") };
-            IEnumerable<Models.Selector> selectors = new List<Models.Selector>() { new Models.Selector(SelectorType.List, "selector1", targets) };
+            IEnumerable<Models.TargetReference> targets = new List<Models.TargetReference>() { new Models.TargetReference(TargetReferenceType.ChaosTarget, $"/subscriptions/{this.subscriptionId}/resourceGroups/{this.resourceGroup}/providers/Microsoft.Compute/virtualMachineScaleSets/{this.vmssName}/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet") };
+            IEnumerable<Models.Selector> selectors = new List<Models.Selector>() { new Models.ListSelector("selector1", targets) };
             var experimentData = new ExperimentData(AzureLocation.WestUS2, steps, selectors);
             experimentData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             return experimentData;

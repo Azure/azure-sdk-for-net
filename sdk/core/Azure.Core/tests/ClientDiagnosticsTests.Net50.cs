@@ -32,6 +32,22 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
+        public void StartsActivityNoOpsWithoutSwitchWithListener()
+        {
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            Assert.IsFalse(scope.IsEnabled);
+
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(0, activityListener.Activities.Count);
+        }
+
+        [Test]
+        [NonParallelizable]
         public void StartActivityNoOpsWithoutSwitch()
         {
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
@@ -52,62 +68,49 @@ namespace Azure.Core.Tests
         {
             using var _ = SetAppConfigSwitch();
 
-            // Bug: there is no way to set activity type to W3C
-            // https://github.com/dotnet/runtime/issues/43853
-            var oldDefault = Activity.DefaultIdFormat;
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-            try
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            scope.SetDisplayName("custom display name");
+
+            scope.AddAttribute("Attribute1", "Value1");
+            scope.AddAttribute("Attribute2", 2, i => i.ToString());
+            scope.AddAttribute("Attribute3", 3);
+
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
             {
-                using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+                {"linkAttribute", "linkAttributeValue"}
+            });
 
-                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+            Assert.IsTrue(scope.IsEnabled);
 
-                DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            scope.Start();
 
-                scope.SetDisplayName("custom display name");
+            // Validate that the default activity kind is used
+            Assert.AreEqual(ActivityKind.Internal, Activity.Current.Kind);
+            Assert.AreEqual("custom display name", Activity.Current.DisplayName);
 
-                scope.AddAttribute("Attribute1", "Value1");
-                scope.AddAttribute("Attribute2", 2, i => i.ToString());
-                scope.AddAttribute("Attribute3", 3);
+            scope.Dispose();
 
-                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
-                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
-                {
-                    {"linkAttribute", "linkAttributeValue"}
-                });
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
 
-                Assert.IsTrue(scope.IsEnabled);
+            Assert.AreEqual("Value1", activity.TagObjects.Single(o => o.Key == "Attribute1").Value);
+            Assert.AreEqual("2", activity.TagObjects.Single(o => o.Key == "Attribute2").Value);
+            Assert.AreEqual("3", activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
 
-                scope.Start();
+            var links = activity.Links.ToArray();
+            Assert.AreEqual(2, links.Length);
+            Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar"), links[0].Context);
+            Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null), links[1].Context);
 
-                // Validate that the default activity kind is used
-                Assert.AreEqual(ActivityKind.Internal, Activity.Current.Kind);
-                Assert.AreEqual("custom display name", Activity.Current.DisplayName);
+            Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
 
-                scope.Dispose();
-
-                Assert.AreEqual(1, activityListener.Activities.Count);
-                var activity = activityListener.Activities.Dequeue();
-
-                Assert.AreEqual("Value1", activity.TagObjects.Single(o => o.Key == "Attribute1").Value);
-                Assert.AreEqual("2", activity.TagObjects.Single(o => o.Key == "Attribute2").Value);
-                Assert.AreEqual("3", activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
-
-                var links = activity.Links.ToArray();
-                Assert.AreEqual(2, links.Length);
-                Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar"), links[0].Context);
-                Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null), links[1].Context);
-
-                Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
-
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
-            }
-            finally
-            {
-                Activity.DefaultIdFormat = oldDefault;
-            }
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
         [Test]
@@ -116,34 +119,21 @@ namespace Azure.Core.Tests
         {
             using var _ = SetAppConfigSwitch();
 
-            // Bug: there is no way to set activity type to W3C
-            // https://github.com/dotnet/runtime/issues/43853
-            var oldDefault = Activity.DefaultIdFormat;
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients.ClientName", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-            try
-            {
-                using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            Assert.IsTrue(scope.IsEnabled);
 
-                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients.ClientName", "Microsoft.Azure.Core.Cool.Tests", true, false);
+            scope.Start();
+            scope.Dispose();
 
-                DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
-                Assert.IsTrue(scope.IsEnabled);
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
 
-                scope.Start();
-                scope.Dispose();
-
-                Assert.AreEqual(1, activityListener.Activities.Count);
-                var activity = activityListener.Activities.Dequeue();
-
-                Assert.AreEqual("ActivityName", activity.DisplayName);
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
-            }
-            finally
-            {
-                Activity.DefaultIdFormat = oldDefault;
-            }
+            Assert.AreEqual("ActivityName", activity.DisplayName);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
         [TestCase(null)]

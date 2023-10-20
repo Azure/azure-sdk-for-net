@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("aclsUrl"u8);
                 writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(DefaultAction))
+            {
+                writer.WritePropertyName("defaultAction"u8);
+                writer.WriteStringValue(DefaultAction.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(MatchConfigurations))
             {
                 writer.WritePropertyName("matchConfigurations"u8);

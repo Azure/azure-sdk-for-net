@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<int> nodeStorageQuotaInMb = default;
             Optional<int> nodeVCores = default;
             Optional<bool> nodeEnablePublicIPAccess = default;
-            Optional<IReadOnlyList<ServerNameItem>> serverNames = default;
+            Optional<IReadOnlyList<CosmosDBForPostgreSqlServerNameItem>> serverNames = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<AzureLocation> sourceLocation = default;
             Optional<DateTimeOffset> pointInTimeUTC = default;
@@ -366,10 +366,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            List<ServerNameItem> array = new List<ServerNameItem>();
+                            List<CosmosDBForPostgreSqlServerNameItem> array = new List<CosmosDBForPostgreSqlServerNameItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerNameItem.DeserializeServerNameItem(item));
+                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item));
                             }
                             serverNames = array;
                             continue;

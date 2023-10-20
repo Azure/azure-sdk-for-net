@@ -37,144 +37,19 @@ namespace Azure.AI.OpenAI
         {
         }
 
-        /// <summary>
-        /// Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
-        /// other augmentations to the base chat completions capabilities.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="chatCompletionsOptions">
-        /// The configuration information for a chat completions request.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data.
-        /// </param>
+        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensionsAsync(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual async Task<Response<ChatCompletions>> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
+        internal virtual async Task<Operation<ImageGenerations>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetChatCompletionsWithAzureExtensionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
-        /// other augmentations to the base chat completions capabilities.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="chatCompletionsOptions">
-        /// The configuration information for a chat completions request.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual Response<ChatCompletions> GetChatCompletionsWithAzureExtensions(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetChatCompletionsWithAzureExtensions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
-        }
-
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
-        /// <summary>
-        /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
-        /// other augmentations to the base chat completions capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetChatCompletionsWithAzureExtensionsAsync(string,ChatCompletionsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensionsAsync(string,RequestContent,RequestContext)']/*" />
-        internal virtual async Task<Response> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsWithAzureExtensions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
-        /// <summary>
-        /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
-        /// other augmentations to the base chat completions capabilities.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)']/*" />
-        internal virtual Response GetChatCompletionsWithAzureExtensions(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsWithAzureExtensions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary> Starts the generation of a batch of images from a text caption. </summary>
@@ -182,32 +57,16 @@ namespace Azure.AI.OpenAI
         /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual async Task<Operation<BatchImageGenerationOperationResponse>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
+        internal virtual Operation<ImageGenerations> BeginAzureBatchImageGeneration(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, ImageGenerations.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
-        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual Operation<BatchImageGenerationOperationResponse> BeginAzureBatchImageGeneration(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
-        }
-
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
@@ -229,7 +88,6 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -239,7 +97,7 @@ namespace Azure.AI.OpenAI
             try
             {
                 using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -248,7 +106,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
@@ -270,7 +127,6 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual Operation<BinaryData> BeginAzureBatchImageGeneration(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -280,32 +136,13 @@ namespace Azure.AI.OpenAI
             try
             {
                 using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetChatCompletionsWithAzureExtensionsRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/extensions/chat/completions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         internal HttpMessage CreateBeginAzureBatchImageGenerationRequest(RequestContent content, RequestContext context)

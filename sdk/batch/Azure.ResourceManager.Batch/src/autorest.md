@@ -28,7 +28,7 @@ format-by-name-rules:
   'ifMatch': 'etag'
   'locationName': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

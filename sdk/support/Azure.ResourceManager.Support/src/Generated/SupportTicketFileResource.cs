@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Support
 
         private readonly ClientDiagnostics _supportTicketFileFilesClientDiagnostics;
         private readonly FilesRestOperations _supportTicketFileFilesRestClient;
-        private readonly FileDetailData _data;
+        private readonly SupportFileDetailData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SupportTicketFileResource"/> class for mocking. </summary>
         protected SupportTicketFileResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of the <see cref = "SupportTicketFileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SupportTicketFileResource(ArmClient client, FileDetailData data) : this(client, data.Id)
+        internal SupportTicketFileResource(ArmClient client, SupportFileDetailData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual FileDetailData Data
+        public virtual SupportFileDetailData Data
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SupportTicketFileResource>> UpdateAsync(WaitUntil waitUntil, FileDetailData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SupportTicketFileResource>> UpdateAsync(WaitUntil waitUntil, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SupportTicketFileResource> Update(WaitUntil waitUntil, FileDetailData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SupportTicketFileResource> Update(WaitUntil waitUntil, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -240,18 +240,18 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="uploadFile"> UploadFile object. </param>
+        /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uploadFile"/> is null. </exception>
-        public virtual async Task<Response> UploadAsync(UploadFile uploadFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> UploadAsync(UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(uploadFile, nameof(uploadFile));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Upload");
             scope.Start();
             try
             {
-                var response = await _supportTicketFileFilesRestClient.UploadAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, uploadFile, cancellationToken).ConfigureAwait(false);
+                var response = await _supportTicketFileFilesRestClient.UploadAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -274,18 +274,18 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="uploadFile"> UploadFile object. </param>
+        /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uploadFile"/> is null. </exception>
-        public virtual Response Upload(UploadFile uploadFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Upload(UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(uploadFile, nameof(uploadFile));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Upload");
             scope.Start();
             try
             {
-                var response = _supportTicketFileFilesRestClient.Upload(Id.SubscriptionId, Id.Parent.Name, Id.Name, uploadFile, cancellationToken);
+                var response = _supportTicketFileFilesRestClient.Upload(Id.SubscriptionId, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

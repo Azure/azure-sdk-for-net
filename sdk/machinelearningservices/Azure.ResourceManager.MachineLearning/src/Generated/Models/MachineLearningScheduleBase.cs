@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningScheduleBase
     {
         /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
-        internal MachineLearningScheduleBase()
+        public MachineLearningScheduleBase()
         {
         }
 
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> A system assigned id for the schedule. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The current deployment state of schedule. </summary>
-        public MachineLearningScheduleProvisioningState? ProvisioningStatus { get; }
+        public MachineLearningScheduleProvisioningState? ProvisioningStatus { get; set; }
         /// <summary> Is the schedule enabled or disabled?. </summary>
-        public MachineLearningScheduleStatus? Status { get; }
+        public MachineLearningScheduleStatus? Status { get; set; }
     }
 }

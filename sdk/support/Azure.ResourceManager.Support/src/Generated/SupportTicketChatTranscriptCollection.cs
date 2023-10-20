@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SupportTicketChatTranscriptResource>> GetIfExistsAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
+
+            using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _supportTicketChatTranscriptChatTranscriptsRestClient.GetAsync(Id.SubscriptionId, Id.Name, chatTranscriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketChatTranscriptResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketChatTranscriptResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        public virtual NullableResponse<SupportTicketChatTranscriptResource> GetIfExists(string chatTranscriptName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
+
+            using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _supportTicketChatTranscriptChatTranscriptsRestClient.Get(Id.SubscriptionId, Id.Name, chatTranscriptName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportTicketChatTranscriptResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportTicketChatTranscriptResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SupportTicketChatTranscriptResource> IEnumerable<SupportTicketChatTranscriptResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

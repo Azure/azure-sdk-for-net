@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="technicalTicketDetails"> Additional ticket details associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
-        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, Consent? advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent) : base(id, name, resourceType, systemData)
+        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent? advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent) : base(id, name, resourceType, systemData)
         {
             SupportTicketId = supportTicketId;
             Description = description;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Indicates if this requires a 24x7 response from Azure. </summary>
         public bool? Require24X7Response { get; set; }
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
-        public Consent? AdvancedDiagnosticConsent { get; set; }
+        public AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get; set; }
         /// <summary> Problem scoping questions associated with the support ticket. </summary>
         public string ProblemScopingQuestions { get; set; }
         /// <summary> Support plan id associated with the support ticket. </summary>
