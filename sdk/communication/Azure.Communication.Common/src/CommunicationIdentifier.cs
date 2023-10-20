@@ -11,12 +11,12 @@ namespace Azure.Communication
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
         internal const string Phone = "4:";
-        internal const string Bot = "28:";
-        internal const string BotPublicCloud = "28:orgid:";
-        internal const string BotDodCloud = "28:dod:";
-        internal const string BotDodCloudGlobal = "28:dod-global:";
-        internal const string BotGcchCloud = "28:gcch:";
-        internal const string BotGcchCloudGlobal = "28:gcch-global:";
+        internal const string TeamsApp = "28:";
+        internal const string TeamsAppPublicCloud = "28:orgid:";
+        internal const string TeamsAppDodCloud = "28:dod:";
+        internal const string TeamsAppDodCloudGlobal = "28:dod-global:";
+        internal const string TeamsAppGcchCloud = "28:gcch:";
+        internal const string TeamsAppGcchCloudGlobal = "28:gcch-global:";
         internal const string TeamUserAnonymous = "8:teamsvisitor:";
         internal const string TeamUserPublicCloud = "8:orgid:";
         internal const string TeamUserDodCloud = "8:dod:";
@@ -78,9 +78,7 @@ namespace Azure.Communication
             var segments = rawId.Split(':');
             if (segments.Length != 3)
             {
-                return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
-                    ? new MicrosoftBotIdentifier(segments[1], false, CommunicationCloudEnvironment.Public)
-                    : new UnknownIdentifier(rawId);
+                return new UnknownIdentifier(rawId);
             }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
@@ -93,11 +91,9 @@ namespace Azure.Communication
                 TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
                 AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
-                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                BotPublicCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Public),
-                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
-                BotGcchCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
-                BotDodCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
+                TeamsAppPublicCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Public),
+                TeamsAppGcchCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Gcch),
+                TeamsAppDodCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
         }
