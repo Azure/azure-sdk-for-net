@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Monitor.Ingestion
 {
     // Data plane generated client.
-    /// <summary> The LogsIngestion service client. </summary>
+    /// <summary> The LogsIngestion service client. Hello World. </summary>
     public partial class LogsIngestionClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://monitor.azure.com//.default" };

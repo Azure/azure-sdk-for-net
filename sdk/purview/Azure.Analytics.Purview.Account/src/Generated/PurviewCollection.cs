@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Account
 {
     // Data plane generated sub-client.
-    /// <summary> The PurviewCollection sub-client. </summary>
+    /// <summary> The PurviewCollection sub-client. Hello World. </summary>
     public partial class PurviewCollection
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };

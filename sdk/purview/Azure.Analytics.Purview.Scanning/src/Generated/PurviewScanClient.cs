@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Scanning
 {
     // Data plane generated client.
-    /// <summary> The PurviewScan service client. </summary>
+    /// <summary> The PurviewScan service client. Hello World. </summary>
     public partial class PurviewScanClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };

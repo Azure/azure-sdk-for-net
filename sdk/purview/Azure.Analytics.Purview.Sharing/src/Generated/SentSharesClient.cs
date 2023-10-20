@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Sharing
 {
     // Data plane generated client.
-    /// <summary> The SentShares service client. </summary>
+    /// <summary> The SentShares service client. Hello World. </summary>
     public partial class SentSharesClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
