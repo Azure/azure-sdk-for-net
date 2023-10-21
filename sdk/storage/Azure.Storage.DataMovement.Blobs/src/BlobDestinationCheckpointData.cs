@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
-using static Azure.Storage.DataMovement.JobPlanExtensions;
+using static Azure.Storage.DataMovement.CheckpointerExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 

@@ -9,8 +9,23 @@ using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
-    internal partial class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
+        internal static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
+        {
+            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
+            {
+                return new LocalTransferCheckpointer(options.CheckpointerPath);
+            }
+            else
+            {
+                // Default TransferCheckpointer
+                return new LocalTransferCheckpointer(default);
+            }
+        }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
+
         internal static async Task<DataTransferStatus> GetJobStatusAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
