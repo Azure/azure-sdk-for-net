@@ -201,12 +201,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return response.Value.ToStorageResourceReadStreamResult();
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new ShareFileSourceCheckpointData();
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new ShareFileDestinationCheckpointData();
         }

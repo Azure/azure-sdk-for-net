@@ -54,12 +54,12 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             throw new NotImplementedException();
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             throw new NotImplementedException();
         }
