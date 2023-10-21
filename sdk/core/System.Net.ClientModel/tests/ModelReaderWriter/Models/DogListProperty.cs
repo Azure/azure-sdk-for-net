@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -182,7 +183,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
     }
 }

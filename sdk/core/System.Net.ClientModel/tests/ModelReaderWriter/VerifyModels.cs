@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.ClientModel;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
 

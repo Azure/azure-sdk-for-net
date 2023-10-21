@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 using System.Reflection;
 using System.Text.Json;
 
@@ -144,11 +145,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write(ModelInstance, options));
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read<T>(new BinaryData("x"), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));

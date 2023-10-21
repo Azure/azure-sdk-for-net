@@ -4,6 +4,7 @@
 using System.Text.Json;
 using System.Net.ClientModel.Tests.Client.ResourceManager.Compute;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {

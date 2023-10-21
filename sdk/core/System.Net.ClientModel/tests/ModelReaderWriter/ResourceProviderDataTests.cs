@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using System.IO;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Tests.Client;
 using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
 

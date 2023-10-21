@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
 namespace System.Net.ClientModel.Tests.ModelReaderWriterTests

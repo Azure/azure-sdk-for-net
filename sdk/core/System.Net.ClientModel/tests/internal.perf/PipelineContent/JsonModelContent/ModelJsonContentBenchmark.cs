@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {
