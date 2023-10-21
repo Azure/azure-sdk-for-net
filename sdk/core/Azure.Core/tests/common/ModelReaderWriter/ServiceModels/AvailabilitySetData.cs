@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Net.ClientModel.Core.Content;
-using System.Net.ClientModel.Core.Content;
 using System.Text.Json;
 using Azure.Core.Tests.ResourceManager.Compute.Models;
 using Azure.Core.Tests.ResourceManager.Models;

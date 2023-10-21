@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -124,7 +124,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
-                return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+                return ModelReaderWriter.WriteCore(this, options);
             }
             else
             {

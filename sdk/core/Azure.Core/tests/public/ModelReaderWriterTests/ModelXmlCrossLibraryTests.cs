@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
+using System.Net.ClientModel.Core.Content;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -27,12 +27,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         public void ThrowsIfMismatch()
         {
             ModelReaderWriterOptions jsonOptions = new ModelReaderWriterOptions(ModelReaderWriterFormat.Json);
-            ModelXmlCrossLibrary model = System.Net.ClientModel.ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), jsonOptions);
+            ModelXmlCrossLibrary model = ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), jsonOptions);
 
-            Assert.Throws(Is.InstanceOf<JsonException>(), () => System.Net.ClientModel.ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
+            Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
             ModelReaderWriterOptions wireOptions = ModelReaderWriterOptions.DefaultWireOptions;
-            Assert.Throws<XmlException>(() => System.Net.ClientModel.ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
+            Assert.Throws<XmlException>(() => ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 
         protected override string GetExpectedResult(ModelReaderWriterFormat format)

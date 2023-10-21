@@ -62,7 +62,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
 
         public static implicit operator RequestContent(ModelAsStruct model)

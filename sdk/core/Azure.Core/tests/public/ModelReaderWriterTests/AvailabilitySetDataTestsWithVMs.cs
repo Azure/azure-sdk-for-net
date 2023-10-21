@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
+using System.Net.ClientModel.Core.Content;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.ResourceManager.Compute;
 using NUnit.Framework;
