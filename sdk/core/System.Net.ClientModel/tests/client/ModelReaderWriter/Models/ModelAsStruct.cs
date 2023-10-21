@@ -4,7 +4,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
@@ -59,7 +61,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return ClientModel.ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.WriteCore(this, options);
         }
 
         public static implicit operator PipelineContent(ModelAsStruct model)

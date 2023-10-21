@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Core.Content;
+using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
