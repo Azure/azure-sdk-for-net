@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolPrivateEndpointConnectionResource(Client, PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(e)), _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HostPoolPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolPrivateEndpointConnectionResource(Client, DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(e)), _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HostPoolPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolPrivateEndpointConnectionResource(Client, PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(e)), _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HostPoolPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolPrivateEndpointConnectionResource(Client, DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(e)), _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HostPoolPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

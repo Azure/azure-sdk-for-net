@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DesktopVirtualizationPrivateLinkResource item in hostPool.GetPrivateLinkResourcesAsync())
+            await foreach (DesktopVirtualizationPrivateLinkResourceData item in hostPool.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

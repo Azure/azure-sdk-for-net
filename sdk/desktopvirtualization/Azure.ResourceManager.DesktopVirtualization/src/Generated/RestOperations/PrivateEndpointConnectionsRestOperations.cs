@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionWithSystemDataData>> GetByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DesktopVirtualizationPrivateEndpointConnectionDataData>> GetByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionWithSystemDataData)null, message.Response);
+                    return Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionWithSystemDataData> GetByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<DesktopVirtualizationPrivateEndpointConnectionDataData> GetByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionWithSystemDataData)null, message.Response);
+                    return Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionWithSystemDataData>> UpdateByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
+        public async Task<Response<DesktopVirtualizationPrivateEndpointConnectionDataData>> UpdateByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionWithSystemDataData> UpdateByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
+        public Response<DesktopVirtualizationPrivateEndpointConnectionDataData> UpdateByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionWithSystemDataData>> GetByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DesktopVirtualizationPrivateEndpointConnectionDataData>> GetByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -512,13 +512,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionWithSystemDataData)null, message.Response);
+                    return Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionWithSystemDataData> GetByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<DesktopVirtualizationPrivateEndpointConnectionDataData> GetByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -545,13 +545,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionWithSystemDataData)null, message.Response);
+                    return Response.FromValue((DesktopVirtualizationPrivateEndpointConnectionDataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionWithSystemDataData>> UpdateByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
+        public async Task<Response<DesktopVirtualizationPrivateEndpointConnectionDataData>> UpdateByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -682,9 +682,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionWithSystemDataData> UpdateByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
+        public Response<DesktopVirtualizationPrivateEndpointConnectionDataData> UpdateByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -715,9 +715,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionWithSystemDataData value = default;
+                        DesktopVirtualizationPrivateEndpointConnectionDataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(document.RootElement);
+                        value = DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

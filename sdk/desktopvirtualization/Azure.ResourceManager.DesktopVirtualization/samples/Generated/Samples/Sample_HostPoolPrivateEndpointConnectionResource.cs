@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionWithSystemDataData resourceData = result.Data;
+            DesktopVirtualizationPrivateEndpointConnectionDataData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionWithSystemDataData resourceData = result.Data;
+            DesktopVirtualizationPrivateEndpointConnectionDataData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

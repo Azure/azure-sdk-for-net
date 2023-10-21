@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateEndpointConnectionWithSystemDataData>> value = default;
+            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnectionWithSystemDataData> array = new List<PrivateEndpointConnectionWithSystemDataData>();
+                    List<DesktopVirtualizationPrivateEndpointConnectionDataData> array = new List<DesktopVirtualizationPrivateEndpointConnectionDataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionWithSystemDataData.DeserializePrivateEndpointConnectionWithSystemDataData(item));
+                        array.Add(DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(item));
                     }
                     value = array;
                     continue;

@@ -13,17 +13,17 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing the PrivateEndpointConnectionWithSystemData data model.
+    /// A class representing the DesktopVirtualizationPrivateEndpointConnectionData data model.
     /// The Private Endpoint Connection resource.
     /// </summary>
-    public partial class PrivateEndpointConnectionWithSystemDataData : ResourceData
+    public partial class DesktopVirtualizationPrivateEndpointConnectionDataData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionWithSystemDataData. </summary>
-        public PrivateEndpointConnectionWithSystemDataData()
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
+        public DesktopVirtualizationPrivateEndpointConnectionDataData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionWithSystemDataData. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal PrivateEndpointConnectionWithSystemDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;

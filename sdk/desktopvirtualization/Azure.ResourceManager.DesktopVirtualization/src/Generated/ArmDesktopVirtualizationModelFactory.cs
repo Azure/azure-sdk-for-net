@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionWithSystemDataData. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnectionDataData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="privateEndpointId"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.PrivateEndpointConnectionWithSystemDataData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionWithSystemDataData PrivateEndpointConnectionWithSystemDataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new PrivateEndpointConnectionWithSystemDataData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateLinkResource"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateLinkResource DesktopVirtualizationPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static DesktopVirtualizationPrivateLinkResourceData DesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new DesktopVirtualizationPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new DesktopVirtualizationPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>

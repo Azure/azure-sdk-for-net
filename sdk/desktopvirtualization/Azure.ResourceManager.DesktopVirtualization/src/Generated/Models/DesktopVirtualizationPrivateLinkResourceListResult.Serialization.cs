@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    List<DesktopVirtualizationPrivateLinkResource> array = new List<DesktopVirtualizationPrivateLinkResource>();
+                    List<DesktopVirtualizationPrivateLinkResourceData> array = new List<DesktopVirtualizationPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopVirtualizationPrivateLinkResource.DeserializeDesktopVirtualizationPrivateLinkResource(item));
+                        array.Add(DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultWithSystemData. </summary>
         internal PrivateEndpointConnectionListResultWithSystemData()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionWithSystemDataData>();
+            Value = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnectionDataData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultWithSystemData. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal PrivateEndpointConnectionListResultWithSystemData(IReadOnlyList<PrivateEndpointConnectionWithSystemDataData> value, string nextLink)
+        internal PrivateEndpointConnectionListResultWithSystemData(IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionWithSystemDataData> Value { get; }
+        public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

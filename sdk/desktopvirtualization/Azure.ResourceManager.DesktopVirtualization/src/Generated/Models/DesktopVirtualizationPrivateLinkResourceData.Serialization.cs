@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationPrivateLinkResource : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static DesktopVirtualizationPrivateLinkResource DeserializeDesktopVirtualizationPrivateLinkResource(JsonElement element)
+        internal static DesktopVirtualizationPrivateLinkResourceData DeserializeDesktopVirtualizationPrivateLinkResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new DesktopVirtualizationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new DesktopVirtualizationPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

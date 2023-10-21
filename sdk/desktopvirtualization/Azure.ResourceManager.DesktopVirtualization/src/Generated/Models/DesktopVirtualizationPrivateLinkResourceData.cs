@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class DesktopVirtualizationPrivateLinkResource : ResourceData
+    public partial class DesktopVirtualizationPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResource. </summary>
-        public DesktopVirtualizationPrivateLinkResource()
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
+        public DesktopVirtualizationPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal DesktopVirtualizationPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal DesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

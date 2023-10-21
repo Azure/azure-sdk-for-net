@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class PrivateEndpointConnectionWithSystemDataData : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationPrivateEndpointConnectionDataData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointConnectionWithSystemDataData DeserializePrivateEndpointConnectionWithSystemDataData(JsonElement element)
+        internal static DesktopVirtualizationPrivateEndpointConnectionDataData DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionWithSystemDataData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
