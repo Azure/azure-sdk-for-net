@@ -1,18 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
-
+using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
-#if BlobDataMovementSDK
-using DMBlobs::Azure.Storage.DataMovement.JobPlan;
-#else
-using Azure.Storage.DataMovement.JobPlan;
-#endif
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -56,8 +50,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption DefaultPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType DefaultRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
-        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
         internal static readonly DateTimeOffset DefaultCreateTime = new DateTimeOffset(2023, 08, 28, 17, 26, 0, default);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(

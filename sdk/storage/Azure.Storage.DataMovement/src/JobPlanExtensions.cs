@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement
             bool hasFailed = jobPlanStatus.HasFlag(JobPlanStatus.HasFailed);
             bool hasSkipped = jobPlanStatus.HasFlag(JobPlanStatus.HasSkipped);
 
-            return new DataTransferStatusInternal(state, hasFailed, hasSkipped);
+            return new DataTransferStatus(state, hasFailed, hasSkipped);
         }
     }
 }
