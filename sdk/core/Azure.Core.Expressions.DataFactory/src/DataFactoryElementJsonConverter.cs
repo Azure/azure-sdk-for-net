@@ -29,6 +29,7 @@ namespace Azure.Core.Expressions.DataFactory
                    typeToConvert == typeof(DataFactoryElement<IList<string>>) ||
                    typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>) ||
                    typeToConvert == typeof(DataFactoryElement<BinaryData>) ||
+                   typeToConvert == typeof(DataFactoryElement<object>) ||
                    TryGetGenericDataFactoryList(typeToConvert, out _);
         }
 
@@ -55,6 +56,8 @@ namespace Azure.Core.Expressions.DataFactory
                 return Deserialize<IDictionary<string, string>>(document.RootElement);
             if (typeToConvert == typeof(DataFactoryElement<BinaryData>))
                 return Deserialize<BinaryData>(document.RootElement);
+            if (typeToConvert == typeof(DataFactoryElement<object>))
+                return Deserialize<object>(document.RootElement);
             if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
             {
                 var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
@@ -115,6 +118,9 @@ namespace Azure.Core.Expressions.DataFactory
                     break;
                 case DataFactoryElement<BinaryData?> binaryDataElement:
                     Serialize(writer, binaryDataElement);
+                    break;
+                case DataFactoryElement<object?> objectElement:
+                    Serialize(writer, objectElement);
                     break;
                 default:
                 {
@@ -333,6 +339,11 @@ namespace Azure.Core.Expressions.DataFactory
             if (typeof(T) == typeof(BinaryData) && json.ValueKind == JsonValueKind.Object)
             {
                 return new DataFactoryElement<T?>((T)(object)BinaryData.FromString(json.GetRawText()!));
+            }
+
+            if (typeof(T) == typeof(object) && json.ValueKind == JsonValueKind.Object)
+            {
+                return new DataFactoryElement<T?>((T?)json.GetObject());
             }
 
             var obj = json.GetObject();
