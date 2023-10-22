@@ -575,8 +575,9 @@ namespace Azure.Storage.DataMovement.Tests
             int size = Constants.KB;
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destination.Container,
-                objectName: name,
-                objectLength: size);
+                objectLength: size,
+                createResource: true,
+                objectName: name);
 
             // Act
             // Create options bag to fail and keep track of the failure.
@@ -590,6 +591,7 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: source.Container,
                 objectName: GetNewObjectName(),
+                createResource: true,
                 objectLength: size);
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);

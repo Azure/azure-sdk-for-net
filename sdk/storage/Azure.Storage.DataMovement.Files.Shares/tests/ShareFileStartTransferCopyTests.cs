@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Tests;
 using System.IO;
-using System.Security.AccessControl;
+using Azure.Core;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -29,10 +27,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
     {
         private const string _fileResourcePrefix = "test-file-";
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
+        protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
         public ShareFileStartTransferCopyTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, _expectedOverwriteExceptionMessage, _fileResourcePrefix, null /* RecordedTestMode.Record /* to re-record */)
         {
+            _serviceVersion = serviceVersion;
             SourceClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
             DestinationClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
         }
@@ -58,23 +58,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Stream contents = null)
         {
             objectName ??= GetNewObjectName();
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
             if (createResource)
             {
                 if (!objectLength.HasValue)
                 {
                     throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
                 }
-                ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
                 await fileClient.CreateAsync(objectLength.Value);
 
                 if (contents != default)
                 {
                     await fileClient.UploadAsync(contents);
                 }
-
-                return fileClient;
             }
-            return container.GetRootDirectoryClient().GetFileClient(objectName);
+            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, DateTimeOffset.UtcNow.AddDays(2));
+            return InstrumentClient(new ShareFileClient(sourceUri, GetOptions()));
         }
 
         protected override Task<ShareFileClient> GetSourceObjectClientAsync(
@@ -118,5 +117,26 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
+
+        public ShareClientOptions GetOptions()
+        {
+            var options = new ShareClientOptions(_serviceVersion)
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                },
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return InstrumentClientOptions(options);
+        }
     }
 }

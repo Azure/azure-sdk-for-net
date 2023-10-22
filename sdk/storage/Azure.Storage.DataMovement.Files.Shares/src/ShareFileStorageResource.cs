@@ -158,12 +158,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
-                range: new HttpRange(0, completeLength),
-                sourceRange: new HttpRange(0, completeLength),
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            if (completeLength > 0)
+            {
+                await ShareFileClient.UploadRangeFromUriAsync(
+                    sourceUri: sourceResource.Uri,
+                    range: new HttpRange(0, completeLength),
+                    sourceRange: new HttpRange(0, completeLength),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
