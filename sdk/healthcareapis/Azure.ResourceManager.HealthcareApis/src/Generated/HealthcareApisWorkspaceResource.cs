@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisWorkspacePrivateEndpointConnectionResources and their operations over a HealthcareApisWorkspacePrivateEndpointConnectionResource. </returns>
         public virtual HealthcareApisWorkspacePrivateEndpointConnectionCollection GetHealthcareApisWorkspacePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HealthcareApisWorkspacePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisWorkspacePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisWorkspacePrivateEndpointConnectionResource>> GetHealthcareApisWorkspacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetHealthcareApisWorkspacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisWorkspacePrivateLinkResources and their operations over a HealthcareApisWorkspacePrivateLinkResource. </returns>
         public virtual HealthcareApisWorkspacePrivateLinkResourceCollection GetHealthcareApisWorkspacePrivateLinkResources()
         {
-            return GetCachedClient(Client => new HealthcareApisWorkspacePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisWorkspacePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisWorkspacePrivateLinkResource>> GetHealthcareApisWorkspacePrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisWorkspacePrivateLinkResource> GetHealthcareApisWorkspacePrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of DicomServiceResources and their operations over a DicomServiceResource. </returns>
         public virtual DicomServiceCollection GetDicomServices()
         {
-            return GetCachedClient(Client => new DicomServiceCollection(Client, Id));
+            return GetCachedClient(client => new DicomServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DicomServiceResource>> GetDicomServiceAsync(string dicomServiceName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DicomServiceResource> GetDicomService(string dicomServiceName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisIotConnectorResources and their operations over a HealthcareApisIotConnectorResource. </returns>
         public virtual HealthcareApisIotConnectorCollection GetHealthcareApisIotConnectors()
         {
-            return GetCachedClient(Client => new HealthcareApisIotConnectorCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisIotConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisIotConnectorResource>> GetHealthcareApisIotConnectorAsync(string iotConnectorName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisIotConnectorResource> GetHealthcareApisIotConnector(string iotConnectorName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of FhirServiceResources and their operations over a FhirServiceResource. </returns>
         public virtual FhirServiceCollection GetFhirServices()
         {
-            return GetCachedClient(Client => new FhirServiceCollection(Client, Id));
+            return GetCachedClient(client => new FhirServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FhirServiceResource>> GetFhirServiceAsync(string fhirServiceName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FhirServiceResource> GetFhirService(string fhirServiceName, CancellationToken cancellationToken = default)
         {

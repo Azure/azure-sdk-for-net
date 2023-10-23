@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsNamespaceAuthorizationRuleResources and their operations over a EventHubsNamespaceAuthorizationRuleResource. </returns>
         public virtual EventHubsNamespaceAuthorizationRuleCollection GetEventHubsNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new EventHubsNamespaceAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsNamespaceAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetEventHubsNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsNamespaceAuthorizationRuleResource> GetEventHubsNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsPrivateEndpointConnectionResources and their operations over a EventHubsPrivateEndpointConnectionResource. </returns>
         public virtual EventHubsPrivateEndpointConnectionCollection GetEventHubsPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new EventHubsPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsPrivateEndpointConnectionResource>> GetEventHubsPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsPrivateEndpointConnectionResource> GetEventHubsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsDisasterRecoveryResources and their operations over a EventHubsDisasterRecoveryResource. </returns>
         public virtual EventHubsDisasterRecoveryCollection GetEventHubsDisasterRecoveries()
         {
-            return GetCachedClient(Client => new EventHubsDisasterRecoveryCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsDisasterRecoveryCollection(client, Id));
         }
 
         /// <summary>
@@ -241,12 +241,12 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsDisasterRecoveryResource>> GetEventHubsDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            return await GetEventHubsDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubsDisasterRecoveries().GetAsync(@alias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsDisasterRecoveryResource> GetEventHubsDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
         {
-            return GetEventHubsDisasterRecoveries().Get(alias, cancellationToken);
+            return GetEventHubsDisasterRecoveries().Get(@alias, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubResources in the EventHubsNamespace. </summary>
         /// <returns> An object representing collection of EventHubResources and their operations over a EventHubResource. </returns>
         public virtual EventHubCollection GetEventHubs()
         {
-            return GetCachedClient(Client => new EventHubCollection(Client, Id));
+            return GetCachedClient(client => new EventHubCollection(client, Id));
         }
 
         /// <summary>
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubResource>> GetEventHubAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubResource> GetEventHub(string eventHubName, CancellationToken cancellationToken = default)
         {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsSchemaGroupResources and their operations over a EventHubsSchemaGroupResource. </returns>
         public virtual EventHubsSchemaGroupCollection GetEventHubsSchemaGroups()
         {
-            return GetCachedClient(Client => new EventHubsSchemaGroupCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsSchemaGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsSchemaGroupResource>> GetEventHubsSchemaGroupAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
@@ -368,8 +368,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsSchemaGroupResource> GetEventHubsSchemaGroup(string schemaGroupName, CancellationToken cancellationToken = default)
         {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubsApplicationGroupResources and their operations over a EventHubsApplicationGroupResource. </returns>
         public virtual EventHubsApplicationGroupCollection GetEventHubsApplicationGroups()
         {
-            return GetCachedClient(Client => new EventHubsApplicationGroupCollection(Client, Id));
+            return GetCachedClient(client => new EventHubsApplicationGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -398,8 +398,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="applicationGroupName"> The Application Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsApplicationGroupResource>> GetEventHubsApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
@@ -421,8 +421,8 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="applicationGroupName"> The Application Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubsApplicationGroupResource> GetEventHubsApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
         {

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsEndpointResources and their operations over a DigitalTwinsEndpointResource. </returns>
         public virtual DigitalTwinsEndpointResourceCollection GetDigitalTwinsEndpointResources()
         {
-            return GetCachedClient(Client => new DigitalTwinsEndpointResourceCollection(Client, Id));
+            return GetCachedClient(client => new DigitalTwinsEndpointResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DigitalTwinsEndpointResource>> GetDigitalTwinsEndpointResourceAsync(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="endpointName"> Name of Endpoint Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DigitalTwinsEndpointResource> GetDigitalTwinsEndpointResource(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsPrivateLinkResources and their operations over a DigitalTwinsPrivateLinkResource. </returns>
         public virtual DigitalTwinsPrivateLinkResourceCollection GetDigitalTwinsPrivateLinkResources()
         {
-            return GetCachedClient(Client => new DigitalTwinsPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new DigitalTwinsPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="resourceId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DigitalTwinsPrivateLinkResource>> GetDigitalTwinsPrivateLinkResourceAsync(string resourceId, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="resourceId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DigitalTwinsPrivateLinkResource> GetDigitalTwinsPrivateLinkResource(string resourceId, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsPrivateEndpointConnectionResources and their operations over a DigitalTwinsPrivateEndpointConnectionResource. </returns>
         public virtual DigitalTwinsPrivateEndpointConnectionCollection GetDigitalTwinsPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new DigitalTwinsPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new DigitalTwinsPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DigitalTwinsPrivateEndpointConnectionResource>> GetDigitalTwinsPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DigitalTwinsPrivateEndpointConnectionResource> GetDigitalTwinsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of TimeSeriesDatabaseConnectionResources and their operations over a TimeSeriesDatabaseConnectionResource. </returns>
         public virtual TimeSeriesDatabaseConnectionCollection GetTimeSeriesDatabaseConnections()
         {
-            return GetCachedClient(Client => new TimeSeriesDatabaseConnectionCollection(Client, Id));
+            return GetCachedClient(client => new TimeSeriesDatabaseConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TimeSeriesDatabaseConnectionResource>> GetTimeSeriesDatabaseConnectionAsync(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="timeSeriesDatabaseConnectionName"> Name of time series database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timeSeriesDatabaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TimeSeriesDatabaseConnectionResource> GetTimeSeriesDatabaseConnection(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
