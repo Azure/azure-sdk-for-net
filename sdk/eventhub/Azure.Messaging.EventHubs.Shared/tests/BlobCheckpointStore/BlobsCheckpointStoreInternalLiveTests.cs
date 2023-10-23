@@ -852,7 +852,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
-                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(mockEvent.SequenceNumber, false)));
                 Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
             }
         }
