@@ -12,13 +12,6 @@ namespace System.Net.ClientModel
         public bool TryGetKey(out string key) { throw null; }
         public void Update(string key) { }
     }
-    public partial class MessageFailedException : System.Exception
-    {
-        public MessageFailedException(System.Net.ClientModel.Core.PipelineResponse response) { }
-        protected MessageFailedException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
-        protected MessageFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
-    }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
         internal NullableResult() { }
@@ -39,6 +32,13 @@ namespace System.Net.ClientModel
         public System.Net.ClientModel.Core.Pipeline.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>[]? PerTryPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.Pipeline.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>? RetryPolicy { get { throw null; } set { } }
         public System.Net.ClientModel.Core.Pipeline.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage>? Transport { get { throw null; } set { } }
+    }
+    public partial class PipelineRequestException : System.Exception
+    {
+        public PipelineRequestException(System.Net.ClientModel.Core.PipelineResponse response) { }
+        protected PipelineRequestException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
+        protected PipelineRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public int Status { get { throw null; } }
     }
     public partial class RequestOptions : System.Net.ClientModel.PipelineOptions
     {
