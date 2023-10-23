@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -91,10 +89,10 @@ namespace Azure.Communication.CallAutomation
             switch (returnedEvent)
             {
                 case CancelAddParticipantSucceeded successEvent:
-                    result = new CancelAddParticipantEventResult(true, successEvent, null, successEvent?.InvitationId, successEvent?.Participant);
+                    result = new CancelAddParticipantEventResult(true, successEvent, null);
                     break;
                 case CancelAddParticipantFailed failedEvent:
-                    result = new CancelAddParticipantEventResult(false, null, failedEvent, failedEvent?.InvitationId);
+                    result = new CancelAddParticipantEventResult(false, null, failedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

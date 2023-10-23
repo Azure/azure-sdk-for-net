@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetPhoneNumberIdentity"> The target to transfer the call to. </param>
+        /// <param name="targetPhoneNumberIdentity"> The target where the call should be transferred to. </param>
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
             Target = targetPhoneNumberIdentity;
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="targetIdentity"> The target where the call should be transferred to. </param>
         public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
@@ -32,14 +32,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        /// <param name="targetIdentity"> The target where the call should be transferred to. </param>
         public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
         }
 
         /// <summary>
-        /// The target callee.
+        /// The identity of the target where the call should be transferred to.
         /// </summary>
         /// <value></value>
         public CommunicationIdentifier Target { get; }
@@ -50,14 +50,19 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Transferee is the participant who is transferring the call.
+        /// Transferee is the participant who is transferred away.
         /// </summary>
-
         public CommunicationIdentifier Transferee { get; set; }
 
         /// <summary>
-        /// The callback URI to override the main callback URI.
+        /// The Custom Context which contains SIP and voip headers
         /// </summary>
-        public string OverrideCallbackUrl { get; set; }
+        public CustomContext CustomContext { get; }
+
+        /// <summary>
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public Uri OperationCallbackUri { get; set; }
     }
 }
