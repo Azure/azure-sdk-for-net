@@ -426,11 +426,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointPrefersSequenceNumberAsTheStartingPosition()
+        public async Task GetCheckpointPrefersOffsetNumberAsTheStartingPosition()
         {
             var expectedOffset = 13;
             var expectedSequenceNumber = 7777;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequenceNumber, false);
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -443,36 +443,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, expectedOffset.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequenceNumber.ToString()}
-                                           })
-            };
-            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
-            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
-
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
-        }
-        /// <summary>
-        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
-        /// </summary>
-        ///
-        [Test]
-        public async Task GetCheckpointSetsReplicationSegmentWhenPresent()
-        {
-            var expectedSequenceNumber = 13;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequenceNumber, false);
-            var partition = Guid.NewGuid().ToString();
-
-            var blobList = new List<BlobItem>
-            {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
-                                           false,
-                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
-                                           "snapshot",
-                                           new Dictionary<string, string>
-                                           {
-                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, "13"},
                                                {BlobMetadataKey.SequenceNumber, expectedSequenceNumber.ToString()}
                                            })
             };
@@ -520,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenPresentInLegacyCheckpoint()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
         {
             var blobList = new List<BlobItem>
             {
@@ -547,7 +517,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 
@@ -1287,7 +1257,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960182, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
@@ -1329,7 +1299,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 
