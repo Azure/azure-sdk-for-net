@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceFleetMemberResources and their operations over a ContainerServiceFleetMemberResource. </returns>
         public virtual ContainerServiceFleetMemberCollection GetContainerServiceFleetMembers()
         {
-            return GetCachedClient(Client => new ContainerServiceFleetMemberCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceFleetMemberCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceFleetMemberResource>> GetContainerServiceFleetMemberAsync(string fleetMemberName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceFleetMemberResource> GetContainerServiceFleetMember(string fleetMemberName, CancellationToken cancellationToken = default)
         {
